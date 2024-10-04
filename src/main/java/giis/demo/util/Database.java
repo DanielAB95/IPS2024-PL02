@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.apache.commons.dbutils.DbUtils;
 
+//prueba 14:27
 /**
  * Encapsula los datos de acceso JDBC, lectura de la configuracion
  * y scripts de base de datos para creacion y carga.
