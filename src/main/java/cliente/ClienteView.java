@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import giis.demo.util.Database;
 import giis.demo.util.Database2;
 
 import javax.swing.JComboBox;
@@ -42,15 +43,17 @@ public class ClienteView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClienteView frame = new ClienteView();
-					frame.setVisible(true);
+					
 					
 					//creo bd
-					Database2 db=new Database2();
+					Database2 db =new Database2();
 					db.createDatabase(false);
 					
 					//lleno bd
 					db.loadDatabase();
+					
+					ClienteView frame = new ClienteView();
+					frame.setVisible(true);
 					
 					
 					//model.printProductos();
