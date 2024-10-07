@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Pedido {
 
-	private Map<Producto, Integer> pedido = new HashMap<>();
+	private Map<Integer, Integer> pedido = new HashMap<>();
 	
-	public boolean addProduct(Producto id, int units) {
+	public boolean addProduct(Integer id, int units) {
 		if (units < 1) throw new IllegalArgumentException();
 		pedido.put(id, units);
 		return true;

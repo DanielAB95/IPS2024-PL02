@@ -2,14 +2,13 @@ package modelo.modelo;
 
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database2;
-import modelo.dto.WorkOrder;
 
 public class Service {
 	
-	private WorkOrder wo;
+	private WorkorderModel wo;
 	private Database2 db = new Database2();
 	
-	public Service(WorkOrder workOrder) {
+	public Service(WorkorderModel workOrder) {
 		if (workOrder == null) throw new IllegalArgumentException();
 		wo = workOrder;
 	}

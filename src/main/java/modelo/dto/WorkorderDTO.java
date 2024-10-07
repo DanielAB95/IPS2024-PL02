@@ -1,14 +1,16 @@
 package modelo.dto;
 
+import java.util.List;
+
 public class WorkorderDTO {
 	private int idWorkorder;
 	private int idAlmacenero;
-	private int idPedido;
+	private List<Integer> pedidos;
 	
-	public WorkorderDTO(int idWorkorder, int idAlmacenero, int idPedido) {
+	public WorkorderDTO(int idWorkorder, int idAlmacenero, List<Integer> idPedido) {
 		this.idWorkorder = idWorkorder;
 		this.idAlmacenero = idAlmacenero;
-		this.idPedido = idPedido;
+		this.pedidos = idPedido;
 	}
 	
 	public int getIdAlmacenero() {
@@ -19,12 +21,12 @@ public class WorkorderDTO {
 		this.idAlmacenero = idAlmacenero;
 	}
 
-	public int getIdPedido() {
-		return idPedido;
+	public List<Integer> getIdPedido() {
+		return pedidos;
 	}
 
-	public void setIdPedido(int idPedido) {
-		this.idPedido = idPedido;
+	public void setIdPedido(List<Integer> idPedido) {
+		pedidos = List.copyOf(idPedido);
 	}
 
 	public WorkorderDTO(int idWorkorer) {
