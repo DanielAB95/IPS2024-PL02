@@ -1,7 +1,8 @@
-package almacen;
+package modelo.modelo;
 
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database2;
+import modelo.dto.WorkOrder;
 
 public class Service {
 	

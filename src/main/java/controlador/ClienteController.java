@@ -1,7 +1,10 @@
-package cliente;
+package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import modelo.modelo.ClienteModel;
+import vista.ClienteView;
 
 public class ClienteController {
 	
@@ -33,25 +36,25 @@ public class ClienteController {
 		
 		
 		//añado controlador al comboBox de cantidad de productos
-		view.comboBoxCantidad.addActionListener(new ActionListener() {
+		view.getComboBoxCantidad().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				view.getTextPrecio().setText(model.getPrecioPorNombre((String) view.getComboBoxProductos().getSelectedItem(), (int) view.getComboBoxCantidad().getSelectedItem() ));
 			}
 		});
 		
 		//añado controlador al boton de añadir productos al carrito
-		view.btnAdd.addActionListener(new ActionListener() {
+		view.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				view.carrito.addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
+				view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
 			}
 		});
 		
 		//añado controlador al boton de Siguiente
-		view.btnSiguiente.addActionListener(new ActionListener() {
+		view.getBtnSiguiente().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				view.carrito.printCarrito();
+				view.getCarrito().printCarrito();
 			}
 		});
 		

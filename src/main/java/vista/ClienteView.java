@@ -1,4 +1,4 @@
-package cliente;
+package vista;
 
 import java.awt.EventQueue;
 
@@ -6,8 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controlador.ClienteController;
 import giis.demo.util.Database;
 import giis.demo.util.Database2;
+import modelo.dto.Carrito;
+import modelo.modelo.ClienteModel;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -108,35 +111,35 @@ public class ClienteView extends JFrame {
 		}
 		return comboBoxProductos;
 	}
-	private JLabel getLblProductos() {
+	public JLabel getLblProductos() {
 		if (lblProductos == null) {
 			lblProductos = new JLabel("Productos: ");
 			lblProductos.setBounds(10, 39, 91, 14);
 		}
 		return lblProductos;
 	}
-	JComboBox<Integer> getComboBoxCantidad() {
+	public JComboBox<Integer> getComboBoxCantidad() {
 		if (comboBoxCantidad == null) {
 			comboBoxCantidad = new JComboBox<Integer>();			
 			comboBoxCantidad.setBounds(272, 64, 77, 22);
 		}
 		return comboBoxCantidad;
 	}
-	private JLabel getLblCantidad() {
+	public JLabel getLblCantidad() {
 		if (lblCantidad == null) {
 			lblCantidad = new JLabel("Cantidad: ");
 			lblCantidad.setBounds(272, 39, 77, 14);
 		}
 		return lblCantidad;
 	}
-	private JLabel getLblCategoria() {
+	public JLabel getLblCategoria() {
 		if (lblCategoria == null) {
 			lblCategoria = new JLabel("Categoría: ");
 			lblCategoria.setBounds(10, 112, 77, 14);
 		}
 		return lblCategoria;
 	}
-	JTextField getTextCategoria() {
+	public JTextField getTextCategoria() {
 		if (textCategoria == null) {
 			textCategoria = new JTextField();
 			textCategoria.setEditable(false);
@@ -152,7 +155,7 @@ public class ClienteView extends JFrame {
 		}
 		return lblPrecio;
 	}
-	JTextField getTextPrecio() {
+	public JTextField getTextPrecio() {
 		if (textPrecio == null) {
 			textPrecio = new JTextField();
 			textPrecio.setEditable(false);
@@ -168,7 +171,7 @@ public class ClienteView extends JFrame {
 		}
 		return lblDescripcion;
 	}
-	JTextArea getTextDescripcion() {
+	public JTextArea getTextDescripcion() {
 		if (textDescripcion == null) {
 			textDescripcion = new JTextArea();
 			textDescripcion.setLineWrap(true);
@@ -177,7 +180,7 @@ public class ClienteView extends JFrame {
 		}
 		return textDescripcion;
 	}
-	private JButton getBtnAdd() {
+	public JButton getBtnAdd() {
 		if (btnAdd == null) {
 			btnAdd = new JButton("Añadir");		
 			btnAdd.setForeground(Color.WHITE);
@@ -186,7 +189,7 @@ public class ClienteView extends JFrame {
 		}
 		return btnAdd;
 	}
-	private JButton getBtnSiguiente() {
+	public JButton getBtnSiguiente() {
 		if (btnSiguiente == null) {
 			btnSiguiente = new JButton("Siguiente");
 			btnSiguiente.setForeground(Color.WHITE);
@@ -194,5 +197,9 @@ public class ClienteView extends JFrame {
 			btnSiguiente.setBounds(385, 277, 89, 23);
 		}
 		return btnSiguiente;
+	}
+	
+	public Carrito getCarrito() {
+		return carrito;
 	}
 }

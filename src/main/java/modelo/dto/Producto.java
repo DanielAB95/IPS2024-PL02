@@ -1,4 +1,4 @@
-package cliente;
+package modelo.dto;
 
 public class Producto {
 	
