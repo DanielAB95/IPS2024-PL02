@@ -1,9 +1,7 @@
-package almacen;
+package modelo.dto;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import cliente.Producto;
 
 public class Pedido {
 

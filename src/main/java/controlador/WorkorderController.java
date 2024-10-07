@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.swing.table.TableModel;
 
-import cliente.ClienteModel;
 import giis.demo.util.SwingUtil;
 import modelo.dto.AlmaceneroDTO;
 import modelo.dto.PedidoDTO;
 import modelo.dto.PedidoProductoDTO;
+import modelo.modelo.ClienteModel;
 import modelo.modelo.PedidoProductoModel;
 import modelo.modelo.WorkorderModel;
 import vista.WorkorderView;

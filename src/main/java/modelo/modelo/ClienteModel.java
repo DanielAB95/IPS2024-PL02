@@ -1,4 +1,4 @@
-package cliente;
+package modelo.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import giis.demo.util.Database2;
+import modelo.dto.Producto;
 
 public class ClienteModel {
 	
