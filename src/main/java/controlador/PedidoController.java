@@ -42,7 +42,7 @@ public class PedidoController {
                 }
 			}
 		});
-	}
+	} 
 
 	public void getListaPedidos() {
 		List<PedidoDTO> pedidos = model.getPedidos();

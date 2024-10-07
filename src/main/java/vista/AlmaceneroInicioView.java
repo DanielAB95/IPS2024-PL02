@@ -60,7 +60,6 @@ public class AlmaceneroInicioView extends JFrame {
 		model = new AlmaceneroModel();
 		view = new AlmaceneroView();
 		controller = new AlmaceneroController(this, view, model);
-		controller.initControllerId();
 		//controller.initView();
 		controller.initController();
 		

@@ -32,9 +32,6 @@ public class AlmaceneroController {
 		view.getTextAlmacenero().setText(model.getAlmacenero(idAlmacenero).toString());
 	}
 	
-	public void initControllerId() {
-		
-	}
 	
 	public void initController() {
 		viewId.getButtonContinuar().addActionListener(new ActionListener() {
@@ -56,7 +53,7 @@ public class AlmaceneroController {
 //			mostrarAlmaceneroView();
 //		}
 		
-		if (viewId.getTextIdAlmacenero().getText().isBlank()) {
+		if (viewId.getTextIdAlmacenero().getText().isEmpty() || viewId.getTextIdAlmacenero().getText().equals(" ")) {
             JOptionPane.showMessageDialog(null, "porfavor, identifiquise");
             return;
         }
