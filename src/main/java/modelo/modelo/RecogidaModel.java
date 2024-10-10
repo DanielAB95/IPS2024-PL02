@@ -1,15 +1,25 @@
 package modelo.modelo;
 
 import giis.demo.util.Database2;
+import modelo.dto.WorkorderDTO;
 
 public class RecogidaModel {
 	
-	private WorkorderModel wo;
+	private WorkorderDTO dto;
 	private Database2 db = new Database2();
+	private final static String SQL = "select idWorkorder, idPedido from Workorders where idWorkorder = ?";
 	
-	public RecogidaModel(WorkorderModel workOrder) {
+	public RecogidaModel(WorkorderDTO workOrder) {
 		if (workOrder == null) throw new IllegalArgumentException();
-		wo = workOrder;
+		dto = workOrder;
+	}
+	
+	public RecogidaModel() {
+		extractWorkorder();
+	}
+	
+	private void extractWorkorder() {
+		dto = (WorkorderDTO) db.executeQueryPojo(WorkorderDTO.class, SQL, "1");
 	}
 	
 	public void checkProduct(int id, int units) {

@@ -31,6 +31,15 @@ insert into Pedido(idPedido, numProductos, fecha, estado, idAlmacenero) values
 	(11, 33, '2024-11-16', 'Pendiente', 10),
 	(12, 2, '2024-03-14', 'Listo', 6);
 
+delete from PedidoProducto
+insert into PedidoProducto(idPedido, idProducto, cantidad) values
+	(1, 1, 1),
+	(1, 3, 2),
+	(1, 4, 1),
+	(1, 5, 2),
+	(1, 6, 1),
+	(1, 8, 1);
+	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(1, 'Carlos', 'Garcia'),
@@ -44,3 +53,6 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(9, 'Victor', 'Suarez'),
 	(10, 'Maria', 'Garcia');
 
+delete from Workorder;
+create into Workorder(idWorkorder, idAlmacenero, idPedido) values
+	(1, 1, 1);

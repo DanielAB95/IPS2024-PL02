@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controlador.RecogidaController;
 import modelo.dto.Producto;
 
 import javax.swing.JList;
@@ -17,6 +18,8 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RecogidaView extends JFrame {
 
@@ -30,6 +33,7 @@ public class RecogidaView extends JFrame {
 	private JTextField textField;
 	private JSpinner spinner;
 	private JButton btComprobar;
+	private RecogidaController rc;
 
 	/**
 	 * Launch the application.
@@ -65,6 +69,9 @@ public class RecogidaView extends JFrame {
 		contentPane.add(getTextField());
 		contentPane.add(getSpinner());
 		contentPane.add(getBtComprobar());
+		
+		rc = new RecogidaController(this);
+		rc.initController();
 	}
 	public JList<Producto> getProductosList() {
 		if (productosList == null) {
