@@ -20,6 +20,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class RecogidaView extends JFrame {
 
@@ -34,6 +35,7 @@ public class RecogidaView extends JFrame {
 	private JSpinner spinner;
 	private JButton btComprobar;
 	private RecogidaController rc;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -62,13 +64,14 @@ public class RecogidaView extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.add(getProductosList());
 		contentPane.add(getBtAceptar());
 		contentPane.add(getBtCancelar());
 		contentPane.add(getTxfWorkOrderId());
 		contentPane.add(getTextField());
 		contentPane.add(getSpinner());
 		contentPane.add(getBtComprobar());
+		contentPane.add(getScrollPane());
+		setLocationRelativeTo(null);
 		
 		rc = new RecogidaController(this);
 		rc.initController();
@@ -76,11 +79,15 @@ public class RecogidaView extends JFrame {
 	public JList<Producto> getProductosList() {
 		if (productosList == null) {
 			listModel = new DefaultListModel<Producto>();
-			productosList = new JList<>();
-			productosList.setBounds(10, 58, 202, 322);
+			productosList = new JList<>(listModel);
 		}
 		return productosList;
 	}
+	
+	public DefaultListModel<Producto> getlistModel(){
+		return listModel;
+	}
+	
 	public JButton getBtAceptar() {
 		if (btAceptar == null) {
 			btAceptar = new JButton("Aceptar");
@@ -134,5 +141,13 @@ public class RecogidaView extends JFrame {
 			btComprobar.setBounds(484, 55, 89, 37);
 		}
 		return btComprobar;
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 58, 202, 322);
+			scrollPane.setViewportView(getProductosList());
+		}
+		return scrollPane;
 	}
 }

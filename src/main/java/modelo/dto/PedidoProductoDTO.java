@@ -4,13 +4,11 @@ public class PedidoProductoDTO {
 	 private int idPedido;
 	 private int idProducto;
 	 private int cantidad;
-	 private String descripcion;
 	 
-	 public PedidoProductoDTO(int idPedido, int idProducto, int cantidad, String descripcion){
+	 public PedidoProductoDTO(int idPedido, int idProducto, int cantidad){
 		 this.idPedido = idPedido;
 		 this.idProducto = idProducto;
 		 this.cantidad = cantidad;
-		 this.descripcion = descripcion; 
 	 }
 	 
 	public int getIdPedido() {
@@ -30,15 +28,6 @@ public class PedidoProductoDTO {
 	}
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	 
+	} 
 	 
 }

@@ -47,12 +47,9 @@ public class WorkorderModel {
 	public List<WorkorderDTO> getWorkorders(){
 		List<WorkorderDTO> list = new ArrayList<WorkorderDTO>();
 		List<Object[]> workorders = db.executeQueryArray(SQL_WORKORDERS);
-		List<Integer> pedidosLista = new ArrayList<>();
 		
 		for (int i = 0; i < workorders.size(); i++) {
-			pedidosLista.add((int)workorders.get(i)[2]);
-			WorkorderDTO w = new WorkorderDTO((int)workorders.get(i)[0], (int)workorders.get(i)[1], pedidosLista);
-			pedidosLista.remove(i);
+			WorkorderDTO w = new WorkorderDTO((int)workorders.get(i)[0], (int)workorders.get(i)[1], (int)workorders.get(i)[2]);
 			list.add(w);	
 		}
 		return list;

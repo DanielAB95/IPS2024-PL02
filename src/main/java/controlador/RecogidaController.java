@@ -2,7 +2,9 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import modelo.dto.Producto;
 import modelo.modelo.RecogidaModel;
 import vista.RecogidaView;
 
@@ -18,6 +20,8 @@ public class RecogidaController {
 	
 	public void initController() {
 		addExit();
+		idWorkorder();
+		fillList();
 	}
 	
 	private void addExit() {
@@ -27,6 +31,16 @@ public class RecogidaController {
 				System.exit(0);
 			}
 		});
+	}
+	
+	private void idWorkorder() {
+		rw.getTxfWorkOrderId().setText(Integer.toString(rm.getWOID()));
+	}
+	
+	private void fillList() {
+		List<Producto> productos = rm.extractProducts();
+		for (int i = 0; i<productos.size(); i++) 
+			rw.getlistModel().addElement(productos.get(i));		
 	}
 
 }

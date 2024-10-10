@@ -29,8 +29,6 @@ create table Pedido(
     numProductos int not null,
     fecha date not null,
     estado varchar(20) not null,
-    idAlmacenero int not null,
-    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
     check (estado in('Pendiente','Listo'))
 );
 
@@ -41,14 +39,14 @@ create table Almacenero(
 );
 
 create table PaqueteWorkorder (
-    idWorkorder intenger not null,
-    idPaquete integer not null,
+    idWorkorder int not null,
+    idPaquete int not null,
     foreign key (idWorkorder) references Workorder(idWorkorder),
     foreign key (idPaquete) references Paquete(idPaquete)
 );
 
 create table Workorder(
-    idWorkorder  integer primary key autoincrement,
+    idWorkorder  int primary key,
     idAlmacenero int not null,
     idPedido int not null,
     foreign key (idAlmacenero) references Almacenero(idAlmacenero),

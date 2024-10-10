@@ -15,7 +15,7 @@ public class PedidoProductoModel {
 		List<Object[]> listDb = db.executeQueryArray(SQL_PRODUCTOS_PEDIDO, idPedido);
 		
 		for(int i = 0; i<listDb.size();i++) {
-			PedidoProductoDTO p = new PedidoProductoDTO((int)listDb.get(i)[0],(int)listDb.get(i)[1],(int)listDb.get(i)[2],(String)listDb.get(i)[3]);
+			PedidoProductoDTO p = new PedidoProductoDTO((int)listDb.get(i)[0],(int)listDb.get(i)[1],(int)listDb.get(i)[2]);
 			list.add(p);
 		}
 		return list;
