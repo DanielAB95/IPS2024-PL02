@@ -1,14 +1,13 @@
 package modelo.modelo;
 
-import giis.demo.util.ApplicationException;
 import giis.demo.util.Database2;
 
-public class Service {
+public class RecogidaModel {
 	
 	private WorkorderModel wo;
 	private Database2 db = new Database2();
 	
-	public Service(WorkorderModel workOrder) {
+	public RecogidaModel(WorkorderModel workOrder) {
 		if (workOrder == null) throw new IllegalArgumentException();
 		wo = workOrder;
 	}
