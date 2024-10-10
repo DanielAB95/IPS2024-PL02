@@ -17,20 +17,29 @@ insert into producto(id, nombre, categoria, descripcion, precio) values
 	(10, 'Escalera de Aluminio', 'Almacén', 'Escalera de aluminio de 7 peldaños, ligera y resistente', 49.99);
 
 delete from Pedido;
-insert into Pedido(idPedido, numProductos, fecha, estado, idAlmacenero) values
-	(1, 6, '2024-10-25', 'Pendiente', 2),
-	(2, 1, '2024-05-08', 'Pendiente', 3),
-	(3, 15, '2024-10-24', 'Listo', 10),
-	(4, 5, '2024-10-26', 'Pendiente', 5),
-	(5, 12, '2024-07-12', 'Pendiente', 7),
-	(6, 9, '2024-12-01', 'Listo', 4),
-	(7, 19, '2024-10-24', 'Pendiente', 1),
-	(8, 22, '2024-10-31', 'Pendiente', 9),
-	(9, 4, '2024-10-19', 'Listo', 8),
-	(10, 13, '2024-10-04', 'Pendiente', 1),
-	(11, 33, '2024-11-16', 'Pendiente', 10),
-	(12, 2, '2024-03-14', 'Listo', 6);
+insert into Pedido(idPedido, numProductos, fecha, estado) values
+	(1, 6, '2024-10-25', 'Pendiente'),
+	(2, 1, '2024-05-08', 'Pendiente'),
+	(3, 15, '2024-10-24', 'Listo'),
+	(4, 5, '2024-10-26', 'Pendiente'),
+	(5, 12, '2024-07-12', 'Pendiente'),
+	(6, 9, '2024-12-01', 'Listo'),
+	(7, 19, '2024-10-24', 'Pendiente'),
+	(8, 22, '2024-10-31', 'Pendiente'),
+	(9, 4, '2024-10-19', 'Listo'),
+	(10, 13, '2024-10-04', 'Pendiente'),
+	(11, 33, '2024-11-16', 'Pendiente'),
+	(12, 2, '2024-03-14', 'Listo');
 
+delete from PedidoProducto;
+insert into PedidoProducto(idPedido, idProducto, cantidad) values
+	(1, 1, 1),
+	(1, 3, 2),
+	(1, 4, 1),
+	(1, 5, 2),
+	(1, 6, 1),
+	(1, 8, 1);
+	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(1, 'Carlos', 'Garcia'),
@@ -44,3 +53,9 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(9, 'Victor', 'Suarez'),
 	(10, 'Maria', 'Garcia');
 
+delete from Workorder;
+insert into Workorder(idWorkorder, idAlmacenero, idPedido) values
+	(1, 1, 1),
+	(2, 2, 2),
+	(4, 4, 4),
+	(5, 5, 5);

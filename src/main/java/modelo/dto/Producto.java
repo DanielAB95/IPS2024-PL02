@@ -36,4 +36,9 @@ public class Producto {
 	public double getPrecio() {
 		return precio;
 	}
+	
+	@Override
+	public String toString() {
+		return nombre + " - " + id;
+	}
 }
