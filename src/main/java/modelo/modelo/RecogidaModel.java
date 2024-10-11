@@ -27,14 +27,13 @@ public class RecogidaModel {
 	}
 	
 	public RecogidaModel() {
-		dto.idWorkorder = 1;
+		dto.idWorkorder = 2;
 		extractWorkorder();
 	}
 	
 	private void extractWorkorder() {
 		List<Object[]> workorder = db.executeQueryArray(SQL_WORKORDER, dto.idWorkorder);
 		dto = new WorkorderDTO((int)workorder.get(0)[0], (int)workorder.get(0)[1], (int)workorder.get(0)[2]);
-		System.out.println((String)workorder.get(0)[3]);
 	}
 	
 	public Map<Producto,Integer> extractProducts() {

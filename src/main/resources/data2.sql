@@ -38,7 +38,8 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(1, 4, 1),
 	(1, 5, 2),
 	(1, 6, 1),
-	(1, 8, 1);
+	(1, 8, 1),
+	(2, 9, 1);
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
