@@ -59,3 +59,16 @@ insert into Workorder(idWorkorder, idAlmacenero, idPedido) values
 	(2, 5, 2),
 	(3, 7, 4),
 	(4, 10, 5);
+
+delete from Almacen;
+insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values 
+	(1,1,1,1),
+	(2,1,2,1),
+	(3,1,3,1),
+	(4,2,1,2),
+	(5,2,2,2),
+	(6,2,3,2),
+	(7,3,1,2),
+	(8,3,2,2),
+	(9,3,3,2),
+	(10,4,1,3);

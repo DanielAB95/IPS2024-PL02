@@ -8,6 +8,7 @@ import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
+import modelo.dto.Producto;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
 import vista.PedidoView;
@@ -55,8 +56,16 @@ public class PedidoController {
 		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
 	}
 	
+	public void getListaProductos(int idPedido) {
+		List<Producto> pedidos = wModel.getProductos(idPedido);
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos, new String[] {"id", "nombre","categoria", "descripcion", "precio", "localizacion"});
+		wView.getTablaProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
+	}
+	
 	private void mostrarWorkorder(int idPedido) {
 		wView.getTextPedido().setText(String.valueOf(idPedido));
+		getListaProductos(idPedido);
 		wView.getFrame().setVisible(true);
 	}
 }
