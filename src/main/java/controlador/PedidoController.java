@@ -9,6 +9,7 @@ import javax.swing.table.TableModel;
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
 import modelo.dto.ProductoAlmacen;
+import modelo.dto.PedidoDTO.Estado;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;

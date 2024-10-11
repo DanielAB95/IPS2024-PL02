@@ -14,8 +14,7 @@ create table Producto(
     nombre varchar(32) unique not null, 
     categoria varchar(32) not null, 
     descripcion varchar(200),
-    precio decimal(10,2) not null,
-    localizacion int not null
+    precio decimal(10,2) not null
 );
 
 create table PedidoProducto(

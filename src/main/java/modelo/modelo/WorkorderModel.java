@@ -3,6 +3,7 @@ package modelo.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import giis.demo.util.Database2;
 import modelo.dto.Pedido;
@@ -12,7 +13,7 @@ import modelo.dto.ProductoAlmacen;
 import modelo.dto.WorkorderDTO;
 
 public class WorkorderModel {
-	private static final String SQL_ADD_WORKORDER = "insert into Workorder (idAlmacenero, idPedido) values (?, ?)";
+	private static final String SQL_ADD_WORKORDER = "insert into Workorder (idWorkOrder, idAlmacenero, idPedido, workorderEstado) values (?, ?, ?, ?)";
 	private static final String SQL_WORKORDERS = "select * from Workorder";
 	private static final String SQL_WORKORDER_ALMACENERO = "select idAlmacenero from Workorder where idWorkorder = ?";
 	private static final String SQL_WORKORDER_PEDIDO= "select idAlmacenero from Workorder where idWorkorder = ?";
@@ -35,7 +36,8 @@ public class WorkorderModel {
 	
 	public void crearWorkorder(int idAlmacenero, int idPedido) {
 		addPedido(idPedido);
-		db.executeUpdate(SQL_ADD_WORKORDER, idAlmacenero, idPedido);
+		int idWorkorder = generarIdWorkorder();
+		db.executeUpdate(SQL_ADD_WORKORDER, idWorkorder,idAlmacenero,idPedido,"Pendiente");
 	}
 	
 	public void addPedidos(List<Integer> pedidosIn) {
@@ -81,5 +83,23 @@ public class WorkorderModel {
 		return productos;
 	}
 	
+	
+	private int generarIdWorkorder() {
+	    Random random = new Random();
+	    int idWorkorder;
+	    
+	    do {
+	        idWorkorder = random.nextInt(1000000); 
+	    } while (idExiste(idWorkorder)); 
+
+	    return idWorkorder;
+	}
+
+	private boolean idExiste(int idWorkorder2) {
+		String query = "select count(*) from Workorder where idWorkorder = ?";
+	    List<Object[]> listDb = db.executeQueryArray(query, idWorkorder);
+	    int c = (int)listDb.get(0)[0];
+	    return c > 0; 
+	}
 	
 }
