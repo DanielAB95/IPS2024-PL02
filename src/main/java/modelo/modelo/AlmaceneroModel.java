@@ -6,7 +6,6 @@ import java.util.List;
 
 import giis.demo.util.Database2;
 import modelo.dto.AlmaceneroDTO;
-import modelo.dto.PedidoProductoDTO;
 
 public class AlmaceneroModel {
 	public static final String SQL_ALMACENERO = "select * from Almacenero where idAlmacenero =?";

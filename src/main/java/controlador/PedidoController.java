@@ -8,7 +8,8 @@ import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
-import modelo.dto.Producto;
+import modelo.dto.ProductoAlmacen;
+import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
 import vista.PedidoView;
@@ -20,12 +21,14 @@ public class PedidoController {
 	private WorkorderModel wModel;
 	private PedidoView view;
 	private WorkorderView wView;
+	private AlmaceneroModel aModel;
 	
 	public PedidoController(PedidoView view, PedidoModel model) {
 		this.model = model;
 		this.view = view;
 		this.wModel = new WorkorderModel();
 		this.wView = new WorkorderView();
+		this.aModel = new AlmaceneroModel();
 	}
 	
 	public void initView() {
@@ -40,10 +43,10 @@ public class PedidoController {
                 int row = view.getTablaPedidos().getSelectedRow();
                 if (row != -1) { 
                 	 int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
-                	 //int idAlmacenero = model.getIdAlmacenero(idPedido);
-                	 //wModel.crearWorkorder(idAlmacenero, idPedido);
+                	 int idAlmacenero = Integer.parseInt(view.getTextAlmacenero().getText().substring(0,1));
+                	 wModel.crearWorkorder(idAlmacenero, idPedido);
                 	 
-                     mostrarWorkorder(idPedido);
+                     mostrarWorkorder(idPedido, idAlmacenero);
                 }
 			}
 		});
@@ -57,14 +60,16 @@ public class PedidoController {
 	}
 	
 	public void getListaProductos(int idPedido) {
-		List<Producto> pedidos = wModel.getProductos(idPedido);
-		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos, new String[] {"id", "nombre","categoria", "descripcion", "precio", "localizacion"});
+		List<ProductoAlmacen> pedidos = wModel.getProductos(idPedido);
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos, new String[] {"idProducto", "cantidad","descripcion", "pasillo", "estanteria", "posicionEstanteria"});
 		wView.getTablaProductos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
 	}
 	
-	private void mostrarWorkorder(int idPedido) {
+	private void mostrarWorkorder(int idPedido, int idAlmacenero) {
 		wView.getTextPedido().setText(String.valueOf(idPedido));
+		//wView.getTextAlmacenero().setText(String.valueOf(idAlmacenero));
+		wView.getTextAlmacenero().setText(aModel.getAlmacenero(idAlmacenero).toString());
 		getListaProductos(idPedido);
 		wView.getFrame().setVisible(true);
 	}
