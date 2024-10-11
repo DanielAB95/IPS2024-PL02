@@ -4,17 +4,17 @@
 
 	
 delete from producto;
-insert into producto(id, nombre, categoria, descripcion, precio, localizacion) values  
-	(1, 'Taladro Inalámbrico', 'Ferretería', 'Taladro inalámbrico de 18V con batería de litio', 99.99,1),
-	(2, 'Martillo de Uña', 'Ferretería', 'Martillo de uña de acero forjado con mango antideslizante', 14.50,2),
-	(3, 'Destornillador Eléctrico', 'Ferretería', 'Destornillador eléctrico con 20 puntas intercambiables', 29.99,3),
-	(4, 'Caja de Herramientas', 'Ferretería', 'Caja de herramientas de plástico con múltiples compartimentos', 24.99,4),
-	(5, 'Llave Inglesa', 'Ferretería', 'Llave inglesa ajustable de acero inoxidable', 12.75,5),
-	(6, 'Sierra Circular', 'Ferretería', 'Sierra circular de 7 1/4 pulgadas con motor de alta potencia', 139.90,6),
-	(7, 'Caja de Almacenamiento', 'Almacén', 'Caja de almacenamiento de plástico con tapa hermética de 50L', 19.95,7),
-	(8, 'Estantería Metálica', 'Almacén', 'Estantería metálica de 5 niveles con capacidad de 150kg por nivel', 89.99,8),
-	(9, 'Carro de Carga', 'Almacén', 'Carro de carga plegable con capacidad de 200kg', 55.50,9),
-	(10, 'Escalera de Aluminio', 'Almacén', 'Escalera de aluminio de 7 peldaños, ligera y resistente', 49.99,10);
+insert into producto(id, nombre, categoria, descripcion, precio) values  
+	(1, 'Taladro Inalámbrico', 'Ferretería', 'Taladro inalámbrico de 18V con batería de litio', 99.99),
+	(2, 'Martillo de Uña', 'Ferretería', 'Martillo de uña de acero forjado con mango antideslizante', 14.50),
+	(3, 'Destornillador Eléctrico', 'Ferretería', 'Destornillador eléctrico con 20 puntas intercambiables', 29.99),
+	(4, 'Caja de Herramientas', 'Ferretería', 'Caja de herramientas de plástico con múltiples compartimentos', 24.99),
+	(5, 'Llave Inglesa', 'Ferretería', 'Llave inglesa ajustable de acero inoxidable', 12.75),
+	(6, 'Sierra Circular', 'Ferretería', 'Sierra circular de 7 1/4 pulgadas con motor de alta potencia', 139.90),
+	(7, 'Caja de Almacenamiento', 'Almacén', 'Caja de almacenamiento de plástico con tapa hermética de 50L', 19.95),
+	(8, 'Estantería Metálica', 'Almacén', 'Estantería metálica de 5 niveles con capacidad de 150kg por nivel', 89.99),
+	(9, 'Carro de Carga', 'Almacén', 'Carro de carga plegable con capacidad de 200kg', 55.50),
+	(10, 'Escalera de Aluminio', 'Almacén', 'Escalera de aluminio de 7 peldaños, ligera y resistente', 49.99);
 
 delete from Pedido;
 insert into Pedido(idPedido, numProductos, fecha, estado) values
@@ -40,12 +40,20 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(1, 8, 3),
 	(1, 10, 12),
 	(1, 3, 2),
+<<<<<<< HEAD
 	(2, 3, 2),
 	(4, 4, 4),
 	(4, 6, 7),
 	(5, 5, 2),
 	(7, 6, 1),
 	(8, 8, 1);
+=======
+	(1, 4, 1),
+	(1, 5, 2),
+	(1, 6, 1),
+	(1, 8, 1),
+	(2, 9, 1);
+>>>>>>> refs/heads/develop
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
@@ -61,6 +69,7 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(10, 'Maria', 'Garcia');
 
 delete from Workorder;
+<<<<<<< HEAD
 insert into Workorder(idWorkorder, idAlmacenero, idPedido) values
 	(1, 3, 1),
 	(2, 5, 2),
@@ -79,3 +88,10 @@ insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values
 	(8,3,2,2),
 	(9,3,3,2),
 	(10,4,1,3);
+=======
+insert into Workorder(idWorkorder, idAlmacenero, idPedido, workorderEstado) values
+	(1, 1, 1, 'Pendiente'),
+	(2, 2, 2, 'Pendiente'),
+	(4, 4, 4, 'Pendiente'),
+	(5, 5, 5, 'Incidencia');
+>>>>>>> refs/heads/develop
