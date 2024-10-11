@@ -30,7 +30,7 @@ public class PedidoController {
 		this.wView = new WorkorderView();
 		this.aModel = new AlmaceneroModel();
 	}
-	
+	 
 	public void initView() {
 		this.getListaPedidos();
 		//view.getFrame().setVisible(true); 

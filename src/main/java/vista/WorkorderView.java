@@ -101,7 +101,7 @@ public class WorkorderView extends JFrame {
 	private JLabel getLbProductos() {
 		if (lbProductos == null) {
 			lbProductos = new JLabel("Productos:");
-			lbProductos.setBounds(10, 103, 192, 39);
+			lbProductos.setBounds(20, 103, 192, 39);
 		}
 		return lbProductos;
 	}
