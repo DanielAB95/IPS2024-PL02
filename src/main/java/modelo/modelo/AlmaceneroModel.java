@@ -6,10 +6,12 @@ import java.util.List;
 
 import giis.demo.util.Database2;
 import modelo.dto.AlmaceneroDTO;
+import modelo.dto.PedidoProductoDTO;
 
 public class AlmaceneroModel {
 	public static final String SQL_ALMACENERO = "select * from Almacenero where idAlmacenero =?";
 	public static final String SQL_ALMACENERO_ID = "select idAlmacenero from Almacenero";
+	public static final String SQL_ALMACENERO_PEDIDO = "select ap.idPedido from AlmaceneroPedido ap join Almacenero a on ap.idAlmacenero = a p.idAlmacenero and a.idAlmacenero = ?";
 	
 	private Database2 db=new Database2();
 	//private List<AlmaceneroDTO> almaceneros = new ArrayList<AlmaceneroDTO>();
@@ -41,5 +43,6 @@ public class AlmaceneroModel {
 		}
 		return ids;
 	}
+	
 	
 }

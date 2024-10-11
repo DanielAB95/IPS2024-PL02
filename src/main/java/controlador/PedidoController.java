@@ -16,12 +16,15 @@ import vista.WorkorderView;
 public class PedidoController {
 	
 	private PedidoModel model;
-	private WorkorderModel wModel = new WorkorderModel();
+	private WorkorderModel wModel;
 	private PedidoView view;
+	private WorkorderView wView;
 	
 	public PedidoController(PedidoView view, PedidoModel model) {
 		this.model = model;
 		this.view = view;
+		this.wModel = new WorkorderModel();
+		this.wView = new WorkorderView();
 	}
 	
 	public void initView() {
@@ -36,9 +39,10 @@ public class PedidoController {
                 int row = view.getTablaPedidos().getSelectedRow();
                 if (row != -1) { 
                 	 int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
-                	
-                	 wModel.crearWorkorder(model.getIdAlmacenero(idPedido), idPedido);
-                     mostrarWorkorder();
+                	 //int idAlmacenero = model.getIdAlmacenero(idPedido);
+                	 //wModel.crearWorkorder(idAlmacenero, idPedido);
+                	 
+                     mostrarWorkorder(idPedido);
                 }
 			}
 		});
@@ -51,8 +55,8 @@ public class PedidoController {
 		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
 	}
 	
-	private void mostrarWorkorder() {
-		WorkorderView wv = new WorkorderView();
-		wv.getFrame().setVisible(true);
+	private void mostrarWorkorder(int idPedido) {
+		wView.getTextPedido().setText(String.valueOf(idPedido));
+		wView.getFrame().setVisible(true);
 	}
 }
