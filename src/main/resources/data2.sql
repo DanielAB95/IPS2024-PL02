@@ -54,8 +54,8 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(10, 'Maria', 'Garcia');
 
 delete from Workorder;
-insert into Workorder(idWorkorder, idAlmacenero, idPedido) values
-	(1, 1, 1),
-	(2, 2, 2),
-	(4, 4, 4),
-	(5, 5, 5);
+insert into Workorder(idWorkorder, idAlmacenero, idPedido, workorderEstado) values
+	(1, 1, 1, 'Pendiente'),
+	(2, 2, 2, 'Pendiente'),
+	(4, 4, 4, 'Pendiente'),
+	(5, 5, 5, 'Incidencia');

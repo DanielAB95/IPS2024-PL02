@@ -166,9 +166,13 @@ public class RecogidaController {
 		rw.getBtAceptar().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				pasarWorkorderAListo();
 			}
 		});
+	}
+	
+	private void pasarWorkorderAListo() {
+		rm.pasarAListo();		
 	}
 
 }

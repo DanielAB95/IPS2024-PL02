@@ -17,6 +17,7 @@ public class RecogidaModel {
 	private final static String SQL_WORKORDER = "select * from workorder where idWorkorder = ?";
 	private final static String SQL_PRODUCTS_ID = "select idProducto, cantidad from pedidoproducto where idPedido = ?";
 	private final static String SQL_PRODUCTS = "select * from producto where id = ?";
+	private final static String SQL_WOLISTA = "update workorder set workorderEstado = 'Listo' where idWorkorder = ?";
 	
 	
 	public RecogidaModel(int idWorkorder) {
@@ -31,11 +32,9 @@ public class RecogidaModel {
 	}
 	
 	private void extractWorkorder() {
-		System.out.println(dto.idWorkorder + " " + dto.idAlmacenero + " " + dto.idPedido);
 		List<Object[]> workorder = db.executeQueryArray(SQL_WORKORDER, dto.idWorkorder);
-		System.out.println(workorder.size());
 		dto = new WorkorderDTO((int)workorder.get(0)[0], (int)workorder.get(0)[1], (int)workorder.get(0)[2]);
-		System.out.println(dto.idWorkorder + " " + dto.idAlmacenero + " " + dto.idPedido);
+		System.out.println((String)workorder.get(0)[3]);
 	}
 	
 	public Map<Producto,Integer> extractProducts() {
@@ -43,7 +42,6 @@ public class RecogidaModel {
 		List<Object[]> idProductos = db.executeQueryArray(SQL_PRODUCTS_ID, dto.idPedido);
 		
 		List<Object[]> productos;
-		System.out.println(idProductos.size());
 		for (int i = 0; i < idProductos.size(); i++) {
 			productos = db.executeQueryArray(SQL_PRODUCTS, idProductos.get(i)[0]);
 			Producto p = new Producto(productos.get(0)[0], productos.get(0)[1], productos.get(0)[2], productos.get(0)[3], productos.get(0)[4]);
@@ -75,6 +73,10 @@ public class RecogidaModel {
 
 	private void checkID(ProductoWrapper p, int id) {
 		if (id != p.getID()) throw new ApplicationException("Producto no encontrado en el pedido");
+	}
+
+	public void pasarAListo() {
+		db.executeUpdate(SQL_WOLISTA, dto.idWorkorder);
 	}
 
 }

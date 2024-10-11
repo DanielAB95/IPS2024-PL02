@@ -49,6 +49,8 @@ create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     idPedido int not null,
+    workorderEstado varchar(20) not null,
     foreign key (idAlmacenero) references Almacenero(idAlmacenero),
-    foreign key (idPedido) references Pedido(idPedido)
+    foreign key (idPedido) references Pedido(idPedido),
+    check (workorderEstado in('Pendiente','Listo','Incidencia'))
 );
