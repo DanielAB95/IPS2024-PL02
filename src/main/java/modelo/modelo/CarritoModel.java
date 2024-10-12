@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.Producto;
+import vista.AppInicioView;
 import vista.CarritoView;
 
 public class CarritoModel {
@@ -26,14 +27,19 @@ public class CarritoModel {
 	private Database2 db;
 	private CarritoView v;
 	
-	public CarritoModel (Carrito c, CarritoView v) {
+	public CarritoModel (Carrito c, CarritoView v, Database2 db) {
 		this.carrito = c;
 		this.v = v;
-		this.db = new Database2();
+		this.db = db;
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 	
 	public void confirmarPedido() {
 		if (checkHayProductos()) {
+			System.out.println("-- ANTES de confirmar compra -- ");
 			mostrarPedidos();
 			
 			int nuevoID = getNuevoID();
@@ -47,7 +53,13 @@ public class CarritoModel {
 			
 			JOptionPane.showMessageDialog(this.v, "Compra realizada");
 			
+			System.out.println("-- DESPUES de confirmar compra --");
 			mostrarPedidos();
+			
+			//vuelvo al inicio
+			AppInicioView vista = new AppInicioView(getDatabase());
+			this.v.dispose();
+			vista.setVisible(true);
 			
 		} else {
 			JOptionPane.showMessageDialog(this.v, "No hay productos en su carrito");
@@ -199,13 +211,13 @@ public class CarritoModel {
 	}
 	
 	private void mostrarPedidos() {
-		System.out.println("<------------------------------------->");
+		System.out.println("<------------------  INICIO  ------------------->");
 		List<Object[]> pedidos = db.executeQueryArray(SQL_GET_PEDIDOS);
 		
 		for (Object[] p: pedidos) {
 			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3]);
 		}
-		System.out.println("<------------------------------------->");
+		System.out.println();
 		
 		
 		List<Object[]> productos = db.executeQueryArray(SQL_GET_PEDIDOs_Producto);

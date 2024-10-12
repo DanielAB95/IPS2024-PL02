@@ -57,7 +57,7 @@ public class ClienteController {
 			public void actionPerformed(ActionEvent e) {
 				//view.getCarrito().printCarrito();
 				view.dispose();
-				CarritoView frame = new CarritoView(view.getCarrito());
+				CarritoView frame = new CarritoView(view.getCarrito(), model.getDatabase());
 				frame.setVisible(true);
 			}
 		});

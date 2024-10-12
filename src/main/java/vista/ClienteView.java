@@ -38,39 +38,43 @@ public class ClienteView extends JFrame {
 	Carrito carrito;
 	JButton btnSiguiente;
 	private ClienteController controller;
+	private Database2 db;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					
-					//creo bd
-					Database2 db =new Database2();
-					db.createDatabase(false);
-					
-					//lleno bd
-					db.loadDatabase();
-					
-					ClienteView frame = new ClienteView();
-					frame.setVisible(true);
-					
-					
-					//model.printProductos();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					
+//					
+//					//creo bd
+//					Database2 db =new Database2();
+//					db.createDatabase(false);
+//					
+//					//lleno bd
+//					db.loadDatabase();
+//					
+//					ClienteView frame = new ClienteView();
+//					frame.setVisible(true);
+//					
+//					
+//					//model.printProductos();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ClienteView() {
+	public ClienteView(Database2 db) {
+		this.db = db;
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 350);
 		contentPane = new JPanel();
@@ -79,7 +83,7 @@ public class ClienteView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getComboBoxProductos());
 		
-		model = new ClienteModel();
+		model = new ClienteModel(this.db);
 		
 		contentPane.add(getComboBoxCantidad());
 		model.rellenaComboCantidad(getComboBoxCantidad()); //relleno el combo de cantidad

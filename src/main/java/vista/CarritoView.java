@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.CarritoController;
+import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.modelo.CarritoModel;
 
@@ -39,15 +40,17 @@ public class CarritoView extends JFrame {
 	private JScrollPane scrollPane;
 	private  DefaultListModel<String> listModel;
 	private CarritoController controller;
+	private Database2 database;
 	
 	/**
 	 * Create the frame.
 	 */
-	public CarritoView(Carrito c) {
+	public CarritoView(Carrito c, Database2 db) {
+		this.database = db;
 		
 		this.listModel = new DefaultListModel<>();
 		this.carrito = c;
-		this.modelo = new CarritoModel(carrito, this);
+		this.modelo = new CarritoModel(carrito, this, this.database);
 		this.controller = new CarritoController(this, modelo);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
