@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controlador.EmpaquetadoController;
 import modelo.dto.ProductoWrapper;
 import modelo.dto.WorkorderDTO;
+import modelo.dto.WorkorderWrapper;
 
 import javax.swing.JButton;
 import java.awt.Color;
@@ -27,13 +29,14 @@ public class EmpaquetadoView extends JFrame {
 	private JButton btAceptar;
 	private JScrollPane scrollPane;
 	private JList<ProductoWrapper> listProductos;
-	private JComboBox<WorkorderDTO> cbWorkorders;
+	private JComboBox<WorkorderWrapper> cbWorkorders;
 	private JTextArea textArea;
 	private JButton btApuntar;
 	private JLabel lbIncidencia;
 	private JTextField textField;
 	private JLabel lbID;
 	private JButton btComprobar;
+	private EmpaquetadoController ec;
 
 	/**
 	 * Launch the application.
@@ -75,6 +78,9 @@ public class EmpaquetadoView extends JFrame {
 		contentPane.add(getLbID());
 		contentPane.add(getBtComprobar());
 		setLocationRelativeTo(null);
+		
+		ec = new EmpaquetadoController(this);
+		ec.init();
 	}
 	public JButton getBtCancelar() {
 		if (btCancelar == null) {
@@ -88,6 +94,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtAceptar() {
 		if (btAceptar == null) {
 			btAceptar = new JButton("Aceptar");
+			btAceptar.setEnabled(false);
 			btAceptar.setForeground(Color.WHITE);
 			btAceptar.setBackground(Color.GREEN);
 			btAceptar.setBounds(385, 357, 89, 23);
@@ -102,15 +109,15 @@ public class EmpaquetadoView extends JFrame {
 		}
 		return scrollPane;
 	}
-	public JList getListProductos() {
+	public JList<ProductoWrapper> getListProductos() {
 		if (listProductos == null) {
-			listProductos = new JList();
+			listProductos = new JList<>();
 		}
 		return listProductos;
 	}
-	public JComboBox getCbWorkorders() {
+	public JComboBox<WorkorderWrapper> getCbWorkorders() {
 		if (cbWorkorders == null) {
-			cbWorkorders = new JComboBox();
+			cbWorkorders = new JComboBox<>();
 			cbWorkorders.setBounds(10, 11, 365, 40);
 		}
 		return cbWorkorders;
@@ -125,6 +132,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtApuntar() {
 		if (btApuntar == null) {
 			btApuntar = new JButton("Apuntar");
+			btApuntar.setEnabled(false);
 			btApuntar.setBounds(385, 323, 89, 23);
 		}
 		return btApuntar;
@@ -156,6 +164,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtComprobar() {
 		if (btComprobar == null) {
 			btComprobar = new JButton("Comprobar");
+			btComprobar.setEnabled(false);
 			btComprobar.setBounds(484, 92, 89, 23);
 		}
 		return btComprobar;
