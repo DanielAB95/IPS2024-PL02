@@ -137,6 +137,7 @@ public class RecogidaController {
 	
 	private void addIncidencia() {
 		rw.getTextArea().setText("");
+		rm.apuntarIncidencia();
 	}
 	
 	private void activarAceptar() {
@@ -174,5 +175,6 @@ public class RecogidaController {
 	private void pasarWorkorderAListo() {
 		rm.pasarAListo();		
 	}
+	
 
 }

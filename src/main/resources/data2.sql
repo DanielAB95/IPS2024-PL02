@@ -45,7 +45,9 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(4, 6, 7),
 	(5, 5, 2),
 	(7, 6, 1),
-	(8, 8, 1);
+	(8, 8, 1),
+	(12, 1, 1),
+	(12, 2, 1);
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
@@ -64,8 +66,9 @@ delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, idPedido, workorderEstado) values
 	(1, 1, 1, 'Pendiente'),
 	(2, 2, 2, 'Pendiente'),
-	(4, 4, 4, 'Pendiente'),
-	(5, 5, 5, 'Incidencia');
+	(3, 4, 4, 'Pendiente'),
+	(4, 5, 5, 'Incidencia'),
+	(5, 1, 12, 'Listo');
 
 delete from Almacen;
 insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values 

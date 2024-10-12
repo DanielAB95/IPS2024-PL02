@@ -17,7 +17,7 @@ public class RecogidaModel {
 	private final static String SQL_WORKORDER = "select * from workorder where idWorkorder = ?";
 	private final static String SQL_PRODUCTS_ID = "select idProducto, cantidad from pedidoproducto where idPedido = ?";
 	private final static String SQL_PRODUCTS = "select * from producto where id = ?";
-	private final static String SQL_WOLISTA = "update workorder set workorderEstado = 'Listo' where idWorkorder = ?";
+	private final static String SQL_WOESTADO = "update workorder set workorderEstado = ? where idWorkorder = ?";
 	
 	
 	public RecogidaModel(int idWorkorder) {
@@ -75,7 +75,11 @@ public class RecogidaModel {
 	}
 
 	public void pasarAListo() {
-		db.executeUpdate(SQL_WOLISTA, dto.idWorkorder);
+		db.executeUpdate(SQL_WOESTADO,"Listo", dto.idWorkorder);
+	}
+
+	public void apuntarIncidencia() {
+		db.executeUpdate(SQL_WOESTADO, "Incidencia", dto.idWorkorder);
 	}
 
 }
