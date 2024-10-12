@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.modelo.ClienteModel;
+import vista.CarritoView;
 import vista.ClienteView;
 
 public class ClienteController {
@@ -54,7 +55,10 @@ public class ClienteController {
 		view.getBtnSiguiente().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				view.getCarrito().printCarrito();
+				//view.getCarrito().printCarrito();
+				view.dispose();
+				CarritoView frame = new CarritoView(view.getCarrito());
+				frame.setVisible(true);
 			}
 		});
 		

@@ -4,8 +4,10 @@ drop table Producto;
 drop table Pedido;
 drop table PedidoProducto;
 drop table Almacenero;
+drop table AlmaceneroPedido;
 drop table PaqueteWorkorder;
 drop table Workorder;
+drop table Almacen;
 
 create table Producto(
     id int primary key not null, 
@@ -38,6 +40,13 @@ create table Almacenero(
     apellido varchar(20) not null
 );
 
+create table AlmaceneroPedido(
+    idAlmacenero int not null,
+    idPedido int not null,
+    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
+    foreign key (idPedido) references Pedido(idPedido)
+);
+
 create table PaqueteWorkorder (
     idWorkorder int not null,
     idPaquete int not null,
@@ -49,6 +58,19 @@ create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     idPedido int not null,
+    workorderEstado varchar(20) not null,
+    check (workorderEstado in('Pendiente','Listo','Incidencia')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero),
     foreign key (idPedido) references Pedido(idPedido)
 );
+
+create table Almacen(
+    idProducto int not null,
+    estanteria int not null,
+    posicionEstanteria int not null,
+    pasillo int not null,
+    foreign key (idProducto) references Producto(id)
+);
+
+
+

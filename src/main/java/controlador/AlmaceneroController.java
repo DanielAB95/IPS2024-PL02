@@ -28,7 +28,6 @@ public class AlmaceneroController {
 	
 	
 	public void initView() {
-		System.out.println(idAlmacenero);
 		view.getTextAlmacenero().setText(model.getAlmacenero(idAlmacenero).toString());
 	}
 	
@@ -39,19 +38,12 @@ public class AlmaceneroController {
 			public void actionPerformed(ActionEvent e) {
 				inicioSesion();
 				initView();
-				menuAlmacenero();
+				menuAlmacenero(idAlmacenero);
 			}			
 		});
 	}
 	
 	private void inicioSesion() {
-		
-//		if(viewId.getTextIdAlmacenero().getText().isBlank() 
-//				|| !ids.contains(Integer.parseInt(viewId.getTextIdAlmacenero().getText()))) {
-//			JOptionPane.showMessageDialog(null, "Id invalida o no existe");
-//		}else {
-//			mostrarAlmaceneroView();
-//		}
 		
 		if (viewId.getTextIdAlmacenero().getText().isEmpty() || viewId.getTextIdAlmacenero().getText().equals(" ")) {
             JOptionPane.showMessageDialog(null, "porfavor, identifiquise");
@@ -70,12 +62,12 @@ public class AlmaceneroController {
 		
 	}
 	
-	private void menuAlmacenero() {
+	private void menuAlmacenero(int idAlmacenero) {
 		view.getButtonPedidosPendientes().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mostrarPedidosPendientes();
+				mostrarPedidosPendientes(idAlmacenero);
 			}
 		});
 		
@@ -86,8 +78,9 @@ public class AlmaceneroController {
 		view.getFrame().setLocationRelativeTo(viewId.getFrame());
 	}
 	
-	private void mostrarPedidosPendientes() {
+	private void mostrarPedidosPendientes(int idAlmacenero) {
 		PedidoView pv = new PedidoView();
+		pv.getTextAlmacenero().setText(model.getAlmacenero(idAlmacenero).toString());
 		pv.setVisible(true);
 		pv.setLocationRelativeTo(view.getFrame());
 		

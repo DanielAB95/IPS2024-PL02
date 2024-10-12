@@ -37,6 +37,8 @@ public class AlmaceneroDTO {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(getIdAlmacenero());
+		sb.append(" - " );
 		sb.append(getNombre());
 		sb.append(" ");
 		sb.append(getApellido());

@@ -21,12 +21,26 @@ public class Carrito {
 	}
 	
 	
+	public void removeFromCarrito(String producto) {
+		boolean found = false;
+		for (int i = 0; i < productosCarrito.size() && !found; i++) {
+			if ( ((Producto) productosCarrito.get(i)[0]).getNombre().equals(producto)) {
+				productosCarrito.remove(i);
+			}
+		}
+	}
+	
+	
 	public void printCarrito() {
 		System.out.println();
 		System.out.println("------------ Estado del Carrito ------------");
 		for (int i = 0; i < productosCarrito.size(); i++) {
 			System.out.println( ((Producto) productosCarrito.get(i)[0]).getNombre() + ", cantidad: " + productosCarrito.get(i)[1]);
 		}
+	}
+	
+	public List<Object[]> getCarrito(){
+		return this.productosCarrito;
 	}
 
 }

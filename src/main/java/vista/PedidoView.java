@@ -15,6 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class PedidoView extends JFrame {
 
@@ -27,6 +31,8 @@ public class PedidoView extends JFrame {
 	private JTable tabPedidos;
 	private PedidoModel model;
 	private PedidoController controller;
+	private JLabel lbAlmacenero;
+	private JTextField txAlmacenero;
 
 	/**
 	 * Launch the application.
@@ -56,15 +62,17 @@ public class PedidoView extends JFrame {
 	 */
 	public PedidoView() {
 		setTitle("Pedidos pendientes");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 612, 416);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 1, 0, 0));
+		contentPane.setLayout(null);
 		contentPane.add(getTablePanel());
+		contentPane.add(getLbAlmacenero());
+		contentPane.add(getTextField());
 		
 		model = new PedidoModel();
 		controller = new PedidoController(this, model);
@@ -75,6 +83,7 @@ public class PedidoView extends JFrame {
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
 	        tablePanel = new JScrollPane(getTabPedidos()); 
+	        tablePanel.setBounds(0, 48, 596, 329);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
 	    }
 	    return tablePanel;
@@ -89,7 +98,33 @@ public class PedidoView extends JFrame {
 		return tabPedidos;
 	}
 	
+	private JLabel getLbAlmacenero() {
+		if (lbAlmacenero == null) {
+			lbAlmacenero = new JLabel("Almacenero en sesion:");
+			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lbAlmacenero.setBounds(200, 11, 153, 26);
+		}
+		return lbAlmacenero;
+	}
+	private JTextField getTextField() {
+		if (txAlmacenero == null) {
+			txAlmacenero = new JTextField();
+			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
+			txAlmacenero.setEditable(false);
+			txAlmacenero.setBounds(329, 14, 194, 23);
+			txAlmacenero.setColumns(10);
+		}
+		return txAlmacenero;
+	}
+	
+	
+	//Metodos Auxiliares
+	
 	public JTable getTablaPedidos() {
 		return this.tabPedidos;
+	}
+	
+	public JTextField getTextAlmacenero() {
+		return this.txAlmacenero;
 	}
 }

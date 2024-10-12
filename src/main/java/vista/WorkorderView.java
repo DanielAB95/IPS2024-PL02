@@ -44,8 +44,8 @@ public class WorkorderView extends JFrame {
 	 */
 	public WorkorderView() {
 		setTitle("Workorder");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 844, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -93,7 +93,7 @@ public class WorkorderView extends JFrame {
 	private JScrollPane getProductoPanel() {
 		if (productoPanel == null) {
 			productoPanel = new JScrollPane();
-			productoPanel.setBounds(10, 133, 414, 128);
+			productoPanel.setBounds(0, 133, 828, 246);
 			productoPanel.setViewportView(getTabProductos());
 		}
 		return productoPanel;
@@ -101,7 +101,7 @@ public class WorkorderView extends JFrame {
 	private JLabel getLbProductos() {
 		if (lbProductos == null) {
 			lbProductos = new JLabel("Productos:");
-			lbProductos.setBounds(10, 103, 192, 39);
+			lbProductos.setBounds(20, 103, 192, 39);
 		}
 		return lbProductos;
 	}

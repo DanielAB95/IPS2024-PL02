@@ -9,14 +9,14 @@ import modelo.dto.AlmaceneroDTO;
 import modelo.dto.PedidoDTO;
 import modelo.dto.PedidoProductoDTO;
 import modelo.modelo.ClienteModel;
-import modelo.modelo.PedidoProductoModel;
+import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
 import vista.WorkorderView;
 
 public class WorkorderController {
 	private WorkorderView view;
 	private WorkorderModel model;
-	private PedidoProductoModel pModel;
+	private PedidoModel pModel;
 	
 	
 	
@@ -24,7 +24,7 @@ public class WorkorderController {
 	public WorkorderController(WorkorderView view ,WorkorderModel model) {
 		this.view = view;
 		this.model = model; 
-		pModel = new PedidoProductoModel();
+		pModel = new PedidoModel();
 		
 	}
 	

@@ -34,11 +34,20 @@ insert into Pedido(idPedido, numProductos, fecha, estado) values
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(1, 1, 1),
+	(1, 4, 6),
+	(1, 6, 16),
+	(1, 7, 5),
+	(1, 8, 3),
+	(1, 10, 12),
 	(1, 3, 2),
-	(1, 4, 1),
-	(1, 5, 2),
-	(1, 6, 1),
-	(1, 8, 1);
+	(2, 3, 2),
+	(4, 4, 4),
+	(4, 6, 7),
+	(5, 5, 2),
+	(7, 6, 1),
+	(8, 8, 1),
+	(12, 1, 1),
+	(12, 2, 1);
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
@@ -54,8 +63,24 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(10, 'Maria', 'Garcia');
 
 delete from Workorder;
-insert into Workorder(idWorkorder, idAlmacenero, idPedido) values
-	(1, 1, 1),
-	(2, 2, 2),
-	(4, 4, 4),
-	(5, 5, 5);
+insert into Workorder(idWorkorder, idAlmacenero, idPedido, workorderEstado) values
+	(1, 1, 1, 'Pendiente'),
+	(2, 2, 2, 'Pendiente'),
+	(3, 4, 4, 'Pendiente'),
+	(4, 5, 5, 'Incidencia'),
+	(5, 1, 12, 'Listo');
+
+delete from Almacen;
+insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values 
+	(1,1,1,1),
+	(2,1,2,1),
+	(3,1,3,1),
+	(4,2,1,2),
+	(5,2,2,2),
+	(6,2,3,2),
+	(7,3,1,2),
+	(8,3,2,2),
+	(9,3,3,2),
+	(10,4,1,3);
+
+
