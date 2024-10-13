@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
+import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
 import vista.AppInicioView;
 import vista.CarritoView;
@@ -26,11 +27,13 @@ public class CarritoModel {
 	private Carrito carrito;
 	private Database2 db;
 	private CarritoView v;
+	private ClienteDTO dto;
 	
-	public CarritoModel (Carrito c, CarritoView v, Database2 db) {
+	public CarritoModel (Carrito c, CarritoView v, Database2 db, ClienteDTO dto) {
 		this.carrito = c;
 		this.v = v;
 		this.db = db;
+		this.dto = dto;
 	}
 	
 	public Database2 getDatabase() {
@@ -63,6 +66,10 @@ public class CarritoModel {
 			
 		} else {
 			JOptionPane.showMessageDialog(this.v, "No hay productos en su carrito");
+			//vuelvo al inicio
+			AppInicioView vista = new AppInicioView(getDatabase());
+			this.v.dispose();
+			vista.setVisible(true);
 		}
 	}
 	
@@ -195,7 +202,11 @@ public class CarritoModel {
 	}
 
 	public void borrarProductoCarrito(String nombre) {
-		carrito.removeFromCarrito(nombre);
+		if (nombre != null) {
+			carrito.removeFromCarrito(nombre);
+		} else {
+			JOptionPane.showMessageDialog(this.v, "Por favor, Seleccione el producto a eliminar.");
+		}
 	}
 	
 	
@@ -226,5 +237,9 @@ public class CarritoModel {
 			System.out.println("PedidoProducto: " + p[0] + " "+ p[1] + " "+ p[2]);
 		}
 		System.out.println("<-----------------  FIN  -------------------->");
+	}
+
+	public ClienteDTO getDto() {
+		return dto;
 	}
 }

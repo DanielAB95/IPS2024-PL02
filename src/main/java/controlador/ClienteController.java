@@ -3,6 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import modelo.modelo.ClienteModel;
 import vista.CarritoView;
 import vista.ClienteView;
@@ -48,8 +50,14 @@ public class ClienteController {
 		view.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
-				view.getListModel().addElement(view.getComboBoxProductos().getSelectedItem() +": "+ view.getComboBoxCantidad().getSelectedItem());
+				if (!model.checkProductoYaEnCarrito((String) view.getComboBoxProductos().getSelectedItem())) {
+					
+					view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
+					view.getListModel().addElement(view.getComboBoxProductos().getSelectedItem() +": "+ view.getComboBoxCantidad().getSelectedItem());
+				} else {
+					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido, más adelante \n podrá modificar su cantidad o eliminarlo.");
+				}
+				
 			}
 		});
 		
@@ -59,7 +67,7 @@ public class ClienteController {
 			public void actionPerformed(ActionEvent e) {
 				//view.getCarrito().printCarrito();
 				view.dispose();
-				CarritoView frame = new CarritoView(view.getCarrito(), model.getDatabase());
+				CarritoView frame = new CarritoView(view.getCarrito(), model.getDatabase(), model.getDto());
 				frame.setVisible(true);
 			}
 		});

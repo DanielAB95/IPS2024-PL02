@@ -22,6 +22,7 @@ public class CarritoController {
 	
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
+		view.getLblNombreUsuario().setText(modelo.getDto().getName());
 	}
 	
 	public void initController() {
@@ -47,13 +48,15 @@ public class CarritoController {
 		view.getBtnEliminar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelo.borrarProductoCarrito((String) view.getList_2().getSelectedValue());
-				if (view.getList_2().getSelectedIndex() != -1)  view.getListModel().remove(view.getList_2().getSelectedIndex());
+				if (view.getList_2().getSelectedIndex() != -1)  {
+					view.getListModel().remove(view.getList_2().getSelectedIndex());
 				
 				
-				modelo.modificarCantidadProductoPorNombre((String) view.getList_2().getSelectedValue(), Integer.valueOf(view.getTextCantidad().getText()) );
-				view.getTextCantidad().setText(String.valueOf( modelo.getCantidadProductoPorNombre( (String) view.getList_2().getSelectedValue() ) ));
-				view.getTextProductos().setText(String.valueOf( modelo.getPrecioProductoPorNombre( (String) view.getList_2().getSelectedValue() ) ));
-				view.getTextPrecioTotal().setText(modelo.calcularPrecioTotal());
+					modelo.modificarCantidadProductoPorNombre((String) view.getList_2().getSelectedValue(), Integer.valueOf(view.getTextCantidad().getText()) );
+					view.getTextCantidad().setText(String.valueOf( modelo.getCantidadProductoPorNombre( (String) view.getList_2().getSelectedValue() ) ));
+					view.getTextProductos().setText(String.valueOf( modelo.getPrecioProductoPorNombre( (String) view.getList_2().getSelectedValue() ) ));
+					view.getTextPrecioTotal().setText(modelo.calcularPrecioTotal());
+				}
 			}
 		});
 		

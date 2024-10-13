@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import giis.demo.util.Database2;
+import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
 
@@ -16,11 +18,24 @@ public class ClienteModel {
 	private Database2 db;//=new Database2();
 	private List<Producto> productosPosibles;
 	private ClienteDTO dto;
+	private Carrito carrito;
 	
-	public ClienteModel(Database2 db, ClienteDTO dto) {
+	public ClienteModel(Database2 db, ClienteDTO dto, Carrito c) {
 		this.db = db;
 		this.productosPosibles = getProductos();
 		this.dto = dto;
+		this.carrito = c;
+	}
+	
+	public boolean checkProductoYaEnCarrito(String nombre) {
+		List<Object[]> productos = carrito.getCarrito();
+		for (Object[] o: productos) {
+			if ( ((Producto)o[0]).getNombre().equals(nombre)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public Database2 getDatabase() {

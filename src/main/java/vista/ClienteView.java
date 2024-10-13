@@ -58,7 +58,7 @@ public class ClienteView extends JFrame {
 	public ClienteView(Database2 db, ClienteDTO dto) {
 		this.db = db;
 		this.dto = dto;
-		
+		this.carrito = new Carrito();
 		this.listModel = new DefaultListModel<>();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +69,7 @@ public class ClienteView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getComboBoxProductos());
 		
-		model = new ClienteModel(this.db, this.dto);
+		model = new ClienteModel(this.db, this.dto, this.carrito);
 		
 		contentPane.add(getComboBoxCantidad());
 		model.rellenaComboCantidad(getComboBoxCantidad()); //relleno el combo de cantidad
@@ -92,7 +92,7 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLblCarrito());
 		//contentPane.add(getList());
 		
-		this.carrito = new Carrito();
+		
 		this.controller = new ClienteController(this, model); //añado el controlador
 		
 		controller.initView(); //inicializa los datos para visualizarlos desde el principio
@@ -216,7 +216,7 @@ public class ClienteView extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(10, 64, 142, 236);
+			panel.setBounds(10, 64, 160, 236);
 			panel.setLayout(null);
 			panel.add(getScrollPane());
 		}
@@ -232,7 +232,7 @@ public class ClienteView extends JFrame {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getList());
-			scrollPane.setBounds(0, 0, 142, 236);
+			scrollPane.setBounds(0, 0, 160, 236);
 		}
 		return scrollPane;
 	}

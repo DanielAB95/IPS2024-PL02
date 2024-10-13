@@ -26,6 +26,7 @@ public class Carrito {
 		for (int i = 0; i < productosCarrito.size() && !found; i++) {
 			if ( ((Producto) productosCarrito.get(i)[0]).getNombre().equals(producto)) {
 				productosCarrito.remove(i);
+				found = true;
 			}
 		}
 	}

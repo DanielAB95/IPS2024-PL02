@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import controlador.CarritoController;
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
+import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
 
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.Color;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class CarritoView extends JFrame {
@@ -41,16 +43,20 @@ public class CarritoView extends JFrame {
 	private  DefaultListModel<String> listModel;
 	private CarritoController controller;
 	private Database2 database;
+	private JLabel lblUsuario;
+	private JLabel lblNombreUsuario;
+	private ClienteDTO dto;
 	
 	/**
 	 * Create the frame.
 	 */
-	public CarritoView(Carrito c, Database2 db) {
+	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
 		this.database = db;
+		this.dto = dto;
 		
 		this.listModel = new DefaultListModel<>();
 		this.carrito = c;
-		this.modelo = new CarritoModel(carrito, this, this.database);
+		this.modelo = new CarritoModel(carrito, this, this.database, this.dto);
 		this.controller = new CarritoController(this, modelo);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +76,8 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextPrecioTotal());
 		contentPane.add(getBtnConfirmar());
 		contentPane.add(getPanel());
+		contentPane.add(getLblUsuario());
+		contentPane.add(getLblNombreUsuario());
 	
 		controller.initView();
 		controller.initController();
@@ -78,14 +86,14 @@ public class CarritoView extends JFrame {
 	private JLabel getLblProductos() {
 		if (lblProductos == null) {
 			lblProductos = new JLabel("Productos Seleccionados: ");
-			lblProductos.setBounds(10, 23, 161, 14);
+			lblProductos.setBounds(10, 33, 161, 14);
 		}
 		return lblProductos;
 	}
 	private JLabel getLblCantidad() {
 		if (lblCantidad == null) {
 			lblCantidad = new JLabel("Cantidad: ");
-			lblCantidad.setBounds(217, 23, 79, 14);
+			lblCantidad.setBounds(217, 33, 79, 14);
 		}
 		return lblCantidad;
 	}
@@ -93,7 +101,7 @@ public class CarritoView extends JFrame {
 		if (textCantidad == null) {
 			textCantidad = new JTextField();
 			
-			textCantidad.setBounds(217, 50, 86, 20);
+			textCantidad.setBounds(217, 58, 86, 20);
 			textCantidad.setColumns(10);
 		}
 		return textCantidad;
@@ -101,7 +109,7 @@ public class CarritoView extends JFrame {
 	private JLabel getLblPrecioProducto() {
 		if (lblPrecioProducto == null) {
 			lblPrecioProducto = new JLabel("Precio Producto: ");
-			lblPrecioProducto.setBounds(313, 23, 101, 14);
+			lblPrecioProducto.setBounds(313, 33, 101, 14);
 		}
 		return lblPrecioProducto;
 	}
@@ -109,7 +117,7 @@ public class CarritoView extends JFrame {
 		if (textProductos == null) {
 			textProductos = new JTextField();
 			textProductos.setEditable(false);
-			textProductos.setBounds(313, 50, 86, 20);
+			textProductos.setBounds(313, 58, 86, 20);
 			textProductos.setColumns(10);
 		}
 		return textProductos;
@@ -120,14 +128,14 @@ public class CarritoView extends JFrame {
 			
 			btnEliminar.setBackground(new Color(178, 34, 34));
 			btnEliminar.setForeground(Color.WHITE);
-			btnEliminar.setBounds(409, 49, 155, 23);
+			btnEliminar.setBounds(409, 57, 155, 23);
 		}
 		return btnEliminar;
 	}
 	private JLabel getLblPrecioTotal() {
 		if (lblPrecioTotal == null) {
 			lblPrecioTotal = new JLabel("Precio Total: ");
-			lblPrecioTotal.setBounds(313, 193, 86, 14);
+			lblPrecioTotal.setBounds(313, 203, 86, 14);
 		}
 		return lblPrecioTotal;
 	}
@@ -136,7 +144,7 @@ public class CarritoView extends JFrame {
 		if (textPrecioTotal == null) {
 			textPrecioTotal = new JTextField();
 			textPrecioTotal.setEditable(false);
-			textPrecioTotal.setBounds(313, 218, 86, 20);
+			textPrecioTotal.setBounds(313, 228, 86, 20);
 			textPrecioTotal.setColumns(10);
 		}
 		return textPrecioTotal;
@@ -148,7 +156,7 @@ public class CarritoView extends JFrame {
 			
 			btnConfirmar.setBackground(new Color(50, 205, 50));
 			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.setBounds(409, 217, 155, 23);
+			btnConfirmar.setBounds(409, 227, 155, 23);
 		}
 		return btnConfirmar;
 	}
@@ -157,7 +165,7 @@ public class CarritoView extends JFrame {
 	private JPanel getPanel() {
 	    if (panel == null) {
 	        panel = new JPanel();
-	        panel.setBounds(10, 48, 197, 190);
+	        panel.setBounds(10, 58, 197, 190);
 	        panel.setLayout(new BorderLayout()); 
 	        panel.add(getScrollPane(), BorderLayout.CENTER); 
 	    }
@@ -185,5 +193,20 @@ public class CarritoView extends JFrame {
 	public DefaultListModel<String> getListModel() {
 		return listModel;
 	}
-
+	private JLabel getLblUsuario() {
+		if (lblUsuario == null) {
+			lblUsuario = new JLabel("Usuario: ");
+			lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblUsuario.setBounds(10, 8, 71, 14);
+		}
+		return lblUsuario;
+	}
+	public JLabel getLblNombreUsuario() {
+		if (lblNombreUsuario == null) {
+			lblNombreUsuario = new JLabel("");
+			lblNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			lblNombreUsuario.setBounds(91, 8, 116, 14);
+		}
+		return lblNombreUsuario;
+	}
 }
