@@ -21,7 +21,9 @@ public class ClienteLoginController {
 	public void init() {
 		vista.getBtnSiguiente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if (!vista.getTextNombreUsuario().getText().isBlank() && !vista.getTextNombreUsuario().getText().isEmpty()) {
+					
 					ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
 					
 					ClienteView compra = new ClienteView(vista.getDb(), dto);

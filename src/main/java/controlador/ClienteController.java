@@ -65,11 +65,12 @@ public class ClienteController {
 		view.getBtnSiguiente().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				//view.getCarrito().printCarrito();
 				if (!model.getCarrito().isEmpty()) {
+					
 					view.dispose();
 					CarritoView frame = new CarritoView(view.getCarrito(), model.getDatabase(), model.getDto());
 					frame.setVisible(true);
+					
 				} else {
 					JOptionPane.showMessageDialog(view, "No hay ningún producto en el carrito.");
 				}
