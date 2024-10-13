@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import giis.demo.util.Database2;
+import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
 
 public class ClienteModel {
@@ -14,11 +15,12 @@ public class ClienteModel {
 	
 	private Database2 db;//=new Database2();
 	private List<Producto> productosPosibles;
+	private ClienteDTO dto;
 	
-	public ClienteModel(Database2 db) {
+	public ClienteModel(Database2 db, ClienteDTO dto) {
 		this.db = db;
 		this.productosPosibles = getProductos();
-
+		this.dto = dto;
 	}
 	
 	public Database2 getDatabase() {
@@ -79,6 +81,10 @@ public class ClienteModel {
 			if (p.getNombre().equals(nombre)) return p;
 		}
 		return null;
+	}
+
+	public ClienteDTO getDto() {
+		return dto;
 	}
 	
 }

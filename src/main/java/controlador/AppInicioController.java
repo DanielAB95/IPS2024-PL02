@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import vista.AlmaceneroInicioView;
 import vista.AppInicioView;
+import vista.ClienteLoginView;
 import vista.ClienteView;
 
 public class AppInicioController {
@@ -19,9 +20,10 @@ public class AppInicioController {
 	public void initController() {
 		view.getBtnCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClienteView cliente = new ClienteView(view.getDatabase());
+				//ClienteView cliente = new ClienteView(view.getDatabase());
+				ClienteLoginView login = new ClienteLoginView(view.getDatabase());
 				view.dispose();
-				cliente.setVisible(true);
+				login.setVisible(true);
 			}
 		});
 		
