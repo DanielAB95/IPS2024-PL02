@@ -32,6 +32,10 @@ public class Carrito {
 	}
 	
 	
+	public boolean isEmpty() {
+		if (this.productosCarrito.size() > 0) return false; else return true;
+	}
+	
 	public void printCarrito() {
 		System.out.println();
 		System.out.println("------------ Estado del Carrito ------------");

@@ -42,6 +42,10 @@ public class ClienteModel {
 		return this.db;
 	}
 	
+	public Carrito getCarrito() {
+		return this.carrito;
+	}
+	
 	public List<Producto> getProductos() {
 		List<Producto> resultado = new ArrayList<Producto>();
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
