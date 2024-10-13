@@ -14,7 +14,9 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.dto.Producto;
 import modelo.dto.ProductoWrapper;
+import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.RecogidaModel;
+import vista.EmpaquetadoView;
 import vista.RecogidaView;
 
 public class RecogidaController {
@@ -173,7 +175,12 @@ public class RecogidaController {
 	}
 	
 	private void pasarWorkorderAListo() {
-		rm.pasarAListo();		
+		rm.pasarAListo();
+		rw.dispose();
+		EmpaquetadoView ew = new EmpaquetadoView();
+		new EmpaquetadoController(ew, new EmpaquetadoModel(rm.getDB()));
+		ew.setVisible(true);
+		
 	}
 	
 

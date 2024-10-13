@@ -21,6 +21,11 @@ public class FacturaController {
 		this.fm = new FacturaModel();
 	}
 	
+	public FacturaController(FacturaView fw, FacturaModel fm) {
+		this.fv = fw;
+		this.fm = fm;
+	}
+
 	public void init() {
 		fillComboBox();
 		accionGenerar();

@@ -64,5 +64,9 @@ public class EmpaquetadoModel {
 	public void empaquetar(int idPaquete, int idWorkorder) {
 		db.executeUpdate(SQL_PAQUETE, idPaquete, idWorkorder);
 	}
+	
+	public Database2 getDB() {
+		return db;
+	}
 
 }

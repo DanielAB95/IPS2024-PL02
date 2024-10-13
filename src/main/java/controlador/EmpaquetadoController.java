@@ -15,7 +15,9 @@ import modelo.dto.ProductoWrapper;
 import modelo.dto.WorkorderDTO;
 import modelo.dto.WorkorderWrapper;
 import modelo.modelo.EmpaquetadoModel;
+import modelo.modelo.FacturaModel;
 import vista.EmpaquetadoView;
+import vista.FacturaView;
 
 public class EmpaquetadoController {
 	
@@ -24,6 +26,11 @@ public class EmpaquetadoController {
 	
 	public EmpaquetadoController(EmpaquetadoView ew) {
 		this.em = new EmpaquetadoModel();
+		this.ew = ew;
+	}
+	
+	public EmpaquetadoController(EmpaquetadoView ew, EmpaquetadoModel em) {
+		this.em = em;
 		this.ew = ew;
 	}
 	
@@ -68,7 +75,6 @@ public class EmpaquetadoController {
 		int id = ((WorkorderWrapper)ew.getCbWorkorders().getSelectedItem()).getInfo().idPedido;
 		List<ProductoWrapper> productos = em.productosPorWorkorder(id);
 		for (ProductoWrapper producto : productos) {
-			System.out.println(producto);
 			ew.getListModel().addElement(producto);
 		}	
 	}
@@ -159,5 +165,9 @@ public class EmpaquetadoController {
 	private void empaquetar() {
 		int idWorkorder = ((WorkorderWrapper)ew.getCbWorkorders().getSelectedItem()).getInfo().idWorkorder;
 		em.empaquetar(1, idWorkorder);
+		ew.dispose();
+		FacturaView fw = new FacturaView();
+		new FacturaController(fw, new FacturaModel(em.getDB()));
+		fw.setVisible(true);
 	}
 }
