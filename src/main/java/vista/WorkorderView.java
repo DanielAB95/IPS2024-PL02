@@ -43,7 +43,7 @@ public class WorkorderView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null); 
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTxAlmacenero());
 		contentPane.add(getLblPedido());
