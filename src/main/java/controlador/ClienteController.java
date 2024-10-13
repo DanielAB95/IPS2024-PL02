@@ -21,6 +21,7 @@ public class ClienteController {
 		view.getTextCategoria().setText(model.getCategoriaPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
 		view.getTextPrecio().setText(model.getPrecioPorNombre((String) view.getComboBoxProductos().getSelectedItem(), (int) view.getComboBoxCantidad().getSelectedItem() ));
 		view.getTextDescripcion().setText(model.getDescripcionPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
+		view.getLblNombreUsuario().setText(model.getDto().getName());
 	}
 	
 	public void initController() {
@@ -48,6 +49,7 @@ public class ClienteController {
 			public void actionPerformed(ActionEvent e) {
 				
 				view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
+				view.getListModel().addElement(view.getComboBoxProductos().getSelectedItem() +": "+ view.getComboBoxCantidad().getSelectedItem());
 			}
 		});
 		

@@ -51,33 +51,6 @@ public class ClienteView extends JFrame {
 	private  DefaultListModel<String> listModel;
 	private ClienteDTO dto;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					
-//					
-//					//creo bd
-//					Database2 db =new Database2();
-//					db.createDatabase(false);
-//					
-//					//lleno bd
-//					db.loadDatabase();
-//					
-//					ClienteView frame = new ClienteView();
-//					frame.setVisible(true);
-//					
-//					
-//					//model.printProductos();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -235,6 +208,7 @@ public class ClienteView extends JFrame {
 	public JLabel getLblNombreUsuario() {
 		if (lblNombreUsuario == null) {
 			lblNombreUsuario = new JLabel("");
+			lblNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			lblNombreUsuario.setBounds(75, 11, 77, 14);
 		}
 		return lblNombreUsuario;
@@ -271,7 +245,7 @@ public class ClienteView extends JFrame {
 //	    return scrollPane;
 //	}
 	
-	private JList<String> getList() {
+	public JList<String> getList() {
 		if (list == null) {
 			
 			list = new JList<String>(getListModel());
