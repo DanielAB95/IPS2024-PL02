@@ -16,15 +16,12 @@ import vista.WorkorderView;
 public class WorkorderController {
 	private WorkorderView view;
 	private WorkorderModel model;
-	private PedidoModel pModel;
-	
 	
 	
 	//private workOrderModel model;
 	public WorkorderController(WorkorderView view ,WorkorderModel model) {
 		this.view = view;
 		this.model = model; 
-		pModel = new PedidoModel();
 		
 	}
 	

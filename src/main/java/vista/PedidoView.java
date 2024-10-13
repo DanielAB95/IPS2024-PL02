@@ -33,34 +33,14 @@ public class PedidoView extends JFrame {
 	private PedidoController controller;
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
+	private Database2 db;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//creo bd
-					Database2 db =new Database2();
-					db.createDatabase(false);
-					
-					//lleno bd
-					db.loadDatabase();
-					
-					PedidoView frame = new PedidoView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public PedidoView() {
+	public PedidoView(Database2 db) {
+		this.db = db;
 		setTitle("Pedidos pendientes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 612, 416);
@@ -74,7 +54,7 @@ public class PedidoView extends JFrame {
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTextField());
 		
-		model = new PedidoModel();
+		model = new PedidoModel(db);
 		controller = new PedidoController(this, model);
 		controller.initController();
 		controller.initView();
@@ -126,5 +106,9 @@ public class PedidoView extends JFrame {
 	
 	public JTextField getTextAlmacenero() {
 		return this.txAlmacenero;
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 }

@@ -62,6 +62,7 @@ public class CarritoController {
 			
 			public void actionPerformed(ActionEvent e) {
 				modelo.confirmarPedido();
+				
 			}
 		});
 		

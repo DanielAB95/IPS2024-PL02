@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.WorkorderController;
+import giis.demo.util.Database2;
+import modelo.modelo.WorkorderModel;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -22,27 +27,15 @@ public class WorkorderView extends JFrame {
 	private JScrollPane productoPanel;
 	private JLabel lbProductos;
 	private JTable tabProductos;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					WorkorderView frame = new WorkorderView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Database2 db;
+	private WorkorderModel model;
+	private WorkorderController controller;
 
 	/**
 	 * Create the frame.
 	 */
-	public WorkorderView() {
+	public WorkorderView(Database2 db) {
+		this.db = db;
 		setTitle("Workorder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 844, 418);
@@ -50,13 +43,17 @@ public class WorkorderView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null); 
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTxAlmacenero());
 		contentPane.add(getLblPedido());
 		contentPane.add(getTxPedido());
 		contentPane.add(getProductoPanel());
 		contentPane.add(getLbProductos());
+		
+		model = new WorkorderModel(db);
+		controller = new WorkorderController(this, model);
+		
 	}
 	private JLabel getLbAlmacenero() {
 		if (lbAlmacenero == null) {
@@ -129,6 +126,10 @@ public class WorkorderView extends JFrame {
 	
 	public JFrame getFrame() {
 		return this;
+	}
+	
+	public Database2 getDatabase(){
+		return this.db;
 	}
 	
 	

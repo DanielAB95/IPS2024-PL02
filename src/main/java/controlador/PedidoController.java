@@ -27,9 +27,9 @@ public class PedidoController {
 	public PedidoController(PedidoView view, PedidoModel model) {
 		this.model = model;
 		this.view = view;
-		this.wModel = new WorkorderModel();
-		this.wView = new WorkorderView();
-		this.aModel = new AlmaceneroModel();
+		this.wModel = new WorkorderModel(view.getDatabase());
+		this.wView = new WorkorderView(view.getDatabase());
+		this.aModel = new AlmaceneroModel(view.getDatabase());
 	}
 	 
 	public void initView() {

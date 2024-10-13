@@ -12,11 +12,17 @@ public class ClienteModel {
 	
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	
-	private Database2 db=new Database2();
+	private Database2 db;//=new Database2();
 	private List<Producto> productosPosibles;
 	
-	public ClienteModel() {
+	public ClienteModel(Database2 db) {
+		this.db = db;
 		this.productosPosibles = getProductos();
+
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 	
 	public List<Producto> getProductos() {

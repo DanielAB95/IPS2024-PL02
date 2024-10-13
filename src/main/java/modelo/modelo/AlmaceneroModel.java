@@ -27,6 +27,10 @@ public class AlmaceneroModel {
 //		
 //	}
 	
+	public AlmaceneroModel(Database2 database) {
+		this.db = database;
+	}
+	
 	public AlmaceneroDTO getAlmacenero(int idAlmacenero) {
 		List<Object[]> obj = db.executeQueryArray(SQL_ALMACENERO, idAlmacenero);
 		AlmaceneroDTO almacenero = new AlmaceneroDTO((int)obj.get(0)[0], (String)obj.get(0)[1], (String)obj.get(0)[2]);
