@@ -26,7 +26,7 @@ insert into Pedido(idPedido, numProductos, fecha, estado) values
 	(6, 9, '2024-12-01', 'Listo'),
 	(7, 19, '2024-10-24', 'Pendiente'),
 	(8, 22, '2024-10-31', 'Pendiente'),
-	(9, 4, '2024-10-19', 'Listo'),
+	(9, 3, '2024-10-19', 'Listo'),
 	(10, 13, '2024-10-04', 'Pendiente'),
 	(11, 33, '2024-11-16', 'Pendiente'),
 	(12, 2, '2024-03-14', 'Listo');
@@ -46,6 +46,9 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(5, 5, 2),
 	(7, 6, 1),
 	(8, 8, 1),
+	(9, 2, 5),
+	(9, 1, 2),
+	(9, 4, 1),
 	(12, 1, 1),
 	(12, 2, 1);
 	
@@ -68,7 +71,8 @@ insert into Workorder(idWorkorder, idAlmacenero, idPedido, workorderEstado) valu
 	(2, 2, 2, 'Pendiente'),
 	(3, 4, 4, 'Pendiente'),
 	(4, 5, 5, 'Incidencia'),
-	(5, 1, 12, 'Listo');
+	(5, 1, 12, 'Listo'),
+	(6, 3, 9, 'Listo');
 
 delete from Almacen;
 insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values 
@@ -82,5 +86,9 @@ insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values
 	(8,3,2,2),
 	(9,3,3,2),
 	(10,4,1,3);
+
+delete from Paquete;
+insert into Paquete(idPaquete, idWorkorder, paqueteEstado) values
+	(2, 6, 'Listo');
 
 

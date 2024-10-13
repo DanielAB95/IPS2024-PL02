@@ -23,20 +23,20 @@ public class RecogidaModel {
 	public RecogidaModel(int idWorkorder) {
 		if (idWorkorder < 1) throw new IllegalArgumentException();
 		dto.idWorkorder = idWorkorder;
-		extractWorkorder();
+		getWorkorder();
 	}
 	
 	public RecogidaModel() {
 		dto.idWorkorder = 2;
-		extractWorkorder();
+		getWorkorder();
 	}
 	
-	private void extractWorkorder() {
+	private void getWorkorder() {
 		List<Object[]> workorder = db.executeQueryArray(SQL_WORKORDER, dto.idWorkorder);
 		dto = new WorkorderDTO((int)workorder.get(0)[0], (int)workorder.get(0)[1], (int)workorder.get(0)[2]);
 	}
 	
-	public Map<Producto,Integer> extractProducts() {
+	public Map<Producto,Integer> getProducts() {
 		Map<Producto,Integer> resultado = new HashMap<>();
 		List<Object[]> idProductos = db.executeQueryArray(SQL_PRODUCTS_ID, dto.idPedido);
 		

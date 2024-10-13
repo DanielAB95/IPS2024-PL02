@@ -53,7 +53,7 @@ public class RecogidaController {
 	}
 	
 	private void fillList() {
-		Map<Producto, Integer> productos = rm.extractProducts();
+		Map<Producto, Integer> productos = rm.getProducts();
 		for (Producto entry : productos.keySet()) {
 			ProductoWrapper producto = new ProductoWrapper(entry, productos.get(entry));
 			rw.getlistModel().addElement(producto);
