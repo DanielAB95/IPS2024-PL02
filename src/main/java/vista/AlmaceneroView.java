@@ -3,6 +3,9 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import giis.demo.util.Database2;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -17,11 +20,14 @@ public class AlmaceneroView extends JFrame {
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
 	private JButton btPedidosPendientes;
+	private Database2 db;
 
 	/**
 	 * Create the frame.
 	 */
-	public AlmaceneroView() {
+	public AlmaceneroView(Database2 db) {
+		this.db = db;
+		 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -69,5 +75,9 @@ public class AlmaceneroView extends JFrame {
 	
 	public JFrame getFrame() {
 		return this;
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 }

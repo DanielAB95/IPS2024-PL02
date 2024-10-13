@@ -83,7 +83,7 @@ public class AppInicioView extends JFrame {
 		}
 		return btnCliente;
 	}
-	private JButton getBtnAlmacen() {
+	public JButton getBtnAlmacen() {
 		if (btnAlmacen == null) {
 			btnAlmacen = new JButton("Almacen");
 			btnAlmacen.setBounds(10, 227, 89, 23);

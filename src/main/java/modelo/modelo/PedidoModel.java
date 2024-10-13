@@ -19,9 +19,11 @@ public class PedidoModel {
 	private Database2 db = new Database2();
 	//private List<PedidoDTO> pedidos;
 	
-	public PedidoModel() {
+	public PedidoModel(Database2 database) {
 		//this.pedidos = getPedidos();
+		this.db = database;
 	}
+	
 
 	public List<PedidoDTO> getPedidos() {
 		List<PedidoDTO> list = new ArrayList<PedidoDTO>();
