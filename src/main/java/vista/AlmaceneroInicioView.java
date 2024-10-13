@@ -24,41 +24,21 @@ public class AlmaceneroInicioView extends JFrame {
 	private AlmaceneroModel model;
 	private AlmaceneroController controller;
 	private AlmaceneroView view;
+	private Database2 db;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//creo bd
-					Database2 db =new Database2();
-					db.createDatabase(false);
-					
-					//lleno bd
-					db.loadDatabase();
-					
-					AlmaceneroInicioView frame = new AlmaceneroInicioView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	/**
 	 * Create the frame.
 	 */
-	public AlmaceneroInicioView() {
+	public AlmaceneroInicioView(Database2 db) {
+		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 275, 132);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		model = new AlmaceneroModel();
-		view = new AlmaceneroView();
+		model = new AlmaceneroModel(db);
+		view = new AlmaceneroView(db);
 		controller = new AlmaceneroController(this, view, model);
 		//controller.initView();
 		controller.initController();
@@ -107,6 +87,10 @@ public class AlmaceneroInicioView extends JFrame {
 	
 	public JFrame getFrame() {
 		return this;
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 	
 }

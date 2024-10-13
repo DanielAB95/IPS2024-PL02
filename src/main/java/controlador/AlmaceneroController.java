@@ -79,7 +79,7 @@ public class AlmaceneroController {
 	}
 	
 	private void mostrarPedidosPendientes(int idAlmacenero) {
-		PedidoView pv = new PedidoView();
+		PedidoView pv = new PedidoView(viewId.getDatabase());
 		pv.getTextAlmacenero().setText(model.getAlmacenero(idAlmacenero).toString());
 		pv.setVisible(true);
 		pv.setLocationRelativeTo(view.getFrame());

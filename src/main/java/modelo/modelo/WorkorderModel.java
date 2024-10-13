@@ -28,6 +28,10 @@ public class WorkorderModel {
 	private List<Integer> pedidos = new ArrayList<>();
 	private boolean incidencia = false;
 	
+	public WorkorderModel(Database2 dataBase) {
+		this.db = dataBase;
+	}
+	
 	public void addIncidencia(String incidenciaStr) {
 		if (incidenciaStr == null) throw new IllegalArgumentException();
 		if (!incidencia) incidencia = true;
