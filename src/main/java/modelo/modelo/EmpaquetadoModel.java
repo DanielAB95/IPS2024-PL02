@@ -1,9 +1,7 @@
 package modelo.modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import giis.demo.util.Database2;
 import modelo.dto.Producto;
@@ -16,6 +14,7 @@ public class EmpaquetadoModel {
 	private final static String SQL_WOLISTAS = "select * from Workorder where workorderEstado = 'Listo'";
 	private final static String SQL_PRODUCTS_ID = "select idProducto, cantidad from pedidoproducto where idPedido = ?";
 	private final static String SQL_PRODUCTS = "select * from producto where id = ?";
+	private final static String SQL_PAQUETE = "insert into Paquete(idPaquete, idWorkorder, paqueteEstado) values (?,?,'Listo')";
 	
 	public EmpaquetadoModel(Database2 db2) {
 		db = db2;
@@ -23,6 +22,8 @@ public class EmpaquetadoModel {
 	
 	public EmpaquetadoModel() {
 		db = new Database2();
+		db.createDatabase(false);
+		db.loadDatabase();
 	}
 	
 	public List<WorkorderDTO> workordersListas(){
@@ -49,6 +50,23 @@ public class EmpaquetadoModel {
 		}
 		
 		return resultado;
+	}
+
+	public int checkID(int id, List<ProductoWrapper> productos) {
+		for (int i = 0; i<productos.size(); i++) {
+			if (id == productos.get(i).getID()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public void empaquetar(int idPaquete, int idWorkorder) {
+		db.executeUpdate(SQL_PAQUETE, idPaquete, idWorkorder);
+	}
+	
+	public Database2 getDB() {
+		return db;
 	}
 
 }

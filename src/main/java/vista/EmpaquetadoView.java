@@ -8,9 +8,9 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.EmpaquetadoController;
 import modelo.dto.ProductoWrapper;
-import modelo.dto.WorkorderDTO;
 import modelo.dto.WorkorderWrapper;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JScrollPane;
@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class EmpaquetadoView extends JFrame {
 
@@ -30,6 +31,7 @@ public class EmpaquetadoView extends JFrame {
 	private JScrollPane scrollPane;
 	private JList<ProductoWrapper> listProductos;
 	private JComboBox<WorkorderWrapper> cbWorkorders;
+	private DefaultListModel<ProductoWrapper> listModel;
 	private JTextArea textArea;
 	private JButton btApuntar;
 	private JLabel lbIncidencia;
@@ -37,6 +39,7 @@ public class EmpaquetadoView extends JFrame {
 	private JLabel lbID;
 	private JButton btComprobar;
 	private EmpaquetadoController ec;
+	private JLabel lbInfo;
 
 	/**
 	 * Launch the application.
@@ -61,7 +64,7 @@ public class EmpaquetadoView extends JFrame {
 		setTitle("Empaquetado");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 599, 430);
+		setBounds(100, 100, 620, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -77,6 +80,7 @@ public class EmpaquetadoView extends JFrame {
 		contentPane.add(getTextField());
 		contentPane.add(getLbID());
 		contentPane.add(getBtComprobar());
+		contentPane.add(getLbInfo());
 		setLocationRelativeTo(null);
 		
 		ec = new EmpaquetadoController(this);
@@ -87,17 +91,17 @@ public class EmpaquetadoView extends JFrame {
 			btCancelar = new JButton("Cancelar");
 			btCancelar.setBackground(Color.RED);
 			btCancelar.setForeground(Color.WHITE);
-			btCancelar.setBounds(484, 357, 89, 23);
+			btCancelar.setBounds(506, 357, 88, 23);
 		}
 		return btCancelar;
 	}
 	public JButton getBtAceptar() {
 		if (btAceptar == null) {
-			btAceptar = new JButton("Aceptar");
+			btAceptar = new JButton("Empaquetar");
 			btAceptar.setEnabled(false);
 			btAceptar.setForeground(Color.WHITE);
 			btAceptar.setBackground(Color.GREEN);
-			btAceptar.setBounds(385, 357, 89, 23);
+			btAceptar.setBounds(385, 357, 111, 23);
 		}
 		return btAceptar;
 	}
@@ -111,9 +115,13 @@ public class EmpaquetadoView extends JFrame {
 	}
 	public JList<ProductoWrapper> getListProductos() {
 		if (listProductos == null) {
-			listProductos = new JList<>();
+			listModel = new DefaultListModel<ProductoWrapper>();
+			listProductos = new JList<>(listModel);
 		}
 		return listProductos;
+	}
+	public DefaultListModel<ProductoWrapper> getListModel(){
+		return listModel;
 	}
 	public JComboBox<WorkorderWrapper> getCbWorkorders() {
 		if (cbWorkorders == null) {
@@ -125,7 +133,7 @@ public class EmpaquetadoView extends JFrame {
 	public JTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new JTextArea();
-			textArea.setBounds(385, 216, 186, 96);
+			textArea.setBounds(385, 216, 209, 96);
 		}
 		return textArea;
 	}
@@ -133,7 +141,7 @@ public class EmpaquetadoView extends JFrame {
 		if (btApuntar == null) {
 			btApuntar = new JButton("Apuntar");
 			btApuntar.setEnabled(false);
-			btApuntar.setBounds(385, 323, 89, 23);
+			btApuntar.setBounds(385, 323, 101, 23);
 		}
 		return btApuntar;
 	}
@@ -141,7 +149,7 @@ public class EmpaquetadoView extends JFrame {
 		if (lbIncidencia == null) {
 			lbIncidencia = new JLabel("Incidencia:");
 			lbIncidencia.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lbIncidencia.setBounds(385, 182, 188, 23);
+			lbIncidencia.setBounds(385, 182, 209, 23);
 		}
 		return lbIncidencia;
 	}
@@ -165,8 +173,16 @@ public class EmpaquetadoView extends JFrame {
 		if (btComprobar == null) {
 			btComprobar = new JButton("Comprobar");
 			btComprobar.setEnabled(false);
-			btComprobar.setBounds(484, 92, 89, 23);
+			btComprobar.setBounds(425, 92, 148, 23);
 		}
 		return btComprobar;
+	}
+	public JLabel getLbInfo() {
+		if (lbInfo == null) {
+			lbInfo = new JLabel("");
+			lbInfo.setVerticalAlignment(SwingConstants.TOP);
+			lbInfo.setBounds(385, 126, 188, 45);
+		}
+		return lbInfo;
 	}
 }

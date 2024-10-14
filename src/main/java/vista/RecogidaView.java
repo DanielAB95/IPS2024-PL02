@@ -58,9 +58,6 @@ public class RecogidaView extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public RecogidaView() {
 		setResizable(false);
 		setTitle("Recogida");
