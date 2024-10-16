@@ -22,7 +22,7 @@ public class ClienteLoginController {
 		vista.getBtnSiguiente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (!vista.getTextNombreUsuario().getText().isBlank() && !vista.getTextNombreUsuario().getText().isEmpty()) {
+				if (!vista.getTextNombreUsuario().getText().trim().isEmpty()) {
 					
 					ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
 					
@@ -36,5 +36,7 @@ public class ClienteLoginController {
 			}
 		});
 	}
+	
+	
 
 }
