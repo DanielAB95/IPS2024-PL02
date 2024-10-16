@@ -56,7 +56,7 @@ public class PedidoController {
 	
 	public void getListaPedidos() {
 			List<PedidoDTO> pedidos = model.getPedidos();
-			modeloPedido.addAll(pedidos);
+			rellenarModelo(pedidos);					
 			view.getJListPedidos().setModel(modeloPedido);
 			if(modeloPedido.isEmpty()) {
 				view.getLabelPedidosPendientes().setVisible(true);
@@ -66,6 +66,13 @@ public class PedidoController {
 	//		view.getTablaPedidos().setModel(tmodel);
 			//SwingUtil.autoAdjustColumns(view.getTablaPedidos());
 		}
+
+	private void rellenarModelo(List<PedidoDTO> pedidos) {
+		for(PedidoDTO p : pedidos) {
+			modeloPedido.addElement(p);
+		}
+		
+	}
 
 	private void actualizarLista() {
 		modeloPedido.clear();

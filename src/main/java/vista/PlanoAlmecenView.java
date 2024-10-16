@@ -20,19 +20,21 @@ public class PlanoAlmecenView extends JFrame {
 	 * Create the frame.
 	 */
 	public PlanoAlmecenView() {
+		setTitle("Almacenero: Planos ALmacen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 640, 960);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+		contentPane.setLayout(null);
 		contentPane.add(getLbPlanosAlmacen());
 	}
 
 	private JLabel getLbPlanosAlmacen() {
 		if (lbPlanosAlmacen == null) {
 			lbPlanosAlmacen = new JLabel("");
+			lbPlanosAlmacen.setBounds(0, 0, 619, 916);
 		}
 		return lbPlanosAlmacen;
 	}
