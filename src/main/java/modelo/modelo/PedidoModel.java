@@ -58,7 +58,7 @@ public class PedidoModel {
 		
 		for(int i = 0; i<listDb.size();i++) {
 			PedidoDTO p = new PedidoDTO((int)listDb.get(i)[0],(int)listDb.get(i)[1],(String)listDb.get(i)[2]);
-			list.add(p);
+			list.add(p);  
 		}
 		return list;
 	}
