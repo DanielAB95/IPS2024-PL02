@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AlmaceneroView extends JFrame {
 
@@ -23,11 +25,13 @@ public class AlmaceneroView extends JFrame {
 	private JTextField txAlmacenero;
 	private JButton btPedidosPendientes;
 	private Database2 db;
+	private JButton btPlanosAlmacen;
 
 	/**
 	 * Create the frame.
 	 */
 	public AlmaceneroView(Database2 db) {
+		setTitle("Almacenero: Inicio");
 		this.db = db;
 		 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +44,7 @@ public class AlmaceneroView extends JFrame {
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTxAlmacenero());
 		contentPane.add(getBtPedidosPendientes());
+		contentPane.add(getBtPlanosAlmacen());
 	}
 
 	private JLabel getLbAlmacenero() {
@@ -69,6 +74,15 @@ public class AlmaceneroView extends JFrame {
 		return btPedidosPendientes;
 	}
 	
+	private JButton getBtPlanosAlmacen() {
+		if (btPlanosAlmacen == null) {
+			btPlanosAlmacen = new JButton("Planos Almacen");
+			btPlanosAlmacen.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			btPlanosAlmacen.setBounds(166, 771, 308, 113);
+		}
+		return btPlanosAlmacen;
+	}
+	
 	//metodos Auxiliares
 	
 	public JTextField getTextAlmacenero() {
@@ -79,6 +93,10 @@ public class AlmaceneroView extends JFrame {
 		return this.btPedidosPendientes;
 	}
 	
+	public JButton getButtonPlanosAlmacen() {
+		return this.btPlanosAlmacen;
+	}
+	
 	public JFrame getFrame() {
 		return this;
 	}
@@ -86,4 +104,5 @@ public class AlmaceneroView extends JFrame {
 	public Database2 getDatabase() {
 		return this.db;
 	}
+	
 }

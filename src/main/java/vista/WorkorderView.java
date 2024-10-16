@@ -38,7 +38,7 @@ public class WorkorderView extends JFrame {
 	 */
 	public WorkorderView(Database2 db) {
 		this.db = db;
-		setTitle("Workorder");
+		setTitle("Almacenero: WorkOrder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 640, 960);
 		contentPane = new JPanel();
@@ -116,6 +116,10 @@ public class WorkorderView extends JFrame {
 	private JTextArea getTxProductos() {
 		if (txProductos == null) {
 			txProductos = new JTextArea();
+			txProductos.setWrapStyleWord(true);
+			txProductos.setLineWrap(true);
+			txProductos.setEditable(false);
+
 		}
 		return txProductos;
 	}

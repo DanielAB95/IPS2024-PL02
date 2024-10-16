@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.PedidoController;
 import giis.demo.util.Database2;
+import modelo.dto.Pedido;
+import modelo.dto.PedidoDTO;
 import modelo.modelo.PedidoModel;
 
 import java.awt.GridLayout;
@@ -19,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JList;
 
 public class PedidoView extends JFrame {
 
@@ -28,12 +31,13 @@ public class PedidoView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JScrollPane tablePanel;
-	private JTable tabPedidos;
 	private PedidoModel model;
 	private PedidoController controller;
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
 	private Database2 db;
+	private JList<PedidoDTO> listPedidos;
+	private JLabel lbPedidosPendientes;
 
 
 	/**
@@ -41,7 +45,7 @@ public class PedidoView extends JFrame {
 	 */
 	public PedidoView(Database2 db) {
 		this.db = db;
-		setTitle("Pedidos pendientes");
+		setTitle("Almacenero: Pedidos pendientes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 640, 960);
 		setLocationRelativeTo(null);
@@ -53,6 +57,7 @@ public class PedidoView extends JFrame {
 		contentPane.add(getTablePanel());
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTextField());
+		contentPane.add(getLbPedidosPendientes());
 		
 		model = new PedidoModel(db);
 		controller = new PedidoController(this, model);
@@ -62,20 +67,12 @@ public class PedidoView extends JFrame {
 
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
-	        tablePanel = new JScrollPane(getTabPedidos()); 
-	        tablePanel.setBounds(0, 239, 626, 596);
+	        tablePanel = new JScrollPane(); 
+	        tablePanel.setBounds(0, 239, 626, 682);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
+	        tablePanel.setViewportView(getListPedidos());
 	    }
 	    return tablePanel;
-	}
-	private JTable getTabPedidos() {
-		if (tabPedidos == null) {
-			tabPedidos = new JTable();
-			tabPedidos.setDefaultEditor(Object.class, null); //readonly
-			tabPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tabPedidos.setName("tabPedidos");
-		}
-		return tabPedidos;
 	}
 	
 	private JLabel getLbAlmacenero() {
@@ -98,12 +95,26 @@ public class PedidoView extends JFrame {
 		return txAlmacenero;
 	}
 	
+	private JList<PedidoDTO> getListPedidos() {
+		if (listPedidos == null) {
+			listPedidos = new JList<PedidoDTO>();
+			listPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return listPedidos;
+	}
+	
+	private JLabel getLbPedidosPendientes() {
+		if (lbPedidosPendientes == null) {
+			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
+			lbPedidosPendientes.setVisible(false);
+			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbPedidosPendientes.setBounds(117, 198, 377, 42);
+		}
+		return lbPedidosPendientes;
+	}
+	
 	
 	//Metodos Auxiliares
-	
-	public JTable getTablaPedidos() {
-		return this.tabPedidos;
-	}
 	
 	public JTextField getTextAlmacenero() {
 		return this.txAlmacenero;
@@ -111,5 +122,13 @@ public class PedidoView extends JFrame {
 	
 	public Database2 getDatabase() {
 		return this.db;
+	}
+	
+	public JList<PedidoDTO> getJListPedidos(){
+		return this.listPedidos;
+	}
+	
+	public JLabel getLabelPedidosPendientes() {
+		return this.lbPedidosPendientes;
 	}
 }
