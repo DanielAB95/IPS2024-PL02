@@ -46,6 +46,7 @@ public class PedidoController {
                 	 int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
                 	 int idAlmacenero = Integer.parseInt(view.getTextAlmacenero().getText().substring(0,1));
                 	 wModel.crearWorkorder(idAlmacenero, idPedido);
+                	 model.actualizarPedidoListo(idPedido);
                 	 
                      mostrarWorkorder(idPedido, idAlmacenero);
                 }
@@ -62,8 +63,9 @@ public class PedidoController {
 	
 	public void getListaProductos(int idPedido) {
 		List<ProductoAlmacen> pedidos = wModel.getProductos(idPedido);
-		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos, new String[] {"idProducto", "cantidad","descripcion", "pasillo", "estanteria", "posicionEstanteria"});
-		wView.getTablaProductos().setModel(tmodel);
+		for(ProductoAlmacen p : pedidos) {
+			wView.getJTextProductos().setText(p.toString());
+		}
 		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
 	}
 	

@@ -15,6 +15,7 @@ public class PedidoModel {
 	public static final String SQL_PEDIDO_ALMACENERO = "select ap.idAlmacenero from AlmaceneroPedido ap join Pedido p on ap.idPedido = p.idPedido and p.idPedido = ?";
 	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
 	private static final String SQL_ADD_PEDIDO_ALAMACENERO = "insert into AlmaceneroPedido (idAlmacenero, idPedido) values (?, ?)";
+	private static final String SQL_UPDATE_ESTADO_LISTO = "update Estado from Pedido where idPedido = ? ";
 	
 	private Database2 db = new Database2();
 	//private List<PedidoDTO> pedidos;
@@ -60,6 +61,10 @@ public class PedidoModel {
 			list.add(p);
 		}
 		return list;
+	}
+	
+	public void actualizarPedidoListo(int idPedido) {
+		db.executeQueryArray(SQL_UPDATE_ESTADO_LISTO, idPedido);
 	}
 	
 //	public void addAlmaceneroConPedido(int idA) {

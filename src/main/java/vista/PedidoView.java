@@ -43,7 +43,7 @@ public class PedidoView extends JFrame {
 		this.db = db;
 		setTitle("Pedidos pendientes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 612, 416);
+		setBounds(100, 100, 640, 960);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,7 +63,7 @@ public class PedidoView extends JFrame {
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
 	        tablePanel = new JScrollPane(getTabPedidos()); 
-	        tablePanel.setBounds(0, 48, 596, 329);
+	        tablePanel.setBounds(0, 239, 626, 596);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
 	    }
 	    return tablePanel;
@@ -81,17 +81,18 @@ public class PedidoView extends JFrame {
 	private JLabel getLbAlmacenero() {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero en sesion:");
-			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lbAlmacenero.setBounds(200, 11, 153, 26);
+			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbAlmacenero.setBounds(117, 10, 361, 75);
 		}
 		return lbAlmacenero;
 	}
 	private JTextField getTextField() {
 		if (txAlmacenero == null) {
 			txAlmacenero = new JTextField();
+			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(329, 14, 194, 23);
+			txAlmacenero.setBounds(117, 91, 426, 86);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
