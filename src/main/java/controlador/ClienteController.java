@@ -52,10 +52,22 @@ public class ClienteController {
 				
 				if (!model.checkProductoYaEnCarrito((String) view.getComboBoxProductos().getSelectedItem())) {
 					
-					view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), (int) view.getComboBoxCantidad().getSelectedItem());
+					int cantidad = (int) view.getComboBoxCantidad().getSelectedItem();
+					view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), cantidad);
 					view.getListModel().addElement(view.getComboBoxProductos().getSelectedItem() +": "+ view.getComboBoxCantidad().getSelectedItem());
+					//view.getTable()
+					
+					Object[] nuevaFila = {view.getComboBoxProductos().getSelectedItem(), 
+											cantidad,
+											model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()).getPrecio()*cantidad};
+					
+					 String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+					view.getTextPrecioTotal().setText( formattedNumber);
+					view.getTableModel().addRow(nuevaFila);
+					System.out.println("Número de filas en el modelo: " + view.getTableModel().getRowCount());
+					
 				} else {
-					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido, más adelante \n podrá modificar su cantidad o eliminarlo.");
+					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido, puede modificar su cantidad o eliminarlo.");
 				}
 				
 			}

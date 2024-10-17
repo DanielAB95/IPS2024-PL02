@@ -31,6 +31,13 @@ public class Carrito {
 		}
 	}
 	
+	public double getTotal() {
+		double res  = 0;
+		for (Object[] o: productosCarrito) {
+			res += ((Producto)o[0]).getPrecio() * (int)o[1];
+		}
+		return res;
+	}
 	
 	public boolean isEmpty() {
 		if (this.productosCarrito.size() > 0) return false; else return true;

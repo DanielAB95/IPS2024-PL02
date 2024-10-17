@@ -21,6 +21,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import java.awt.BorderLayout;
 
 public class ClienteView extends JFrame {
 
@@ -46,10 +51,12 @@ public class ClienteView extends JFrame {
 	private JLabel lblNombreUsuario;
 	private JPanel panel;
 	private JLabel lblCarrito;
-	private JScrollPane scrollPane;
-	private JList<String> list;
 	private  DefaultListModel<String> listModel;
 	private ClienteDTO dto;
+	private JTable table;
+	private DefaultTableModel tableModel;
+	private JLabel PrecioTotal;
+	private JTextField textPrecioTotal;
 
 
 	/**
@@ -62,7 +69,7 @@ public class ClienteView extends JFrame {
 		this.listModel = new DefaultListModel<>();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 690, 350);
+		setBounds(100, 100, 998, 388);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -90,6 +97,8 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLblNombreUsuario());
 		contentPane.add(getPanel());
 		contentPane.add(getLblCarrito());
+		contentPane.add(getPrecioTotal());
+		contentPane.add(getTextPrecioTotal());
 		//contentPane.add(getList());
 		
 		
@@ -171,7 +180,7 @@ public class ClienteView extends JFrame {
 			textDescripcion = new JTextArea();
 			textDescripcion.setLineWrap(true);
 			textDescripcion.setEditable(false);
-			textDescripcion.setBounds(201, 215, 339, 85);
+			textDescripcion.setBounds(201, 215, 339, 123);
 		}
 		return textDescripcion;
 	}
@@ -189,7 +198,7 @@ public class ClienteView extends JFrame {
 			btnSiguiente = new JButton("Siguiente");
 			btnSiguiente.setForeground(Color.WHITE);
 			btnSiguiente.setBackground(new Color(0, 204, 0));		
-			btnSiguiente.setBounds(575, 277, 89, 23);
+			btnSiguiente.setBounds(868, 315, 89, 23);
 		}
 		return btnSiguiente;
 	}
@@ -216,42 +225,20 @@ public class ClienteView extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(10, 64, 160, 236);
-			panel.setLayout(null);
-			panel.add(getScrollPane());
+			panel.setBounds(712, 64, 245, 140);
+			panel.setLayout(new BorderLayout(0, 0));
+			JScrollPane scrollPane = new JScrollPane(getTable());
+			panel.add(scrollPane);
+			//panel.add(getTable());
 		}
 		return panel;
 	}
 	private JLabel getLblCarrito() {
 		if (lblCarrito == null) {
 			lblCarrito = new JLabel("Carrito: ");
-			lblCarrito.setBounds(10, 39, 46, 14);
+			lblCarrito.setBounds(712, 39, 46, 14);
 		}
 		return lblCarrito;
-	}
-	private JScrollPane getScrollPane() {
-		if (scrollPane == null) {
-			scrollPane = new JScrollPane(getList());
-			scrollPane.setBounds(0, 0, 160, 236);
-		}
-		return scrollPane;
-	}
-	
-//	private JScrollPane getScrollPane() {
-//	    if (scrollPane == null) {
-//	        scrollPane = new JScrollPane(getList_2()); 
-//	        scrollPane.setPreferredSize(new Dimension(197, 190)); 
-//	    }
-//	    return scrollPane;
-//	}
-	
-	public JList<String> getList() {
-		if (list == null) {
-			
-			list = new JList<String>(getListModel());
-			list.setBounds(85, 39, 1, 1);
-		}
-		return list;
 	}
 	
 	public DefaultListModel<String> getListModel() {
@@ -260,5 +247,41 @@ public class ClienteView extends JFrame {
 
 	public ClienteDTO getDto() {
 		return dto;
+	}
+	
+	public JTable getTable() {
+		if (table == null) {
+			String[] columnNames = {"Producto", "Cantidad ", "Precio"};
+			tableModel = new DefaultTableModel(columnNames, 0);
+			
+			table = new JTable(tableModel);
+			TableColumnModel columnModel = table.getColumnModel();
+			columnModel.getColumn(0).setPreferredWidth(200);
+			columnModel.getColumn(1).setPreferredWidth(80);
+			
+			table.setBounds(712, 64, 160, 236);
+			
+		}
+		return table;
+	}
+	
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+	private JLabel getPrecioTotal() {
+		if (PrecioTotal == null) {
+			PrecioTotal = new JLabel("Precio Total:");
+			PrecioTotal.setBounds(880, 215, 77, 14);
+		}
+		return PrecioTotal;
+	}
+	public JTextField getTextPrecioTotal() {
+		if (textPrecioTotal == null) {
+			textPrecioTotal = new JTextField();
+			textPrecioTotal.setEditable(false);
+			textPrecioTotal.setBounds(880, 240, 77, 20);
+			textPrecioTotal.setColumns(10);
+		}
+		return textPrecioTotal;
 	}
 }
