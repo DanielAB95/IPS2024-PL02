@@ -251,14 +251,15 @@ public class ClienteView extends JFrame {
 	
 	public JTable getTable() {
 		if (table == null) {
-			String[] columnNames = {"Producto", "Cantidad ", "Precio"};
-			tableModel = new DefaultTableModel(columnNames, 0);
-			
+			Object[] columnNames = {"Producto", "Cantidad ", "Precio"};
+			//tableModel = new DefaultTableModel(columnNames, 0);
+			tableModel = new MyTableModel(columnNames);
 			table = new JTable(tableModel);
+			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			TableColumnModel columnModel = table.getColumnModel();
 			columnModel.getColumn(0).setPreferredWidth(200);
-			columnModel.getColumn(1).setPreferredWidth(80);
-			
+			columnModel.getColumn(1).setPreferredWidth(85);
+			columnModel.getColumn(1).setPreferredWidth(85);
 			table.setBounds(712, 64, 160, 236);
 			
 		}
@@ -284,4 +285,17 @@ public class ClienteView extends JFrame {
 		}
 		return textPrecioTotal;
 	}
+	
+	// Clase que extiende DefaultTableModel
+    static class MyTableModel extends DefaultTableModel {
+        public MyTableModel(Object[] data) {
+            super(data,0);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Solo la segunda columna (índice 1) es editable
+            return column == 1; // Editable solo en la columna 1 (Cantidad)
+        }
+    }
 }
