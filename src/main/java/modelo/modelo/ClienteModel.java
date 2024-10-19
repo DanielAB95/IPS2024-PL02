@@ -15,7 +15,7 @@ public class ClienteModel {
 	
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	
-	private Database2 db;//=new Database2();
+	private Database2 db;
 	private List<Producto> productosPosibles;
 	private ClienteDTO dto;
 	private Carrito carrito;

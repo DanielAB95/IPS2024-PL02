@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import modelo.modelo.ClienteModel;
 import vista.CarritoView;
@@ -61,10 +63,10 @@ public class ClienteController {
 											cantidad,
 											model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()).getPrecio()*cantidad};
 					
-					String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
-					view.getTextPrecioTotal().setText( formattedNumber);
+					actualizaLblTotal();
+					
 					view.getTableModel().addRow(nuevaFila);
-					System.out.println("Número de filas en el modelo: " + view.getTableModel().getRowCount());
+					
 					
 				} else {
 					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido, puede modificar su cantidad o eliminarlo.");
@@ -89,6 +91,50 @@ public class ClienteController {
 			}
 		});
 		
+		
+		//boton eliminar de carrito
+		view.getBtnEliminar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int filaSeleccionada = view.getTable().getSelectedRow();
+				String nombreProducto = (String) view.getTable().getValueAt(filaSeleccionada, 0);
+				view.getTableModel().removeRow(filaSeleccionada);
+				view.getCarrito().removeFromCarrito(nombreProducto);
+				
+				actualizaLblTotal();
+			}
+		});
+		
+		
+		//action listener apra la JTABLE
+		view.getTableModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // verificar si el cambio es en la columna 1 (Cantidad)
+                if (e.getColumn() == 1 && e.getType() == TableModelEvent.UPDATE) {
+                    int fila = e.getFirstRow(); //devuelve la fila que cambio
+                    
+                    // obtener la cantidad modificada
+                    int nuevaCantidad = Integer.valueOf((String) view.getTableModel().getValueAt(fila, 1));
+                    
+                    String nuevoPrecio = model.getPrecioPorNombre((String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+                    
+                    view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
+                    
+                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+                    String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+                    view.getTextPrecioTotal().setText( formattedNumber );
+                    
+                    
+                }
+            }
+        });
+		
+	}
+	
+	private void actualizaLblTotal() {
+		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+		view.getTextPrecioTotal().setText( formattedNumber );
 	}
 
 }

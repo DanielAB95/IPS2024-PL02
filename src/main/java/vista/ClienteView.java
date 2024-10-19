@@ -3,6 +3,8 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import controlador.ClienteController;
 import giis.demo.util.Database2;
@@ -26,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ClienteView extends JFrame {
 
@@ -57,6 +61,7 @@ public class ClienteView extends JFrame {
 	private DefaultTableModel tableModel;
 	private JLabel PrecioTotal;
 	private JTextField textPrecioTotal;
+	private JButton btnEliminar;
 
 
 	/**
@@ -99,6 +104,7 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLblCarrito());
 		contentPane.add(getPrecioTotal());
 		contentPane.add(getTextPrecioTotal());
+		contentPane.add(getBtnEliminar());
 		//contentPane.add(getList());
 		
 		
@@ -195,7 +201,7 @@ public class ClienteView extends JFrame {
 	}
 	public JButton getBtnSiguiente() {
 		if (btnSiguiente == null) {
-			btnSiguiente = new JButton("Siguiente");
+			btnSiguiente = new JButton("Comprar");
 			btnSiguiente.setForeground(Color.WHITE);
 			btnSiguiente.setBackground(new Color(0, 204, 0));		
 			btnSiguiente.setBounds(868, 315, 89, 23);
@@ -251,7 +257,7 @@ public class ClienteView extends JFrame {
 	
 	public JTable getTable() {
 		if (table == null) {
-			Object[] columnNames = {"Producto", "Cantidad ", "Precio"};
+			Object[] columnNames = {"Producto   ", "Cantidad ", "Precio"};
 			//tableModel = new DefaultTableModel(columnNames, 0);
 			tableModel = new MyTableModel(columnNames);
 			table = new JTable(tableModel);
@@ -259,7 +265,7 @@ public class ClienteView extends JFrame {
 			TableColumnModel columnModel = table.getColumnModel();
 			columnModel.getColumn(0).setPreferredWidth(200);
 			columnModel.getColumn(1).setPreferredWidth(85);
-			columnModel.getColumn(1).setPreferredWidth(85);
+			columnModel.getColumn(1).setPreferredWidth(85);	
 			table.setBounds(712, 64, 160, 236);
 			
 		}
@@ -298,4 +304,13 @@ public class ClienteView extends JFrame {
             return column == 1; // Editable solo en la columna 1 (Cantidad)
         }
     }
+	public JButton getBtnEliminar() {
+		if (btnEliminar == null) {
+			btnEliminar = new JButton("Eliminar");
+			btnEliminar.setBackground(new Color(255, 0, 0));
+			btnEliminar.setForeground(Color.WHITE);
+			btnEliminar.setBounds(712, 239, 89, 23);
+		}
+		return btnEliminar;
+	}
 }

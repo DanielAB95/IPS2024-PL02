@@ -54,5 +54,12 @@ public class Carrito {
 	public List<Object[]> getCarrito(){
 		return this.productosCarrito;
 	}
+	
+	public void cambiaCantidadCarrito(String nombre, int cantidad) {
+		for (Object[] o: productosCarrito) {
+			if ( ((Producto)o[0]).getNombre().equals(nombre) ) 
+				o[1] = cantidad;
+		}
+	}
 
 }
