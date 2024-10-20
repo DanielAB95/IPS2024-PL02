@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.JTable;
 
 public class WorkorderView extends JFrame {
 
@@ -31,7 +32,7 @@ public class WorkorderView extends JFrame {
 	private Database2 db;
 	private WorkorderModel model;
 	private WorkorderController controller;
-	private JTextArea txProductos;
+	private JTable tbProductos;
 
 	/**
 	 * Create the frame.
@@ -61,7 +62,7 @@ public class WorkorderView extends JFrame {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero responsable:");
 			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbAlmacenero.setBounds(116, 121, 360, 63);
+			lbAlmacenero.setBounds(100, 122, 360, 63);
 		}
 		return lbAlmacenero;
 	}
@@ -71,7 +72,7 @@ public class WorkorderView extends JFrame {
 			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(146, 172, 420, 82);
+			txAlmacenero.setBounds(100, 172, 420, 82);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
@@ -80,7 +81,7 @@ public class WorkorderView extends JFrame {
 		if (lblPedido == null) {
 			lblPedido = new JLabel("Pedido:");
 			lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lblPedido.setBounds(156, 10, 162, 55);
+			lblPedido.setBounds(100, 11, 162, 55);
 		}
 		return lblPedido;
 	}
@@ -90,7 +91,7 @@ public class WorkorderView extends JFrame {
 			txPedido.setHorizontalAlignment(SwingConstants.CENTER);
 			txPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txPedido.setEditable(false);
-			txPedido.setBounds(173, 56, 246, 55);
+			txPedido.setBounds(100, 64, 246, 55);
 			txPedido.setColumns(10);
 		}
 		return txPedido;
@@ -100,7 +101,7 @@ public class WorkorderView extends JFrame {
 			productoPanel = new JScrollPane();
 			productoPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			productoPanel.setBounds(0, 358, 626, 501);
-			productoPanel.setViewportView(getTxProductos());
+			productoPanel.setViewportView(getTbProductos());
 		}
 		return productoPanel;
 	}
@@ -108,20 +109,16 @@ public class WorkorderView extends JFrame {
 		if (lbProductos == null) {
 			lbProductos = new JLabel("Productos:");
 			lbProductos.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbProductos.setBounds(43, 308, 192, 39);
+			lbProductos.setBounds(100, 308, 192, 39);
 		}
 		return lbProductos;
 	}
 	
-	private JTextArea getTxProductos() {
-		if (txProductos == null) {
-			txProductos = new JTextArea();
-			txProductos.setWrapStyleWord(true);
-			txProductos.setLineWrap(true);
-			txProductos.setEditable(false);
-
+	private JTable getTbProductos() {
+		if (tbProductos == null) {
+			tbProductos = new JTable();
 		}
-		return txProductos;
+		return tbProductos;
 	}
 	
 	//Metodos auxiliares
@@ -143,8 +140,8 @@ public class WorkorderView extends JFrame {
 		return this.db;
 	}
 	
-	public JTextArea getJTextProductos() {
-		return this.txProductos;
+	public JTable getTablaProductos() {
+		return this.tbProductos;
 	}
 	
 }

@@ -8,11 +8,9 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.PedidoController;
 import giis.demo.util.Database2;
-import modelo.dto.Pedido;
-import modelo.dto.PedidoDTO;
 import modelo.modelo.PedidoModel;
 
-import java.awt.GridLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -21,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JList;
+
 
 public class PedidoView extends JFrame {
 
@@ -36,16 +34,17 @@ public class PedidoView extends JFrame {
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
 	private Database2 db;
-	private JList<PedidoDTO> listPedidos;
 	private JLabel lbPedidosPendientes;
+	private JTable tbPedidos;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public PedidoView(Database2 db) {
+		setResizable(false);
 		this.db = db;
-		setTitle("Almacenero: Pedidos pendientes");
+		setTitle("Almacenero: Generar WorkOrder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 640, 960);
 		setLocationRelativeTo(null);
@@ -70,7 +69,7 @@ public class PedidoView extends JFrame {
 	        tablePanel = new JScrollPane(); 
 	        tablePanel.setBounds(0, 239, 626, 682);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
-	        tablePanel.setViewportView(getListPedidos());
+	        tablePanel.setViewportView(getTbPedidos());
 	    }
 	    return tablePanel;
 	}
@@ -95,14 +94,6 @@ public class PedidoView extends JFrame {
 		return txAlmacenero;
 	}
 	
-	private JList<PedidoDTO> getListPedidos() {
-		if (listPedidos == null) {
-			listPedidos = new JList<PedidoDTO>();
-			listPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		}
-		return listPedidos;
-	}
-	
 	private JLabel getLbPedidosPendientes() {
 		if (lbPedidosPendientes == null) {
 			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
@@ -113,6 +104,13 @@ public class PedidoView extends JFrame {
 		return lbPedidosPendientes;
 	}
 	
+	private JTable getTbPedidos() {
+		if (tbPedidos == null) {
+			tbPedidos = new JTable();
+			tbPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tbPedidos;
+	}
 	
 	//Metodos Auxiliares
 	
@@ -124,11 +122,12 @@ public class PedidoView extends JFrame {
 		return this.db;
 	}
 	
-	public JList<PedidoDTO> getJListPedidos(){
-		return this.listPedidos;
+	public JTable getTablaPedidos(){
+		return this.tbPedidos;
 	}
 	
 	public JLabel getLabelPedidosPendientes() {
 		return this.lbPedidosPendientes;
 	}
+	
 }
