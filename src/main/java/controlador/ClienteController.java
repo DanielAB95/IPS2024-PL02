@@ -2,11 +2,14 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
 import vista.CarritoView;
 import vista.ClienteView;
@@ -22,58 +25,22 @@ public class ClienteController {
 	}
 	
 	public void initView() {
-		view.getTextCategoria().setText(model.getCategoriaPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
-		view.getTextPrecio().setText(model.getPrecioPorNombre((String) view.getComboBoxProductos().getSelectedItem(), (int) view.getComboBoxCantidad().getSelectedItem() ));
-		view.getTextDescripcion().setText(model.getDescripcionPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
+		
 		view.getLblNombreUsuario().setText(model.getDto().getName());
 	}
 	
 	public void initController() {
-		//añado controlador al comboBox de productos
-		view.getComboBoxProductos().addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				view.getTextCategoria().setText(model.getCategoriaPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
-				view.getTextPrecio().setText(model.getPrecioPorNombre((String) view.getComboBoxProductos().getSelectedItem(), (int) view.getComboBoxCantidad().getSelectedItem() ));
-				view.getTextDescripcion().setText(model.getDescripcionPorNombre((String) view.getComboBoxProductos().getSelectedItem()));
-			}
-		});
+		
 		
 		
 		//añado controlador al comboBox de cantidad de productos
 		view.getComboBoxCantidad().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				view.getTextPrecio().setText(model.getPrecioPorNombre((String) view.getComboBoxProductos().getSelectedItem(), (int) view.getComboBoxCantidad().getSelectedItem() ));
+				
 			}
 		});
 		
-		//añado controlador al boton de añadir productos al carrito
-		view.getBtnAdd().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				if (!model.checkProductoYaEnCarrito((String) view.getComboBoxProductos().getSelectedItem())) {
-					
-					int cantidad = (int) view.getComboBoxCantidad().getSelectedItem();
-					view.getCarrito().addToCarrito(model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()), cantidad);
-					view.getListModel().addElement(view.getComboBoxProductos().getSelectedItem() +": "+ view.getComboBoxCantidad().getSelectedItem());
-
-					
-					Object[] nuevaFila = {view.getComboBoxProductos().getSelectedItem(), 
-											cantidad,
-											model.getProductoPorNombre((String) view.getComboBoxProductos().getSelectedItem()).getPrecio()*cantidad};
-					
-					actualizaLblTotal();
-					
-					view.getTableModel().addRow(nuevaFila);
-					
-					
-				} else {
-					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido, puede modificar su cantidad o eliminarlo.");
-				}
-				
-			}
-		});
+		
 		
 		//añado controlador al boton de Siguiente
 		view.getBtnSiguiente().addActionListener(new ActionListener() {
@@ -97,11 +64,13 @@ public class ClienteController {
 			public void actionPerformed(ActionEvent e) {
 				
 				int filaSeleccionada = view.getTable().getSelectedRow();
-				String nombreProducto = (String) view.getTable().getValueAt(filaSeleccionada, 0);
-				view.getTableModel().removeRow(filaSeleccionada);
-				view.getCarrito().removeFromCarrito(nombreProducto);
-				
-				actualizaLblTotal();
+				if (filaSeleccionada != -1) {
+					String nombreProducto = (String) view.getTable().getValueAt(filaSeleccionada, 0);
+					view.getTableModel().removeRow(filaSeleccionada);
+					view.getCarrito().removeFromCarrito(nombreProducto);
+					
+					actualizaLblTotal();
+				}
 			}
 		});
 		
@@ -122,13 +91,50 @@ public class ClienteController {
                     view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
-                    String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
-                    view.getTextPrecioTotal().setText( formattedNumber );
+                   
+                    actualizaLblTotal();
                     
                     
                 }
             }
         });
+		
+		
+		view.getTablaProductos().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				int fila = view.getTablaProductos().getSelectedRow();
+				String producto = (String) view.getTablaProductos().getValueAt(fila, 0);
+				String categoria = model.getCategoriaPorNombre(producto);
+				view.getTextCategoria().setText(categoria);
+			}
+		});
+		
+		
+		view.getBtnAdd().addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				int fila = view.getTablaProductos().getSelectedRow();
+				if (fila != -1) {
+					String producto = (String) view.getTablaProductos().getValueAt(fila, 0);
+					Producto p = model.getProductoPorNombre(producto);
+					int cantidad = (int)view.getComboBoxCantidad().getSelectedItem();
+					
+					if (!model.checkProductoYaEnCarrito(producto)) {
+						model.getCarrito().addToCarrito(p, cantidad);
+						
+						Object[] filaNueva = {p.getNombre(), cantidad, p.getPrecio()*cantidad};
+						view. getTableModel().addRow(filaNueva);
+						actualizaLblTotal();
+						view.getComboBoxCantidad().setSelectedIndex(0);
+					} else {
+						JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
+					}
+				}
+			}
+		});
 		
 	}
 	

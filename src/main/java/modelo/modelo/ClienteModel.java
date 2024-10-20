@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
@@ -58,10 +59,11 @@ public class ClienteModel {
 		return resultado;
 	}
 	
-	public void rellenaComboProductos(JComboBox<String> combo) {
+	public void rellenaTablaProductos(DefaultTableModel modelo) {
 		
 		for (int i = 0; i <  productosPosibles.size(); i++) {
-			combo.addItem(productosPosibles.get(i).getNombre());
+			Object[] fila = {productosPosibles.get(i).getNombre(), productosPosibles.get(i).getPrecio(), productosPosibles.get(i).getDescripcion()};
+			modelo.addRow(fila);
 		}
 	}
 	
