@@ -15,7 +15,7 @@ public class PedidoModel {
 	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
 	private static final String SQL_UPDATE_ESTADO_LISTO = "update Pedido set Estado = 'Listo' where idPedido = ? ";
 	
-	private Database2 db = new Database2();
+	private Database2 db;
 	//private List<PedidoDTO> pedidos;
 	
 	public PedidoModel(Database2 database) {
@@ -50,7 +50,7 @@ public class PedidoModel {
 		return list;
 	}
 	
-	public List<PedidoDTO> getPedidoAlmacenreo (int idAlmacenro){
+	public List<PedidoDTO> getPedidoAlmacenero (int idAlmacenro){
 		List<PedidoDTO> list = new ArrayList<PedidoDTO>();
 		List<Object[]> listDb = db.executeQueryArray(SQL_PRODUCTOS_PEDIDO, idAlmacenro);
 		

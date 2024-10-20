@@ -9,6 +9,7 @@ import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
+import modelo.dto.PedidoProductoDTO;
 import modelo.dto.ProductoAlmacen;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.PedidoModel;
@@ -67,17 +68,11 @@ public class PedidoController {
 	}
 
 	public void getListaProductos(int idPedido) {
-		String texto = "";
-		List<ProductoAlmacen> pedidos = wModel.getProductos(idPedido);
-		for (ProductoAlmacen p : pedidos) {
-			texto += p.toString();
-			if (!p.equals(pedidos.get(pedidos.size() - 1))) {
-				texto += "\n"
-						+ "------------------------------------------------------------------------------------------------------"
-						+ "\n";
-			}
-		}
-		wView.getJTextProductos().setText(texto);
+		List<ProductoAlmacen> productos = wModel.getProductos(idPedido);
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(productos,
+				new String[] { "idProducto", "cantidad", "descripcion", "pasillo","estanteria","posicionEstanteria" });
+		wView.getTablaProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(wView.getTablaProductos());
 	}
 	
 	private void actualizaTabla() {
