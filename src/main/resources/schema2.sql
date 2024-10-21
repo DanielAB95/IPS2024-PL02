@@ -9,6 +9,12 @@ drop table Workorder;
 drop table Paquete;
 drop table Almacen;
 
+--crear una tabla cliente (puede ser empresa o particular)
+
+
+
+
+
 create table Producto(
     id int primary key not null, 
     nombre varchar(32) unique not null, 
@@ -26,6 +32,8 @@ create table PedidoProducto(
     check (cantidad >= 0)
 );
 
+	-- igual quitar numProductos para hacerlo con una Query sql
+	-- pedido meterle idCliente
 create table Pedido(
     idPedido int primary key not null,
     numProductos int not null,
@@ -40,6 +48,8 @@ create table Almacenero(
     apellido varchar(20) not null
 );
 
+	--se le asigna una workorder, no un pedido
+	--quitar idPedido
 create table AlmaceneroPedido(
     idAlmacenero int not null,
     idPedido int not null,
@@ -47,6 +57,8 @@ create table AlmaceneroPedido(
     foreign key (idPedido) references Pedido(idPedido)
 );
 
+
+	--quitar idPedido y hacer la relacion muchos a muchos con pedido
 create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
@@ -57,6 +69,8 @@ create table Workorder(
     foreign key (idPedido) references Pedido(idPedido)
 );
 
+	--esta asignado a un pedido, no a una workorder
+	-- que se puedan añadir incidencias a los paquetes
 create table Paquete(
     idPaquete int not null,
     idWorkorder int not null,
@@ -65,6 +79,7 @@ create table Paquete(
     foreign key (idWorkorder) references Workorder(idWorkorder)
 );
 
+	--igual cambiar nombres ?
 create table Almacen(
     idProducto int not null,
     estanteria int not null,
