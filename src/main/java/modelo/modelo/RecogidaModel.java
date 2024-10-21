@@ -21,7 +21,7 @@ public class RecogidaModel {
 	
 	
 	public RecogidaModel(Database2 db2,int idWorkorder) {
-		db = new Database2();
+		db = db2;
 		if (idWorkorder < 1) throw new IllegalArgumentException();
 		dto.idWorkorder = idWorkorder;
 		getWorkorder();
