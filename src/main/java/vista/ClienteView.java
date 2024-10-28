@@ -70,6 +70,7 @@ public class ClienteView extends JFrame {
 	 * Create the frame.
 	 */
 	public ClienteView(Database2 db, ClienteDTO dto) {
+		setTitle("Página de compra");
 		this.db = db;
 		this.dto = dto;
 		this.carrito = new Carrito();
