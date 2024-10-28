@@ -74,4 +74,5 @@ create table Almacen(
 );
 
 
+--cliente
 
