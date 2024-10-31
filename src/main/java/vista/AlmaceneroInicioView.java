@@ -13,6 +13,8 @@ import modelo.modelo.AlmaceneroModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class AlmaceneroInicioView extends JFrame {
 
@@ -31,9 +33,10 @@ public class AlmaceneroInicioView extends JFrame {
 	 * Create the frame.
 	 */
 	public AlmaceneroInicioView(Database2 db) {
+		setTitle("Inicio sesion");
 		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 275, 132);
+		setBounds(100, 100, 640, 960);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -54,7 +57,9 @@ public class AlmaceneroInicioView extends JFrame {
 	private JTextField getTxIdAlmacenero() {
 		if (txIdAlmacenero == null) {
 			txIdAlmacenero = new JTextField();
-			txIdAlmacenero.setBounds(101, 13, 118, 28);
+			txIdAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
+			txIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			txIdAlmacenero.setBounds(171, 234, 277, 136);
 			txIdAlmacenero.setColumns(10);
 		}
 		return txIdAlmacenero;
@@ -62,7 +67,8 @@ public class AlmaceneroInicioView extends JFrame {
 	private JLabel getLbIdAlmacenero() {
 		if (lbIdAlmacenero == null) {
 			lbIdAlmacenero = new JLabel("Escriba su id:");
-			lbIdAlmacenero.setBounds(10, 11, 118, 32);
+			lbIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbIdAlmacenero.setBounds(171, 144, 264, 73);
 		}
 		return lbIdAlmacenero;
 	}
@@ -70,7 +76,8 @@ public class AlmaceneroInicioView extends JFrame {
 	private JButton getBtContinuar() {
 		if (btContinuar == null) {
 			btContinuar =  new JButton("Continuar");
-			btContinuar.setBounds(52, 52, 138, 30);
+			btContinuar.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			btContinuar.setBounds(195, 692, 264, 102);
 		}
 		return btContinuar;
 	}

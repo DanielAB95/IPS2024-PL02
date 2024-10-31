@@ -2,11 +2,13 @@ package modelo.modelo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
@@ -21,21 +23,35 @@ public class CarritoModel {
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
 	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, numProductos, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
-	
+	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
 	
 	private Carrito carrito;
 	private Database2 db;
 	private CarritoView v;
 	private ClienteDTO dto;
+	private List<Producto> productosPosibles;
 	
 	public CarritoModel (Carrito c, CarritoView v, Database2 db, ClienteDTO dto) {
 		this.carrito = c;
 		this.v = v;
 		this.db = db;
 		this.dto = dto;
+		this.productosPosibles = getProductos();
 	}
 	
+	private List<Producto> getProductos() {
+		List<Producto> resultado = new ArrayList<Producto>();
+		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
+		
+		for (int i = 0; i < productos.size(); i++) {
+			Producto p = new Producto(productos.get(i)[0], productos.get(i)[1], productos.get(i)[2], productos.get(i)[3], productos.get(i)[4]);
+			resultado.add(p);
+		}
+		
+		return resultado;
+	}
+
 	public Database2 getDatabase() {
 		return this.db;
 	}
@@ -133,10 +149,12 @@ public class CarritoModel {
 		return result;
 	}
 	
-	public void añadeProductosListModel(DefaultListModel<String> lista) {
+	public void añadeProductosListModel(DefaultTableModel tabla) {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
-		for (int i = 0; i < productosCarrito.size(); i++) {
-			lista.addElement(((Producto) productosCarrito.get(i)[0]).getNombre());
+		for (Object[] o: productosCarrito) {
+			//nombre producto, cantidad Producto, precio producto
+			Object[] fila = { ((Producto) o[0]).getNombre(),  o[1],  ((Producto) o[0]).getPrecio() * (int)o[1] };
+			tabla.addRow(fila);
 		}
 	}
 	
@@ -241,5 +259,14 @@ public class CarritoModel {
 
 	public ClienteDTO getDto() {
 		return dto;
+	}
+
+	public String getPrecioPorNombre(String nombre, int cantidad) {
+		double precio = 0;
+		for (Producto p: this.productosPosibles) {
+			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
+		}
+		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
+		return precioFormateado;
 	}
 }

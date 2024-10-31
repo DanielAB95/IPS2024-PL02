@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.Font;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.JTable;
 
 public class WorkorderView extends JFrame {
@@ -26,19 +29,19 @@ public class WorkorderView extends JFrame {
 	private JTextField txPedido;
 	private JScrollPane productoPanel;
 	private JLabel lbProductos;
-	private JTable tabProductos;
 	private Database2 db;
 	private WorkorderModel model;
 	private WorkorderController controller;
+	private JTable tbProductos;
 
 	/**
 	 * Create the frame.
 	 */
 	public WorkorderView(Database2 db) {
 		this.db = db;
-		setTitle("Workorder");
+		setTitle("Almacenero: WorkOrder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 844, 418);
+		setBounds(100, 100, 640, 960);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -58,15 +61,18 @@ public class WorkorderView extends JFrame {
 	private JLabel getLbAlmacenero() {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero responsable:");
-			lbAlmacenero.setBounds(10, 53, 185, 39);
+			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbAlmacenero.setBounds(100, 122, 360, 63);
 		}
 		return lbAlmacenero;
 	}
 	private JTextField getTxAlmacenero() {
 		if (txAlmacenero == null) {
 			txAlmacenero = new JTextField();
+			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
+			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(184, 57, 221, 30);
+			txAlmacenero.setBounds(100, 172, 420, 82);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
@@ -74,15 +80,18 @@ public class WorkorderView extends JFrame {
 	private JLabel getLblPedido() {
 		if (lblPedido == null) {
 			lblPedido = new JLabel("Pedido:");
-			lblPedido.setBounds(10, 11, 136, 30);
+			lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lblPedido.setBounds(100, 11, 162, 55);
 		}
 		return lblPedido;
 	}
 	private JTextField getTxPedido() {
 		if (txPedido == null) {
 			txPedido = new JTextField();
+			txPedido.setHorizontalAlignment(SwingConstants.CENTER);
+			txPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txPedido.setEditable(false);
-			txPedido.setBounds(181, 11, 224, 35);
+			txPedido.setBounds(100, 64, 246, 55);
 			txPedido.setColumns(10);
 		}
 		return txPedido;
@@ -90,24 +99,26 @@ public class WorkorderView extends JFrame {
 	private JScrollPane getProductoPanel() {
 		if (productoPanel == null) {
 			productoPanel = new JScrollPane();
-			productoPanel.setBounds(0, 133, 828, 246);
-			productoPanel.setViewportView(getTabProductos());
+			productoPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			productoPanel.setBounds(0, 358, 626, 501);
+			productoPanel.setViewportView(getTbProductos());
 		}
 		return productoPanel;
 	}
 	private JLabel getLbProductos() {
 		if (lbProductos == null) {
 			lbProductos = new JLabel("Productos:");
-			lbProductos.setBounds(20, 103, 192, 39);
+			lbProductos.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbProductos.setBounds(100, 308, 192, 39);
 		}
 		return lbProductos;
 	}
 	
-	private JTable getTabProductos() {
-		if (tabProductos == null) {
-			tabProductos = new JTable();
+	private JTable getTbProductos() {
+		if (tbProductos == null) {
+			tbProductos = new JTable();
 		}
-		return tabProductos;
+		return tbProductos;
 	}
 	
 	//Metodos auxiliares
@@ -120,9 +131,6 @@ public class WorkorderView extends JFrame {
 		return this.txAlmacenero;
 	}
 	
-	public JTable getTablaProductos() {
-		return this.tabProductos;
-	}
 	
 	public JFrame getFrame() {
 		return this;
@@ -132,5 +140,8 @@ public class WorkorderView extends JFrame {
 		return this.db;
 	}
 	
+	public JTable getTablaProductos() {
+		return this.tbProductos;
+	}
 	
 }

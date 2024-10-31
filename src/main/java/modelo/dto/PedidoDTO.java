@@ -87,6 +87,19 @@ public class PedidoDTO {
 		this.estado = estado;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("IdPedido: ");
+		sb.append(getIdPedido());
+		sb.append(" | ");
+		sb.append("Tamaño: ");
+		sb.append(getNumProductos());
+		sb.append(" | ");
+		sb.append("Fecha: ");
+		sb.append(getFecha());
+		
+		return sb.toString();
+	}
 	
 	
 	

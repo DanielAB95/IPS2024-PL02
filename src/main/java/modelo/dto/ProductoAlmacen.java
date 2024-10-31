@@ -67,5 +67,32 @@ public class ProductoAlmacen {
 		this.posicionEstanteria = posicionEstanteria;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("IdProducto: ");
+		sb.append(getIdProducto());
+		sb.append("\n");
+		sb.append(" Cantidad: ");
+		sb.append(getCantidad());
+		sb.append("\n");
+		sb.append("Descripcion: ");
+		sb.append(getDescripcion());
+		sb.append("\n");
+		sb.append("Ubicacion: ");
+		sb.append("\n");
+		sb.append("\t");
+		sb.append("pasillo: ");
+		sb.append(getPasillo());
+		sb.append("\n");
+		sb.append("\t");
+		sb.append(" estanteria: ");
+		sb.append(getEstanteria());
+		sb.append("\n");
+		sb.append("\t");
+		sb.append(" posicion en estanteria: ");
+		sb.append(getPosicionEstanteria());
+		return sb.toString();
+		
+	}
 	
 }

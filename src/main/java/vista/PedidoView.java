@@ -10,7 +10,7 @@ import controlador.PedidoController;
 import giis.demo.util.Database2;
 import modelo.modelo.PedidoModel;
 
-import java.awt.GridLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
+
 public class PedidoView extends JFrame {
 
 	/**
@@ -28,22 +29,24 @@ public class PedidoView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JScrollPane tablePanel;
-	private JTable tabPedidos;
 	private PedidoModel model;
 	private PedidoController controller;
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
 	private Database2 db;
+	private JLabel lbPedidosPendientes;
+	private JTable tbPedidos;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public PedidoView(Database2 db) {
+		setResizable(false);
 		this.db = db;
-		setTitle("Pedidos pendientes");
+		setTitle("Almacenero: Generar WorkOrder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 612, 416);
+		setBounds(100, 100, 640, 960);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,6 +56,7 @@ public class PedidoView extends JFrame {
 		contentPane.add(getTablePanel());
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTextField());
+		contentPane.add(getLbPedidosPendientes());
 		
 		model = new PedidoModel(db);
 		controller = new PedidoController(this, model);
@@ -62,47 +66,53 @@ public class PedidoView extends JFrame {
 
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
-	        tablePanel = new JScrollPane(getTabPedidos()); 
-	        tablePanel.setBounds(0, 48, 596, 329);
+	        tablePanel = new JScrollPane(); 
+	        tablePanel.setBounds(0, 239, 626, 682);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
+	        tablePanel.setViewportView(getTbPedidos());
 	    }
 	    return tablePanel;
-	}
-	private JTable getTabPedidos() {
-		if (tabPedidos == null) {
-			tabPedidos = new JTable();
-			tabPedidos.setDefaultEditor(Object.class, null); //readonly
-			tabPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tabPedidos.setName("tabPedidos");
-		}
-		return tabPedidos;
 	}
 	
 	private JLabel getLbAlmacenero() {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero en sesion:");
-			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lbAlmacenero.setBounds(200, 11, 153, 26);
+			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbAlmacenero.setBounds(117, 10, 361, 75);
 		}
 		return lbAlmacenero;
 	}
 	private JTextField getTextField() {
 		if (txAlmacenero == null) {
 			txAlmacenero = new JTextField();
+			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(329, 14, 194, 23);
+			txAlmacenero.setBounds(117, 91, 426, 86);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
 	}
 	
+	private JLabel getLbPedidosPendientes() {
+		if (lbPedidosPendientes == null) {
+			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
+			lbPedidosPendientes.setVisible(false);
+			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbPedidosPendientes.setBounds(117, 198, 377, 42);
+		}
+		return lbPedidosPendientes;
+	}
+	
+	private JTable getTbPedidos() {
+		if (tbPedidos == null) {
+			tbPedidos = new JTable();
+			tbPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tbPedidos;
+	}
 	
 	//Metodos Auxiliares
-	
-	public JTable getTablaPedidos() {
-		return this.tabPedidos;
-	}
 	
 	public JTextField getTextAlmacenero() {
 		return this.txAlmacenero;
@@ -111,4 +121,13 @@ public class PedidoView extends JFrame {
 	public Database2 getDatabase() {
 		return this.db;
 	}
+	
+	public JTable getTablaPedidos(){
+		return this.tbPedidos;
+	}
+	
+	public JLabel getLabelPedidosPendientes() {
+		return this.lbPedidosPendientes;
+	}
+	
 }
