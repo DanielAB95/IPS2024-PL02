@@ -167,7 +167,7 @@ public class EmpaquetadoController {
 		em.empaquetar(1, idWorkorder);
 		ew.dispose();
 		FacturaView fw = new FacturaView();
-		new FacturaController(fw, new FacturaModel(em.getDB()));
+		new FacturaController(fw, new FacturaModel(em.getDB(), 2));
 		fw.setVisible(true);
 	}
 }

@@ -138,6 +138,8 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(1, 10, 12),
 	(1, 3, 2),
 	(2, 3, 2),
+    (3, 1, 2),
+    (3, 2, 1),
 	(4, 4, 4),
 	(4, 6, 7),
 	(5, 5, 2),
@@ -166,13 +168,17 @@ delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
 	(1, 1, 'Pendiente'),
 	(2, 2, 'Pendiente'),
-	(3, 4, 'Pendiente'),
+	(3, 4, 'Listo'),
 	(4, 5, 'Incidencia'),
 	(5, 1, 'Listo'),
 	(6, 3, 'Listo');
 
 delete from Paquete;
-insert into Paquete(idPaquete,idPedido, paqueteEstado) values
+insert into Paquete(idPaquete, idPedido, paqueteEstado) values
 	(2, 3, 'Listo');
 
+delete from PaqueteProducto;
+insert into PaqueteProducto(idPaquete, idProducto, cantidad) values
+    (2, 1, 2),
+    (2, 2, 1);
 
