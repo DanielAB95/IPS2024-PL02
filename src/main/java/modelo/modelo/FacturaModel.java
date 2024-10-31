@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import giis.demo.util.Database2;
-import modelo.dto.PaqueteDto;
 import modelo.dto.PaqueteWrapper;
 import modelo.dto.Producto;
 import modelo.dto.ProductoWrapper;
+import persistence.dto.PaqueteDto;
 
 public class FacturaModel {
 	

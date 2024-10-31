@@ -108,18 +108,16 @@ create table WorkorderProducto(
     check (cantidad >= 0),
     check (recogidos >= 0),
     primary key (idWorkorder, idPedido, idProducto)
-    check (paqueteEstado in('Pendiente','Listo','Incidencia')),
-    foreign key (idPedido) references Pedido(idPedido)
 );
 
 create table PaqueteProducto(
     idPaquete int not null,
     idProducto int not null,
     cantidad int not null,
-    recogidos int not null,
+    empaquetados int not null,
     foreign key (idPaquete) references Paquete(idPaquete),
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0),
-    check (recogidos >= 0),
+    check (empaquetados >= 0),
     primary key (idPaquete, idProducto)
 );
