@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -18,10 +19,15 @@ public class ClienteController {
 	
 	private ClienteView view;
 	private ClienteModel model;
+	private DefaultListModel<Producto> moodeloProducto;
+		
+	
 	
 	public ClienteController(ClienteView view, ClienteModel model) {
 		this.model = model;
 		this.view = view;
+		this.moodeloProducto = new DefaultListModel<Producto
+				>();
 	}
 	
 	public void initView() {
@@ -60,57 +66,25 @@ public class ClienteController {
 		
 		
 		//boton eliminar de carrito
-		view.getBtnEliminar().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int filaSeleccionada = view.getTable().getSelectedRow();
-				if (filaSeleccionada != -1) {
-					String nombreProducto = (String) view.getTable().getValueAt(filaSeleccionada, 0);
-					view.getTableModel().removeRow(filaSeleccionada);
-					view.getCarrito().removeFromCarrito(nombreProducto);
-					
-					actualizaLblTotal();
-				}
-			}
-		});
+//		view.getBtnEliminar().addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				int filaSeleccionada = view.getTable().getSelectedRow();
+//				if (filaSeleccionada != -1) {
+//					String nombreProducto = (String) view.getTable().getValueAt(filaSeleccionada, 0);
+//					view.getTableModel().removeRow(filaSeleccionada);
+//					view.getCarrito().removeFromCarrito(nombreProducto);
+//					
+//					actualizaLblTotal();
+//				}
+//			}
+//		});
 		
 		
-		//action listener apra la JTABLE
-		view.getTableModel().addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                // verificar si el cambio es en la columna 1 (Cantidad)
-                if (e.getColumn() == 1 && e.getType() == TableModelEvent.UPDATE) {
-                    int fila = e.getFirstRow(); //devuelve la fila que cambio
-                    
-                    // obtener la cantidad modificada
-                    int nuevaCantidad = Integer.valueOf((String) view.getTableModel().getValueAt(fila, 1));
-                    
-                    String nuevoPrecio = model.getPrecioPorNombre((String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
-                    
-                    view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
-                    
-                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
-                   
-                    actualizaLblTotal();
-                    
-                    
-                }
-            }
-        });
+	
 		
 		
-		view.getTablaProductos().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				
-				int fila = view.getTablaProductos().getSelectedRow();
-				String producto = (String) view.getTablaProductos().getValueAt(fila, 0);
-				String categoria = model.getCategoriaPorNombre(producto);
-				view.getTextCategoria().setText(categoria);
-			}
-		});
+		
 		
 		
 		view.getBtnAdd().addActionListener(new ActionListener() {

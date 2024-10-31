@@ -5,20 +5,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import modelo.modelo.AlmaceneroModel;
 import vista.AlmaceneroInicioView;
 import vista.AlmaceneroView;
 import vista.PedidoView;
-import vista.PlanoAlmecenView;
 
 public class AlmaceneroController {
 	private AlmaceneroView view;
 	private AlmaceneroInicioView viewId;
 	private AlmaceneroModel model;
-	private PlanoAlmecenView plView;
 	List<Integer> ids = new ArrayList<Integer>();
 	private int idAlmacenero;
 	
@@ -27,7 +24,6 @@ public class AlmaceneroController {
 		this.view = view;
 		this.model = model;
 		this.ids = model.getIdExistente();
-		this.plView = new PlanoAlmecenView();
 	}
 	
 	
@@ -72,14 +68,7 @@ public class AlmaceneroController {
 			public void actionPerformed(ActionEvent e) {
 				mostrarPedidosPendientes(idAlmacenero);
 			}
-		});	
-		view.getButtonPlanosAlmacen().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mostrarPlanosAlmacen();	
-			}
-		});	
+		});		
 	}
 
 	private void mostrarAlmaceneroView() {
@@ -87,12 +76,6 @@ public class AlmaceneroController {
 		view.getFrame().setLocationRelativeTo(viewId.getFrame());
 	}
 	
-	private void mostrarPlanosAlmacen() {
-		
-		plView.getLabelAlmacen().setIcon(new ImageIcon(PlanoAlmecenView.class.getResource("/imagenes/Almacen.png")));
-		plView.setLocationRelativeTo(view);
-		plView.setVisible(true);
-	}
 	
 	private void mostrarPedidosPendientes(int idAlmacenero) {
 		PedidoView pv = new PedidoView(viewId.getDatabase());

@@ -39,7 +39,6 @@ public class ClienteView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ClienteModel model;
-	private JLabel lblProductos;
 	JComboBox<Integer> comboBoxCantidad;
 	private JLabel lblCantidad;
 	private JLabel lblCategoria;
@@ -62,8 +61,10 @@ public class ClienteView extends JFrame {
 	private JTextField textPrecioTotal;
 	private JButton btnEliminar;
 	private JPanel panelProductos;
-	private JScrollPane scrollPane_1;
-	private JTable tablaProductos;
+	private JScrollPane pnProductos;
+	private JList<Producto> listProductos;
+	private JButton btAnterior;
+	private JButton btInicio;
 
 
 	/**
@@ -90,7 +91,6 @@ public class ClienteView extends JFrame {
 		
 		
 		contentPane.add(getLblCantidad());
-		contentPane.add(getLblProductos());
 		contentPane.add(getLblCategoria());
 		contentPane.add(getTextCategoria());
 		contentPane.add(getBtnAdd());
@@ -99,10 +99,12 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLblNombreUsuario());
 		contentPane.add(getPanelCarrito());
 		contentPane.add(getLblCarrito());
-		contentPane.add(getPrecioTotal());
-		contentPane.add(getTextPrecioTotal());
+		//contentPane.add(getPrecioTotal());
+	//	contentPane.add(getTextPrecioTotal());
 		contentPane.add(getBtnEliminar());
 		contentPane.add(getPanelProductos());
+		contentPane.add(getBtAnterior());
+		contentPane.add(getBtInicio());
 		//contentPane.add(getList());
 		
 		model.rellenaTablaProductos(this.tableModelProductos);
@@ -111,31 +113,24 @@ public class ClienteView extends JFrame {
 		controller.initView(); //inicializa los datos para visualizarlos desde el principio
 		controller.initController(); //añade los action listeners
 	}
-	public JLabel getLblProductos() {
-		if (lblProductos == null) {
-			lblProductos = new JLabel("Productos: ");
-			lblProductos.setBounds(10, 68, 91, 14);
-		}
-		return lblProductos;
-	}
 	public JComboBox<Integer> getComboBoxCantidad() {
 		if (comboBoxCantidad == null) {
 			comboBoxCantidad = new JComboBox<Integer>();			
-			comboBoxCantidad.setBounds(446, 64, 77, 22);
+			comboBoxCantidad.setBounds(496, 64, 77, 22);
 		}
 		return comboBoxCantidad;
 	}
 	public JLabel getLblCantidad() {
 		if (lblCantidad == null) {
 			lblCantidad = new JLabel("Cantidad: ");
-			lblCantidad.setBounds(369, 68, 67, 14);
+			lblCantidad.setBounds(494, 46, 67, 14);
 		}
 		return lblCantidad;
 	}
 	public JLabel getLblCategoria() {
 		if (lblCategoria == null) {
-			lblCategoria = new JLabel("Categoría: ");
-			lblCategoria.setBounds(10, 39, 77, 14);
+			lblCategoria = new JLabel("Estas en:");
+			lblCategoria.setBounds(162, 46, 77, 14);
 		}
 		return lblCategoria;
 	}
@@ -143,7 +138,7 @@ public class ClienteView extends JFrame {
 		if (textCategoria == null) {
 			textCategoria = new JTextField();
 			textCategoria.setEditable(false);
-			textCategoria.setBounds(75, 36, 86, 20);
+			textCategoria.setBounds(162, 64, 219, 23);
 			textCategoria.setColumns(10);
 		}
 		return textCategoria;
@@ -153,7 +148,7 @@ public class ClienteView extends JFrame {
 			btnAdd = new JButton("Añadir");		
 			btnAdd.setForeground(Color.WHITE);
 			btnAdd.setBackground(Color.BLACK);
-			btnAdd.setBounds(533, 64, 89, 23);
+			btnAdd.setBounds(595, 64, 89, 23);
 		}
 		return btnAdd;
 	}
@@ -191,9 +186,8 @@ public class ClienteView extends JFrame {
 			panelCarrito = new JPanel();
 			panelCarrito.setBounds(712, 93, 245, 218);
 			panelCarrito.setLayout(new BorderLayout(0, 0));
-			JScrollPane scrollPane = new JScrollPane(getTable());
-			panelCarrito.add(scrollPane);
-			//panel.add(getTable());
+		//	JScrollPane scrollPane = new JScrollPane(getTable());
+		//	panelCarrito.add(scrollPane);
 		}
 		return panelCarrito;
 	}
@@ -205,6 +199,44 @@ public class ClienteView extends JFrame {
 		return lblCarrito;
 	}
 	
+	private JPanel getPanelProductos() {
+		if (panelProductos == null) {
+			panelProductos = new JPanel();
+			panelProductos.setBounds(10, 93, 612, 357);
+			panelProductos.setLayout(new BorderLayout(0, 0));
+			panelProductos.add(getPnProductos());
+			
+		}
+		return panelProductos;
+	}
+	private JScrollPane getPnProductos() {
+		if (pnProductos == null) {
+			pnProductos = new JScrollPane();
+			pnProductos.setViewportView(getListProductos());
+		}
+		return pnProductos;
+	}
+	private JList<Producto> getListProductos() {
+		if (listProductos == null) {
+			listProductos = new JList<Producto>();
+		}
+		return listProductos;
+	}
+	private JButton getBtAnterior() {
+		if (btAnterior == null) {
+			btAnterior = new JButton("Volver Atras");
+			btAnterior.setBounds(34, 64, 102, 23);
+		}
+		return btAnterior;
+	}
+	private JButton getBtInicio() {
+		if (btInicio == null) {
+			btInicio = new JButton("Inicio");
+			btInicio.setBounds(391, 64, 89, 23);
+		}
+		return btInicio;
+	}
+	
 	public DefaultListModel<String> getListModel() {
 		return listModel;
 	}
@@ -213,60 +245,6 @@ public class ClienteView extends JFrame {
 		return dto;
 	}
 	
-	public JTable getTable() {
-		if (table == null) {
-			Object[] columnNames = {"   Producto   ", "Cantidad ", "€ "};
-			//tableModel = new DefaultTableModel(columnNames, 0);
-			tableModelCarrito = new MyTableModel(columnNames);
-			table = new JTable(tableModelCarrito);
-			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			TableColumnModel columnModel = table.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(200);
-			columnModel.getColumn(1).setPreferredWidth(85);
-			columnModel.getColumn(1).setPreferredWidth(85);	
-			table.setBounds(712, 64, 160, 236);
-			
-		}
-		return table;
-	}
-	
-	public DefaultTableModel getTableModel() {
-		return tableModelCarrito;
-	}
-	private JLabel getPrecioTotal() {
-		if (PrecioTotal == null) {
-			PrecioTotal = new JLabel("Precio Total:");
-			PrecioTotal.setBounds(868, 322, 77, 14);
-		}
-		return PrecioTotal;
-	}
-	public JTextField getTextPrecioTotal() {
-		if (textPrecioTotal == null) {
-			textPrecioTotal = new JTextField();
-			textPrecioTotal.setEditable(false);
-			textPrecioTotal.setBounds(868, 347, 89, 20);
-			textPrecioTotal.setColumns(10);
-		}
-		return textPrecioTotal;
-	}
-	
-	// clase que extiende DefaultTableModel
-    static class MyTableModel extends DefaultTableModel {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public MyTableModel(Object[] data) {
-            super(data,0);
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            // solo la segunda columna (índice 1) es editable
-            return column == 1; 
-        }
-    }
 	public JButton getBtnEliminar() {
 		if (btnEliminar == null) {
 			btnEliminar = new JButton("Eliminar");
@@ -276,47 +254,16 @@ public class ClienteView extends JFrame {
 		}
 		return btnEliminar;
 	}
-	private JPanel getPanelProductos() {
-		if (panelProductos == null) {
-			panelProductos = new JPanel();
-			panelProductos.setBounds(10, 93, 612, 357);
-			panelProductos.setLayout(new BorderLayout(0, 0));
-			panelProductos.add(getScrollPane_1());
-			
-		}
-		return panelProductos;
+	
+	public JButton getButtonAnterior() {
+		return this.btAnterior;
 	}
-	private JScrollPane getScrollPane_1() {
-		if (scrollPane_1 == null) {
-			scrollPane_1 = new JScrollPane(getTablaProductos());
-		}
-		return scrollPane_1;
+	
+	public JButton getButtonInivio() {
+		return this.btInicio;
 	}
-	public JTable getTablaProductos() {
-		if (tablaProductos == null) {
-					
-			Object[] columnNames = {"  Nombre Producto  ", " € / Ud ", "   Descripción   "};
-			tableModelProductos = new DefaultTableModel(columnNames, 0) {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-	            public boolean isCellEditable(int row, int column) {
-	                // ninguna celda es editable
-	                return false;
-	            }
-	        };
-			
-			tablaProductos = new JTable(tableModelProductos);
-			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			
-			
-			//ajusto tamaño de las columnas:
-			TableColumnModel columnModel = tablaProductos.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(160);
-			columnModel.getColumn(1).setPreferredWidth(50);
-			columnModel.getColumn(2).setPreferredWidth(380);	
-			
-		}
-		return tablaProductos;
+	
+	public JList<Producto> getListaProductos(){
+		return this.listProductos;
 	}
 }
