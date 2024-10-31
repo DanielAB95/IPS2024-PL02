@@ -62,7 +62,7 @@ public class RecogidaView extends JFrame {
 		setResizable(false);
 		setTitle("Recogida");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 599, 430);
+		setBounds(100, 100, 599, 669);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -80,6 +80,7 @@ public class RecogidaView extends JFrame {
 		contentPane.add(getBtIncidencia());
 		contentPane.add(getTextArea());
 		contentPane.add(getLbID());
+		contentPane.add(getProductosList());
 		setLocationRelativeTo(null);
 		
 		rc = new RecogidaController(this);
@@ -89,6 +90,7 @@ public class RecogidaView extends JFrame {
 		if (productosList == null) {
 			listModel = new DefaultListModel<ProductoWrapper>();
 			productosList = new JList<>(listModel);
+			productosList.setBounds(10, 59, 247, 320);
 		}
 		return productosList;
 	}
@@ -103,7 +105,7 @@ public class RecogidaView extends JFrame {
 			btAceptar.setEnabled(false);
 			btAceptar.setBackground(Color.GREEN);
 			btAceptar.setForeground(Color.WHITE);
-			btAceptar.setBounds(385, 357, 89, 23);
+			btAceptar.setBounds(10, 596, 89, 23);
 		}
 		return btAceptar;
 	}
@@ -112,7 +114,7 @@ public class RecogidaView extends JFrame {
 			btCancelar = new JButton("Cancelar");
 			btCancelar.setBackground(Color.RED);
 			btCancelar.setForeground(Color.WHITE);
-			btCancelar.setBounds(484, 357, 89, 23);
+			btCancelar.setBounds(484, 596, 89, 23);
 		}
 		return btCancelar;
 	}
@@ -130,7 +132,7 @@ public class RecogidaView extends JFrame {
 	public JTextField getTxfIDProducto() {
 		if (txfIDProducto == null) {
 			txfIDProducto = new JTextField();
-			txfIDProducto.setBounds(305, 56, 97, 36);
+			txfIDProducto.setBounds(306, 12, 97, 36);
 			txfIDProducto.setColumns(10);
 		}
 		return txfIDProducto;
@@ -139,7 +141,7 @@ public class RecogidaView extends JFrame {
 		if (spinner == null) {
 			spinner = new JSpinner();
 			spinner.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-			spinner.setBounds(412, 56, 62, 36);
+			spinner.setBounds(419, 12, 62, 36);
 		}
 		return spinner;
 	}
@@ -148,15 +150,14 @@ public class RecogidaView extends JFrame {
 			btComprobar = new JButton("Comprobar");
 			btComprobar.setEnabled(false);
 			btComprobar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			btComprobar.setBounds(484, 55, 89, 37);
+			btComprobar.setBounds(494, 12, 89, 37);
 		}
 		return btComprobar;
 	}
 	public JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 58, 249, 322);
-			scrollPane.setViewportView(getProductosList());
+			scrollPane.setBounds(10, 58, 563, 322);
 		}
 		return scrollPane;
 	}
@@ -174,7 +175,7 @@ public class RecogidaView extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Escribir incidencia:");
 			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblNewLabel.setBounds(269, 202, 304, 20);
+			lblNewLabel.setBounds(10, 418, 304, 20);
 		}
 		return lblNewLabel;
 	}
@@ -182,14 +183,14 @@ public class RecogidaView extends JFrame {
 		if (btIncidencia == null) {
 			btIncidencia = new JButton("Apuntar");
 			btIncidencia.setEnabled(false);
-			btIncidencia.setBounds(269, 357, 89, 23);
+			btIncidencia.setBounds(324, 419, 89, 23);
 		}
 		return btIncidencia;
 	}
 	public JTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new JTextArea();
-			textArea.setBounds(269, 233, 304, 88);
+			textArea.setBounds(10, 449, 304, 88);
 		}
 		return textArea;
 	}
@@ -197,7 +198,7 @@ public class RecogidaView extends JFrame {
 		if (lbID == null) {
 			lbID = new JLabel("ID:");
 			lbID.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lbID.setBounds(269, 56, 26, 36);
+			lbID.setBounds(269, 11, 26, 37);
 		}
 		return lbID;
 	}

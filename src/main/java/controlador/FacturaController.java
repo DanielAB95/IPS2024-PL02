@@ -50,8 +50,8 @@ public class FacturaController {
 	private void generarFactura() {
 		StringBuilder factura = new StringBuilder();
          
-		factura.append("Fecha: " + getDate() + "\n");
-		factura.append("Numero de factura: 00123\n\n");
+		factura.append("Fecha: " + getDate() + "\n\n");
+		factura.append("ID del pedido:" + getIDPedido() + "\n");
 		factura.append("ID del paquete: " + getIDPaquete() + "\n");
 		factura.append("Productos: \n");
 		factura.append(getProductosString());
@@ -68,6 +68,10 @@ public class FacturaController {
 	private int getIDPaquete() {
 		PaqueteWrapper pq = (PaqueteWrapper)fv.getComboBox().getSelectedItem();
 		return pq.getIDPaquete();
+	}
+	
+	private int getIDPedido() {
+		return fm.getIDPedido();
 	}
 	
 	private String getProductosString() {
