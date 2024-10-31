@@ -38,7 +38,7 @@ public class FacturaView extends JDialog {
 		setTitle("Facturación");
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 360, 640);
+		setBounds(100, 100, 480, 854);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -57,7 +57,7 @@ public class FacturaView extends JDialog {
 			textArea = new JTextArea();
 			textArea.setTabSize(4);
 			textArea.setEditable(false);
-			textArea.setBounds(10, 11, 324, 579);
+			textArea.setBounds(10, 11, 444, 793);
 		}
 		return textArea;
 	}
