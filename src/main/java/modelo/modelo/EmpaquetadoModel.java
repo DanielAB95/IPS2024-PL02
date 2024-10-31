@@ -31,7 +31,7 @@ public class EmpaquetadoModel {
 		List<Object[]> result = db.executeQueryArray(SQL_WOLISTAS);
 		
 		for (Object[] o : result) {
-			WorkorderDTO wo = new WorkorderDTO((int)o[0], (int)o[1], (int)o[2]);
+			WorkorderDTO wo = new WorkorderDTO((int)o[0], (int)o[1]);
 			workorders.add(wo);
 		}
 		return workorders;

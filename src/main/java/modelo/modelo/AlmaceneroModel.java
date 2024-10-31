@@ -13,19 +13,6 @@ public class AlmaceneroModel {
 	public static final String SQL_ALMACENERO_PEDIDO = "select ap.idPedido from AlmaceneroPedido ap join Almacenero a on ap.idAlmacenero = a p.idAlmacenero and a.idAlmacenero = ?";
 	
 	private Database2 db=new Database2();
-	//private List<AlmaceneroDTO> almaceneros = new ArrayList<AlmaceneroDTO>();
-	
-//	public List<AlmaceneroDTO> getAlmaceneros(){
-//		List<AlmaceneroDTO> list =  new ArrayList<AlmaceneroDTO>();
-//		List<Object[]> listDb = db.executeQueryArray(SQL_ALMACENERO); 
-//		for (int i = 0; i < listDb.size(); i++) {
-//			AlmaceneroDTO a = new AlmaceneroDTO((int)listDb.get(i)[0], (String)listDb.get(i)[1],(String) listDb.get(i)[2]);
-//			list.add(p);
-//		}
-//		
-//		return resultado;
-//		
-//	}
 	
 	public AlmaceneroModel(Database2 database) {
 		this.db = database;

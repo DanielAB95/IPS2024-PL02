@@ -19,6 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class PedidoView extends JFrame {
@@ -36,6 +40,11 @@ public class PedidoView extends JFrame {
 	private Database2 db;
 	private JLabel lbPedidosPendientes;
 	private JTable tbPedidos;
+	private JPanel pnMenu;
+	private JButton btGenerarWorkOrder;
+	private JButton btRecogida;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
 
 
 	/**
@@ -57,6 +66,7 @@ public class PedidoView extends JFrame {
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTextField());
 		contentPane.add(getLbPedidosPendientes());
+		contentPane.add(getPnMenu());
 		
 		model = new PedidoModel(db);
 		controller = new PedidoController(this, model);
@@ -67,7 +77,7 @@ public class PedidoView extends JFrame {
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
 	        tablePanel = new JScrollPane(); 
-	        tablePanel.setBounds(0, 239, 626, 682);
+	        tablePanel.setBounds(0, 239, 626, 561);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
 	        tablePanel.setViewportView(getTbPedidos());
 	    }
@@ -112,6 +122,47 @@ public class PedidoView extends JFrame {
 		return tbPedidos;
 	}
 	
+	private JPanel getPnMenu() {
+		if (pnMenu == null) {
+			pnMenu = new JPanel();
+			pnMenu.setBounds(0, 821, 626, 100);
+			pnMenu.setLayout(new GridLayout(0, 4, 0, 0));
+			pnMenu.add(getBtGenerarWorkOrder());
+			pnMenu.add(getBtRecogida());
+			pnMenu.add(getBtnNewButton_2());
+			pnMenu.add(getBtnNewButton_3());
+		}
+		return pnMenu;
+	}
+	private JButton getBtGenerarWorkOrder() {
+		if (btGenerarWorkOrder == null) {
+			btGenerarWorkOrder = new JButton("Generar WorkOrder");
+			btGenerarWorkOrder.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+		}
+		return btGenerarWorkOrder;
+	}
+	private JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+		}
+		return btRecogida;
+	}
+	private JButton getBtnNewButton_2() {
+		if (btnNewButton_2 == null) {
+			btnNewButton_2 = new JButton("New button");
+		}
+		return btnNewButton_2;
+	}
+	private JButton getBtnNewButton_3() {
+		if (btnNewButton_3 == null) {
+			btnNewButton_3 = new JButton("New button");
+		}
+		return btnNewButton_3;
+	}
+	
 	//Metodos Auxiliares
 	
 	public JTextField getTextAlmacenero() {
@@ -128,6 +179,14 @@ public class PedidoView extends JFrame {
 	
 	public JLabel getLabelPedidosPendientes() {
 		return this.lbPedidosPendientes;
+	}
+	
+	public JButton getButtonGenerarWorkOrders() {
+		return this.btGenerarWorkOrder;
+	}
+	
+	public JButton getButtonRecogida() {
+		return this.btRecogida;
 	}
 	
 }

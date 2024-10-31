@@ -13,7 +13,7 @@ import modelo.dto.ProductoAlmacen;
 import modelo.dto.WorkorderDTO;
 
 public class WorkorderModel {
-	private static final String SQL_ADD_WORKORDER = "insert into Workorder (idWorkOrder, idAlmacenero, idPedido, workorderEstado) values (?, ?, ?, ?)";
+	private static final String SQL_ADD_WORKORDER = "insert into Workorder (idWorkOrder, idAlmacenero, workorderEstado) values (?, ?, ?)";
 	private static final String SQL_WORKORDERS = "select * from Workorder";
 	private static final String SQL_WORKORDER_ALMACENERO = "select idAlmacenero from Workorder where idWorkorder = ?";
 	private static final String SQL_WORKORDER_PEDIDO= "select idAlmacenero from Workorder where idWorkorder = ?";
@@ -38,10 +38,9 @@ public class WorkorderModel {
 		incidencias.add(incidenciaStr);
 	}
 	
-	public void crearWorkorder(int idAlmacenero, int idPedido) {
-		addPedido(idPedido);
+	public void crearWorkorder(int idAlmacenero) {
 		int idWorkorder = generarIdWorkorder();
-		db.executeUpdate(SQL_ADD_WORKORDER, idWorkorder,idAlmacenero,idPedido,"Pendiente");
+		db.executeUpdate(SQL_ADD_WORKORDER, idWorkorder,idAlmacenero,"Pendiente");
 	}
 	
 	public void addPedidos(List<Integer> pedidosIn) {
@@ -61,7 +60,7 @@ public class WorkorderModel {
 		List<Object[]> workorders = db.executeQueryArray(SQL_WORKORDERS);
 		
 		for (int i = 0; i < workorders.size(); i++) {
-			WorkorderDTO w = new WorkorderDTO((int)workorders.get(i)[0], (int)workorders.get(i)[1], (int)workorders.get(i)[2]);
+			WorkorderDTO w = new WorkorderDTO((int)workorders.get(i)[0], (int)workorders.get(i)[1]);
 			list.add(w);	
 		}
 		return list;
