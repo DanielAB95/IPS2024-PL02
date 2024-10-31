@@ -6,10 +6,10 @@ public class WorkorderDTO {
 	public int idAlmacenero;
 	public int idPedido;
 	
-	public WorkorderDTO(int idWorkorder, int idAlmacenero, int idPedido) {
+	public WorkorderDTO(int idWorkorder, int idAlmacenero) {
 		this.idWorkorder = idWorkorder;
 		this.idAlmacenero = idAlmacenero;
-		this.idPedido = idPedido;
+		this.idPedido = 1;
 	}
 	
 	public WorkorderDTO() {}

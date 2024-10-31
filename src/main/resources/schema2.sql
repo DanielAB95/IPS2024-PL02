@@ -39,7 +39,7 @@ create table Categoria (
 
 create table Producto(
     id int primary key not null, 
-    nombreProducto varchar(32) unique not null, 
+    nombre varchar(32) unique not null, 
     categoria varchar(20) not null, 
     descripcion varchar(200),
     precio decimal(10,2) not null,
@@ -91,8 +91,7 @@ create table Workorder(
     idAlmacenero int not null,
     workorderEstado varchar(20) not null,
     check (workorderEstado in('Pendiente','Listo','Incidencia')),
-    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
-    foreign key (idPedido) references Pedido(idPedido)
+    foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
 
 

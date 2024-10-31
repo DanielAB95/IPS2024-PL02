@@ -46,10 +46,9 @@ public class PedidoController {
 				if (row != -1) {
 					int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
 					int idAlmacenero = Integer.parseInt(view.getTextAlmacenero().getText().substring(0, 1));
-					wModel.crearWorkorder(idAlmacenero, idPedido);
+					wModel.crearWorkorder(idAlmacenero);
 					model.actualizarPedidoListo(idPedido);
 					actualizaTabla();
-					mostrarWorkorder(idPedido, idAlmacenero);
 				}
 			}
 		});
@@ -67,25 +66,9 @@ public class PedidoController {
 
 	}
 
-	public void getListaProductos(int idPedido) {
-		List<ProductoAlmacen> productos = wModel.getProductos(idPedido);
-		TableModel tmodel = SwingUtil.getTableModelFromPojos(productos,
-				new String[] { "idProducto", "cantidad", "descripcion", "pasillo","estanteria","posicionEstanteria" });
-		wView.getTablaProductos().setModel(tmodel);
-		SwingUtil.autoAdjustColumns(wView.getTablaProductos());
-	}
-	
 	private void actualizaTabla() {
 		view.getTablaPedidos().removeAll();
 		getPedidos();
 		
-	}
-
-	private void mostrarWorkorder(int idPedido, int idAlmacenero) {
-		wView.getTextPedido().setText(String.valueOf(idPedido));
-		// wView.getTextAlmacenero().setText(String.valueOf(idAlmacenero));
-		wView.getTextAlmacenero().setText(aModel.getAlmacenero(idAlmacenero).toString());
-		getListaProductos(idPedido);
-		wView.getFrame().setVisible(true);
 	}
 }

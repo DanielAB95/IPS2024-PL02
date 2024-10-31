@@ -38,7 +38,7 @@ public class RecogidaModel {
 	
 	private void getWorkorder() {
 		List<Object[]> workorder = db.executeQueryArray(SQL_WORKORDER, dto.idWorkorder);
-		dto = new WorkorderDTO((int)workorder.get(0)[0], (int)workorder.get(0)[1], (int)workorder.get(0)[2]);
+		dto = new WorkorderDTO((int)workorder.get(0)[0], (int)workorder.get(0)[1]);
 	}
 	
 	public Map<Producto,Integer> getProducts() {
