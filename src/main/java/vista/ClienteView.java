@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import controlador.ClienteController;
+//import controlador.ClienteController;
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
@@ -46,7 +46,7 @@ public class ClienteView extends JFrame {
 	JButton btnAdd;
 	Carrito carrito;
 	JButton btnSiguiente;
-	private ClienteController controller;
+//	private ClienteController controller;
 	private Database2 db;
 	private JLabel lblUsuario;
 	private JLabel lblNombreUsuario;
@@ -107,11 +107,11 @@ public class ClienteView extends JFrame {
 		contentPane.add(getBtInicio());
 		//contentPane.add(getList());
 		
-		model.rellenaTablaProductos(this.tableModelProductos);
-		this.controller = new ClienteController(this, model); //añado el controlador
-		
-		controller.initView(); //inicializa los datos para visualizarlos desde el principio
-		controller.initController(); //añade los action listeners
+//		model.rellenaTablaProductos(this.tableModelProductos);
+//		this.controller = new ClienteController(this, model); //añado el controlador
+//		
+//		controller.initView(); //inicializa los datos para visualizarlos desde el principio
+//		controller.initController(); //añade los action listeners
 	}
 	public JComboBox<Integer> getComboBoxCantidad() {
 		if (comboBoxCantidad == null) {
