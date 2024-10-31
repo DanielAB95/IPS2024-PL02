@@ -4,17 +4,50 @@ drop table Producto;
 drop table Pedido;
 drop table PedidoProducto;
 drop table Almacenero;
-drop table AlmaceneroPedido;
+--drop table AlmaceneroPedido;
 drop table Workorder;
 drop table Paquete;
-drop table Almacen;
+--drop table Almacen;
+drop table Cliente;
+drop table WorkorderPedido;
+drop table Categoria;
+
+--estado: particular o empresa
+create table Cliente(
+	 idCliente varchar(9) primary key not null,
+	 nombre varchar(32) not null,
+	 direccion varchar(200) not null
+);
+
+
+create table Categoria (
+	nombreCategoria varchar(20) primary key,
+	categoriaPadre varchar(20),
+	foreign key (categoriaPadre) references Categoria(nombreCategoria)
+	
+);
+
+	-- igual cambiar nombres ?
+	-- meter la info directamente en producto
+--create table Almacen(
+--    idProducto int not null,
+--    estanteria int not null,
+--    posicionEstanteria int not null,
+--    pasillo int not null,
+--    foreign key (idProducto) references Producto(id)
+--);
 
 create table Producto(
     id int primary key not null, 
-    nombre varchar(32) unique not null, 
-    categoria varchar(32) not null, 
+    nombreProducto varchar(32) unique not null, 
+    categoria varchar(20) not null, 
     descripcion varchar(200),
-    precio decimal(10,2) not null
+    precio decimal(10,2) not null,
+    pasillo int not null,
+    estanteria int not null,
+    balda int not null,
+    foreign key (categoria) references Categoria(nombreCategoria)
+    
 );
 
 create table PedidoProducto(
@@ -26,12 +59,15 @@ create table PedidoProducto(
     check (cantidad >= 0)
 );
 
+	
+	
 create table Pedido(
     idPedido int primary key not null,
-    numProductos int not null,
+    idCliente varchar(9) not null,
     fecha date not null,
     estado varchar(20) not null,
-    check (estado in('Pendiente','Listo'))
+    check (estado in('Pendiente','Listo')),
+    foreign key (idCliente) references Cliente(idCliente)
 );
 
 create table Almacenero(
@@ -40,39 +76,43 @@ create table Almacenero(
     apellido varchar(20) not null
 );
 
-create table AlmaceneroPedido(
-    idAlmacenero int not null,
-    idPedido int not null,
-    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
-    foreign key (idPedido) references Pedido(idPedido)
-);
+	--se le asigna una workorder, no un pedido
+	--quitar idPedido
+--create table AlmaceneroPedido(
+--    idAlmacenero int not null,
+--    idPedido int not null,
+--    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
+--    foreign key (idPedido) references Pedido(idPedido)
+--);
+
 
 create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
-    idPedido int not null,
     workorderEstado varchar(20) not null,
     check (workorderEstado in('Pendiente','Listo','Incidencia')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero),
     foreign key (idPedido) references Pedido(idPedido)
 );
 
-create table Paquete(
-    idPaquete int not null,
-    idWorkorder int not null,
-    paqueteEstado varchar(20) not null,
-    check (paqueteEstado in('Pendiente','Listo')),
-    foreign key (idWorkorder) references Workorder(idWorkorder)
+
+create table WorkorderPedido (
+	idWorkorder int not null, 
+	idPedido int not null,
+	foreign key (idPedido) references Pedido(idPedido),
+	foreign key (idWorkorder) references Workorder(idWorkorder)
 );
 
-create table Almacen(
-    idProducto int not null,
-    estanteria int not null,
-    posicionEstanteria int not null,
-    pasillo int not null,
-    foreign key (idProducto) references Producto(id)
+create table Paquete(
+    idPaquete int primary key,
+    idPedido int not null,
+    paqueteEstado varchar(20) not null,
+    check (paqueteEstado in('Pendiente','Listo','Incidencia')),
+    foreign key (idPedido) references Pedido(idPedido)
 );
 
 
 --cliente
+
+
 
