@@ -3,19 +3,6 @@
 --Para proyecto IPS:
 
 delete from producto;
-<<<<<<< HEAD
-insert into producto(id, nombreProducto, categoria, descripcion, precio, pasillo, estanteria, balda) values  
-	(1, 'Taladro Inalámbrico', 'Ferretería', 'Taladro inalámbrico de 18V con batería de litio', 99.99, 1, 1, 1),
-	(2, 'Martillo de Uña', 'Ferretería', 'Martillo de uña de acero forjado con mango antideslizante', 14.50, 1, 2, 1),
-	(3, 'Destornillador Eléctrico', 'Ferretería', 'Destornillador eléctrico con 20 puntas intercambiables', 29.99, 1, 3, 1),
-	(4, 'Caja de Herramientas', 'Ferretería', 'Caja de herramientas de plástico con múltiples compartimentos', 24.99, 2, 1, 2),
-	(5, 'Llave Inglesa', 'Ferretería', 'Llave inglesa ajustable de acero inoxidable', 12.75, 2, 2, 2),
-	(6, 'Sierra Circular', 'Ferretería', 'Sierra circular de 7 1/4 pulgadas con motor de alta potencia', 139.90, 2, 3, 2),
-	(7, 'Caja de Almacenamiento', 'Almacén', 'Caja de almacenamiento de plástico con tapa hermética de 50L', 19.95, 3, 1, 2),
-	(8, 'Estantería Metálica', 'Almacén', 'Estantería metálica de 5 niveles con capacidad de 150kg por nivel', 89.99, 3, 2, 2),
-	(9, 'Carro de Carga', 'Almacén', 'Carro de carga plegable con capacidad de 200kg', 55.50, 3, 3, 2),
-	(10, 'Escalera de Aluminio', 'Almacén', 'Escalera de aluminio de 7 peldaños, ligera y resistente', 49.99, 4, 1, 3);
-=======
 insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda) values  
 	-- Productos en la categoría Ferretería
     (1, 'Llave Inglesa', 'Llaves y Pinzas', 'Llave inglesa ajustable', 15.99, 1, 1, 1),
@@ -125,24 +112,8 @@ insert into Categoria(nombreCategoria,categoriaPadre) values
     -- Sub-subcategorías de Teléfonos
     ('Smartphones', 'Teléfonos'),
     ('Teléfonos Fijos', 'Teléfonos');
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 
 delete from Pedido;
-<<<<<<< HEAD
-insert into Pedido(idPedido, idCliente, fecha, estado) values
-	(1, 1, '2024-10-25', 'Pendiente'),
-	(2, 2, '2024-05-08', 'Pendiente'),
-	(3, 1, '2024-10-24', 'Listo'),
-	(4, 3, '2024-10-26', 'Pendiente'),
-	(5, 2, '2024-07-12', 'Pendiente'),
-	(6, 2, '2024-12-01', 'Listo'),
-	(7, 4, '2024-10-24', 'Pendiente'),
-	(8, 5, '2024-10-31', 'Pendiente'),
-	(9, 6, '2024-10-19', 'Listo'),
-	(10, 1, '2024-10-04', 'Pendiente'),
-	(11, 5, '2024-11-16', 'Pendiente'),
-	(12, 1, '2024-03-14', 'Listo');
-=======
 insert into Pedido(idPedido,idCliente, fecha, estado) values
 	(1, 2,'2024-10-25', 'Pendiente'),
 	(2, 3, '2024-05-08', 'Pendiente'),
@@ -156,7 +127,6 @@ insert into Pedido(idPedido,idCliente, fecha, estado) values
 	(10, 17, '2024-10-04', 'Pendiente'),
 	(11, 44,'2024-11-16', 'Pendiente'),
 	(12, 33, '2024-03-14', 'Listo');
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
@@ -201,29 +171,8 @@ insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
 	(5, 1, 'Listo'),
 	(6, 3, 'Listo');
 
-<<<<<<< HEAD
-=======
--- delete from Almacen;
--- insert into Almacen(idProducto, estanteria,posicionEstanteria, pasillo) values 
--- 	(1,1,1,1),
--- 	(2,1,2,1),
--- 	(3,1,3,1),
--- 	(4,2,1,2),
--- 	(5,2,2,2),
--- 	(6,2,3,2),
--- 	(7,3,1,2),
--- 	(8,3,2,2),
--- 	(9,3,3,2),
--- 	(10,4,1,3);
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
-
 delete from Paquete;
-<<<<<<< HEAD
-insert into Paquete(idPaquete, idPedido, paqueteEstado) values
-	(2, 12, 'Listo');
-=======
 insert into Paquete(idPaquete,idPedido, paqueteEstado) values
 	(2, 3, 'Listo');
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 
 

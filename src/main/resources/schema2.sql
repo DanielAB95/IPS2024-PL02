@@ -10,7 +10,6 @@ drop table Paquete;
 drop table Cliente;
 drop table WorkorderPedido;
 drop table Categoria;
-<<<<<<< HEAD
 drop table PaqueteProducto;
 drop table WorkorderProducto;
 
@@ -26,22 +25,6 @@ create table Categoria (
 	nombreCategoria varchar(20) primary key,
 	categoriaPadre varchar(20),
 	foreign key (categoriaPadre) references Categoria(nombreCategoria)
-=======
-
---estado: particular o empresa
-create table Cliente(
-	 idCliente varchar(9) primary key not null,
-	 nombre varchar(32) not null,
-	 direccion varchar(200) not null
-);
-
-
-create table Categoria (
-	nombreCategoria varchar(20) primary key,
-	categoriaPadre varchar(20),
-	foreign key (categoriaPadre) references Categoria(nombreCategoria)
-	
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 );
 
 	-- igual cambiar nombres ?
@@ -56,11 +39,7 @@ create table Categoria (
 
 create table Producto(
     id int primary key not null, 
-<<<<<<< HEAD
-    nombreProducto varchar(32) unique not null, 
-=======
     nombre varchar(32) unique not null, 
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
     categoria varchar(20) not null, 
     descripcion varchar(200),
     precio decimal(10,2) not null,
@@ -68,10 +47,6 @@ create table Producto(
     estanteria int not null,
     balda int not null,
     foreign key (categoria) references Categoria(nombreCategoria)
-<<<<<<< HEAD
-=======
-    
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 );
 
 create table PedidoProducto(
@@ -82,8 +57,6 @@ create table PedidoProducto(
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0)
 );
-
-	
 	
 create table Pedido(
     idPedido int primary key not null,
@@ -100,41 +73,13 @@ create table Almacenero(
     apellido varchar(20) not null
 );
 
-<<<<<<< HEAD
---se le asigna una workorder, no un pedido
---quitar idPedido
---create table AlmaceneroPedido(
---    idAlmacenero int not null,
---    idPedido int not null,
---    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
---    foreign key (idPedido) references Pedido(idPedido)
---);
-=======
-	--se le asigna una workorder, no un pedido
-	--quitar idPedido
---create table AlmaceneroPedido(
---    idAlmacenero int not null,
---    idPedido int not null,
---    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
---    foreign key (idPedido) references Pedido(idPedido)
---);
-
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
-
 create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     workorderEstado varchar(20) not null,
-<<<<<<< HEAD
     check (workorderEstado in('Pendiente','Listo','Incidencia','En Curso')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
-=======
-    check (workorderEstado in('Pendiente','Listo','Incidencia')),
-    foreign key (idAlmacenero) references Almacenero(idAlmacenero)
-);
-
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 
 create table WorkorderPedido (
 	idWorkorder int not null, 
@@ -147,7 +92,6 @@ create table Paquete(
     idPaquete int primary key,
     idPedido int not null,
     paqueteEstado varchar(20) not null,
-<<<<<<< HEAD
     check (paqueteEstado in('Pendiente','Listo','Incidencia','En Curso')),
     foreign key (idPedido) references Pedido(idPedido)
 );
@@ -164,13 +108,10 @@ create table WorkorderProducto(
     check (cantidad >= 0),
     check (recogidos >= 0),
     primary key (idWorkorder, idPedido, idProducto)
-=======
     check (paqueteEstado in('Pendiente','Listo','Incidencia')),
     foreign key (idPedido) references Pedido(idPedido)
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
 );
 
-<<<<<<< HEAD
 create table PaqueteProducto(
     idPaquete int not null,
     idProducto int not null,
@@ -182,10 +123,3 @@ create table PaqueteProducto(
     check (recogidos >= 0),
     primary key (idPaquete, idProducto)
 );
-=======
-
---cliente
-
-
-
->>>>>>> branch 'develop' of https://github.com/DanielAB95/IPS2024-PL02.git
