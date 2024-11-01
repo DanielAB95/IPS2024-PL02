@@ -114,7 +114,7 @@ insert into Categoria(nombreCategoria,categoriaPadre) values
     ('Teléfonos Fijos', 'Teléfonos');
 
 delete from Pedido;
-insert into Pedido(idPedido,idCliente, fecha, estado) values
+insert into Pedido(idPedido, idCliente, fecha, estado) values
 	(1, 2,'2024-10-25', 'Pendiente'),
 	(2, 3, '2024-05-08', 'Pendiente'),
 	(3, 5,'2024-10-24', 'Listo'),
@@ -126,7 +126,10 @@ insert into Pedido(idPedido,idCliente, fecha, estado) values
 	(9, 1,'2024-10-19', 'Listo'),
 	(10, 17, '2024-10-04', 'Pendiente'),
 	(11, 44,'2024-11-16', 'Pendiente'),
-	(12, 33, '2024-03-14', 'Listo');
+	(12, 33, '2024-03-14', 'Listo'),
+    (13, 200, '2024-05-14', 'Listo'),
+    (14, 201, '2024-05-15', 'Listo'),
+    (15, 202, '2024-05-15', 'Listo');
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
@@ -149,7 +152,12 @@ insert into PedidoProducto(idPedido, idProducto, cantidad) values
 	(9, 1, 2),
 	(9, 4, 1),
 	(12, 1, 1),
-	(12, 2, 1);
+	(12, 2, 1),
+    (13, 21, 1),
+    (13, 30, 1),
+    (14, 29, 1),
+    (15, 1, 4),
+    (15, 2, 1);
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
@@ -164,14 +172,33 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(9, 'Victor', 'Suarez'),
 	(10, 'Maria', 'Garcia');
 
+delete from WorkorderPedido;
+insert into WorkorderPedido(idWorkorder, idPedido) values
+    (300, 13),
+    (300, 14),
+    (301, 15),
+    (302, 15);
+
+delete from WorkorderProducto;
+insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recogidos) values
+    (300, 13, 21, 1, 0),
+    (300, 13, 30, 1, 0),
+    (300, 14, 29, 1, 0),
+    (301, 15, 1, 3, 0),
+    (302, 15, 1, 1, 0),
+    (302, 15, 2, 1, 0);
+
 delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
 	(1, 1, 'Pendiente'),
 	(2, 2, 'Pendiente'),
-	(3, 4, 'Listo'),
+	(3, 4, 'Pendiente'),
 	(4, 5, 'Incidencia'),
-	(5, 1, 'Listo'),
-	(6, 3, 'Listo');
+	(5, 1, 'Pendiente'),
+	(6, 3, 'Pendiente'),
+    (300, 1, 'Listo'),
+    (301, 1, 'Listo'),
+    (302, 1, 'Listo');
 
 delete from Paquete;
 insert into Paquete(idPaquete, idPedido, paqueteEstado) values

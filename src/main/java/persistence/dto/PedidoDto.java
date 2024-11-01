@@ -7,7 +7,7 @@ import java.util.Map;
 public class PedidoDto {
 
 	public int idPedido;
-	public int idCliente;
+	public String idCliente; //nif
 	public LocalDate fecha;
 	public String estadoPedido;
 	public Map<ProductoDto, Integer> productos; //mapa producto cantidad

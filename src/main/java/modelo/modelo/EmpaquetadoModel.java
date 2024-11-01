@@ -1,42 +1,72 @@
 package modelo.modelo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import giis.demo.util.Database2;
 import modelo.dto.Producto;
 import modelo.dto.ProductoWrapper;
-import modelo.dto.WorkorderDTO;
+import persistence.dto.AlmaceneroDto;
+import persistence.dto.PedidoDto;
+import persistence.dto.WorkorderDto;
 
 public class EmpaquetadoModel {
 	
+	List<WorkorderDto> workorders = new ArrayList<>();
+	AlmaceneroDto almacenero = new AlmaceneroDto();
 	private Database2 db;
+	
 	private final static String SQL_WOLISTAS = "select * from Workorder where workorderEstado = 'Listo'";
+	private final static String SQL_PEDIDOS = "select * from WorkorderPedido wp "
+											+ "inner join Pedido p on wp.idPedido = p.idPedido "
+											+ "where idWorkorder = ?";
 	private final static String SQL_PRODUCTS_ID = "select idProducto, cantidad from pedidoproducto where idPedido = ?";
 	private final static String SQL_PRODUCTS = "select * from producto where id = ?";
 	private final static String SQL_PAQUETE = "insert into Paquete(idPaquete, idWorkorder, paqueteEstado) values (?,?,'Listo')";
 	
-	public EmpaquetadoModel(Database2 db2) {
+	public EmpaquetadoModel(Database2 db2, int idAlmacenero) {
 		db = db2;
+		almacenero.idAlmacenero = idAlmacenero;
+		workordersListas();
 	}
 	
 	public EmpaquetadoModel() {
 		db = new Database2();
 		db.createDatabase(false);
 		db.loadDatabase();
+		almacenero.idAlmacenero = 1;
+		workordersListas();
 	}
 	
-	public List<WorkorderDTO> workordersListas(){
-		List<WorkorderDTO> workorders = new ArrayList<>();
+	private void workordersListas(){
 		List<Object[]> result = db.executeQueryArray(SQL_WOLISTAS);
 		
 		for (Object[] o : result) {
-			WorkorderDTO wo = new WorkorderDTO((int)o[0], (int)o[1]);
+			WorkorderDto wo = new WorkorderDto();
+			wo.idWorkorder = (int)o[0];
+			wo.idAlmacenero = (int)o[1];
+			wo.estado = (String)o[2];
+			System.out.println(wo.idWorkorder + " " + wo.idAlmacenero + " " + wo.estado);
+			wo.pedidos = getPedidos(wo.idWorkorder);
 			workorders.add(wo);
 		}
-		return workorders;
 	}
 	
+	private List<PedidoDto> getPedidos(int idWorkorder) {
+		List<Object[]> result = db.executeQueryArray(SQL_PEDIDOS, idWorkorder);
+		List<PedidoDto> pedidos = new ArrayList<>();
+		for (Object[] o : result) {
+			PedidoDto pedido = new PedidoDto();
+			pedido.idPedido = (int)o[1];
+			pedido.idCliente = (String)o[3];
+			pedido.fecha = LocalDate.parse((String)o[4]);
+			pedido.estadoPedido = (String)o[5];
+			System.out.println(pedido.idPedido + " " + pedido.idCliente + " " + pedido.fecha + " " + pedido.estadoPedido);
+		}	
+		return pedidos;
+	}
+
 	public List<ProductoWrapper> productosPorWorkorder(int idPedido){
 		List<ProductoWrapper> resultado = new ArrayList<>();
 		List<Object[]> idProductos = db.executeQueryArray(SQL_PRODUCTS_ID, idPedido);
