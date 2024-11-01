@@ -14,6 +14,7 @@ import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
 //import vista.ClienteView.MyTableModel;
+import vista.ClienteView.MyTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -215,7 +216,7 @@ public class CarritoView extends JFrame {
 		if (table == null) {
 			Object[] columnNames = {"   Producto   ", "Cantidad ", "€ "};
 			//tableModel = new DefaultTableModel(columnNames, 0);
-			//tableModelCarrito = new MyTableModel(columnNames);
+			tableModelCarrito = new MyTableModel(columnNames);
 			table = new JTable(tableModelCarrito);
 			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		//	TableColumnModel columnModel = table.getColumnModel();
