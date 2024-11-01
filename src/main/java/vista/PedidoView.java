@@ -57,7 +57,7 @@ public class PedidoView extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 640, 960);
 		setLocationRelativeTo(null);
-		contentPane = new JPanel();
+		contentPane =  new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			
 		setContentPane(contentPane);
@@ -188,5 +188,4 @@ public class PedidoView extends JFrame {
 	public JButton getButtonRecogida() {
 		return this.btRecogida;
 	}
-	
 }
