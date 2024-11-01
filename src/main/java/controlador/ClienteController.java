@@ -9,11 +9,9 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-
-
+import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
 import persistence.dto.CategoriaDto;
-import persistence.dto.ProductoDto;
 import vista.CarritoView;
 import vista.ClienteLoginView;
 import vista.ClienteView;
@@ -75,7 +73,7 @@ public class ClienteController {
 		view.getListaProductos().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ProductoDto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
+				Producto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
 				if(pSeleccionado != null){		
 					view.getBtnAdd().setEnabled(true);				
 				}else {
@@ -104,7 +102,7 @@ public class ClienteController {
 			
 		view.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				ProductoDto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
+				Producto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
 				if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
 					int cantidad = (int) view.getSpinnerUnidades().getValue();
 					model.getCarrito().addToCarrito(pSeleccionado, cantidad);
@@ -132,15 +130,15 @@ public class ClienteController {
 		rellenarModelo(list);
 		view.getListaProductos().setModel(modeloProducto);
 		if(modeloProducto.isEmpty()) {
-			List<ProductoDto> listProductos = model.getProductos(categoria);
+			List<Producto> listProductos = model.getProductos(categoria);
 			rellenarModeloProducto(listProductos);
 			view.getListaProductos().setModel(modeloProducto);
 		}
 	}
 	
-	private void rellenarModeloProducto(List<ProductoDto> productos) {
-		for(ProductoDto p : productos) {
-			modeloProducto.addElement(String.format("%s, (%s), Precio: %s€", p.nombre,p.descripcion,String.valueOf(p.precio)));
+	private void rellenarModeloProducto(List<Producto> productos) {
+		for(Producto p : productos) {
+			modeloProducto.addElement(String.format("%s, (%s), Precio: %s€", p.getNombre(),p.getDescripcion(),String.valueOf(p.getPrecio())));
 		}
 		
 	}

@@ -74,7 +74,7 @@ public class EmpaquetadoModel {
 		List<Object[]> productos;
 		for (int i = 0; i < idProductos.size(); i++) {
 			productos = db.executeQueryArray(SQL_PRODUCTS, idProductos.get(i)[0]);
-			Producto p = new Producto(productos.get(0)[0], productos.get(0)[1], productos.get(0)[2], productos.get(0)[3], productos.get(0)[4]);
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
 			ProductoWrapper pw = new ProductoWrapper(p, (int)idProductos.get(i)[1]);
 			resultado.add(pw);
 		}

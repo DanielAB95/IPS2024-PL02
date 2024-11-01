@@ -3,15 +3,12 @@ package modelo.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JComboBox;
-import javax.swing.table.DefaultTableModel;
 
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
-import modelo.dto.ClienteDTO;
+
 import modelo.dto.Producto;
 import persistence.dto.CategoriaDto;
-import persistence.dto.ProductoDto;
 
 public class ClienteModel {
 
@@ -32,7 +29,7 @@ public class ClienteModel {
 	public boolean checkProductoYaEnCarrito(String nombre) {
 		List<Object[]> productos = carrito.getCarrito();
 		for (Object[] o : productos) {
-			if (((ProductoDto) o[0]).getNombre().equals(nombre)) {
+			if (((Producto) o[0]).getNombre().equals(nombre)) {
 				return true;
 			}
 		}
@@ -54,11 +51,11 @@ public class ClienteModel {
 		return list;
 	}
 
-	public List<ProductoDto> getProductos(String categoria) {
-		List<ProductoDto> list = new ArrayList<ProductoDto>();
+	public List<Producto> getProductos(String categoria) {
+		List<Producto> list = new ArrayList<Producto>();
 		List<Object[]> listDb = db.executeQueryArray(SQL_LISTA_PRODUCTOS, categoria);
 		for (int i = 0; i < listDb.size(); i++) {
-			ProductoDto p = new ProductoDto((int) listDb.get(i)[0], (String) listDb.get(i)[1],
+			Producto p = new Producto((int) listDb.get(i)[0], (String) listDb.get(i)[1],
 					(String) listDb.get(i)[2], (String) listDb.get(i)[3], (double) listDb.get(i)[4],
 					(int) listDb.get(i)[5], (int) listDb.get(i)[6], (int) listDb.get(i)[7]);
 			list.add(p);
@@ -82,12 +79,12 @@ public class ClienteModel {
 		return c;
 	}
 	
-	public ProductoDto getProducto(String nombre) {
+	public Producto getProducto(String nombre) {
 		List<Object[]> listDb = db.executeQueryArray(SQL_PRODUCTO, nombre);
 		if(listDb.isEmpty()) {
 			return null;
 		}
-		ProductoDto p = new ProductoDto((int) listDb.get(0)[0], (String) listDb.get(0)[1],
+		Producto p = new Producto((int) listDb.get(0)[0], (String) listDb.get(0)[1],
 				(String) listDb.get(0)[2], (String) listDb.get(0)[3], (double) listDb.get(0)[4],
 				(int) listDb.get(0)[5], (int) listDb.get(0)[6], (int) listDb.get(0)[7]);
 		return p;

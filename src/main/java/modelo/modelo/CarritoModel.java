@@ -14,7 +14,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
-import persistence.dto.ProductoDto;
+
 import vista.AppInicioView;
 import vista.CarritoView;
 
@@ -31,7 +31,7 @@ public class CarritoModel {
 	private Database2 db;
 	private CarritoView v;
 	private ClienteDTO dto;
-	private List<ProductoDto> productosPosibles;
+	private List<Producto> productosPosibles;
 	
 	public CarritoModel (Carrito c, CarritoView v, Database2 db, ClienteDTO dto) {
 		this.carrito = c;
@@ -41,12 +41,12 @@ public class CarritoModel {
 		this.productosPosibles = getProductos();
 	}
 	
-	private List<ProductoDto> getProductos() {
-		List<ProductoDto> resultado = new ArrayList<ProductoDto>();
+	private List<Producto> getProductos() {
+		List<Producto> resultado = new ArrayList<Producto>();
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
 		
 		for (int i = 0; i < productos.size(); i++) {
-			ProductoDto p = new ProductoDto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
 			resultado.add(p);
 		}
 		
@@ -102,7 +102,7 @@ public class CarritoModel {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		
 		for (Object[] o: productosCarrito) {
-			db.executeUpdate(SQL_INSERTAR_PRODUCTOS_PEDIDO, pedidoID, ((ProductoDto) o[0]).getIdProducto(), o[1]);
+			db.executeUpdate(SQL_INSERTAR_PRODUCTOS_PEDIDO, pedidoID, ((Producto) o[0]).getId(), o[1]);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class CarritoModel {
 		String[] result = new String[dimension];
 		
 		for (int i = 0; i < dimension; i++) {
-			result[i] = ((ProductoDto) productosCarrito.get(i)[0]).getNombre();
+			result[i] = ((Producto) productosCarrito.get(i)[0]).getNombre();
 		}
 		return result;
 	}
@@ -154,7 +154,7 @@ public class CarritoModel {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		for (Object[] o: productosCarrito) {
 			//nombre producto, cantidad Producto, precio producto
-			Object[] fila = { ((ProductoDto) o[0]).getNombre(),  o[1],  ((ProductoDto) o[0]).getPrecio() * (int)o[1] };
+			Object[] fila = { ((Producto) o[0]).getNombre(),  o[1],  ((Producto) o[0]).getPrecio() * (int)o[1] };
 			tabla.addRow(fila);
 		}
 	}
@@ -164,7 +164,7 @@ public class CarritoModel {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		
 		for (int i = 0; i < productosCarrito.size(); i++) {
-			resultado += ((ProductoDto) productosCarrito.get(i)[0]).getPrecio() * ((Integer) productosCarrito.get(i)[1]);
+			resultado += ((Producto) productosCarrito.get(i)[0]).getPrecio() * ((Integer) productosCarrito.get(i)[1]);
 		}
 		return String.format("%.2f", resultado);
 	}
@@ -173,7 +173,7 @@ public class CarritoModel {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		
 		for (int i = 0; i < productosCarrito.size(); i++) {
-			if ( ((ProductoDto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) return ((Integer) productosCarrito.get(i)[1]);
+			if ( ((Producto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) return ((Integer) productosCarrito.get(i)[1]);
 		}
 		return 0;
 	}
@@ -181,9 +181,9 @@ public class CarritoModel {
 	public String getPrecioProductoPorNombre(String nombre) {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		for (int i = 0; i < productosCarrito.size(); i++) {
-			if ( ((ProductoDto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) {
+			if ( ((Producto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) {
 				//return ((Integer) productosCarrito.get(i)[1]) *  ((Producto) productosCarrito.get(i)[0]).getPrecio();
-				return String.format("%.2f", ((Integer) productosCarrito.get(i)[1]) *  ((ProductoDto) productosCarrito.get(i)[0]).getPrecio());
+				return String.format("%.2f", ((Integer) productosCarrito.get(i)[1]) *  ((Producto) productosCarrito.get(i)[0]).getPrecio());
 			}
 		}
 		return "";
@@ -197,7 +197,7 @@ public class CarritoModel {
 			boolean encontrado = false;
 			
 			for (int i = 0; i < productosCarrito.size() && !encontrado; i++) {
-				if ( ((ProductoDto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) {
+				if ( ((Producto) productosCarrito.get(i)[0]).getNombre().equals(nombre) ) {
 					productosCarrito.get(i)[1] = cantidadNueva;
 					encontrado = true;
 				}
@@ -236,7 +236,7 @@ public class CarritoModel {
 		System.out.println();
 		System.out.println("------------ Estado del Carrito ------------");
 		for (int i = 0; i < productosCarrito.size(); i++) {
-			System.out.println( ((ProductoDto) productosCarrito.get(i)[0]).getNombre() + ", cantidad: " + productosCarrito.get(i)[1]);
+			System.out.println( ((Producto) productosCarrito.get(i)[0]).getNombre() + ", cantidad: " + productosCarrito.get(i)[1]);
 		}
 	}
 	
@@ -264,7 +264,7 @@ public class CarritoModel {
 
 	public String getPrecioPorNombre(String nombre, int cantidad) {
 		double precio = 0;
-		for (ProductoDto p: this.productosPosibles) {
+		for (Producto p: this.productosPosibles) {
 			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
 		}
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
