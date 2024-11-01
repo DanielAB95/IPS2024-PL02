@@ -1,4 +1,3 @@
-
 --Para trabajo IPS:
 drop table Producto;
 drop table Pedido;
@@ -11,6 +10,8 @@ drop table Paquete;
 drop table Cliente;
 drop table WorkorderPedido;
 drop table Categoria;
+drop table PaqueteProducto;
+drop table WorkorderProducto;
 
 --estado: particular o empresa
 create table Cliente(
@@ -24,7 +25,6 @@ create table Categoria (
 	nombreCategoria varchar(20) primary key,
 	categoriaPadre varchar(20),
 	foreign key (categoriaPadre) references Categoria(nombreCategoria)
-	
 );
 
 	-- igual cambiar nombres ?
@@ -47,7 +47,6 @@ create table Producto(
     estanteria int not null,
     balda int not null,
     foreign key (categoria) references Categoria(nombreCategoria)
-    
 );
 
 create table PedidoProducto(
@@ -58,8 +57,6 @@ create table PedidoProducto(
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0)
 );
-
-	
 	
 create table Pedido(
     idPedido int primary key not null,
@@ -76,24 +73,13 @@ create table Almacenero(
     apellido varchar(20) not null
 );
 
-	--se le asigna una workorder, no un pedido
-	--quitar idPedido
---create table AlmaceneroPedido(
---    idAlmacenero int not null,
---    idPedido int not null,
---    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
---    foreign key (idPedido) references Pedido(idPedido)
---);
-
-
 create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     workorderEstado varchar(20) not null,
-    check (workorderEstado in('Pendiente','Listo','Incidencia')),
+    check (workorderEstado in('Pendiente','Listo','Incidencia','En Curso')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
-
 
 create table WorkorderPedido (
 	idWorkorder int not null, 
@@ -106,12 +92,32 @@ create table Paquete(
     idPaquete int primary key,
     idPedido int not null,
     paqueteEstado varchar(20) not null,
-    check (paqueteEstado in('Pendiente','Listo','Incidencia')),
+    check (paqueteEstado in('Pendiente','Listo','Incidencia','En Curso')),
     foreign key (idPedido) references Pedido(idPedido)
 );
 
+create table WorkorderProducto(
+    idWorkorder int not null,
+    idPedido int not null,
+    idProducto int not null,
+    cantidad int not null,
+    recogidos int not null,
+    foreign key (idWorkorder) references Workorder(idWorkorder),
+    foreign key (idPedido) references Pedido(idPedido),
+    foreign key (idProducto) references Producto(id),
+    check (cantidad >= 0),
+    check (recogidos >= 0),
+    primary key (idWorkorder, idPedido, idProducto)
+);
 
---cliente
-
-
-
+create table PaqueteProducto(
+    idPaquete int not null,
+    idProducto int not null,
+    cantidad int not null,
+    empaquetados int not null,
+    foreign key (idPaquete) references Paquete(idPaquete),
+    foreign key (idProducto) references Producto(id),
+    check (cantidad >= 0),
+    check (empaquetados >= 0),
+    primary key (idPaquete, idProducto)
+);

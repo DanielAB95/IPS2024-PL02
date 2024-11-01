@@ -11,9 +11,10 @@ import modelo.dto.PaqueteWrapper;
 
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 
-public class FacturaView extends JFrame {
+public class FacturaView extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -42,7 +43,7 @@ public class FacturaView extends JFrame {
 	public FacturaView() {
 		setTitle("Facturación");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 529, 446);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

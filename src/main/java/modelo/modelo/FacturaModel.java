@@ -7,6 +7,7 @@ import giis.demo.util.Database2;
 import modelo.dto.PaqueteWrapper;
 import modelo.dto.Producto;
 import modelo.dto.ProductoWrapper;
+import persistence.dto.PaqueteDto;
 
 public class FacturaModel {
 	
@@ -14,6 +15,7 @@ public class FacturaModel {
 	private final static String SQL_PRODUCTOS = "select * from Producto where id = ?";
 	private final static String SQL_PRODUCTOS_ID = "select * from PedidoProducto where idPedido = "
 												+ "(select idPedido from Workorder where idWorkorder = ?)";
+	private PaqueteDto paquete = new PaqueteDto();
 	private Database2 db;
 	
 	public FacturaModel(Database2 db) {
@@ -48,5 +50,10 @@ public class FacturaModel {
 			productosWP.add(new ProductoWrapper(p, (int)idProductos.get(i)[2]));
 		}
 		return productosWP;
+	}
+
+	public int getIDPedido() {
+		
+		return 0;
 	}
 }
