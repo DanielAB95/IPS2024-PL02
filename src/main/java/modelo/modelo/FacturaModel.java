@@ -1,59 +1,74 @@
 package modelo.modelo;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import giis.demo.util.Database2;
-import modelo.dto.PaqueteWrapper;
-import modelo.dto.Producto;
-import modelo.dto.ProductoWrapper;
 import persistence.dto.PaqueteDto;
+import persistence.dto.ProductoDto;
 
 public class FacturaModel {
 	
-	private final static String SQL_PAQUETES = "select * from Paquete where paqueteEstado = 'Listo'";
-	private final static String SQL_PRODUCTOS = "select * from Producto where id = ?";
-	private final static String SQL_PRODUCTOS_ID = "select * from PedidoProducto where idPedido = "
-												+ "(select idPedido from Workorder where idWorkorder = ?)";
 	private PaqueteDto paquete = new PaqueteDto();
 	private Database2 db;
 	
-	public FacturaModel(Database2 db) {
+	private final static String SQL_PAQUETES = "select * from Paquete where idPaquete = ?";
+	private final static String SQL_PRODUCTOS_ID = "select * from PaqueteProducto where idPaquete = ?";
+	private final static String SQL_PRODUCTOS = "select * from Producto where id = ?";
+	
+	public FacturaModel(Database2 db, int paquete) {
 		this.db = db;
+		this.paquete.idPaquete = paquete;
+		getPaquete();
+		getProductos();
 	}
 	
 	public FacturaModel() {
 		db = new Database2();
 		db.createDatabase(false);
 		db.loadDatabase();
-	}
-
-	public List<PaqueteWrapper> getPaquetes(){
-		List<PaqueteWrapper> paquetes = new ArrayList<>();
-		List<Object[]> result = db.executeQueryArray(SQL_PAQUETES);
-		
-		for (Object[] o : result) {
-			PaqueteWrapper paquete = new PaqueteWrapper((int)o[0], (int)o[1]);
-			paquetes.add(paquete);
-		}
-		return paquetes;
+		paquete.idPaquete = 2;
+		getPaquete();
+		getProductos();
 	}
 	
-	public List<ProductoWrapper> getProductos(int idWorkorder){
-		List<ProductoWrapper> productosWP = new ArrayList<>();
-		List<Object[]> idProductos = db.executeQueryArray(SQL_PRODUCTOS_ID, idWorkorder);
+
+	private void getPaquete(){
+		List<Object[]> result = db.executeQueryArray(SQL_PAQUETES, paquete.idPaquete);
+		paquete.idPedido = (int)result.get(0)[1];
+	}
+	
+	private void getProductos(){
+		Map<ProductoDto, Integer> productosMapa = new HashMap<>();
+		List<Object[]> idProductos = db.executeQueryArray(SQL_PRODUCTOS_ID, paquete.idPaquete);
 		
-		List<Object[]> productos;
+		List<Object[]> producto;
 		for (int i = 0; i < idProductos.size(); i++) {
-			productos = db.executeQueryArray(SQL_PRODUCTOS, idProductos.get(i)[1]);
-			Producto p = new Producto(productos.get(0)[0], productos.get(0)[1], productos.get(0)[2], productos.get(0)[3], productos.get(0)[4]);
-			productosWP.add(new ProductoWrapper(p, (int)idProductos.get(i)[2]));
+			producto = db.executeQueryArray(SQL_PRODUCTOS, idProductos.get(i)[1]);
+			ProductoDto p = new ProductoDto();
+			p.idProducto = (int)producto.get(0)[0];
+			p.nombre = (String)producto.get(0)[1];
+			p.categoria = (String)producto.get(0)[2];
+			p.descripcion = (String)producto.get(0)[3];
+			p.precio = (Double)producto.get(0)[4];
+			p.pasillo = (int)producto.get(0)[5];
+			p.estanteria = (int)producto.get(0)[6];
+			p.balda = (int)producto.get(0)[7];
+			productosMapa.put(p, (int)idProductos.get(i)[2]);
 		}
-		return productosWP;
+		paquete.productos = productosMapa;
 	}
 
 	public int getIDPedido() {
-		
-		return 0;
+		return paquete.idPedido;
+	}
+	
+	public int getIDPaquete() {
+		return paquete.idPaquete;
+	}
+	
+	public String getProductosString() {
+		return paquete.productosToString();
 	}
 }

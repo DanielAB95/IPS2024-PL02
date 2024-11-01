@@ -178,7 +178,7 @@ public class RecogidaController {
 		rm.pasarAListo();
 		rw.dispose();
 		EmpaquetadoView ew = new EmpaquetadoView();
-		new EmpaquetadoController(ew, new EmpaquetadoModel(rm.getDB()));
+		new EmpaquetadoController(ew, new EmpaquetadoModel(rm.getDB(),1));
 		ew.setVisible(true);
 		
 	}
