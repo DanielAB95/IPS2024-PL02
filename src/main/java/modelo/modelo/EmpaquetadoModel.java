@@ -95,7 +95,6 @@ public class EmpaquetadoModel {
 	}
 	
 	private Map<ProductoDto, Integer> getProductosPorPedido(int idWorkorder, int idPedido) {
-		
 		Map<ProductoDto, Integer> resultado = new HashMap<>();
 		List<Object[]> productos = db.executeQueryArray(SQL_PRODUCTOS, idWorkorder, idPedido);
 		for (Object[] o : productos) {
@@ -111,7 +110,6 @@ public class EmpaquetadoModel {
 			System.out.println("\t\t" + dto.idProducto + " " + dto.nombre + " " + dto.categoria + " " + dto.precio + " " + (int)o[3]);
 			resultado.put(dto, (int)o[3]);
 		}
-
 		return resultado;
 	}
 	

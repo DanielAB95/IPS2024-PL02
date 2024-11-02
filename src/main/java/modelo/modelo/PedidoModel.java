@@ -6,6 +6,7 @@ import java.util.List;
 import giis.demo.util.Database2;
 import modelo.dto.PedidoDTO;
 import modelo.dto.PedidoProductoDTO;
+import persistence.dto.AlmaceneroDto;
 
 public class PedidoModel {
 	
@@ -14,15 +15,29 @@ public class PedidoModel {
 	public static final String SQL_PEDIDO_ALMACENERO = "select ap.idAlmacenero from AlmaceneroPedido ap join Pedido p on ap.idPedido = p.idPedido and p.idPedido = ?";
 	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
 	private static final String SQL_UPDATE_ESTADO_LISTO = "update Pedido set Estado = 'Listo' where idPedido = ? ";
+	private static final String SQL_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
+	
+	private AlmaceneroDto almacenero = new AlmaceneroDto();
 	
 	private Database2 db;
 	//private List<PedidoDTO> pedidos;
 	
-	public PedidoModel(Database2 database) {
+	public PedidoModel(Database2 database, int idAlmacenero) {
 		//this.pedidos = getPedidos();
 		this.db = database;
+		almacenero.idAlmacenero = idAlmacenero;
+		setAlmacenero();
 	}
 	
+	private void setAlmacenero() {
+		List<Object[]> o = db.executeQueryArray(SQL_ALMACENERO, almacenero.idAlmacenero);
+		almacenero.nombre = (String)o.get(0)[1];
+		almacenero.apellido = (String)o.get(0)[2];
+	}
+	
+	public AlmaceneroDto getAlmacenero() {
+		return almacenero;
+	}
 
 	public List<PedidoDTO> getPedidos() {
 		List<PedidoDTO> list = new ArrayList<PedidoDTO>();

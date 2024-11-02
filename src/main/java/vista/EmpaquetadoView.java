@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,9 +29,8 @@ public class EmpaquetadoView extends JFrame {
 	private JPanel pnDatos;
 	private JLabel lbAlmacennero;
 	private JPanel pnBotones;
-	private JButton btVolver;
-	private JButton btGenerar;
-	private JButton btRecoger;
+	private JButton btGenerarWorkOrder;
+	private JButton btRecogida;
 	private JButton btMenu;
 	private JScrollPane scTabla;
 	private JTextArea txaIncidencias;
@@ -41,6 +42,7 @@ public class EmpaquetadoView extends JFrame {
 	private JLabel lbIncidencia;
 	private JTable table;
 	private JTextField textField;
+	private JButton btVolver;
 
 	/**
 	 * Launch the application.
@@ -114,35 +116,32 @@ public class EmpaquetadoView extends JFrame {
 			pnBotones.setBounds(10, 764, 444, 40);
 			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
 			pnBotones.add(getBtVolver());
-			pnBotones.add(getBtGenerar());
-			pnBotones.add(getBtRecoger());
+			pnBotones.add(getBtGenerarWorkOrder());
+			pnBotones.add(getBtRecogida());
 			pnBotones.add(getBtMenu());
 		}
 		return pnBotones;
 	}
 	
-	public JButton getBtVolver() {
-		if (btVolver == null) {
-			btVolver = new JButton("Volver");
-			btVolver.setBackground(Color.WHITE);
+	public JButton getBtGenerarWorkOrder() {
+		if (btGenerarWorkOrder == null) {
+			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setBackground(Color.WHITE);
 		}
-		return btVolver;
+		return btGenerarWorkOrder;
 	}
 	
-	public JButton getBtGenerar() {
-		if (btGenerar == null) {
-			btGenerar = new JButton("Generar");
-			btGenerar.setBackground(Color.WHITE);
+	public JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+			btRecogida.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btRecogida.setBackground(Color.WHITE);
 		}
-		return btGenerar;
-	}
-	
-	public JButton getBtRecoger() {
-		if (btRecoger == null) {
-			btRecoger = new JButton("Recoger");
-			btRecoger.setBackground(Color.WHITE);
-		}
-		return btRecoger;
+		return btRecogida;
 	}
 	
 	public JButton getBtMenu() {
@@ -250,5 +249,12 @@ public class EmpaquetadoView extends JFrame {
 			textField.setColumns(10);
 		}
 		return textField;
+	}
+	public JButton getBtVolver() {
+		if (btVolver == null) {
+			btVolver = new JButton("Volver");
+			btVolver.setBackground(Color.WHITE);
+		}
+		return btVolver;
 	}
 }

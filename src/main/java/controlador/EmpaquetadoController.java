@@ -20,6 +20,8 @@ import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
 import vista.EmpaquetadoView;
 import vista.FacturaView;
+import vista.PedidoView;
+import vista.RecogidaView;
 
 public class EmpaquetadoController {
 	
@@ -43,6 +45,8 @@ public class EmpaquetadoController {
 		accionWorkordersTabla();
 		activarBtEscanear();
 		accionBotonVolver();
+		accionWorkOrder();
+		accionRecogida();
 		accionBotonEscanear();
 		accionBotonCerrarCaja();
 	}
@@ -266,5 +270,41 @@ public class EmpaquetadoController {
 		ew.getTableModel().setRowCount(0);
 	}
 
+	private void accionRecogida() {
+		ew.getBtRecogida().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostarRecogida();
+				
+			}
+
+			
+		});	
+	}
+
+	private void accionWorkOrder() {
+		ew.getBtGenerarWorkOrder().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}	
+		});	
+	}
+	
+	private void mostarRecogida() {
+		RecogidaView rView = new RecogidaView(em.getDB());
+		ew.dispose();
+		rView.setVisible(true);
+		
+	}
+	
+	private void mostrarWorkOrder() {
+		PedidoView pView = new PedidoView(em.getDB(), em.getAlmacenero().idAlmacenero);
+		ew.dispose();
+		pView.setVisible(true);
+		
+	}
 	
 }

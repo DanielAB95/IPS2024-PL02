@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.RecogidaController;
+import giis.demo.util.Database2;
 import modelo.dto.ProductoWrapper;
 
 import javax.swing.JList;
@@ -21,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import java.awt.GridLayout;
 
 public class RecogidaView extends JFrame {
 
@@ -41,6 +43,12 @@ public class RecogidaView extends JFrame {
 	private JButton btIncidencia;
 	private JTextArea textArea;
 	private JLabel lbID;
+	private Database2 db;
+	private JPanel pnMenu;
+	private JButton btnNewButton;
+	private JButton btGenerarWorkOrder;
+	private JButton btEmpaquetado;
+	private JButton btRecogida;
 
 	/**
 	 * Launch the application.
@@ -49,7 +57,8 @@ public class RecogidaView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RecogidaView frame = new RecogidaView();
+					Database2 db = new Database2();
+					RecogidaView frame = new RecogidaView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +67,8 @@ public class RecogidaView extends JFrame {
 		});
 	}
 
-	public RecogidaView() {
+	public RecogidaView(Database2 db) {
+		this.db = db;
 		setResizable(false);
 		setTitle("Recogida");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,6 +91,7 @@ public class RecogidaView extends JFrame {
 		contentPane.add(getTextArea());
 		contentPane.add(getLbID());
 		contentPane.add(getProductosList());
+		contentPane.add(getPnMenu());
 		setLocationRelativeTo(null);
 		
 		rc = new RecogidaController(this);
@@ -105,7 +116,7 @@ public class RecogidaView extends JFrame {
 			btAceptar.setEnabled(false);
 			btAceptar.setBackground(Color.GREEN);
 			btAceptar.setForeground(Color.WHITE);
-			btAceptar.setBounds(10, 596, 89, 23);
+			btAceptar.setBounds(10, 540, 89, 23);
 		}
 		return btAceptar;
 	}
@@ -114,7 +125,7 @@ public class RecogidaView extends JFrame {
 			btCancelar = new JButton("Cancelar");
 			btCancelar.setBackground(Color.RED);
 			btCancelar.setForeground(Color.WHITE);
-			btCancelar.setBounds(484, 596, 89, 23);
+			btCancelar.setBounds(494, 540, 89, 23);
 		}
 		return btCancelar;
 	}
@@ -175,7 +186,7 @@ public class RecogidaView extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Escribir incidencia:");
 			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblNewLabel.setBounds(10, 418, 304, 20);
+			lblNewLabel.setBounds(10, 391, 304, 20);
 		}
 		return lblNewLabel;
 	}
@@ -190,7 +201,7 @@ public class RecogidaView extends JFrame {
 	public JTextArea getTextArea() {
 		if (textArea == null) {
 			textArea = new JTextArea();
-			textArea.setBounds(10, 449, 304, 88);
+			textArea.setBounds(10, 422, 304, 88);
 		}
 		return textArea;
 	}
@@ -201,5 +212,61 @@ public class RecogidaView extends JFrame {
 			lbID.setBounds(269, 11, 26, 37);
 		}
 		return lbID;
+	}
+	
+	public Database2 getDatabase2() {
+		return this.db;
+	}
+	private JPanel getPnMenu() {
+		if (pnMenu == null) {
+			pnMenu = new JPanel();
+			pnMenu.setBounds(0, 574, 583, 56);
+			pnMenu.setLayout(new GridLayout(1, 4, 0, 0));
+			pnMenu.add(getBtGenerarWorkOrder());
+			pnMenu.add(getBtRecogida());
+			pnMenu.add(getBtEmpaquetado());
+			pnMenu.add(getBtnNewButton());
+		}
+		return pnMenu;
+	}
+	private JButton getBtnNewButton() {
+		if (btnNewButton == null) {
+			btnNewButton = new JButton("New button");
+		}
+		return btnNewButton;
+	}
+	private JButton getBtGenerarWorkOrder() {
+		if (btGenerarWorkOrder == null) {
+			btGenerarWorkOrder = new JButton("WorkOrder");
+		}
+		return btGenerarWorkOrder;
+	}
+	private JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
+		}
+		return btEmpaquetado;
+	}
+	private JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+		}
+		return btRecogida;
+	}
+	
+	public JButton getButtonWorkOrder() {
+		return this.btGenerarWorkOrder;
+	}
+	
+	public JButton getButtonRecogida() {
+		return this.btRecogida;
+	}
+	
+	public JButton getButtonEmpaquetado() {
+		return this.btEmpaquetado;
+	}
+	
+	public Database2 getDatabase() {
+		return this.db;
 	}
 }

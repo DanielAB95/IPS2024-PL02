@@ -1,20 +1,23 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
-import modelo.dto.PedidoProductoDTO;
-import modelo.dto.ProductoAlmacen;
 import modelo.modelo.AlmaceneroModel;
+import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
+import persistence.dto.AlmaceneroDto;
+import vista.EmpaquetadoView;
 import vista.PedidoView;
+import vista.RecogidaView;
 import vista.WorkorderView;
 
 public class PedidoController {
@@ -32,8 +35,12 @@ public class PedidoController {
 		this.wView = new WorkorderView(view.getDatabase());
 		this.aModel = new AlmaceneroModel(view.getDatabase());
 	}
+	
+	
 
 	public void initView() {
+		AlmaceneroDto alm = model.getAlmacenero();
+		view.getTextAlmacenero().setText(alm.idAlmacenero + " - " + alm.nombre +  " " + alm.apellido);
 		this.getPedidos();
 		// view.getFrame().setVisible(true);
 	}
@@ -45,11 +52,37 @@ public class PedidoController {
 				int row = view.getTablaPedidos().getSelectedRow();
 				if (row != -1) {
 					int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
-					int idAlmacenero = Integer.parseInt(view.getTextAlmacenero().getText().substring(0, 1));
-					wModel.crearWorkorder(idAlmacenero);
+					wModel.crearWorkorder(model.getAlmacenero().idAlmacenero);
 					model.actualizarPedidoListo(idPedido);
 					actualizaTabla();
 				}
+			}
+		});
+		
+		view.getButtonEmpaquetado().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarEmpaquetado();
+				
+			}
+		});
+		
+		view.getButtonRecogida().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 mostrarRecogida();
+				
+			}
+		});
+		
+		view.getButtonGenerarWorkOrders().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
 			}
 		});
 	}
@@ -69,6 +102,25 @@ public class PedidoController {
 	private void actualizaTabla() {
 		view.getTablaPedidos().removeAll();
 		getPedidos();
+		
+	}
+	
+	private void mostrarEmpaquetado() {
+		EmpaquetadoModel em = new EmpaquetadoModel(view.getDatabase(), model.getAlmacenero().idAlmacenero);
+		EmpaquetadoController ec = new EmpaquetadoController(em);
+		EmpaquetadoView eView = new EmpaquetadoView(ec);
+		view.dispose();
+		eView.setVisible(true);	
+	}
+	
+	private void mostrarRecogida() {
+		RecogidaView rView = new RecogidaView(view.getDatabase());
+		view.dispose();
+		rView.setVisible(true);	
+	}
+	
+	private void mostrarWorkOrder() {
+		// TODO Auto-generated method stub
 		
 	}
 }

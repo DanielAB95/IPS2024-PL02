@@ -14,7 +14,10 @@ import javax.swing.event.ListSelectionListener;
 
 import modelo.dto.Producto;
 import modelo.dto.ProductoWrapper;
+import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.RecogidaModel;
+import vista.EmpaquetadoView;
+import vista.PedidoView;
 import vista.RecogidaView;
 
 public class RecogidaController {
@@ -37,8 +40,11 @@ public class RecogidaController {
 		accionIncidencia();
 		activarAceptar();
 		accionAceptar();
+		accionWorkOrder();
+		accionRecogida();
+		accionEmpaquetado();
 	}
-	
+
 	private void accionCancelar() {
 		rw.getBtCancelar().addActionListener(new ActionListener(){
 			@Override
@@ -172,12 +178,56 @@ public class RecogidaController {
 		});
 	}
 	
+	private void accionEmpaquetado() {
+		rw.getButtonEmpaquetado().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}	
+		});	
+	}
+
+	private void accionRecogida() {
+		rw.getButtonRecogida().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {			
+			}	
+		});	
+	}
+
+	private void accionWorkOrder() {
+		rw.getButtonWorkOrder().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}	
+		});	
+	}			
+	
 	private void pasarWorkorderAListo() {
 //		rm.pasarAListo();
 //		rw.dispose();
 //		EmpaquetadoView ew = new EmpaquetadoView();
 //		new EmpaquetadoController(ew, new EmpaquetadoModel(rm.getDB(),1));
 //		ew.setVisible(true);
+		
+	}
+	
+	private void mostarEmpaquetado() {
+		EmpaquetadoModel em = new EmpaquetadoModel(rm.getDB(), 1);
+		EmpaquetadoController ec = new EmpaquetadoController(em);
+		EmpaquetadoView rView = new EmpaquetadoView(ec);
+		rw.dispose();
+		rView.setVisible(true);
+		
+	}
+	
+	private void mostrarWorkOrder() {
+		PedidoView pView = new PedidoView(rw.getDatabase() ,1);
+		rw.dispose();
+		pView.setVisible(true);
 		
 	}
 	
