@@ -4,14 +4,18 @@ public class ClienteDTO {
 	
 	private String name;
 	
-	
+	//asd
 	public ClienteDTO(String nombre) {
-		this.name = nombre;
+		setName(nombre);
 	}
 
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String n) {
+		this.name = n;
 	}
 
 }
