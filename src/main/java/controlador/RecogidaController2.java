@@ -96,6 +96,8 @@ public class RecogidaController2 {
 	
 	private void addIncidencia() {
 		rw.getTxaIncidencias().setText("");
+		rm.apuntarIncidencia(wdto);
+		addWorkordersTable();
 	}
 	
 	private void activarBtIncidencia() {
