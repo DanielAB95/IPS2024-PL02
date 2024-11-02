@@ -24,10 +24,11 @@ public class ClienteLoginController {
 				
 				if (!vista.getTextNombreUsuario().getText().isEmpty()) {
 					
-					//ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
+					ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
 					
-					ClienteView compra = new ClienteView(vista.getDb());
+					ClienteView compra = new ClienteView(vista.getDb(), dto);
 					compra.getLblNombreUsuario().setText(vista.getTextNombreUsuario().getText());
+					compra.setLocationRelativeTo(vista);
 					vista.dispose();
 					compra.setVisible(true);
 					

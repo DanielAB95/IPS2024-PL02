@@ -13,18 +13,19 @@ import vista.ClienteView;
 public class CarritoController {
 	
 	
-	private ClienteView cView;
+	//private ClienteView cView;
 	private CarritoView view;
 	private CarritoModel modelo;
 	
 	public CarritoController(CarritoView v, CarritoModel m) {
 		this.view = v;
 		this.modelo = m;
-		this.cView = new ClienteView(view.getDatabase());
+		//this.cView = new ClienteView(view.getDatabase());
 	}
 	
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
+		view.getLblNombreUsuario().setText("POLLA GORDA");
 	}
 	
 	public void initController() {

@@ -16,8 +16,13 @@ drop table WorkorderProducto;
 --estado: particular o empresa
 create table Cliente(
 	 idCliente varchar(9) primary key not null,
+	 nombreUsuario varchar(32) unique not null,
 	 nombre varchar(32) not null,
-	 direccion varchar(200) not null
+	 telefono varchar(32) not null,
+	 pais varchar(32) not null,
+	 region varchar(32) not null,
+	 ciudad varchar(32) not null,
+	 calle varchar(32) not null
 );
 
 

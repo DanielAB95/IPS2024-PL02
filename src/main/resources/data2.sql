@@ -2,6 +2,22 @@
 
 --Para proyecto IPS:
 
+delete from cliente;
+INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle) VALUES
+('CLI000001', 'jlopez92', 'Juan Lopez', '+34123456789', 'España', 'Madrid', 'Madrid', 'Calle Mayor 15'),
+('CLI000002', 'mmartinez87', 'Maria Martinez', '+34567891234', 'España', 'Cataluña', 'Barcelona', 'Avenida Diagonal 101'),
+('CLI000003', 'rvargas90', 'Raul Vargas', '+34987654321', 'España', 'Valencia', 'Valencia', 'Calle Colon 22'),
+('CLI000004', 'asolano88', 'Andrea Solano', '+34901234567', 'España', 'Andalucía', 'Sevilla', 'Calle Feria 78'),
+('CLI000005', 'cfuentes95', 'Carlos Fuentes', '+34987654321', 'España', 'Galicia', 'A Coruña', 'Rua Nova 11'),
+('CLI000006', 'lflores80', 'Laura Flores', '+35123456789', 'Portugal', 'Lisboa', 'Lisboa', 'Rua Augusta 200'),
+('CLI000007', 'jsantos83', 'Javier Santos', '+33456789123', 'Francia', 'Île-de-France', 'Paris', 'Rue de Rivoli 150'),
+('CLI000008', 'mbrown91', 'Michael Brown', '+44123456789', 'Reino Unido', 'Inglaterra', 'Londres', 'Baker Street 221B'),
+('CLI000009', 'cchen99', 'Chen Chen', '+81312345678', 'Japón', 'Kanto', 'Tokio', 'Shibuya 109'),
+('CLI000010', 'asang95', 'Anita Sang', '+12123456789', 'EE.UU.', 'California', 'Los Ángeles', 'Sunset Blvd 500');
+
+
+
+
 delete from producto;
 insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda) values  
 	-- Productos en la categoría Ferretería
