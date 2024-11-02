@@ -125,11 +125,7 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextPais());
 		contentPane.add(getTextRegion());
 		contentPane.add(getTextCiudad());
-		
-		textCalle = new JTextField();
-		textCalle.setBounds(178, 273, 171, 21);
-		contentPane.add(textCalle);
-		textCalle.setColumns(10);
+		contentPane.add(getTextCalle());
 	
 		controller.initView();
 		controller.initController();
@@ -288,7 +284,7 @@ public class CarritoView extends JFrame {
 	private JLabel getLblMetodoDePago() {
 		if (lblMetodoDePago == null) {
 			lblMetodoDePago = new JLabel("Método de Pago: ");
-			lblMetodoDePago.setBounds(91, 340, 116, 14);
+			lblMetodoDePago.setBounds(91, 340, 197, 14);
 		}
 		return lblMetodoDePago;
 	}
@@ -299,7 +295,7 @@ public class CarritoView extends JFrame {
 		}
 		return panelRadioBotones;
 	}
-	private JTextField getTextTelefono() {
+	public JTextField getTextTelefono() {
 		if (textTelefono == null) {
 			textTelefono = new JTextField();
 			textTelefono.setBounds(178, 100, 171, 20);
@@ -315,7 +311,7 @@ public class CarritoView extends JFrame {
 		}
 		return textNombre;
 	}
-	private JTextField getTextPais() {
+	public JTextField getTextPais() {
 		if (textPais == null) {
 			textPais = new JTextField();
 			textPais.setBounds(178, 140, 171, 20);
@@ -323,7 +319,7 @@ public class CarritoView extends JFrame {
 		}
 		return textPais;
 	}
-	private JTextField getTextRegion() {
+	public JTextField getTextRegion() {
 		if (textRegion == null) {
 			textRegion = new JTextField();
 			textRegion.setBounds(178, 184, 171, 20);
@@ -331,7 +327,7 @@ public class CarritoView extends JFrame {
 		}
 		return textRegion;
 	}
-	private JTextField getTextCiudad() {
+	public JTextField getTextCiudad() {
 		if (textCiudad == null) {
 			textCiudad = new JTextField();
 			textCiudad.setBounds(178, 230, 171, 20);
@@ -341,5 +337,13 @@ public class CarritoView extends JFrame {
 	}
 	public Database2 getDatabase() {
 		return this.database;
+	}
+	public JTextField getTextCalle() {
+		if (textCalle == null) {
+			textCalle = new JTextField();
+			textCalle.setBounds(174, 274, 171, 19);
+			textCalle.setColumns(10);
+		}
+		return textCalle;
 	}
 }

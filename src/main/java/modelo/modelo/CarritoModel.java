@@ -58,14 +58,18 @@ public class CarritoModel {
 		return this.db;
 	}
 	
+	
 	private String getClientIDfromName(String name) {
 		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
 		
-		for (int i = 0; i < usuario.get(0).length; i++) {
-			System.out.print( usuario.get(0)[i] + " ");
-		}
-		
 		return (String) usuario.get(0)[0];
+		
+	}
+	
+	public Object[] getClient(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return usuario.get(0);
 		
 	}
 	
