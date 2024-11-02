@@ -16,8 +16,6 @@ INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, c
 ('CLI000010', 'asang95', 'Anita Sang', '+12123456789', 'EE.UU.', 'California', 'Los Ángeles', 'Sunset Blvd 500 3º B');
 
 
-
-
 delete from producto;
 insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda) values  
 	-- Productos en la categoría Ferretería
@@ -131,21 +129,21 @@ insert into Categoria(nombreCategoria,categoriaPadre) values
 
 delete from Pedido;
 insert into Pedido(idPedido, idCliente, fecha, estado) values
-	(1, 2,'2024-10-25', 'Pendiente'),
-	(2, 3, '2024-05-08', 'Pendiente'),
-	(3, 5,'2024-10-24', 'Listo'),
-	(4, 8,'2024-10-26', 'Pendiente'),
-	(5, 22,'2024-07-12', 'Pendiente'),
-	(6, 11,'2024-12-01', 'Pendiente'),
-	(7, 15,'2024-10-24', 'Pendiente'),
-	(8, 43,'2024-10-31', 'Pendiente'),
-	(9, 1,'2024-10-19', 'Pendiente'),
-	(10, 17, '2024-10-04', 'Pendiente'),
-	(11, 44,'2024-11-16', 'Pendiente'),
-	(12, 33, '2024-03-14', 'Listo'),
-    (13, 200, '2024-05-14', 'Listo'),
-    (14, 201, '2024-05-15', 'Listo'),
-    (15, 202, '2024-05-15', 'Listo');
+	(1, 'CLI000001','2024-10-25', 'Pendiente'),
+	(2, 'CLI000002', '2024-05-08', 'Pendiente'),
+	(3, 'CLI000002','2024-10-24', 'Empaquetado'),
+	(4, 'CLI000003','2024-10-26', 'Pendiente'),
+	(5, 'CLI000003','2024-07-12', 'Pendiente'),
+	(6, 'CLI000004','2024-12-01', 'Pendiente'),
+	(7, 'CLI000005','2024-10-24', 'Pendiente'),
+	(8, 'CLI000006','2024-10-31', 'Pendiente'),
+	(9, 'CLI000007','2024-10-19', 'Pendiente'),
+	(10, 'CLI000008', '2024-10-04', 'Pendiente'),
+	(11, 'CLI000009','2024-11-16', 'Pendiente'),
+	(12, 'CLI000001', '2024-03-14', 'Listo'),
+    (13, 'CLI000009', '2024-05-14', 'Listo'),
+    (14, 'CLI000010', '2024-05-15', 'Listo'),
+    (15, 'CLI000001', '2024-05-15', 'Listo');
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
@@ -170,6 +168,13 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(9, 'Victor', 'Suarez'),
 	(10, 'Maria', 'Garcia');
 
+delete from Workorder;
+insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
+    (5, 1, 'Empaquetada'),
+    (300, 1, 'Listo'),
+    (301, 1, 'Listo'),
+    (302, 1, 'Listo');
+
 delete from WorkorderPedido;
 insert into WorkorderPedido(idWorkorder, idPedido) values
     (5, 3),
@@ -188,13 +193,6 @@ insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recog
     (301, 15, 1, 3, 3),
     (302, 15, 1, 1, 1),
     (302, 15, 2, 1, 1);
-
-delete from Workorder;
-insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
-    (5, 1, 'Empaquetada'),
-    (300, 1, 'Listo'),
-    (301, 1, 'Listo'),
-    (302, 1, 'Listo');
 
 delete from Paquete;
 insert into Paquete(idPaquete, idPedido, paqueteEstado) values

@@ -13,12 +13,14 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import modelo.modelo.AlbaranModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.EtiquetaModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
+import vista.AlbaranView;
 import vista.EmpaquetadoView;
 import vista.EtiquetaView;
 import vista.PedidoView;
@@ -142,6 +144,12 @@ public class EmpaquetadoController {
 			fw.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(null, "No se ha empaquetado nada", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		if (em.albaranDisponible(pdto)) {
+			AlbaranModel am = new AlbaranModel(em.getDB(), pdto.idPedido);
+			AlbaranController ac =  new AlbaranController(am);
+			AlbaranView aw = new AlbaranView(ac);
+			aw.setVisible(true);
 		}
 	}
 

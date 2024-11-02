@@ -38,9 +38,8 @@ public class EmpaquetadoModel {
 	private final static String SQL_RECUPERARPRODUCTO = "select * from paqueteProducto where idPaquete = ? and idProducto = ?";
 	private final static String SQL_UPDATE_ESTADO_PAQUETE = "update Paquete set paqueteEstado = ? where idPaquete = ?";
 	private final static String SQL_UPDATE_ESTADO_WORKORDER = "update Workorder set workorderEstado = ? where idWorkorder = ?";
-	private final static String SQL_FIND_WO_FROM_PEDIDO = "select * from workorderPedido wp "
-														+ "inner join workorder w on wp.idWorkorder = w.idWorkorder "
-														+ "where idPedido = ?";
+	private final static String SQL_UPDATE_ESTADO_PEDIDO = "update Pedido set estado = ? where idPedido = ?";
+	private final static String SQL_FIND_ESTADO_PEDIDO = "select estado from Pedido where idPedido = ?";
 	
 	public EmpaquetadoModel(Database2 db2, int idAlmacenero) {
 		db = db2;
@@ -76,7 +75,6 @@ public class EmpaquetadoModel {
 			wo.idWorkorder = (int)o[0];
 			wo.idAlmacenero = (int)o[1];
 			wo.estado = (String)o[2];
-			System.out.println(wo.idWorkorder + " " + wo.idAlmacenero + " " + wo.estado);
 			wo.pedidos = new ArrayList<>(getPedidosFromWorkorder(wo.idWorkorder));
 			workorders.add(wo);
 		}
@@ -91,7 +89,6 @@ public class EmpaquetadoModel {
 			pedido.idCliente = (String)o[3];
 			pedido.fecha = LocalDate.parse((String)o[4]);
 			pedido.estadoPedido = (String)o[5];
-			System.out.println("\t" + pedido.idPedido + " " + pedido.idCliente + " " + pedido.fecha + " " + pedido.estadoPedido);
 			pedido.productos = new HashMap<>(getProductosPorPedido(idWorkorder, pedido.idPedido));
 			pedidos.add(pedido);
 		}	
@@ -111,7 +108,6 @@ public class EmpaquetadoModel {
 			dto.pasillo = (int)o[10];
 			dto.estanteria = (int)o[11];
 			dto.balda = (int)o[12];
-			System.out.println("\t\t" + dto.idProducto + " " + dto.nombre + " " + dto.categoria + " " + dto.precio + " " + (int)o[3]);
 			resultado.put(dto, (int)o[3]);
 		}
 		return resultado;
@@ -131,7 +127,6 @@ public class EmpaquetadoModel {
 				workorders.remove(wdto);
 				db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Empaquetada", wdto.idWorkorder);
 			}
-			System.out.println(idPaquete);
 			return idPaquete;
 		}
 		return 0;
@@ -157,8 +152,18 @@ public class EmpaquetadoModel {
 			ped.productos.remove(prod);
 			if (isPedidoFinished(ped)) {
 				wo.pedidos.remove(ped);
+				compruebaPedidoEstado(ped);
 			}
 		}
+	}
+	
+	private void compruebaPedidoEstado(PedidoDto pdto) {
+		for (WorkorderDto wo : workorders) {
+			if (wo.pedidos.contains(pdto)) {
+				return;
+			}
+		}
+		db.executeUpdate(SQL_UPDATE_ESTADO_PEDIDO, "Empaquetado", pdto.idPedido);
 	}
 	
 	private boolean isInserted(int idProducto) {
@@ -202,29 +207,25 @@ public class EmpaquetadoModel {
 		return 0;
 	}
 	
+	public boolean albaranDisponible(PedidoDto pdto) {
+		List<Object[]> result = db.executeQueryArray(SQL_FIND_ESTADO_PEDIDO, pdto.idPedido);
+		String estado = (String)result.get(0)[0];
+		if (estado.equals("Empaquetado")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public Database2 getDB() {
 		return db;
 	}
 	
-	public boolean isWoFinished(WorkorderDto dto) {
+	private boolean isWoFinished(WorkorderDto dto) {
 		return dto.pedidos.size() == 0;
 	}
 	
-	public boolean isPedidoFinished(PedidoDto dto) {
+	private boolean isPedidoFinished(PedidoDto dto) {
 		return dto.productos.size() == 0;
-	}
-
-	private List<WorkorderDto> getWorkordersFromPedido(int idPedido) {
-		List<WorkorderDto> wos = new ArrayList<>();
-		List<Object[]> result = db.executeQueryArray(SQL_FIND_WO_FROM_PEDIDO, idPedido);
-		for (Object[] o : result) {
-			WorkorderDto wo = new WorkorderDto();
-			wo.idWorkorder = (int)o[0];
-			wo.idAlmacenero = (int)o[1];
-			wo.estado = (String)o[2];
-			workorders.add(wo);
-		}
-		return wos;
 	}
 
 }
