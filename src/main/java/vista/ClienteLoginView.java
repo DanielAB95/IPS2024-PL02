@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class ClienteLoginView extends JFrame {
 
+	//wer
 	private JPanel contentPane;
 	private Database2 db;
 	private JLabel lblNombreUsuario;

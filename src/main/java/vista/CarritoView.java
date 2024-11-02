@@ -30,7 +30,7 @@ import javax.swing.JTable;
 @SuppressWarnings("serial")
 public class CarritoView extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane;//af
 	private JLabel lblProductos;
 	private JButton btnEliminar;
 	private JLabel lblPrecioTotal;

@@ -4,7 +4,7 @@ public class ClienteDTO {
 	
 	private String name;
 	
-	
+	//asd
 	public ClienteDTO(String nombre) {
 		setName(nombre);
 	}

@@ -15,7 +15,7 @@ import vista.ClienteView;
 public class CarritoController {
 	
 	
-	//private ClienteView cView;
+	//private ClienteView cView; erw
 	private CarritoView view;
 	private CarritoModel modelo;
 	

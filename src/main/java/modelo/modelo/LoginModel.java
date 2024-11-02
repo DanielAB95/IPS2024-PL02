@@ -10,7 +10,7 @@ public class LoginModel {
 	private Database2 db;
 	
 	
-	public LoginModel(Database2 db) {
+	public LoginModel(Database2 db) { // qw
 		this.db = db;
 	}
 	

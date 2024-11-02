@@ -13,7 +13,7 @@ import vista.ClienteView;
 public class ClienteLoginController {
 	
 	
-	private ClienteLoginView vista;
+	private ClienteLoginView vista;//asd
 	private LoginModel model;
 	
 	public ClienteLoginController(ClienteLoginView vista){

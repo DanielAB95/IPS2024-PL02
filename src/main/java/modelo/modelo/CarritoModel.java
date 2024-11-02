@@ -20,7 +20,7 @@ import vista.CarritoView;
 
 public class CarritoModel {
 	
-
+	//wer
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
 	private static final String SQL_CREA_CLIENTE_NUEVO = "INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
