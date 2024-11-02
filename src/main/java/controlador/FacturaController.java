@@ -10,14 +10,16 @@ public class FacturaController {
 	private FacturaView fv;
 	private FacturaModel fm;
 	
-	public FacturaController(FacturaView fv) {
-		this.fv = fv;
+	public FacturaController() {
 		this.fm = new FacturaModel();
 	}
 	
-	public FacturaController(FacturaView fw, FacturaModel fm) {
-		this.fv = fw;
+	public FacturaController(FacturaModel fm) {
 		this.fm = fm;
+	}
+	
+	public void setView(FacturaView fv) {
+		this.fv = fv;
 	}
 
 	public void init() {

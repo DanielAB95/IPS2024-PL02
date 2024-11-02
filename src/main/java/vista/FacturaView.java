@@ -14,7 +14,6 @@ public class FacturaView extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextArea textArea;
-	private FacturaController fc;
 
 	/**
 	 * Launch the application.
@@ -24,7 +23,7 @@ public class FacturaView extends JDialog {
 			@Override
 			public void run() {
 				try {
-					FacturaView frame = new FacturaView();
+					FacturaView frame = new FacturaView(new FacturaController());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +33,7 @@ public class FacturaView extends JDialog {
 	}
 
 
-	public FacturaView() {
+	public FacturaView(FacturaController fc) {
 		setTitle("Facturación");
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -48,7 +47,7 @@ public class FacturaView extends JDialog {
 		
 		setLocationRelativeTo(null);
 		
-		fc = new FacturaController(this);
+		fc.setView(this);;
 		fc.init();
 	}
 

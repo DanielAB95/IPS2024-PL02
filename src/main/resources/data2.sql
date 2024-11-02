@@ -120,10 +120,10 @@ insert into Pedido(idPedido, idCliente, fecha, estado) values
 	(3, 5,'2024-10-24', 'Listo'),
 	(4, 8,'2024-10-26', 'Pendiente'),
 	(5, 22,'2024-07-12', 'Pendiente'),
-	(6, 11,'2024-12-01', 'Listo'),
+	(6, 11,'2024-12-01', 'Pendiente'),
 	(7, 15,'2024-10-24', 'Pendiente'),
 	(8, 43,'2024-10-31', 'Pendiente'),
-	(9, 1,'2024-10-19', 'Listo'),
+	(9, 1,'2024-10-19', 'Pendiente'),
 	(10, 17, '2024-10-04', 'Pendiente'),
 	(11, 44,'2024-11-16', 'Pendiente'),
 	(12, 33, '2024-03-14', 'Listo'),
@@ -133,26 +133,8 @@ insert into Pedido(idPedido, idCliente, fecha, estado) values
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
-	(1, 1, 1),
-	(1, 4, 6),
-	(1, 6, 16),
-	(1, 7, 5),
-	(1, 8, 3),
-	(1, 10, 12),
-	(1, 3, 2),
-	(2, 3, 2),
     (3, 1, 2),
     (3, 2, 1),
-	(4, 4, 4),
-	(4, 6, 7),
-	(5, 5, 2),
-	(7, 6, 1),
-	(8, 8, 1),
-	(9, 2, 5),
-	(9, 1, 2),
-	(9, 4, 1),
-	(12, 1, 1),
-	(12, 2, 1),
     (13, 21, 1),
     (13, 30, 1),
     (14, 29, 1),
@@ -174,6 +156,7 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 
 delete from WorkorderPedido;
 insert into WorkorderPedido(idWorkorder, idPedido) values
+    (5, 3),
     (300, 13),
     (300, 14),
     (301, 15),
@@ -181,21 +164,18 @@ insert into WorkorderPedido(idWorkorder, idPedido) values
 
 delete from WorkorderProducto;
 insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recogidos) values
-    (300, 13, 21, 1, 0),
-    (300, 13, 30, 1, 0),
-    (300, 14, 29, 1, 0),
-    (301, 15, 1, 3, 0),
-    (302, 15, 1, 1, 0),
-    (302, 15, 2, 1, 0);
+    (5, 3, 1, 2, 2),
+    (5, 3, 2, 1, 1),
+    (300, 13, 21, 1, 1),
+    (300, 13, 30, 1, 1),
+    (300, 14, 29, 1, 1),
+    (301, 15, 1, 3, 3),
+    (302, 15, 1, 1, 1),
+    (302, 15, 2, 1, 1);
 
 delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
-	(1, 1, 'Pendiente'),
-	(2, 2, 'Pendiente'),
-	(3, 4, 'Pendiente'),
-	(4, 5, 'Incidencia'),
-	(5, 1, 'Pendiente'),
-	(6, 3, 'Pendiente'),
+    (5, 1, 'Empaquetada'),
     (300, 1, 'Listo'),
     (301, 1, 'Listo'),
     (302, 1, 'Listo');

@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,10 +24,8 @@ public class EmpaquetadoView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultTableModel tableModel;
-	private EmpaquetadoController ec;
 	private JPanel pnDatos;
 	private JLabel lbAlmacennero;
-	private JTextField txAlmacenero;
 	private JPanel pnBotones;
 	private JButton btVolver;
 	private JButton btGenerar;
@@ -41,6 +40,7 @@ public class EmpaquetadoView extends JFrame {
 	private JButton btApuntar;
 	private JLabel lbIncidencia;
 	private JTable table;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -50,7 +50,8 @@ public class EmpaquetadoView extends JFrame {
 			@Override
 			public void run() {
 				try {
-					EmpaquetadoView frame = new EmpaquetadoView();
+					EmpaquetadoController controller = new EmpaquetadoController();
+					EmpaquetadoView frame = new EmpaquetadoView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +63,7 @@ public class EmpaquetadoView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EmpaquetadoView() {
+	public EmpaquetadoView(EmpaquetadoController ec) {
 		setTitle("Empaquetado");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,7 +85,7 @@ public class EmpaquetadoView extends JFrame {
 		contentPane.add(getLbIncidencia());
 		setLocationRelativeTo(null);
 		
-		ec = new EmpaquetadoController(this);
+		ec.setView(this);
 		ec.init();
 	}
 	
@@ -94,7 +95,7 @@ public class EmpaquetadoView extends JFrame {
 			pnDatos.setBounds(10, 11, 444, 30);//60 para pedidos 90 para productos (30)
 			pnDatos.setLayout(new GridLayout(0, 2, 0, 0));
 			pnDatos.add(getLbAlmacennero());
-			pnDatos.add(getTxAlmacenero());
+			pnDatos.add(getTextField());
 		}
 		return pnDatos;
 	}
@@ -105,15 +106,6 @@ public class EmpaquetadoView extends JFrame {
 			lbAlmacennero.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		}
 		return lbAlmacennero;
-	}
-	
-	public JTextField getTxAlmacenero() {
-		if (txAlmacenero == null) {
-			txAlmacenero = new JTextField();
-			txAlmacenero.setEditable(false);
-			txAlmacenero.setColumns(10);
-		}
-		return txAlmacenero;
 	}
 	
 	public JPanel getPnBotones() {
@@ -213,6 +205,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtEscaner() {
 		if (btEscaner == null) {
 			btEscaner = new JButton("Escanear");
+			btEscaner.setEnabled(false);
 			btEscaner.setVisible(false);
 			btEscaner.setBackground(Color.WHITE);
 			btEscaner.setBounds(353, 604, 101, 30);
@@ -249,4 +242,13 @@ public class EmpaquetadoView extends JFrame {
 		return lbIncidencia;
 	}
 
+	public JTextField getTextField() {
+		if (textField == null) {
+			textField = new JTextField();
+			textField.setHorizontalAlignment(SwingConstants.CENTER);
+			textField.setEditable(false);
+			textField.setColumns(10);
+		}
+		return textField;
+	}
 }

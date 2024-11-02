@@ -63,7 +63,7 @@ create table Pedido(
     idCliente varchar(9) not null,
     fecha date not null,
     estado varchar(20) not null,
-    check (estado in('Pendiente','Listo')),
+    check (estado in('Sin Facturar','Pendiente','Listo')),
     foreign key (idCliente) references Cliente(idCliente)
 );
 
@@ -77,7 +77,7 @@ create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     workorderEstado varchar(20) not null,
-    check (workorderEstado in('Pendiente','Listo','Incidencia','En Curso')),
+    check (workorderEstado in('Pendiente','En Curso','Incidencia','Listo','Empaquetada')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
 
@@ -92,7 +92,7 @@ create table Paquete(
     idPaquete int primary key,
     idPedido int not null,
     paqueteEstado varchar(20) not null,
-    check (paqueteEstado in('Pendiente','Listo','Incidencia','En Curso')),
+    check (paqueteEstado in('En Curso','Listo','Incidencia')),
     foreign key (idPedido) references Pedido(idPedido)
 );
 
