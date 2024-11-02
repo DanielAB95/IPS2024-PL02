@@ -2,7 +2,7 @@
 
 --Para proyecto IPS:
 
-delete from cliente;--we
+delete from cliente;
 INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle) VALUES
 ('CLI000001', 'jlopez92', 'Juan Lopez', '+34123456789', 'España', 'Madrid', 'Madrid', 'Calle Mayor 15 5º izquierda'),
 ('CLI000002', 'mmartinez87', 'Maria Martinez', '+34567891234', 'España', 'Cataluña', 'Barcelona', 'Avenida Diagonal 101 5º izquierda'),
