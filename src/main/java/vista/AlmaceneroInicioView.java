@@ -1,20 +1,18 @@
 package vista;
 
-import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.AlmaceneroController;
 import giis.demo.util.Database2;
 import modelo.modelo.AlmaceneroModel;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 
 public class AlmaceneroInicioView extends JFrame {
 
@@ -36,7 +34,7 @@ public class AlmaceneroInicioView extends JFrame {
 		setTitle("Inicio sesion");
 		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 960);
+		setBounds(100, 100, 480, 854);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -52,6 +50,7 @@ public class AlmaceneroInicioView extends JFrame {
 		contentPane.add(getTxIdAlmacenero());
 		contentPane.add(getLbIdAlmacenero());
 		contentPane.add(getBtContinuar());
+		setLocationRelativeTo(null);
 	}
 
 	private JTextField getTxIdAlmacenero() {

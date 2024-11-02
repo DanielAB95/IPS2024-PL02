@@ -8,8 +8,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import modelo.modelo.AlmaceneroModel;
+import modelo.modelo.EmpaquetadoModel;
 import vista.AlmaceneroInicioView;
 import vista.AlmaceneroView;
+import vista.EmpaquetadoView;
 import vista.PedidoView;
 
 public class AlmaceneroController {
@@ -69,13 +71,28 @@ public class AlmaceneroController {
 				mostrarPedidosPendientes(idAlmacenero);
 			}
 		});		
+		
+		view.getBtEmpaquetado().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				irAEmpaquetado();
+			}
+		});	
 	}
 
 	private void mostrarAlmaceneroView() {
 		view.getFrame().setVisible(true);	
 		view.getFrame().setLocationRelativeTo(viewId.getFrame());
+		viewId.dispose();
 	}
 	
+	private void irAEmpaquetado() {
+		EmpaquetadoModel em = new EmpaquetadoModel(view.getDatabase(), idAlmacenero);
+		EmpaquetadoController ec = new EmpaquetadoController(em);
+		EmpaquetadoView ew = new EmpaquetadoView(ec);
+		ew.setVisible(true);
+		view.dispose();
+	}
 	
 	private void mostrarPedidosPendientes(int idAlmacenero) {
 		PedidoView pv = new PedidoView(viewId.getDatabase());
