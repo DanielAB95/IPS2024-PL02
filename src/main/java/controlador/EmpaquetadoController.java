@@ -7,19 +7,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import modelo.modelo.EmpaquetadoModel;
-import modelo.modelo.FacturaModel;
+import modelo.modelo.EtiquetaModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
 import vista.EmpaquetadoView;
-import vista.FacturaView;
+import vista.EtiquetaView;
 import vista.PedidoView;
 import vista.RecogidaView;
 
@@ -27,9 +28,10 @@ public class EmpaquetadoController {
 	
 	private EmpaquetadoModel em;
 	private EmpaquetadoView ew;
-	private int rowWorkorder;
-	private int rowPedido = 0;
 	private int idPaquete;
+	
+	private WorkorderDto wdto;
+	private PedidoDto pdto;
 	
 	public EmpaquetadoController() {
 		this.em = new EmpaquetadoModel();
@@ -91,13 +93,6 @@ public class EmpaquetadoController {
 		});
 	}
 	
-	private void cerrar() {
-		FacturaModel fm = new FacturaModel(em.getDB(), idPaquete);
-		FacturaController fc =  new FacturaController(fm);
-		FacturaView fw = new FacturaView(fc);
-		fw.setVisible(true);
-	}
-	
 	private void activarBtEscanear() {
 		ew.getTxEscaner().getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -127,9 +122,26 @@ public class EmpaquetadoController {
 	
 	private void escanear() {
 		Integer id = Integer.parseInt(ew.getTxEscaner().getText());
-		idPaquete = em.checkID(rowWorkorder, rowPedido, id);
+		idPaquete = em.checkID(wdto, pdto, id);
+		if (pdto.productos.size() == 0) {
+			cerrar();
+		}
 		if (idPaquete > 0) {
-			addProductosTable(rowWorkorder, rowPedido);
+			addProductosTable();
+		} else {
+			JOptionPane.showMessageDialog(null, "No se encuentra la ID en el pedido", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void cerrar() {
+		idPaquete = em.cerrarCaja(wdto.idWorkorder);
+		if (idPaquete > 0) {
+			EtiquetaModel fm = new EtiquetaModel(em.getDB(), idPaquete);
+			EtiquetaController fc =  new EtiquetaController(fm);
+			EtiquetaView fw = new EtiquetaView(fc);
+			fw.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "No se ha empaquetado nada", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -160,26 +172,24 @@ public class EmpaquetadoController {
 		ew.repaint();
 	}
 
-	private void addPedidosTable(int rowWorkorder) {
+	private void addPedidosTable() {
 		vaciarTabla();
 		ew.getTableModel().addColumn("ID Pedido");
 		ew.getTableModel().addColumn("Numero de productos");
-		WorkorderDto workorder = em.getWorkorders().get(rowWorkorder);
-		for (PedidoDto pedido : workorder.pedidos) {
+		for (PedidoDto pedido : wdto.pedidos) {
 			Object[] data = {pedido.idPedido, pedido.productos.size()};
 			ew.getTableModel().addRow(data);
 		}
 	}
 	
-	private void addProductosTable(int idWorkorder, int idPedido) {
+	private void addProductosTable() {
 		vaciarTabla();
+		
 		ew.getTableModel().addColumn("ID Producto");
 		ew.getTableModel().addColumn("Nombre");
 		ew.getTableModel().addColumn("Cantidad");
-		WorkorderDto workorder = em.getWorkorders().get(idWorkorder);
-		PedidoDto pedido = workorder.pedidos.get(idPedido);
-		for (ProductoDto producto : pedido.productos.keySet()) {
-			Object[] data = {producto.idProducto, producto.nombre, pedido.productos.get(producto)};
+		for (ProductoDto producto : pdto.productos.keySet()) {
+			Object[] data = {producto.idProducto, producto.nombre, pdto.productos.get(producto)};
 			ew.getTableModel().addRow(data);
 		}
 		
@@ -199,19 +209,22 @@ public class EmpaquetadoController {
 	private void cambiarDatosDelaTabla() {
 		switch(ew.getTableModel().getColumnName(0)) {
 		case "ID Workorder":
-			rowWorkorder = ew.getTable().getSelectedRow();
-			if ((int)ew.getTableModel().getValueAt(rowWorkorder, 1) > 1) {
+			int rowWorkorder = ew.getTable().getSelectedRow();
+			wdto = em.getWorkorders().get(rowWorkorder);
+			if (wdto.pedidos.size() > 1) {
 				ajustarTamañoPedidos();
-				addPedidosTable(rowWorkorder);
+				addPedidosTable();
 			} else {
+				pdto = wdto.pedidos.get(0);
 				ajustarTamañosProductos(true);
-				addProductosTable(rowWorkorder, rowPedido);
+				addProductosTable();
 			}
 			break;
 		case "ID Pedido":
-			rowPedido = ew.getTable().getSelectedRow();
-				ajustarTamañosProductos(false);
-				addProductosTable(rowWorkorder , rowPedido);
+			int rowPedido = ew.getTable().getSelectedRow();
+			pdto = wdto.pedidos.get(rowPedido);
+			ajustarTamañosProductos(false);
+			addProductosTable();
 			break;
 		case "ID Producto":
 			break;
@@ -222,7 +235,7 @@ public class EmpaquetadoController {
 		ew.getPnDatos().setBounds(10, 11, 444, 60);
 		
 		ew.getPnDatos().add(nuevaLabel("Workorder ID:"));
-		ew.getPnDatos().add(nuevoTxField(em.getWorkorders().get(rowWorkorder).idWorkorder));
+		ew.getPnDatos().add(nuevoTxField(wdto.idWorkorder));
 		ew.validate();
 		ew.repaint();
 	}
@@ -232,10 +245,10 @@ public class EmpaquetadoController {
 		ew.getPnDatos().setBounds(10, 11, 444, 90);
 		if (pasoDirecto) {
 			ew.getPnDatos().add(nuevaLabel("Workorder ID:"));
-			ew.getPnDatos().add(nuevoTxField(em.getWorkorders().get(rowWorkorder).idWorkorder));
+			ew.getPnDatos().add(nuevoTxField(wdto.idWorkorder));
 		}
 		ew.getPnDatos().add(nuevaLabel("Pedido ID:"));
-		ew.getPnDatos().add(nuevoTxField(em.getWorkorders().get(rowWorkorder).pedidos.get(rowPedido).idPedido));
+		ew.getPnDatos().add(nuevoTxField(pdto.idPedido));
 		setVisibleComponentes(true);
 		ew.validate();
 		ew.repaint();

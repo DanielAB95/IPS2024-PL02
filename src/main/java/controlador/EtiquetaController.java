@@ -2,23 +2,23 @@ package controlador;
 
 import java.time.LocalDate;
 
-import modelo.modelo.FacturaModel;
-import vista.FacturaView;
+import modelo.modelo.EtiquetaModel;
+import vista.EtiquetaView;
 
-public class FacturaController {
+public class EtiquetaController {
 	
-	private FacturaView fv;
-	private FacturaModel fm;
+	private EtiquetaView fv;
+	private EtiquetaModel fm;
 	
-	public FacturaController() {
-		this.fm = new FacturaModel();
+	public EtiquetaController() {
+		this.fm = new EtiquetaModel();
 	}
 	
-	public FacturaController(FacturaModel fm) {
+	public EtiquetaController(EtiquetaModel fm) {
 		this.fm = fm;
 	}
 	
-	public void setView(FacturaView fv) {
+	public void setView(EtiquetaView fv) {
 		this.fv = fv;
 	}
 

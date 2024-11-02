@@ -8,7 +8,7 @@ import giis.demo.util.Database2;
 import persistence.dto.PaqueteDto;
 import persistence.dto.ProductoDto;
 
-public class FacturaModel {
+public class EtiquetaModel {
 	
 	private PaqueteDto paquete = new PaqueteDto();
 	private Database2 db;
@@ -17,14 +17,14 @@ public class FacturaModel {
 	private final static String SQL_PRODUCTOS_ID = "select * from PaqueteProducto where idPaquete = ?";
 	private final static String SQL_PRODUCTOS = "select * from Producto where id = ?";
 	
-	public FacturaModel(Database2 db, int paquete) {
+	public EtiquetaModel(Database2 db, int paquete) {
 		this.db = db;
 		this.paquete.idPaquete = paquete;
 		getPaquete();
 		getProductos();
 	}
 	
-	public FacturaModel() {
+	public EtiquetaModel() {
 		db = new Database2();
 		db.createDatabase(false);
 		db.loadDatabase();

@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import controlador.FacturaController;
+import controlador.EtiquetaController;
 
-public class FacturaView extends JDialog {
+public class EtiquetaView extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -23,7 +23,7 @@ public class FacturaView extends JDialog {
 			@Override
 			public void run() {
 				try {
-					FacturaView frame = new FacturaView(new FacturaController());
+					EtiquetaView frame = new EtiquetaView(new EtiquetaController());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class FacturaView extends JDialog {
 	}
 
 
-	public FacturaView(FacturaController fc) {
+	public EtiquetaView(EtiquetaController fc) {
 		setTitle("Facturación");
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

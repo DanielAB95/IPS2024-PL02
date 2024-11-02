@@ -12,6 +12,7 @@ drop table WorkorderPedido;
 drop table Categoria;
 drop table PaqueteProducto;
 drop table WorkorderProducto;
+drop table WorkorderPaquete;
 
 --estado: particular o empresa
 create table Cliente(
@@ -63,7 +64,7 @@ create table Pedido(
     idCliente varchar(9) not null,
     fecha date not null,
     estado varchar(20) not null,
-    check (estado in('Sin Facturar','Pendiente','Listo')),
+    check (estado in('Sin Facturar','Pendiente','Listo','Empaquetado')),
     foreign key (idCliente) references Cliente(idCliente)
 );
 
@@ -118,4 +119,11 @@ create table PaqueteProducto(
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0),
     primary key (idPaquete, idProducto)
+);
+
+create table WorkorderPaquete (
+	idWorkorder int not null, 
+	idPaquete int not null,
+	foreign key (idPaquete) references Paquete(idPaquete),
+	foreign key (idWorkorder) references Workorder(idWorkorder)
 );

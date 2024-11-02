@@ -189,3 +189,7 @@ insert into PaqueteProducto(idPaquete, idProducto, cantidad) values
     (2, 1, 2),
     (2, 2, 1);
 
+delete from WorkorderPaquete;
+insert into WorkorderPaquete(idWorkorder, idPaquete) values
+    (5, 2);
+
