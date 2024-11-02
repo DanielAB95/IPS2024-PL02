@@ -1,5 +1,7 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -14,7 +16,9 @@ import modelo.dto.ProductoAlmacen;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
+import vista.EmpaquetadoView;
 import vista.PedidoView;
+import vista.RecogidaView;
 import vista.WorkorderView;
 
 public class PedidoController {
@@ -52,6 +56,33 @@ public class PedidoController {
 				}
 			}
 		});
+		
+		view.getButtonEmpaquetado().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarEmpaquetado();
+				
+			}
+		});
+		
+		view.getButtonRecogida().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 mostrarRecogida();
+				
+			}
+		});
+		
+		view.getButtonGenerarWorkOrders().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}
+		});
 	}
 
 	public void getPedidos() {
@@ -69,6 +100,23 @@ public class PedidoController {
 	private void actualizaTabla() {
 		view.getTablaPedidos().removeAll();
 		getPedidos();
+		
+	}
+	
+	private void mostrarEmpaquetado() {
+		EmpaquetadoView eView = new EmpaquetadoView(view.getDatabase());
+		view.dispose();
+		eView.setVisible(true);	
+	}
+	
+	private void mostrarRecogida() {
+		RecogidaView rView = new RecogidaView(view.getDatabase());
+		view.dispose();
+		rView.setVisible(true);	
+	}
+	
+	private void mostrarWorkOrder() {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -17,6 +17,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controlador.EmpaquetadoController;
+import giis.demo.util.Database2;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EmpaquetadoView extends JFrame {
 
@@ -28,9 +31,9 @@ public class EmpaquetadoView extends JFrame {
 	private JLabel lbAlmacennero;
 	private JTextField txAlmacenero;
 	private JPanel pnBotones;
-	private JButton btVolver;
-	private JButton btGenerar;
-	private JButton btRecoger;
+	private JButton btGenerarWorkOrder;
+	private JButton btRecogida;
+	private JButton btEmpaquetado;
 	private JButton btMenu;
 	private JScrollPane scTabla;
 	private JTextArea txaIncidencias;
@@ -41,6 +44,7 @@ public class EmpaquetadoView extends JFrame {
 	private JButton btApuntar;
 	private JLabel lbIncidencia;
 	private JTable table;
+	private Database2 db;
 
 	/**
 	 * Launch the application.
@@ -50,7 +54,8 @@ public class EmpaquetadoView extends JFrame {
 			@Override
 			public void run() {
 				try {
-					EmpaquetadoView frame = new EmpaquetadoView();
+					Database2 db = new Database2();
+					EmpaquetadoView frame = new EmpaquetadoView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +67,8 @@ public class EmpaquetadoView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EmpaquetadoView() {
+	public EmpaquetadoView(Database2 db) {
+		this.db = db;
 		setTitle("Empaquetado");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,37 +126,41 @@ public class EmpaquetadoView extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 764, 444, 40);
-			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
-			pnBotones.add(getBtVolver());
-			pnBotones.add(getBtGenerar());
-			pnBotones.add(getBtRecoger());
+			pnBotones.setLayout(new GridLayout(0, 4, 0, 0));
+			pnBotones.add(getBtGenerarWorkOrder());
+			pnBotones.add(getBtRecogida());
+			pnBotones.add(getBtEmpaquetado());
 			pnBotones.add(getBtMenu());
 		}
 		return pnBotones;
 	}
 	
-	public JButton getBtVolver() {
-		if (btVolver == null) {
-			btVolver = new JButton("Volver");
-			btVolver.setBackground(Color.WHITE);
+	public JButton getBtGenerarWorkOrder() {
+		if (btGenerarWorkOrder == null) {
+			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setBackground(Color.WHITE);
 		}
-		return btVolver;
+		return btGenerarWorkOrder;
 	}
 	
-	public JButton getBtGenerar() {
-		if (btGenerar == null) {
-			btGenerar = new JButton("Generar");
-			btGenerar.setBackground(Color.WHITE);
+	public JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+			btRecogida.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btRecogida.setBackground(Color.WHITE);
 		}
-		return btGenerar;
+		return btRecogida;
 	}
 	
-	public JButton getBtRecoger() {
-		if (btRecoger == null) {
-			btRecoger = new JButton("Recoger");
-			btRecoger.setBackground(Color.WHITE);
+	public JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
+			btEmpaquetado.setBackground(Color.WHITE);
 		}
-		return btRecoger;
+		return btEmpaquetado;
 	}
 	
 	public JButton getBtMenu() {
@@ -248,5 +258,8 @@ public class EmpaquetadoView extends JFrame {
 		}
 		return lbIncidencia;
 	}
-
+	
+	public Database2 getDatabase() {
+		return this.db;
+	}
 }

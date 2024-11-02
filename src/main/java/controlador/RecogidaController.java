@@ -17,7 +17,9 @@ import modelo.dto.ProductoWrapper;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.RecogidaModel;
 import vista.EmpaquetadoView;
+import vista.PedidoView;
 import vista.RecogidaView;
+import vista.WorkorderView;
 
 public class RecogidaController {
 	
@@ -39,8 +41,11 @@ public class RecogidaController {
 		accionIncidencia();
 		activarAceptar();
 		accionAceptar();
+		accionWorkOrder();
+		accionRecogida();
+		accionEmpaquetado();
 	}
-	
+
 	private void accionCancelar() {
 		rw.getBtCancelar().addActionListener(new ActionListener(){
 			@Override
@@ -174,12 +179,54 @@ public class RecogidaController {
 		});
 	}
 	
+	private void accionEmpaquetado() {
+		rw.getButtonEmpaquetado().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}	
+		});	
+	}
+
+	private void accionRecogida() {
+		rw.getButtonRecogida().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {			
+			}	
+		});	
+	}
+
+	private void accionWorkOrder() {
+		rw.getButtonWorkOrder().addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarWorkOrder();
+				
+			}	
+		});	
+	}			
+	
 	private void pasarWorkorderAListo() {
 		rm.pasarAListo();
 		rw.dispose();
-		EmpaquetadoView ew = new EmpaquetadoView();
+		EmpaquetadoView ew = new EmpaquetadoView(rw.getDatabase2());
 		new EmpaquetadoController(ew, new EmpaquetadoModel(rm.getDB(),1));
 		ew.setVisible(true);
+		
+	}
+	
+	private void mostarEmpaquetado() {
+		EmpaquetadoView rView = new EmpaquetadoView(rw.getDatabase());
+		rw.dispose();
+		rView.setVisible(true);
+		
+	}
+	
+	private void mostrarWorkOrder() {
+		PedidoView pView = new PedidoView(rw.getDatabase());
+		rw.dispose();
+		pView.setVisible(true);
 		
 	}
 	

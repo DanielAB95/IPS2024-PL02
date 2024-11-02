@@ -25,7 +25,6 @@ public class AlmaceneroInicioView extends JFrame {
 	private JButton btContinuar;
 	private AlmaceneroModel model;
 	private AlmaceneroController controller;
-	private AlmaceneroView view;
 	private Database2 db;
 
 	
@@ -41,8 +40,7 @@ public class AlmaceneroInicioView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		model = new AlmaceneroModel(db);
-		view = new AlmaceneroView(db);
-		controller = new AlmaceneroController(this, view, model);
+		controller = new AlmaceneroController(this, model);
 		//controller.initView();
 		controller.initController();
 		

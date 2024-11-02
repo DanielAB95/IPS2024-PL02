@@ -180,7 +180,6 @@ public class ClienteController {
 		actualizarLista(null);
 	}
 	
-	
 	private void actualizaPrecioTotal() {
 		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
 		view.getTextPrecioTotal().setText(formattedNumber);
