@@ -105,7 +105,7 @@ public class CarritoModel {
 				
 			insertarProductosPedido(nuevoID);
 			
-			JOptionPane.showMessageDialog(this.v, "Compra realizada");
+			//JOptionPane.showMessageDialog(this.v, "Gracias por ");
 			
 			System.out.println("-- DESPUES de confirmar compra --");
 			mostrarPedidos();
