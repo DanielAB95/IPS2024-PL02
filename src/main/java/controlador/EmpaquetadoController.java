@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +13,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import modelo.modelo.AlbaranModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.EtiquetaModel;
+import modelo.modelo.RecogidaModel2;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
@@ -24,7 +28,7 @@ import vista.AlbaranView;
 import vista.EmpaquetadoView;
 import vista.EtiquetaView;
 import vista.PedidoView;
-import vista.RecogidaView;
+import vista.RecogidaView2;
 
 public class EmpaquetadoController {
 	
@@ -164,6 +168,24 @@ public class EmpaquetadoController {
 			Object[] data = {workorder.idWorkorder, workorder.pedidos.size()};
 			ew.getTableModel().addRow(data);
 		}
+		ajustarTabla();
+	}
+	
+	private void ajustarTabla() {
+		for (int i = 0; i < ew.getTable().getColumnCount(); i++) {
+            TableColumn column = ew.getTable().getColumnModel().getColumn(i);
+            int width = 0;
+
+            // Calcular el ancho máximo de cada celda en la columna
+            for (int j = 0; j < ew.getTable().getRowCount(); j++) {
+                TableCellRenderer renderer = ew.getTable().getCellRenderer(j, i);
+                Component comp = renderer.getTableCellRendererComponent(ew.getTable(), ew.getTable().getValueAt(j, i), false, false,i, j);
+                width = Math.max(width, comp.getPreferredSize().width);
+            }
+
+            // Ajustar el ancho de la columna
+            column.setPreferredWidth(width + ew.getTable().getIntercellSpacing().width);
+        }
 	}
 	
 	private void borrarDatos() {
@@ -188,11 +210,11 @@ public class EmpaquetadoController {
 			Object[] data = {pedido.idPedido, pedido.productos.size()};
 			ew.getTableModel().addRow(data);
 		}
+		ajustarTabla();
 	}
 	
 	private void addProductosTable() {
-		vaciarTabla();
-		
+		vaciarTabla();	
 		ew.getTableModel().addColumn("ID Producto");
 		ew.getTableModel().addColumn("Nombre");
 		ew.getTableModel().addColumn("Cantidad");
@@ -200,7 +222,7 @@ public class EmpaquetadoController {
 			Object[] data = {producto.idProducto, producto.nombre, pdto.productos.get(producto)};
 			ew.getTableModel().addRow(data);
 		}
-		
+		ajustarTabla();
 	}
 
 	private void accionWorkordersTabla() {
@@ -315,7 +337,9 @@ public class EmpaquetadoController {
 	}
 	
 	private void mostarRecogida() {
-		RecogidaView rView = new RecogidaView(em.getDB());
+		RecogidaModel2 rm = new RecogidaModel2(em.getDB(), em.getAlmacenero().idAlmacenero);
+		RecogidaController2 rc = new RecogidaController2(rm);
+		RecogidaView2 rView = new RecogidaView2(rc);
 		ew.dispose();
 		rView.setVisible(true);
 		

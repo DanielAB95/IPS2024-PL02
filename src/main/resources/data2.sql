@@ -143,17 +143,24 @@ insert into Pedido(idPedido, idCliente, fecha, estado) values
 	(12, 'CLI000001', '2024-03-14', 'Listo'),
     (13, 'CLI000009', '2024-05-14', 'Listo'),
     (14, 'CLI000010', '2024-05-15', 'Listo'),
-    (15, 'CLI000001', '2024-05-15', 'Listo');
+    (15, 'CLI000001', '2024-05-15', 'Listo'),
+    (16, 'CLI000010', '2024-05-15', 'Listo'),
+    (17, 'CLI000010', '2024-05-15', 'Listo');
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
     (3, 1, 2),
     (3, 2, 1),
+    (12, 4, 2),
+    (12, 18, 1),
+    (12, 29, 3),
     (13, 21, 1),
     (13, 30, 1),
     (14, 29, 1),
     (15, 1, 4),
-    (15, 2, 1);
+    (15, 2, 1),
+    (16, 1, 1),
+    (17, 19, 1);
 	
 delete from Almacenero;
 insert into Almacenero(idAlmacenero, nombre, apellido) values
@@ -170,6 +177,9 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 
 delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
+    (1, 1, 'En Curso'),
+    (2, 1, 'En Curso'),
+    (3, 1, 'En Curso'),
     (5, 1, 'Empaquetada'),
     (300, 1, 'Listo'),
     (301, 1, 'Listo'),
@@ -177,6 +187,10 @@ insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
 
 delete from WorkorderPedido;
 insert into WorkorderPedido(idWorkorder, idPedido) values
+    (1, 12),
+    (2, 12),
+    (3, 16),
+    (3, 17),
     (5, 3),
     (300, 13),
     (300, 14),
@@ -185,6 +199,11 @@ insert into WorkorderPedido(idWorkorder, idPedido) values
 
 delete from WorkorderProducto;
 insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recogidos) values
+    (1, 12, 4, 2, 0),
+    (1, 12, 18, 1, 0),
+    (2, 12, 29, 3, 0),
+    (3, 16, 1, 1, 0),
+    (3, 17, 19, 1, 0),
     (5, 3, 1, 2, 2),
     (5, 3, 2, 1, 1),
     (300, 13, 21, 1, 1),

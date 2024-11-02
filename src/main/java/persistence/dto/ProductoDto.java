@@ -27,4 +27,8 @@ public class ProductoDto {
 		return idProducto == other.idProducto;
 	}
 	
+	public String ubicacion() {		
+		return pasillo + "-" + estanteria + "-" + balda;
+	}
+	
 }

@@ -12,27 +12,26 @@ import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
 
-public class EmpaquetadoModel {
-	
+public class RecogidaModel2 {
+
 	List<WorkorderDto> workorders = new ArrayList<>();
 	AlmaceneroDto almacenero = new AlmaceneroDto();
 	private int idPaquete;
 	private Database2 db;
 	
 	private final static String SQL_FIND_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
-	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado = 'Listo'";
+	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado = 'En Curso' and idAlmacenero = ?";
 	private final static String SQL_FIND_PEDIDOS_FROM_WO = "select * from WorkorderPedido wp "
 											+ "inner join Pedido p on wp.idPedido = p.idPedido "
-											+ "where idWorkorder = ? and p.estado = 'Listo'";
+											+ "where idWorkorder = ?";
 	private final static String SQL_FIND_PRODUCTOS_FROM_PEDIDOYWO = "select * from WorkorderProducto wp "
 											+ "inner join Producto p on wp.idProducto = p.id "
 											+ "where idWorkorder = ? and idPedido = ?";
-	private final static String SQL_FIND_PRODUCTOS_EMPAQUETADOS = "select cantidad from PaqueteProducto "
-															    + "where idPaquete = ? and idProducto = ?";
 	private final static String SQL_INSERT_PAQUETEPROD = "insert into PaqueteProducto(idPaquete, idProducto, cantidad) values (?,?,1)";
 	private final static String SQL_INSERT_PAQUETE = "insert into Paquete(idPaquete, idPedido, paqueteEstado) values (?,?,'En Curso')";
 	private final static String SQL_INSERT_WOPAQ = "insert into workorderPaquete(idWorkorder, idPaquete) values (?,?)";
-	private final static String SQL_UPDATE_PAQUETEPROD = "update PaqueteProducto set cantidad = cantidad + 1 where idPaquete = ? and idProducto = ?";
+	private final static String SQL_UPDATE_WOPROD = "update WorkorderProducto set recogidos = recogidos + ? "
+												  + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
 	private final static String SQL_MAX_NUM_PAQUETE = "select max(idPaquete) from Paquete";
 	private final static String SQL_RECUPERARPAQUETE = "select wp.idPaquete from workorderPaquete wp "
 													 + "inner join Paquete p on wp.idPaquete = p.idPaquete "
@@ -43,14 +42,14 @@ public class EmpaquetadoModel {
 	private final static String SQL_UPDATE_ESTADO_PEDIDO = "update Pedido set estado = ? where idPedido = ?";
 	private final static String SQL_FIND_ESTADO_PEDIDO = "select estado from Pedido where idPedido = ?";
 	
-	public EmpaquetadoModel(Database2 db2, int idAlmacenero) {
+	public RecogidaModel2(Database2 db2, int idAlmacenero) {
 		db = db2;
 		almacenero.idAlmacenero = idAlmacenero;
 		setAlmacenero();
 		workordersListas();
 	}
 	
-	public EmpaquetadoModel() {
+	public RecogidaModel2() {
 		db = new Database2();
 		db.createDatabase(false);
 		db.loadDatabase();
@@ -70,7 +69,7 @@ public class EmpaquetadoModel {
 	}
 	
 	private void workordersListas(){
-		List<Object[]> result = db.executeQueryArray(SQL_FIND_WOLISTAS);
+		List<Object[]> result = db.executeQueryArray(SQL_FIND_WOLISTAS, almacenero.idAlmacenero);
 		
 		for (Object[] o : result) {
 			WorkorderDto wo = new WorkorderDto();
@@ -110,67 +109,50 @@ public class EmpaquetadoModel {
 			dto.pasillo = (int)o[10];
 			dto.estanteria = (int)o[11];
 			dto.balda = (int)o[12];
-			int cantidad = (int)o[3] - getCantidad(idWorkorder, dto.idProducto);
-			if (cantidad > 0) resultado.put(dto, cantidad);
+			resultado.put(dto, (int)o[3]);
 		}
 		return resultado;
-	}
-	
-	private int getCantidad(int idWorkorder, int idProducto) {
-		List<Object[]> result = db.executeQueryArray(SQL_RECUPERARPAQUETE, idWorkorder);
-		if (result.size() == 0) {
-			return 0;
-		}
-		int idPaquete = (int)result.get(0)[0];
-		result = db.executeQueryArray(SQL_FIND_PRODUCTOS_EMPAQUETADOS, idPaquete, idProducto);
-		if (result.size() == 0) {
-			return 0;
-		}
-		return (int)result.get(0)[0];
 	}
 	
 	public List<WorkorderDto> getWorkorders(){
 		return workorders;
 	}
 
-	public int checkID(WorkorderDto wdto, PedidoDto pdto, int idProducto) {
+	public boolean checkID(WorkorderDto wdto, int idProducto, int cantidad) {
 		ProductoDto prod = new ProductoDto();
 		prod.idProducto = idProducto;
-		if (pdto.productos.containsKey(prod)) {
-			guardarEnModelo(wdto, pdto, prod);	
-			guardarEnBaseDeDatos(wdto, pdto, prod);
-			if (isWoFinished(wdto)) {
-				workorders.remove(wdto);
-				db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Empaquetada", wdto.idWorkorder);
-			}
-			return idPaquete;
-		}
-		return 0;
-	}
-
-	private void guardarEnBaseDeDatos(WorkorderDto wo, PedidoDto ped, ProductoDto prod) {
-		if (getPaqueteNuevo(wo.idWorkorder)) {
-			insertarNuevo(ped.idPedido, prod.idProducto);
-		} else {
-			if (isInserted(prod.idProducto)) {
-				actualizar(prod.idProducto);
-			} else {
-				insertar(prod.idProducto);
+		for (PedidoDto pdto : wdto.pedidos) {
+			if (pdto.productos.containsKey(prod)) {
+				if (!guardarEnModelo(wdto, pdto, prod, cantidad)) return false;	
+				guardarEnBaseDeDatos(wdto, pdto, prod, cantidad);
+				if (isWoFinished(wdto)) {
+					workorders.remove(wdto);
+					//db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Empaquetada", wdto.idWorkorder);
+				}
+				return true;
 			}
 		}
+		return false;
 	}
 
-	private void guardarEnModelo(WorkorderDto wo, PedidoDto ped, ProductoDto prod) {
-		int cantidad = ped.productos.get(prod) - 1;
+	private void guardarEnBaseDeDatos(WorkorderDto wo, PedidoDto ped, ProductoDto prod, int cantidad) {
+		actualizar(wo.idWorkorder, ped.idPedido, prod.idProducto, cantidad);
+	}
+
+	private boolean guardarEnModelo(WorkorderDto wo, PedidoDto ped, ProductoDto prod, int cant) {
+		int cantidad = ped.productos.get(prod) - cant;
 		if (cantidad > 0) {
 			ped.productos.replace(prod, cantidad);
-		} else {
+			return true;
+		} else if (cantidad == 0){
 			ped.productos.remove(prod);
 			if (isPedidoFinished(ped)) {
 				wo.pedidos.remove(ped);
-				compruebaPedidoEstado(ped);
+				//compruebaPedidoEstado(ped);
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	private void compruebaPedidoEstado(PedidoDto pdto) {
@@ -194,8 +176,8 @@ public class EmpaquetadoModel {
 		db.executeUpdate(SQL_INSERT_PAQUETEPROD, idPaquete, idProducto);
 	}
 
-	private void actualizar(int idProducto) {
-		db.executeUpdate(SQL_UPDATE_PAQUETEPROD, idPaquete, idProducto);
+	private void actualizar(int idWorkorder, int idPedido, int idProducto, int cantidad) {
+		db.executeUpdate(SQL_UPDATE_WOPROD, cantidad, idWorkorder, idPedido, idProducto);
 	}
 
 	private void insertarNuevo(int idPedido,int idProducto) {
@@ -243,5 +225,4 @@ public class EmpaquetadoModel {
 	private boolean isPedidoFinished(PedidoDto dto) {
 		return dto.productos.size() == 0;
 	}
-
 }
