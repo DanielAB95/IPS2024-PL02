@@ -22,6 +22,20 @@ public class ClienteLoginController {
 	}
 	
 	public void init() {
+		
+		vista.getBtnInvitado().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//hacer proceso como cliente invitado
+				ClienteDTO dto = new ClienteDTO("Invitado");
+				
+				ClienteView compra = new ClienteView(vista.getDb(), dto);
+				compra.getLblNombreUsuario().setText(dto.getName());
+				compra.setLocationRelativeTo(vista);
+				vista.dispose();
+				compra.setVisible(true);
+			}
+		});
+		
 		vista.getBtnSiguiente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

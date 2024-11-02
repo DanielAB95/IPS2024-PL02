@@ -22,6 +22,7 @@ public class CarritoModel {
 	
 
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
+	private static final String SQL_CREA_CLIENTE_NUEVO = "INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
 	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
@@ -70,6 +71,23 @@ public class CarritoModel {
 		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
 		
 		return usuario.get(0);
+		
+	}
+	
+	public boolean doesClientExist(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		if (usuario.isEmpty())
+			return false;
+		
+		return true;
+		
+	}
+	
+	public void createNewClient(String[] clientData) {
+		
+		db.executeUpdate(SQL_CREA_CLIENTE_NUEVO, clientData[0], clientData[1],
+				clientData[2],clientData[3],clientData[4],clientData[5],clientData[6], clientData[7]);
 		
 	}
 	

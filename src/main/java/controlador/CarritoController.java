@@ -2,7 +2,9 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -25,12 +27,16 @@ public class CarritoController {
 	
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
-		rellenaDatosCliente();
+		
+		if (modelo.doesClientExist(modelo.getDto().getName())) {
+			rellenaDatosCliente();
+		}
 		
 	}
 	
 	private void rellenaDatosCliente() {
 		Object[] datosCliente = modelo.getClient(modelo.getDto().getName());
+		view.getTextNombreUsuario().setText((String) datosCliente[1]);
 		view.getTextNombre().setText((String) datosCliente[2]);
 		view.getTextTelefono().setText((String) datosCliente[3]);
 		view.getTextPais().setText((String) datosCliente[4]);
@@ -65,8 +71,29 @@ public class CarritoController {
 		view.getBtnConfirmar().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				modelo.confirmarPedido();
-				
+				if (modelo.doesClientExist(modelo.getDto().getName()))
+					modelo.confirmarPedido();
+				else {
+					
+					if (checkTodosLosCamposRellenados() && checkUsuarioValido()) {
+					
+						String[] clientData = new String[8];
+						clientData[0] = UUID.randomUUID().toString();
+						clientData[1] = view.getTextNombreUsuario().getText();
+						clientData[2] = view.getTextNombre().getText();
+						clientData[3] = view.getTextTelefono().getText();
+						clientData[4] = view.getTextPais().getText();
+						clientData[5] = view.getTextRegion().getText();
+						clientData[6] = view.getTextCiudad().getText();
+						clientData[7] = view.getTextCalle().getText();
+						
+						modelo.createNewClient(clientData);
+						modelo.getDto().setName(clientData[1]);
+						
+						modelo.confirmarPedido();
+					}
+				}
+					
 			}
 		});
 		
@@ -93,6 +120,31 @@ public class CarritoController {
                 }
             }
         });
+	}
+	
+	private boolean checkTodosLosCamposRellenados() {
+		if (view.getTextCalle().getText().isEmpty() ||
+				view.getTextCiudad().getText().isEmpty() || 
+				view.getTextNombre().getText().isEmpty() || 
+				view.getTextNombreUsuario().getText().isEmpty() ||
+				view.getTextPais().getText().isEmpty() ||
+				view.getTextRegion().getText().isEmpty() ||
+				view.getTextTelefono().getText().isEmpty()) {
+			
+			JOptionPane.showMessageDialog(view, "Por favor, rellene todos los campos");
+			return false;
+		}
+			
+		return true;
+	}
+	
+	private boolean checkUsuarioValido() {
+		boolean result =  modelo.doesClientExist(view.getTextNombreUsuario().getText());
+		if (result) {
+			JOptionPane.showMessageDialog(view, "Nombre de usuario no válido, ya existe");
+			return false;
+		} else 
+			return true;
 	}
 	
 	private void actualizaLblTotal() {
