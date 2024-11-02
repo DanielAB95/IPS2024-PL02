@@ -22,7 +22,8 @@ public class CarritoModel {
 	
 
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, numProductos, fecha, estado) values (?, ?, ?, ?)";
+	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
@@ -57,17 +58,32 @@ public class CarritoModel {
 		return this.db;
 	}
 	
+	
+	private String getClientIDfromName(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return (String) usuario.get(0)[0];
+		
+	}
+	
+	public Object[] getClient(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return usuario.get(0);
+		
+	}
+	
 	public void confirmarPedido() {
 		if (checkHayProductos()) {
 			System.out.println("-- ANTES de confirmar compra -- ");
 			mostrarPedidos();
 			
 			int nuevoID = getNuevoID();
-			int numeroProductos = carrito.getCarrito().size();
+			//int numeroProductos = carrito.getCarrito().size(); ya no se utiliza
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, numeroProductos, fecha, estado);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.getName()), fecha, estado);
 				
 			insertarProductosPedido(nuevoID);
 			

@@ -22,7 +22,9 @@ public class AppInicioController {
 			public void actionPerformed(ActionEvent e) {
 				//ClienteView cliente = new ClienteView(view.getDatabase());
 				ClienteLoginView login = new ClienteLoginView(view.getDatabase());
+				login.setLocationRelativeTo(view);
 				view.dispose();
+				
 				login.setVisible(true);
 			}
 		});

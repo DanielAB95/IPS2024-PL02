@@ -13,19 +13,35 @@ import vista.ClienteView;
 public class CarritoController {
 	
 	
-	private ClienteView cView;
+	//private ClienteView cView;
 	private CarritoView view;
 	private CarritoModel modelo;
 	
 	public CarritoController(CarritoView v, CarritoModel m) {
 		this.view = v;
 		this.modelo = m;
-		this.cView = new ClienteView(view.getDatabase());
+		//this.cView = new ClienteView(view.getDatabase());
 	}
 	
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
+		rellenaDatosCliente();
+		
 	}
+	
+	private void rellenaDatosCliente() {
+		Object[] datosCliente = modelo.getClient(modelo.getDto().getName());
+		view.getTextNombre().setText((String) datosCliente[2]);
+		view.getTextTelefono().setText((String) datosCliente[3]);
+		view.getTextPais().setText((String) datosCliente[4]);
+		view.getTextRegion().setText((String) datosCliente[5]);
+		view.getTextCiudad().setText((String) datosCliente[6]);
+		view.getTextCalle().setText((String) datosCliente[7]);
+		
+		// hacer que al iniciar sesion si exista el usuario y 
+		// que se pueda acceder como invitado
+	}
+	
 	
 	public void initController() {
 		

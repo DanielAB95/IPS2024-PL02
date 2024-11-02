@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import modelo.dto.ClienteDTO;
+import modelo.modelo.LoginModel;
 import vista.ClienteLoginView;
 import vista.ClienteView;
 
@@ -13,9 +14,11 @@ public class ClienteLoginController {
 	
 	
 	private ClienteLoginView vista;
+	private LoginModel model;
 	
 	public ClienteLoginController(ClienteLoginView vista){
 		this.vista = vista;
+		this.model = new LoginModel(vista.getDb());
 	}
 	
 	public void init() {
@@ -24,12 +27,19 @@ public class ClienteLoginController {
 				
 				if (!vista.getTextNombreUsuario().getText().isEmpty()) {
 					
-					//ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
+					if (model.doesClientExist(vista.getTextNombreUsuario().getText())) {
+
+						ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
+						
+						ClienteView compra = new ClienteView(vista.getDb(), dto);
+						compra.getLblNombreUsuario().setText(vista.getTextNombreUsuario().getText());
+						compra.setLocationRelativeTo(vista);
+						vista.dispose();
+						compra.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(vista, "Usuario inexistente");
+					}
 					
-					ClienteView compra = new ClienteView(vista.getDb());
-					compra.getLblNombreUsuario().setText(vista.getTextNombreUsuario().getText());
-					vista.dispose();
-					compra.setVisible(true);
 					
 				} else {
 					JOptionPane.showMessageDialog(vista, "Debe proporcionar su nombre de usuario");

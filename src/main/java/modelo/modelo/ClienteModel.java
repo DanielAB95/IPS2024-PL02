@@ -14,16 +14,19 @@ public class ClienteModel {
 
 	public static final String SQL_SUBCATEGORIA = "select * from Categoria where categoriaPadre = ?";
 	public static final String SQL_SUBCATEGORIA_SIN_PADRE = "select * from Categoria where categoriaPadre is NULL";
+	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	public static final String SQL_CATEGORIA = "select * from Categoria where nombreCategoria = ?";
 	public static final String SQL_LISTA_PRODUCTOS = "select * from Producto p inner join Categoria c on p.categoria = c.nombreCategoria and c.nombreCategoria = ?";
 	public static final String SQL_PRODUCTO = "select * from Producto where nombre = ?";
 	
 	private Database2 db;
 	private Carrito carrito;
+	private List<Producto> productosPosibles;
 
 	public ClienteModel(Database2 db, Carrito carrito) {
 		this.db = db;
 		this.carrito = carrito;
+		this.productosPosibles = getProductos();
 	}
 
 	public boolean checkProductoYaEnCarrito(String nombre) {
@@ -36,10 +39,32 @@ public class ClienteModel {
 
 		return false;
 	}
+	
+	private List<Producto> getProductos() {
+		List<Producto> resultado = new ArrayList<Producto>();
+		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
+		
+		for (int i = 0; i < productos.size(); i++) {
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
+			resultado.add(p);
+		}
+		
+		return resultado;
+	}
 
 	public Database2 getDatabase() {
 		return this.db;
 	}
+	
+	public String getPrecioPorNombre(String nombre, int cantidad) {
+		double precio = 0;
+		for (Producto p: this.productosPosibles) {
+			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
+		}
+		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
+		return precioFormateado;
+	}
+	
 
 	public List<CategoriaDto> getSubCategoria(String categoria) {
 		List<CategoriaDto> list = new ArrayList<CategoriaDto>();

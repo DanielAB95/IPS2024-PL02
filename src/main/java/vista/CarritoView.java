@@ -42,7 +42,6 @@ public class CarritoView extends JFrame {
 	private JScrollPane scrollPane;
 	private  DefaultListModel<String> listModel;
 	private CarritoController controller;
-	private Database2 database;
 	private JLabel lblUsuario;
 	private JLabel lblNombreUsuario;
 	private ClienteDTO dto;
@@ -61,6 +60,8 @@ public class CarritoView extends JFrame {
 	private JTextField textPais;
 	private JTextField textRegion;
 	private JTextField textCiudad;
+	private Database2 database;
+	private JTextField textCalle;
 	
 	/**
 	 * Create the frame.
@@ -86,12 +87,13 @@ public class CarritoView extends JFrame {
 	 * 
 	 * 
 	 */
-	public CarritoView(Carrito c, Database2 db) {
+	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
 		setTitle("Confirmación de Compra: Datos de Envío");
 		this.database = db;
 		
 		this.listModel = new DefaultListModel<>();
 		this.carrito = c;
+		this.dto = dto;
 		this.modelo = new CarritoModel(carrito, this, this.database, this.dto);
 		this.controller = new CarritoController(this, modelo);
 		
@@ -123,6 +125,7 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextPais());
 		contentPane.add(getTextRegion());
 		contentPane.add(getTextCiudad());
+		contentPane.add(getTextCalle());
 	
 		controller.initView();
 		controller.initController();
@@ -200,7 +203,7 @@ public class CarritoView extends JFrame {
 		if (lblUsuario == null) {
 			lblUsuario = new JLabel("Usuario: ");
 			lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblUsuario.setBounds(10, 8, 71, 14);
+			lblUsuario.setBounds(12, 17, 71, 14);
 		}
 		return lblUsuario;
 	}
@@ -208,21 +211,21 @@ public class CarritoView extends JFrame {
 		if (lblNombreUsuario == null) {
 			lblNombreUsuario = new JLabel("");
 			lblNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			lblNombreUsuario.setBounds(91, 8, 116, 14);
+			lblNombreUsuario.setBounds(95, 17, 116, 14);
 		}
 		return lblNombreUsuario;
 	}
 	public JTable getTable() {
 		if (table == null) {
-			Object[] columnNames = {"   Producto   ", "Cantidad ", "€ "};
-			//tableModel = new DefaultTableModel(columnNames, 0);
+			Object[] columnNames = {"   Producto   ", "  Cantidad  ", "€ "};
+			
 			tableModelCarrito = new MyTableModel(columnNames);
 			table = new JTable(tableModelCarrito);
-			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		//	TableColumnModel columnModel = table.getColumnModel();
-//			columnModel.getColumn(0).setPreferredWidth(200);
-//			columnModel.getColumn(1).setPreferredWidth(85);
-//			columnModel.getColumn(1).setPreferredWidth(85);	
+			
+			TableColumnModel columnModel = table.getColumnModel();
+			columnModel.getColumn(0).setPreferredWidth(220);
+			columnModel.getColumn(1).setPreferredWidth(85);
+			columnModel.getColumn(2).setPreferredWidth(85);	
 			table.setBounds(712, 64, 160, 236);
 			
 		}
@@ -267,21 +270,21 @@ public class CarritoView extends JFrame {
 	private JLabel getLblCiudad() {
 		if (lblCiudad == null) {
 			lblCiudad = new JLabel("Ciudad: ");
-			lblCiudad.setBounds(91, 236, 77, 14);
+			lblCiudad.setBounds(91, 235, 77, 14);
 		}
 		return lblCiudad;
 	}
 	private JLabel getLblCalle() {
 		if (lblCalle == null) {
 			lblCalle = new JLabel("Calle: ");
-			lblCalle.setBounds(91, 290, 77, 14);
+			lblCalle.setBounds(91, 276, 77, 14);
 		}
 		return lblCalle;
 	}
 	private JLabel getLblMetodoDePago() {
 		if (lblMetodoDePago == null) {
 			lblMetodoDePago = new JLabel("Método de Pago: ");
-			lblMetodoDePago.setBounds(91, 340, 116, 14);
+			lblMetodoDePago.setBounds(91, 340, 197, 14);
 		}
 		return lblMetodoDePago;
 	}
@@ -292,7 +295,7 @@ public class CarritoView extends JFrame {
 		}
 		return panelRadioBotones;
 	}
-	private JTextField getTextTelefono() {
+	public JTextField getTextTelefono() {
 		if (textTelefono == null) {
 			textTelefono = new JTextField();
 			textTelefono.setBounds(178, 100, 171, 20);
@@ -300,7 +303,7 @@ public class CarritoView extends JFrame {
 		}
 		return textTelefono;
 	}
-	private JTextField getTextNombre() {
+	public JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
 			textNombre.setBounds(178, 61, 171, 20);
@@ -308,7 +311,7 @@ public class CarritoView extends JFrame {
 		}
 		return textNombre;
 	}
-	private JTextField getTextPais() {
+	public JTextField getTextPais() {
 		if (textPais == null) {
 			textPais = new JTextField();
 			textPais.setBounds(178, 140, 171, 20);
@@ -316,7 +319,7 @@ public class CarritoView extends JFrame {
 		}
 		return textPais;
 	}
-	private JTextField getTextRegion() {
+	public JTextField getTextRegion() {
 		if (textRegion == null) {
 			textRegion = new JTextField();
 			textRegion.setBounds(178, 184, 171, 20);
@@ -324,16 +327,23 @@ public class CarritoView extends JFrame {
 		}
 		return textRegion;
 	}
-	private JTextField getTextCiudad() {
+	public JTextField getTextCiudad() {
 		if (textCiudad == null) {
 			textCiudad = new JTextField();
-			textCiudad.setBounds(178, 233, 171, 20);
+			textCiudad.setBounds(178, 230, 171, 20);
 			textCiudad.setColumns(10);
 		}
 		return textCiudad;
 	}
-	
 	public Database2 getDatabase() {
 		return this.database;
+	}
+	public JTextField getTextCalle() {
+		if (textCalle == null) {
+			textCalle = new JTextField();
+			textCalle.setBounds(174, 274, 171, 19);
+			textCalle.setColumns(10);
+		}
+		return textCalle;
 	}
 }
