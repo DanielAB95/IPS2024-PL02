@@ -10,6 +10,8 @@ import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
 import modelo.dto.PedidoDTO;
+import modelo.dto.Producto;
+import modelo.dto.ProductoAlmacen;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
@@ -54,6 +56,7 @@ public class PedidoController {
 					int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
 					wModel.crearWorkorder(model.getAlmacenero().idAlmacenero);
 					model.actualizarPedidoListo(idPedido);
+					mostrarWorkorderGenerada(model.getAlmacenero().idAlmacenero,idPedido);
 					actualizaTabla();
 				}
 			}
@@ -122,5 +125,23 @@ public class PedidoController {
 	private void mostrarWorkOrder() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+
+	public void getListaProductos(int idPedido) {
+		List<ProductoAlmacen> productos = wModel.getProductos(idPedido);
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(productos,
+				new String[] { "idProducto", "cantidad", "descripcion", "pasillo","estanteria","posicionEstanteria" });
+		wView.getTablaProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(wView.getTablaProductos());
+	}
+	
+
+	private void mostrarWorkorderGenerada(int idPedido, int idAlmacenero) {
+		wView.getTextPedido().setText(String.valueOf(idPedido));
+		// wView.getTextAlmacenero().setText(String.valueOf(idAlmacenero));
+		wView.getTextAlmacenero().setText(aModel.getAlmacenero(idAlmacenero).toString());
+		getListaProductos(idPedido);
+		wView.getFrame().setVisible(true);
 	}
 }

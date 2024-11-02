@@ -20,10 +20,8 @@ public class PedidoModel {
 	private AlmaceneroDto almacenero = new AlmaceneroDto();
 	
 	private Database2 db;
-	//private List<PedidoDTO> pedidos;
 	
 	public PedidoModel(Database2 database, int idAlmacenero) {
-		//this.pedidos = getPedidos();
 		this.db = database;
 		almacenero.idAlmacenero = idAlmacenero;
 		setAlmacenero();
