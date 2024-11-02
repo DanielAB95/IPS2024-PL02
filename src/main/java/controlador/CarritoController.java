@@ -72,11 +72,11 @@ public class CarritoController {
 			
 			public void actionPerformed(ActionEvent e) {
 				if (modelo.doesClientExist(modelo.getDto().getName()))
-					modelo.confirmarPedido();
+					
+					confirmarPedido();
 				else {
-					
-					if (checkTodosLosCamposRellenados() && checkUsuarioValido()) {
-					
+					if (checkTodosLosCamposRellenados() && checkUsuarioValido() && checkMetodoDePago()) {
+						
 						String[] clientData = new String[8];
 						clientData[0] = UUID.randomUUID().toString();
 						clientData[1] = view.getTextNombreUsuario().getText();
@@ -90,11 +90,10 @@ public class CarritoController {
 						modelo.createNewClient(clientData);
 						modelo.getDto().setName(clientData[1]);
 						
-						modelo.confirmarPedido();
+						confirmarPedido();
 					}
 				}
-					
-			}
+			}					
 		});
 		
 		//action listener apra la JTABLE
@@ -122,6 +121,22 @@ public class CarritoController {
         });
 	}
 	
+	private void confirmarPedido() {
+		if (view.getRdbtnTransferencia().isSelected()) {
+			JOptionPane.showMessageDialog(view, "Para realizar el pago mediante transferencia bancaria, "
+					+ "por favor envíe el importe exacto al siguiente número de cuenta:\n"
+					+ "\nIBAN: ES91 2100 0418 4502 0005 1332");
+			modelo.confirmarPedido();
+		} else if (view.getRdbtnContrarrembolso().isSelected()){
+			JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
+                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
+			modelo.confirmarPedido();
+		} else {
+			//pago con tarjeta : EN PROCESO
+			modelo.confirmarPedido();
+		}
+	}
+	
 	private boolean checkTodosLosCamposRellenados() {
 		if (view.getTextCalle().getText().isEmpty() ||
 				view.getTextCiudad().getText().isEmpty() || 
@@ -145,6 +160,17 @@ public class CarritoController {
 			return false;
 		} else 
 			return true;
+	}
+	
+	private boolean checkMetodoDePago() {
+		if (view.getRdbtnTransferencia().isSelected()
+				|| view.getRdbtnContrarrembolso().isSelected()
+				|| view.getRdbtnTarjetaDeCrdito().isSelected()) {
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(view, "Por favor, Seleccione un método de pago");
+			return false;
+		}
 	}
 	
 	private void actualizaLblTotal() {
