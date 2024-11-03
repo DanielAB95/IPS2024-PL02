@@ -10,7 +10,7 @@ import persistence.dto.AlmaceneroDto;
 
 public class PedidoModel {
 	
-	public static final String SQL_LISTA_PEDIDO = "select p.idPedido, pp.cantidad, p.fecha  from Pedido p inner join PedidoProducto pp on p.idPedido = pp.idPedido  where estado = 'Pendiente' order by fecha";
+	public static final String SQL_LISTA_PEDIDO = "select p.idPedido, sum(pp.cantidad) as cantidad_total, p.fecha  from Pedido p inner join PedidoProducto pp on p.idPedido = pp.idPedido  where estado = 'Pendiente' group  by p.idPedido order by p.fecha";
 	public static final String SQL = "select * from Pedido";
 	public static final String SQL_PEDIDO_ALMACENERO = "select ap.idAlmacenero from AlmaceneroPedido ap join Pedido p on ap.idPedido = p.idPedido and p.idPedido = ?";
 	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
