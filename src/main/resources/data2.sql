@@ -16,6 +16,7 @@ INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, c
 ('CLI000009', 'cchen99', 'Chen Chen', '+81312345678', 'Japón', 'Kanto', 'Tokio', 'Shibuya 109 3º B', 'PARTICULAR'),
 ('CLI000010', 'asang95', 'Anita Sang', '+12123456789', 'EE.UU.', 'California', 'Los Ángeles', 'Sunset Blvd 500 3º B', 'PARTICULAR');
 --EMPRESAS
+
 INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES
 ('CLI000011', 'techsol_inc', 'Tech Solutions Inc.', '+34987651234', 'España', 'Madrid', 'Madrid', 'Calle Gran Vía 1', 'EMPRESA'),
 ('CLI000012', 'bioenviro_sa', 'BioEnviro S.A.', '+34906547812', 'España', 'Cataluña', 'Barcelona', 'Passeig de Gracia 55', 'EMPRESA'),
