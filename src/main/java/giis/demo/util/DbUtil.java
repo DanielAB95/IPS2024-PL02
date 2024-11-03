@@ -41,7 +41,7 @@ public abstract class DbUtil {
 	//Documentacion de apache dbutils:
 	//https://commons.apache.org/proper/commons-dbutils/apidocs/index.html
 	//https://commons.apache.org/proper/commons-dbutils/examples.html
-	
+	 
 	/**
 	 * Ejecuta una query sql con los parametros especificados mapeando el resultet en una lista de objetos 
 	 * de la clase indicada en pojoClass;
