@@ -16,7 +16,6 @@ import modelo.modelo.RecogidaModel2;
 import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
-import persistence.dto.ProductoDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
 import vista.RecogidaView2;
@@ -72,19 +71,11 @@ public class PedidoController {
 		view.getTableModel().addColumn("Numero de productos");
 		view.getTableModel().addColumn("Fecha");
 		for (PedidoDto pedido : model.obtainPedidos()) {
-			Object[] data = {pedido.idPedido, getCantidadTotalDeProductos(pedido), pedido.fecha};
+			Object[] data = {pedido.idPedido, model.getCantidadTotalDeProductos(pedido), pedido.fecha};
 			view.getTableModel().addRow(data);
 		}
 		if (model.obtainPedidos().size() == 0) view.getLabelPedidosPendientes().setVisible(true);
 		ajustarTabla();
-	}
-	
-	private int getCantidadTotalDeProductos(PedidoDto dto) {
-		int cantidad = 0;
-		for (ProductoDto prod : dto.productos.keySet()) {
-			cantidad += dto.productos.get(prod);
-		}
-		return cantidad;
 	}
 	
 	private void vaciarTabla() {

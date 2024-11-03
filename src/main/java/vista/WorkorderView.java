@@ -1,32 +1,27 @@
 package vista;
 
-import java.awt.EventQueue;
+import java.awt.Font;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.WorkorderController;
 import giis.demo.util.Database2;
 import modelo.modelo.WorkorderModel;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import java.awt.Font;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-
-public class WorkorderView extends JFrame {
+public class WorkorderView extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbAlmacenero;
 	private JTextField txAlmacenero;
-	private JLabel lblPedido;
-	private JTextField txPedido;
 	private JScrollPane productoPanel;
 	private JLabel lbProductos;
 	private Database2 db;
@@ -40,8 +35,8 @@ public class WorkorderView extends JFrame {
 	public WorkorderView(Database2 db) {
 		this.db = db;
 		setTitle("Almacenero: WorkOrder");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 640, 960);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 480, 854);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -49,8 +44,6 @@ public class WorkorderView extends JFrame {
 		contentPane.setLayout(null); 
 		contentPane.add(getLbAlmacenero());
 		contentPane.add(getTxAlmacenero());
-		contentPane.add(getLblPedido());
-		contentPane.add(getTxPedido());
 		contentPane.add(getProductoPanel());
 		contentPane.add(getLbProductos());
 		
@@ -62,7 +55,7 @@ public class WorkorderView extends JFrame {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero responsable:");
 			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbAlmacenero.setBounds(100, 122, 360, 63);
+			lbAlmacenero.setBounds(10, 11, 444, 39);
 		}
 		return lbAlmacenero;
 	}
@@ -72,44 +65,25 @@ public class WorkorderView extends JFrame {
 			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(100, 172, 420, 82);
+			txAlmacenero.setBounds(10, 61, 444, 39);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
-	}
-	private JLabel getLblPedido() {
-		if (lblPedido == null) {
-			lblPedido = new JLabel("Pedido:");
-			lblPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lblPedido.setBounds(100, 11, 162, 55);
-		}
-		return lblPedido;
-	}
-	private JTextField getTxPedido() {
-		if (txPedido == null) {
-			txPedido = new JTextField();
-			txPedido.setHorizontalAlignment(SwingConstants.CENTER);
-			txPedido.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			txPedido.setEditable(false);
-			txPedido.setBounds(100, 64, 246, 55);
-			txPedido.setColumns(10);
-		}
-		return txPedido;
 	}
 	private JScrollPane getProductoPanel() {
 		if (productoPanel == null) {
 			productoPanel = new JScrollPane();
 			productoPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			productoPanel.setBounds(0, 358, 626, 501);
+			productoPanel.setBounds(10, 161, 444, 643);
 			productoPanel.setViewportView(getTbProductos());
 		}
 		return productoPanel;
 	}
 	private JLabel getLbProductos() {
 		if (lbProductos == null) {
-			lbProductos = new JLabel("Productos:");
-			lbProductos.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbProductos.setBounds(100, 308, 192, 39);
+			lbProductos = new JLabel("Detalles de las Workorders");
+			lbProductos.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lbProductos.setBounds(10, 111, 444, 39);
 		}
 		return lbProductos;
 	}
@@ -123,17 +97,8 @@ public class WorkorderView extends JFrame {
 	
 	//Metodos auxiliares
 	
-	public JTextField getTextPedido() {
-		return this.txPedido;
-	}
-	
 	public JTextField getTextAlmacenero() {
 		return this.txAlmacenero;
-	}
-	
-	
-	public JFrame getFrame() {
-		return this;
 	}
 	
 	public Database2 getDatabase(){

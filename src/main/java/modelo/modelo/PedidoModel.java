@@ -10,18 +10,17 @@ import giis.demo.util.Database2;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
+import persistence.dto.WorkorderDto;
 
 public class PedidoModel {
 	
-	public static final String SQL_LISTA_PEDIDO = "select * from Pedido where estado = 'Pendiente' order by fecha";
+	private static final String SQL_LISTA_PEDIDO = "select * from Pedido where estado = 'Pendiente' order by fecha";
 	private final static String SQL_FIND_PRODUCTOS_FROM_PEDIDO = "select * from PedidoProducto pp "
 														+ "inner join Producto p on pp.idProducto = p.id "
 														+ "where idPedido = ?";
-	public static final String SQL = "select * from Pedido";
-	public static final String SQL_PEDIDO_ALMACENERO = "select ap.idAlmacenero from AlmaceneroPedido ap join Pedido p on ap.idPedido = p.idPedido and p.idPedido = ?";
-	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
 	private static final String SQL_UPDATE_ESTADO_LISTO = "update Pedido set Estado = 'Listo' where idPedido = ? ";
 	private static final String SQL_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
+	private static final String SQL_MAX_WO_ID = "select max(idWorkorder) from Workorder";
 	
 	private AlmaceneroDto almacenero = new AlmaceneroDto();
 	
@@ -84,8 +83,33 @@ public class PedidoModel {
 	}
 	
 	public void generarWorkorder(int posPedido) {
-		System.out.println(posPedido);
 		PedidoDto pedido = pedidos.get(posPedido);
+		int cantidad = getCantidadTotalDeProductos(pedido);	
+		int numeroWorkoredrsGeneradas = getNumWorkorders(cantidad);
+		System.out.println(getIdWorkorder());
+		
+	}
+	
+	private int getIdWorkorder() {
+		List<Object[]> id = db.executeQueryArray(SQL_MAX_WO_ID);
+		return (int)id.get(0)[0] + 1;
+	}
+	
+	private int getNumWorkorders(int cantidad) {
+		int cantWo = cantidad/WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER;
+		int aux = cantidad%WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER;
+		if (aux > 0) {
+			cantWo++;
+		}
+		return cantWo;
+	}
+
+	public int getCantidadTotalDeProductos(PedidoDto dto) {
+		int cantidad = 0;
+		for (ProductoDto prod : dto.productos.keySet()) {
+			cantidad += dto.productos.get(prod);
+		}
+		return cantidad;
 	}
 	
 	public void actualizarPedidoListo(int idPedido) {
