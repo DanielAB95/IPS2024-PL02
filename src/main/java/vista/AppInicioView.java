@@ -2,6 +2,7 @@ package vista;
 
 
 import java.awt.EventQueue;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ public class AppInicioView extends JFrame {
 	private AppInicioController control;
 	
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -32,12 +34,24 @@ public class AppInicioView extends JFrame {
 			public void run() {
 				try {
 					
-					//creo bd solo una vez
-					Database2 db =new Database2();
-					db.createDatabase(false);
+//					//creo bd solo una vez
+//					Database2 db =new Database2();
+//					db.createDatabase(false);
+//					
+//					//lleno bd solo una vez
 					
-					//lleno bd solo una vez
-					db.loadDatabase();
+//					db.loadDatabase();
+					
+					
+					Database2 db = new Database2();
+
+                    // Verificar si la base de datos ya existe
+                    if (!dbExists(db.getUrl())) {
+                        // Crea la base de datos solo si no existe
+                        db.createDatabase(false);
+                        // Carga datos iniciales solo si se creó la base de datos
+                        db.loadDatabase();
+                    }
 					
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
@@ -74,6 +88,13 @@ public class AppInicioView extends JFrame {
 		
 		mostrarClientes();
 	}
+	
+	
+	private static boolean dbExists(String dbUrl) {
+        // Comprueba si el archivo de base de datos existe
+        File dbFile = new File(dbUrl.replace("jdbc:sqlite:", ""));
+        return dbFile.exists();
+    }
 	
 	private void mostrarClientes() {
 		// SQL_GET_CLIENTES
