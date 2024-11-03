@@ -20,9 +20,11 @@ import vista.CarritoView;
 
 public class CarritoModel {
 	
-
+	//wer
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, numProductos, fecha, estado) values (?, ?, ?, ?)";
+	private static final String SQL_CREA_CLIENTE_NUEVO = "INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
@@ -57,21 +59,53 @@ public class CarritoModel {
 		return this.db;
 	}
 	
+	
+	private String getClientIDfromName(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return (String) usuario.get(0)[0];
+		
+	}
+	
+	public Object[] getClient(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return usuario.get(0);
+		
+	}
+	
+	public boolean doesClientExist(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		if (usuario.isEmpty())
+			return false;
+		
+		return true;
+		
+	}
+	
+	public void createNewClient(String[] clientData) {
+		
+		db.executeUpdate(SQL_CREA_CLIENTE_NUEVO, clientData[0], clientData[1],
+				clientData[2],clientData[3],clientData[4],clientData[5],clientData[6], clientData[7], clientData[8]);
+		
+	}
+	
 	public void confirmarPedido() {
 		if (checkHayProductos()) {
 			System.out.println("-- ANTES de confirmar compra -- ");
 			mostrarPedidos();
 			
 			int nuevoID = getNuevoID();
-			int numeroProductos = carrito.getCarrito().size();
+			//int numeroProductos = carrito.getCarrito().size(); ya no se utiliza
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, numeroProductos, fecha, estado);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.getName()), fecha, estado);
 				
 			insertarProductosPedido(nuevoID);
 			
-			JOptionPane.showMessageDialog(this.v, "Compra realizada");
+			//JOptionPane.showMessageDialog(this.v, "Gracias por ");
 			
 			System.out.println("-- DESPUES de confirmar compra --");
 			mostrarPedidos();

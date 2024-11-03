@@ -78,10 +78,11 @@ public class ClienteView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClienteView(Database2 db) {
+	public ClienteView(Database2 db, ClienteDTO dto) {
 		setTitle("Página de compra");
 		this.db = db;
 		this.carrito = new Carrito();
+		this.dto = dto;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 500);
@@ -108,7 +109,7 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLbPrecioTotal());
 		contentPane.add(getTxPrecioTotal());
 		
-		model = new ClienteModel(db,carrito);
+		model = new ClienteModel(db,carrito,this);
 		controller = new ClienteController(this, model);
 		controller.initController();
 		controller.initView();
@@ -151,7 +152,7 @@ public class ClienteView extends JFrame {
 			btnSiguiente = new JButton("Comprar");
 			btnSiguiente.setForeground(Color.WHITE);
 			btnSiguiente.setBackground(new Color(0, 204, 0));		
-			btnSiguiente.setBounds(868, 427, 89, 23);
+			btnSiguiente.setBounds(857, 427, 111, 23);
 		}
 		return btnSiguiente;
 	}
@@ -227,7 +228,7 @@ public class ClienteView extends JFrame {
 	private JScrollPane getPnCarrito() {
 		if (pnCarrito == null) {
 			pnCarrito = new JScrollPane();
-			pnCarrito.setBounds(712, 93, 245, 218);
+			pnCarrito.setBounds(712, 93, 256, 218);
 			pnCarrito.setViewportView(getTableCarrito());
 		}
 		return pnCarrito;
@@ -244,7 +245,7 @@ public class ClienteView extends JFrame {
 	private JLabel getLbPrecioTotal() {
 		if (lbPrecioTotal == null) {
 			lbPrecioTotal = new JLabel("Precio total:");
-			lbPrecioTotal.setBounds(850, 322, 77, 19);
+			lbPrecioTotal.setBounds(857, 323, 107, 19);
 		}
 		return lbPrecioTotal;
 	}
@@ -252,7 +253,7 @@ public class ClienteView extends JFrame {
 		if (txPrecioTotal == null) {
 			txPrecioTotal = new JTextField();
 			txPrecioTotal.setEditable(false);
-			txPrecioTotal.setBounds(833, 346, 111, 36);
+			txPrecioTotal.setBounds(857, 346, 111, 23);
 			txPrecioTotal.setColumns(10);
 		}
 		return txPrecioTotal;
@@ -260,11 +261,11 @@ public class ClienteView extends JFrame {
 	
 	public JTable getTableCarrito() {
 		if (tableCarrito == null) {	
-			Object[] columnNames = {"Producto", "Cantidad", "€"};
+			Object[] columnNames = {"   Producto   ", "  Cantidad  ", " € "};
 			tableModelCarrito = new MyTableModel(columnNames);
 			tableCarrito = new JTable(tableModelCarrito);
 			TableColumnModel columnModel = tableCarrito.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(200);
+			columnModel.getColumn(0).setPreferredWidth(220);
 			columnModel.getColumn(1).setPreferredWidth(85);
 			columnModel.getColumn(2).setPreferredWidth(85);
 			tableCarrito.setBounds(712,64,160,236);
@@ -310,7 +311,7 @@ public class ClienteView extends JFrame {
 			btnEliminar = new JButton("Eliminar");
 			btnEliminar.setBackground(new Color(255, 0, 0));
 			btnEliminar.setForeground(Color.WHITE);
-			btnEliminar.setBounds(712, 346, 89, 23);
+			btnEliminar.setBounds(712, 346, 107, 23);
 		}
 		return btnEliminar;
 	}

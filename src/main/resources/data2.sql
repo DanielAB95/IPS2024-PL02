@@ -2,6 +2,31 @@
 
 --Para proyecto IPS:
 
+delete from cliente;
+--PARTICULARES
+INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES
+('CLI000001', 'jlopez92', 'Juan Lopez', '+34123456789', 'España', 'Madrid', 'Madrid', 'Calle Mayor 15 5º izquierda', 'PARTICULAR'),
+('CLI000002', 'mmartinez87', 'Maria Martinez', '+34567891234', 'España', 'Cataluña', 'Barcelona', 'Avenida Diagonal 101 5º izquierda', 'PARTICULAR'),
+('CLI000003', 'rvargas90', 'Raul Vargas', '+34987654321', 'España', 'Valencia', 'Valencia', 'Calle Colon 22 5º izquierda', 'PARTICULAR'),
+('CLI000004', 'asolano88', 'Andrea Solano', '+34901234567', 'España', 'Andalucía', 'Sevilla', 'Calle Feria 78 5º izquierda', 'PARTICULAR'),
+('CLI000005', 'cfuentes95', 'Carlos Fuentes', '+34987654321', 'España', 'Galicia', 'A Coruña', 'Rua Nova 11 3º B', 'PARTICULAR'),
+('CLI000006', 'lflores80', 'Laura Flores', '+35123456789', 'Portugal', 'Lisboa', 'Lisboa', 'Rua Augusta 200 3º B', 'PARTICULAR'),
+('CLI000007', 'jsantos83', 'Javier Santos', '+33456789123', 'Francia', 'Île-de-France', 'Paris', 'Rue de Rivoli 150 3º B', 'PARTICULAR'),
+('CLI000008', 'mbrown91', 'Michael Brown', '+44123456789', 'Reino Unido', 'Inglaterra', 'Londres', 'Baker Street 221B 3º B' , 'PARTICULAR'),
+('CLI000009', 'cchen99', 'Chen Chen', '+81312345678', 'Japón', 'Kanto', 'Tokio', 'Shibuya 109 3º B', 'PARTICULAR'),
+('CLI000010', 'asang95', 'Anita Sang', '+12123456789', 'EE.UU.', 'California', 'Los Ángeles', 'Sunset Blvd 500 3º B', 'PARTICULAR');
+--EMPRESAS
+INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES
+('CLI000011', 'techsol_inc', 'Tech Solutions Inc.', '+34987651234', 'España', 'Madrid', 'Madrid', 'Calle Gran Vía 1', 'EMPRESA'),
+('CLI000012', 'bioenviro_sa', 'BioEnviro S.A.', '+34906547812', 'España', 'Cataluña', 'Barcelona', 'Passeig de Gracia 55', 'EMPRESA'),
+('CLI000013', 'ecomerce_llc', 'E-Commerce LLC', '+447765432109', 'Reino Unido', 'Inglaterra', 'Londres', 'King Street 75', 'EMPRESA'),
+('CLI000014', 'softdev_solutions', 'SoftDev Solutions', '+12024567890', 'EE.UU.', 'Nueva York', 'Nueva York', '5th Avenue 300', 'EMPRESA'),
+('CLI000015', 'global_trades', 'Global Trades Ltd.', '+81345678901', 'Japón', 'Kanto', 'Tokio', 'Ginza Street 10', 'EMPRESA');
+
+
+
+
+
 delete from producto;
 insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda) values  
 	-- Productos en la categoría Ferretería

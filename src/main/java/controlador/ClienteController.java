@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
@@ -20,7 +22,7 @@ public class ClienteController {
 	
 	private ClienteView view;
 	private ClienteModel model;
-	private ClienteLoginView lview;
+	//private ClienteLoginView lview;
 	private DefaultListModel<String> modeloProducto;
 		
 	
@@ -28,14 +30,16 @@ public class ClienteController {
 	public ClienteController(ClienteView view, ClienteModel model) {
 		this.model = model;
 		this.view = view;
-		this.lview = new ClienteLoginView(view.getDatabase());
+		//this.lview = new ClienteLoginView(view.getDatabase());
 		this.modeloProducto = new DefaultListModel<String>();
 	}
 	
 	public void initView() {
-		System.out.print(lview.getTextNombreUsuario().getText());
+		//System.out.print(lview.getTextNombreUsuario().getText()); mejor usar dto
+		//cambiar los dto y databases al model en vez de tenerlo en view
 		view.getTextCategoria().setText("Inicio");
-		view.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
+		view.getLblNombreUsuario().setText(view.getDto().getName());
+		//view.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
 		getListaProductos(null);
 	}
 			
@@ -45,10 +49,27 @@ public class ClienteController {
 			
 			public void actionPerformed(ActionEvent e) {
 				if (!model.getCarrito().isEmpty()) {
-					view.dispose();
-					CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase());
-					frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
-					frame.setVisible(true);
+					
+					//si no es invitado, y es cliente de empresa
+					String nombreUsuario = view.getLblNombreUsuario().getText();
+					if (!nombreUsuario.equals("Invitado") && model.esClienteDeEmpresa(nombreUsuario)) {
+						
+						JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
+			                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
+						model.confirmarPedido();
+					} else {
+						
+						view.dispose();
+						CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
+						//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
+						//cambiar los dto y databases al model en vez de tenerlo en view
+						frame.getLblNombreUsuario().setText(view.getDto().getName());
+						frame.setLocationRelativeTo(view);
+						view.dispose();
+						frame.setVisible(true);
+					}
+					
+					
 				} else {
 					JOptionPane.showMessageDialog(view, "No hay ningún producto en el carrito.");
 				}
@@ -116,6 +137,30 @@ public class ClienteController {
 				}
 			}
 		});
+		
+		//action listener apra la JTABLE
+		view.getTableCarritoModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // verificar si el cambio es en la columna 1 (Cantidad)
+                if (e.getColumn() == 1 && e.getType() == TableModelEvent.UPDATE) {
+                    int fila = e.getFirstRow(); //devuelve la fila que cambio
+                    
+                    // obtener la cantidad modificada
+                    int nuevaCantidad = Integer.valueOf((String) view.getTableCarritoModel().getValueAt(fila, 1));
+                    
+                    String nuevoPrecio = model.getPrecioPorNombre((String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                    
+                    view.getTableCarritoModel().setValueAt(nuevoPrecio, fila, 2);
+                    
+                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                   
+                    actualizaPrecioTotal();
+                    
+                    
+                }
+            }
+        });
 		
 	}
 	
