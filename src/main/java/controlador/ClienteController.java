@@ -54,7 +54,8 @@ public class ClienteController {
 					String nombreUsuario = view.getLblNombreUsuario().getText();
 					if (!nombreUsuario.equals("Invitado") && model.esClienteDeEmpresa(nombreUsuario)) {
 						
-						JOptionPane.showMessageDialog(view, "Mensaje confirmacion de compra Empresas");
+						JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
+			                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
 						model.confirmarPedido();
 					} else {
 						

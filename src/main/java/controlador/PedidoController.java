@@ -13,17 +13,21 @@ import javax.swing.table.TableColumn;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.RecogidaModel2;
+import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
 import vista.RecogidaView2;
+import vista.WorkorderView;
 
 public class PedidoController {
 
 	private PedidoModel model;
 	private PedidoView view;
+	private WorkorderModel wModel;
+	private WorkorderView wView;
 
 	public PedidoController(PedidoView view, PedidoModel model) {
 		this.model = model;
@@ -102,35 +106,29 @@ public class PedidoController {
         }
 	}
 
-	private void accionBtGenerar() {
+	private void accionBtGenerar() {		
 		view.getButtonGenerarWorkOrders().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mostrarWorkOrder();
-				
+				mostrarWorkOrder();	
 			}
 		});
 	}
 
 	private void accionBtRecogida() {
-		view.getButtonRecogida().addActionListener(new ActionListener() {
-			
+		view.getButtonRecogida().addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 mostrarRecogida();
-				
 			}
 		});
 	}
 
 	private void accionBtEmpaquetado() {
-		view.getButtonEmpaquetado().addActionListener(new ActionListener() {
-			
+		view.getButtonEmpaquetado().addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mostrarEmpaquetado();
-				
 			}
 		});
 	}
@@ -154,5 +152,5 @@ public class PedidoController {
 	private void mostrarWorkOrder() {
 		// TODO Auto-generated method stub
 		
-	}
+	}	
 }

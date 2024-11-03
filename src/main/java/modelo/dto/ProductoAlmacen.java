@@ -7,16 +7,16 @@ public class ProductoAlmacen {
 	private String descripcion;
 	private int pasillo;
 	private int estanteria;
-	private int posicionEstanteria;
+	private int balda;
 	
 	public ProductoAlmacen(int idProducto, int cantidad, String descripcion, int pasillo, int estanteria,
-			int posicionEstanteria) {
+			int balda) {
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
 		this.descripcion = descripcion;
 		this.pasillo = pasillo;
 		this.estanteria = estanteria;
-		this.posicionEstanteria = posicionEstanteria;
+		this.balda = balda;
 	}
 
 	public int getIdProducto() {
@@ -59,12 +59,12 @@ public class ProductoAlmacen {
 		this.estanteria = estanteria;
 	}
 
-	public int getPosicionEstanteria() {
-		return posicionEstanteria;
+	public int getBalda() {
+		return balda;
 	}
 
-	public void setPosicionEstanteria(int posicionEstanteria) {
-		this.posicionEstanteria = posicionEstanteria;
+	public void setBalda(int balda) {
+		this.balda = balda;
 	}
 	
 	public String toString() {
@@ -90,7 +90,7 @@ public class ProductoAlmacen {
 		sb.append("\n");
 		sb.append("\t");
 		sb.append(" posicion en estanteria: ");
-		sb.append(getPosicionEstanteria());
+		sb.append(getBalda());
 		return sb.toString();
 		
 	}

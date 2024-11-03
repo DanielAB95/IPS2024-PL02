@@ -2,6 +2,8 @@ package modelo.modelo;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -17,11 +19,7 @@ public class WorkorderModel {
 	private static final String SQL_WORKORDERS = "select * from Workorder";
 	private static final String SQL_WORKORDER_ALMACENERO = "select idAlmacenero from Workorder where idWorkorder = ?";
 	private static final String SQL_WORKORDER_PEDIDO= "select idAlmacenero from Workorder where idWorkorder = ?";
-	private static final String SQL_PRODUCTOSORDENADOS = "select p.id, pp.cantidad, p.descripcion, a.pasillo, a.estanteria, a.posicionEstanteria from PedidoProducto pp "
-			+ "join Producto p on pp.idProducto = p.id "
-			+ "join Almacen a on p.id = a.idProducto "
-			+ "where pp.idPedido = ? "
-			+ "order by a.pasillo asc, a.posicionEstanteria asc, a.estanteria ";
+	private static final String SQL_PRODUCTOSORDENADOS = "select p.id, pp.cantidad, p.descripcion, p.pasillo, p.estanteria, p.balda from Producto p inner join PedidoProducto pp on p.id = pp.idProducto where pp.idPedido = ?";
 	private Database2 db=new Database2();
 	private int idWorkorder;
 	private List<String> incidencias = new ArrayList<>();
@@ -83,7 +81,8 @@ public class WorkorderModel {
 			ProductoAlmacen p = new ProductoAlmacen((int)listDb.get(i)[0],(int)listDb.get(i)[1],(String)listDb.get(i)[2],(int)listDb.get(i)[3],(int)listDb.get(i)[4],(int)listDb.get(i)[5]);
 			productos.add(p);
 		}
-		return productos;
+		
+		return ordenarProductos(productos);
 	}
 	
 	
@@ -105,4 +104,54 @@ public class WorkorderModel {
 	    return c > 0; 
 	}
 	
+	
+	class ProductoComparator implements Comparator<ProductoAlmacen> {
+	    private int ultimaBaldaVisitada;
+
+	    public ProductoComparator(int ultimaBaldaVisitada) {
+	        this.ultimaBaldaVisitada = ultimaBaldaVisitada;
+	    }
+
+	    @Override
+	    public int compare(ProductoAlmacen p1, ProductoAlmacen p2) {
+	        // Comprobar por pasillo
+	        int pasilloComp = Integer.compare(p1.getPasillo(), p2.getPasillo());
+	        if (pasilloComp != 0) {
+	            return pasilloComp; 
+	        }
+
+	        // Comprobar estanteria
+	        int estanteriaComparison = Integer.compare(p1.getEstanteria(), p2.getEstanteria());
+	        if (estanteriaComparison != 0) {
+	            return estanteriaComparison; // Si son diferentes, devolvemos la comparación de estanterías
+	        }
+
+	        // comprobar balda
+	        if (ultimaBaldaVisitada == 3) {
+	            //ordenacion descendente (ultima balda es 3)
+	            return Integer.compare(p2.getBalda(), p1.getBalda());
+	        } else {
+	            // ordenacion ascendente (resto)
+	            return Integer.compare(p1.getBalda(), p2.getBalda());
+	        }
+	    }
+
+	    //no hace falta
+	    public void setUltimaBaldaVisitada(int balda) {
+	        this.ultimaBaldaVisitada = balda;
+	    }
+	}
+
+	private List<ProductoAlmacen> ordenarProductos(List<ProductoAlmacen> productos) {
+	    ProductoComparator comparator = new ProductoComparator(1); //por defecto primera balda es 1(ascendente)
+
+	    Collections.sort(productos, comparator);
+
+	    // Actualizar ultima balda visitada(no hace falta)
+	    for (ProductoAlmacen producto : productos) {
+	        comparator.setUltimaBaldaVisitada(producto.getBalda());
+	    }
+
+	    return productos;
+	}
 }

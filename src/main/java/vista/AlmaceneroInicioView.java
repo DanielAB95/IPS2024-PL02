@@ -39,9 +39,8 @@ public class AlmaceneroInicioView extends JFrame {
 		
 		model = new AlmaceneroModel(db);
 		controller = new AlmaceneroController(this, model);
-		//controller.initView();
 		controller.initController();
-		
+		 
 		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
