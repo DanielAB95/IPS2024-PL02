@@ -22,7 +22,8 @@ create table Cliente(
 	 pais varchar(32) not null,
 	 region varchar(32) not null,
 	 ciudad varchar(32) not null,
-	 calle varchar(32) not null
+	 calle varchar(32) not null,
+	 tipoCliente varchar(32) not null
 );
 
 

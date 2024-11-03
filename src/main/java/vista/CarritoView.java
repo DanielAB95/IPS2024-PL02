@@ -65,8 +65,6 @@ public class CarritoView extends JFrame {
 	private JTextField textCiudad;
 	private Database2 database;
 	private JTextField textCalle;
-	private JLabel lblNombreDeUsuario;
-	private JTextField textNombreUsuario;
 	private JRadioButton rdbtnTarjetaDeCrdito;
 	private JRadioButton rdbtnContrarrembolso;
 	private JRadioButton rdbtnTransferencia;
@@ -134,8 +132,6 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextRegion());
 		contentPane.add(getTextCiudad());
 		contentPane.add(getTextCalle());
-		contentPane.add(getLblNombreDeUsuario());
-		contentPane.add(getTextNombreUsuario());
 	
 		controller.initView();
 		controller.initController();
@@ -179,7 +175,7 @@ public class CarritoView extends JFrame {
 	
 	public JButton getBtnConfirmar() {
 		if (btnConfirmar == null) {
-			btnConfirmar = new JButton("Confirmar Pago");
+			btnConfirmar = new JButton("Pagar");
 			
 			btnConfirmar.setBackground(new Color(50, 205, 50));
 			btnConfirmar.setForeground(Color.WHITE);
@@ -252,35 +248,35 @@ public class CarritoView extends JFrame {
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Nombre:");
-			lblNombre.setBounds(91, 96, 77, 23);
+			lblNombre.setBounds(91, 60, 77, 23);
 		}
 		return lblNombre;
 	}
 	private JLabel getLblTelefono() {
 		if (lblTelefono == null) {
 			lblTelefono = new JLabel("Teléfono: ");
-			lblTelefono.setBounds(91, 145, 77, 14);
+			lblTelefono.setBounds(91, 110, 77, 14);
 		}
 		return lblTelefono;
 	}
 	private JLabel getLblPais() {
 		if (lblPais == null) {
 			lblPais = new JLabel("País: ");
-			lblPais.setBounds(91, 185, 77, 14);
+			lblPais.setBounds(91, 156, 77, 14);
 		}
 		return lblPais;
 	}
 	private JLabel getLblRegion() {
 		if (lblRegion == null) {
 			lblRegion = new JLabel("Región:");
-			lblRegion.setBounds(91, 224, 77, 14);
+			lblRegion.setBounds(91, 204, 77, 14);
 		}
 		return lblRegion;
 	}
 	private JLabel getLblCiudad() {
 		if (lblCiudad == null) {
 			lblCiudad = new JLabel("Ciudad: ");
-			lblCiudad.setBounds(91, 262, 77, 14);
+			lblCiudad.setBounds(95, 249, 77, 14);
 		}
 		return lblCiudad;
 	}
@@ -318,7 +314,7 @@ public class CarritoView extends JFrame {
 	public JTextField getTextTelefono() {
 		if (textTelefono == null) {
 			textTelefono = new JTextField();
-			textTelefono.setBounds(178, 143, 252, 23);
+			textTelefono.setBounds(186, 106, 252, 23);
 			textTelefono.setColumns(10);
 		}
 		return textTelefono;
@@ -326,7 +322,7 @@ public class CarritoView extends JFrame {
 	public JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
-			textNombre.setBounds(178, 98, 252, 23);
+			textNombre.setBounds(186, 60, 252, 23);
 			textNombre.setColumns(10);
 		}
 		return textNombre;
@@ -334,7 +330,7 @@ public class CarritoView extends JFrame {
 	public JTextField getTextPais() {
 		if (textPais == null) {
 			textPais = new JTextField();
-			textPais.setBounds(178, 183, 252, 23);
+			textPais.setBounds(186, 152, 252, 23);
 			textPais.setColumns(10);
 		}
 		return textPais;
@@ -342,7 +338,7 @@ public class CarritoView extends JFrame {
 	public JTextField getTextRegion() {
 		if (textRegion == null) {
 			textRegion = new JTextField();
-			textRegion.setBounds(178, 222, 252, 23);
+			textRegion.setBounds(186, 200, 252, 23);
 			textRegion.setColumns(10);
 		}
 		return textRegion;
@@ -350,7 +346,7 @@ public class CarritoView extends JFrame {
 	public JTextField getTextCiudad() {
 		if (textCiudad == null) {
 			textCiudad = new JTextField();
-			textCiudad.setBounds(178, 254, 252, 23);
+			textCiudad.setBounds(186, 245, 252, 23);
 			textCiudad.setColumns(10);
 		}
 		return textCiudad;
@@ -361,25 +357,10 @@ public class CarritoView extends JFrame {
 	public JTextField getTextCalle() {
 		if (textCalle == null) {
 			textCalle = new JTextField();
-			textCalle.setBounds(178, 293, 252, 23);
+			textCalle.setBounds(186, 291, 252, 23);
 			textCalle.setColumns(10);
 		}
 		return textCalle;
-	}
-	private JLabel getLblNombreDeUsuario() {
-		if (lblNombreDeUsuario == null) {
-			lblNombreDeUsuario = new JLabel("Nombre de Usuario: ");
-			lblNombreDeUsuario.setBounds(91, 60, 171, 15);
-		}
-		return lblNombreDeUsuario;
-	}
-	public JTextField getTextNombreUsuario() {
-		if (textNombreUsuario == null) {
-			textNombreUsuario = new JTextField();
-			textNombreUsuario.setBounds(269, 56, 161, 23);
-			textNombreUsuario.setColumns(10);
-		}
-		return textNombreUsuario;
 	}
 	public JRadioButton getRdbtnTarjetaDeCrdito() {
 		if (rdbtnTarjetaDeCrdito == null) {

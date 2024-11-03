@@ -109,7 +109,7 @@ public class ClienteView extends JFrame {
 		contentPane.add(getLbPrecioTotal());
 		contentPane.add(getTxPrecioTotal());
 		
-		model = new ClienteModel(db,carrito);
+		model = new ClienteModel(db,carrito,this);
 		controller = new ClienteController(this, model);
 		controller.initController();
 		controller.initView();
