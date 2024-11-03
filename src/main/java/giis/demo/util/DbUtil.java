@@ -40,7 +40,7 @@ public abstract class DbUtil {
 
 	//Documentacion de apache dbutils:
 	//https://commons.apache.org/proper/commons-dbutils/apidocs/index.html
-	//https://commons.apache.org/proper/commons-dbutils/examples.html
+	//https://commons.apache.org/proper/commons-dbutils/examples.html 
 	
 	/**
 	 * Ejecuta una query sql con los parametros especificados mapeando el resultet en una lista de objetos 
@@ -54,7 +54,7 @@ public abstract class DbUtil {
 			BeanListHandler<T> beanListHandler=new BeanListHandler<>(pojoClass);
 			QueryRunner runner=new QueryRunner();
 			return runner.query(conn, sql, beanListHandler, params);
-		} catch (SQLException e) {
+		} catch (SQLException e) { 
 			throw new UnexpectedException(e);
 		} finally {
 			DbUtils.closeQuietly(conn);

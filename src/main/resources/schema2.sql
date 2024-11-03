@@ -12,7 +12,8 @@ drop table WorkorderPedido;
 drop table Categoria;
 drop table PaqueteProducto;
 drop table WorkorderProducto;
-drop table WorkorderPaquete;
+drop table carrito;
+drop table producto_carrito;
 
 --estado: particular o empresa
 create table Cliente(
@@ -92,7 +93,6 @@ create table Almacenero(
     idAlmacenero int primary key,
     nombre varchar(20) not null,
     apellido varchar(20) not null,
-    check (idAlmacenero >= 0)
 );
 
 create table Workorder(
@@ -140,11 +140,4 @@ create table PaqueteProducto(
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0),
     primary key (idPaquete, idProducto)
-);
-
-create table WorkorderPaquete (
-	idWorkorder int not null, 
-	idPaquete int not null,
-	foreign key (idPaquete) references Paquete(idPaquete),
-	foreign key (idWorkorder) references Workorder(idWorkorder)
 );
