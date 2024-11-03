@@ -19,7 +19,7 @@ public class RecogidaModel2 {
 	private Database2 db;
 	
 	private final static String SQL_FIND_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
-	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado = 'En Curso' and idAlmacenero = ?";
+	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado in ('Pendiente','En Curso') and idAlmacenero = ?";
 	private final static String SQL_FIND_PEDIDOS_FROM_WO = "select * from WorkorderPedido wp "
 											+ "inner join Pedido p on wp.idPedido = p.idPedido "
 											+ "where idWorkorder = ?";
@@ -119,6 +119,9 @@ public class RecogidaModel2 {
 
 	public boolean checkID(WorkorderDto wdto, int idProducto, int cantidad) {
 		ProductoDto prod = new ProductoDto();
+		if (wdto.estado.equals("Pendiente")) {
+			db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "En Curso", wdto.idWorkorder);
+		}
 		prod.idProducto = idProducto;
 		for (PedidoDto pdto : wdto.pedidos) {
 			if (pdto.productos.containsKey(prod)) {

@@ -26,13 +26,12 @@ public class WorkorderView extends JDialog {
 	private JLabel lbProductos;
 	private Database2 db;
 	private WorkorderModel model;
-	private WorkorderController controller;
 	private JTable tbProductos;
 
 	/**
 	 * Create the frame.
 	 */
-	public WorkorderView(Database2 db) {
+	public WorkorderView(WorkorderController wc) {
 		this.db = db;
 		setTitle("Almacenero: WorkOrder");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -47,8 +46,10 @@ public class WorkorderView extends JDialog {
 		contentPane.add(getProductoPanel());
 		contentPane.add(getLbProductos());
 		
-		model = new WorkorderModel(db);
-		controller = new WorkorderController(this, model);
+		setLocationRelativeTo(null);
+		
+		wc.setView(this);
+		wc.init();
 		
 	}
 	private JLabel getLbAlmacenero() {

@@ -210,9 +210,9 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 
 delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
-    (1, 1, 'En Curso'),
-    (2, 1, 'En Curso'),
-    (3, 1, 'En Curso'),
+    (1, 1, 'Pendiente'),
+    (2, 1, 'Pendiente'),
+    (3, 1, 'Pendiente'),
     (5, 1, 'Empaquetada'),
     (300, 1, 'Listo'),
     (301, 1, 'Listo'),
