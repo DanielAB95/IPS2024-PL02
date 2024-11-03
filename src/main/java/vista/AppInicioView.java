@@ -40,8 +40,7 @@ public class AppInicioView extends JFrame {
 				
 //					//lleno bd solo una vez					
 //					db.loadDatabase();
-					
-					
+
 					Database2 db = new Database2();
 
                     // Verificar si la base de datos ya existe
