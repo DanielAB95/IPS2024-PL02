@@ -14,6 +14,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
+
 import vista.AppInicioView;
 import vista.CarritoView;
 
@@ -45,7 +46,7 @@ public class CarritoModel {
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
 		
 		for (int i = 0; i < productos.size(); i++) {
-			Producto p = new Producto(productos.get(i)[0], productos.get(i)[1], productos.get(i)[2], productos.get(i)[3], productos.get(i)[4]);
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
 			resultado.add(p);
 		}
 		

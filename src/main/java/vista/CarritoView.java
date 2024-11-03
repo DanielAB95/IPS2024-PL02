@@ -13,6 +13,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
+//import vista.ClienteView.MyTableModel;
 import vista.ClienteView.MyTableModel;
 
 import javax.swing.JLabel;
@@ -85,10 +86,9 @@ public class CarritoView extends JFrame {
 	 * 
 	 * 
 	 */
-	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
+	public CarritoView(Carrito c, Database2 db) {
 		setTitle("Confirmación de Compra: Datos de Envío");
 		this.database = db;
-		this.dto = dto;
 		
 		this.listModel = new DefaultListModel<>();
 		this.carrito = c;
@@ -219,10 +219,10 @@ public class CarritoView extends JFrame {
 			tableModelCarrito = new MyTableModel(columnNames);
 			table = new JTable(tableModelCarrito);
 			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			TableColumnModel columnModel = table.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(200);
-			columnModel.getColumn(1).setPreferredWidth(85);
-			columnModel.getColumn(1).setPreferredWidth(85);	
+		//	TableColumnModel columnModel = table.getColumnModel();
+//			columnModel.getColumn(0).setPreferredWidth(200);
+//			columnModel.getColumn(1).setPreferredWidth(85);
+//			columnModel.getColumn(1).setPreferredWidth(85);	
 			table.setBounds(712, 64, 160, 236);
 			
 		}
@@ -331,5 +331,9 @@ public class CarritoView extends JFrame {
 			textCiudad.setColumns(10);
 		}
 		return textCiudad;
+	}
+	
+	public Database2 getDatabase() {
+		return this.database;
 	}
 }

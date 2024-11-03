@@ -1,8 +1,9 @@
 package vista;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,12 +11,10 @@ import javax.swing.border.EmptyBorder;
 import controlador.AppInicioController;
 import giis.demo.util.Database2;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AppInicioView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCliente;
 	private JButton btnAlmacen;
@@ -28,6 +27,7 @@ public class AppInicioView extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					
@@ -68,6 +68,7 @@ public class AppInicioView extends JFrame {
 		contentPane.add(getBtnAlmacen());
 		
 		control.initController();
+		setLocationRelativeTo(null);
 	}
 	
 	public Database2 getDatabase() {

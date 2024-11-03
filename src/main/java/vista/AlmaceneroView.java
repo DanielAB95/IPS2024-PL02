@@ -1,18 +1,16 @@
 package vista;
 
+import java.awt.Font;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import giis.demo.util.Database2;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AlmaceneroView extends JFrame {
 
@@ -26,6 +24,7 @@ public class AlmaceneroView extends JFrame {
 	private JButton btPedidosPendientes;
 	private Database2 db;
 	private JButton btPlanosAlmacen;
+	private JButton btEmpaquetado;
 
 	/**
 	 * Create the frame.
@@ -35,7 +34,7 @@ public class AlmaceneroView extends JFrame {
 		this.db = db;
 		 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 960);
+		setBounds(100, 100, 480, 854);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -45,22 +44,26 @@ public class AlmaceneroView extends JFrame {
 		contentPane.add(getTxAlmacenero());
 		contentPane.add(getBtPedidosPendientes());
 		contentPane.add(getBtPlanosAlmacen());
+		contentPane.add(getBtEmpaquetado());
+		setLocationRelativeTo(null);
 	}
 
 	private JLabel getLbAlmacenero() {
 		if (lbAlmacenero == null) {
 			lbAlmacenero = new JLabel("Almacenero en terminal:");
+			lbAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbAlmacenero.setBounds(166, 69, 374, 57);
+			lbAlmacenero.setBounds(10, 11, 444, 57);
 		}
 		return lbAlmacenero;
 	}
 	private JTextField getTxAlmacenero() {
 		if (txAlmacenero == null) {
 			txAlmacenero = new JTextField();
+			txAlmacenero.setEditable(false);
 			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			txAlmacenero.setBounds(114, 136, 426, 72);
+			txAlmacenero.setBounds(10, 79, 444, 72);
 			txAlmacenero.setColumns(10);
 		}
 		return txAlmacenero;
@@ -69,7 +72,7 @@ public class AlmaceneroView extends JFrame {
 		if (btPedidosPendientes == null) {
 			btPedidosPendientes = new JButton("Pedidos Pendientes");
 			btPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			btPedidosPendientes.setBounds(134, 270, 374, 144);
+			btPedidosPendientes.setBounds(10, 162, 444, 144);
 		}
 		return btPedidosPendientes;
 	}
@@ -78,7 +81,7 @@ public class AlmaceneroView extends JFrame {
 		if (btPlanosAlmacen == null) {
 			btPlanosAlmacen = new JButton("Planos Almacen");
 			btPlanosAlmacen.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			btPlanosAlmacen.setBounds(166, 771, 308, 113);
+			btPlanosAlmacen.setBounds(10, 691, 444, 113);
 		}
 		return btPlanosAlmacen;
 	}
@@ -105,4 +108,12 @@ public class AlmaceneroView extends JFrame {
 		return this.db;
 	}
 	
+	public JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
+			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			btEmpaquetado.setBounds(10, 567, 444, 113);
+		}
+		return btEmpaquetado;
+	}
 }

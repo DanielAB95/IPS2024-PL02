@@ -2,30 +2,29 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import modelo.modelo.CarritoModel;
 import vista.CarritoView;
+import vista.ClienteView;
 
 public class CarritoController {
 	
 	
-	
+	private ClienteView cView;
 	private CarritoView view;
 	private CarritoModel modelo;
 	
 	public CarritoController(CarritoView v, CarritoModel m) {
 		this.view = v;
 		this.modelo = m;
+		this.cView = new ClienteView(view.getDatabase());
 	}
 	
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
-		view.getLblNombreUsuario().setText(modelo.getDto().getName());
 	}
 	
 	public void initController() {
