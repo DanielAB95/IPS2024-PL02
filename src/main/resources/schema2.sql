@@ -27,6 +27,20 @@ create table Cliente(
 	 tipoCliente varchar(32) not null
 );
 
+create table carrito (
+	id_cliente varchar(9) not null,
+	id_carrito varchar(9) not null,
+	foreign key (id_cliente) references cliente(idCliente)
+);
+
+create table producto_carrito (
+	id_producto int not null,
+	cantidad int not null,
+	id_carrito varchar(9) not null,
+	foreign key (id_producto) references producto(id),
+	foreign key (id_carrito) references carrito(id_carrito)
+);
+
 
 create table Categoria (
 	nombreCategoria varchar(20) primary key,

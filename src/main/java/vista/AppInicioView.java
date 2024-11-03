@@ -2,6 +2,8 @@ package vista;
 
 
 import java.awt.EventQueue;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,7 @@ public class AppInicioView extends JFrame {
 	private AppInicioController control;
 	
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -31,12 +34,23 @@ public class AppInicioView extends JFrame {
 			public void run() {
 				try {
 					
-					//creo bd solo una vez
-					Database2 db =new Database2();
-					db.createDatabase(false);
+//					//creo bd solo una vez
+//					Database2 db =new Database2();
+//					db.createDatabase(false);
+				
+//					//lleno bd solo una vez					
+//					db.loadDatabase();
 					
-					//lleno bd solo una vez
-					db.loadDatabase();
+					
+					Database2 db = new Database2();
+
+                    // Verificar si la base de datos ya existe
+                    if (!dbExists(db.getUrl())) {
+                        // Crea la base de datos solo si no existe
+                        db.createDatabase(false);
+                        // Carga datos iniciales solo si se creó la base de datos
+                        db.loadDatabase();
+                    }
 					
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
@@ -69,6 +83,29 @@ public class AppInicioView extends JFrame {
 		
 		control.initController();
 		setLocationRelativeTo(null);
+		
+		
+		mostrarClientes();
+	}
+	
+	
+	private static boolean dbExists(String dbUrl) {
+        // Comprueba si el archivo de base de datos existe
+        File dbFile = new File(dbUrl.replace("jdbc:sqlite:", ""));
+        return dbFile.exists();
+    }
+	
+	private void mostrarClientes() {
+		// SQL_GET_CLIENTES
+		List<Object[]> usuarios = database.executeQueryArray("select * from cliente");
+		System.out.println("----------------- CLIENTES ------------------");
+		
+		for (int i = 0; i < usuarios.size(); i++) {
+			for (int j = 0; j < usuarios.get(i).length; j++) {
+				System.out.print(usuarios.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
 	}
 	
 	public Database2 getDatabase() {
