@@ -255,6 +255,7 @@ public class EmpaquetadoView extends JFrame {
 	private JButton getBtEmpaquetado() {
 		if (btEmpaquetado == null) {
 			btEmpaquetado = new JButton("Empaquetado");
+			btEmpaquetado.setEnabled(false);
 		}
 		return btEmpaquetado;
 	}
