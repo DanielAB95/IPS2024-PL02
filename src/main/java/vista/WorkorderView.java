@@ -11,10 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.WorkorderController;
-import giis.demo.util.Database2;
-import modelo.modelo.WorkorderModel;
 
 public class WorkorderView extends JDialog {
 
@@ -24,15 +23,13 @@ public class WorkorderView extends JDialog {
 	private JTextField txAlmacenero;
 	private JScrollPane productoPanel;
 	private JLabel lbProductos;
-	private Database2 db;
-	private WorkorderModel model;
 	private JTable tbProductos;
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Create the frame.
 	 */
 	public WorkorderView(WorkorderController wc) {
-		this.db = db;
 		setTitle("Almacenero: WorkOrder");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 480, 854);
@@ -91,7 +88,8 @@ public class WorkorderView extends JDialog {
 	
 	private JTable getTbProductos() {
 		if (tbProductos == null) {
-			tbProductos = new JTable();
+			tableModel = new DefaultTableModel();
+			tbProductos = new JTable(tableModel);
 		}
 		return tbProductos;
 	}
@@ -102,12 +100,11 @@ public class WorkorderView extends JDialog {
 		return this.txAlmacenero;
 	}
 	
-	public Database2 getDatabase(){
-		return this.db;
-	}
-	
-	public JTable getTablaProductos() {
+	public JTable getTable() {
 		return this.tbProductos;
+	}
+	public DefaultTableModel getTableModel() {
+		return tableModel;
 	}
 	
 }

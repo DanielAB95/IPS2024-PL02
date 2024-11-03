@@ -26,8 +26,6 @@ public class PedidoController {
 
 	private PedidoModel model;
 	private PedidoView view;
-	private WorkorderModel wModel;
-	private WorkorderView wView;
 	private List<Integer> woids;
 
 	public PedidoController(PedidoView view, PedidoModel model) {
@@ -64,7 +62,7 @@ public class PedidoController {
 	private void generarWorkorder(int posPedido) {
 		woids = model.generarWorkorder(posPedido);
 		addPedidosTable();
-		WorkorderModel wm = new WorkorderModel(model.getDB());
+		WorkorderModel wm = new WorkorderModel(model.getDB(), woids);
 		WorkorderController wc = new WorkorderController(wm);
 		WorkorderView wv = new WorkorderView(wc);
 		wv.setVisible(true);

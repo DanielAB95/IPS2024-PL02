@@ -1,58 +1,87 @@
 package modelo.modelo;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import giis.demo.util.Database2;
-import modelo.dto.ProductoAlmacen;
-import modelo.dto.WorkorderDTO;
+import persistence.dto.PedidoDto;
+import persistence.dto.ProductoDto;
+import persistence.dto.WorkorderDto;
 
 public class WorkorderModel {
 	
 	private Database2 db;
+	private List<Integer> ids;
+	private List<WorkorderDto> workorders = new ArrayList<>();
 
-	private static final String SQL = "";
+	private final static String SQL_FIND_WO = "select * from Workorder where idWorkorder = ?";
+	private final static String SQL_FIND_PEDIDOS_FROM_WO = "select * from WorkorderPedido wp "
+														+ "inner join Pedido p on wp.idPedido = p.idPedido "
+														+ "where idWorkorder = ? and p.estado = 'Listo'";
+	private final static String SQL_FIND_PRODUCTOS_FROM_PEDIDOYWO = "select * from WorkorderProducto wp "
+														+ "inner join Producto p on wp.idProducto = p.id "
+														+ "where idWorkorder = ? and idPedido = ?";
 	
-	public WorkorderModel(Database2 dataBase) {
+	public WorkorderModel(Database2 dataBase, List<Integer> ids) {
 		this.db = dataBase;
+		this.ids = ids;
+		getWorkorders();
 	}
 	
-	public List<WorkorderDTO> getWorkorders(){
-		List<WorkorderDTO> list = new ArrayList<WorkorderDTO>();
-		List<Object[]> workorders = db.executeQueryArray(SQL);
-		
-		for (int i = 0; i < workorders.size(); i++) {
-			WorkorderDTO w = new WorkorderDTO((int)workorders.get(i)[0], (int)workorders.get(i)[1]);
-			list.add(w);	
+	private void getWorkorders(){
+		List<Object[]> o;
+		for (int idWorkorder : ids) {
+			o = db.executeQueryArray(SQL_FIND_WO, idWorkorder);
+			WorkorderDto wo = new WorkorderDto();
+			wo.idWorkorder = (int)o.get(0)[0];
+			wo.idAlmacenero = (int)o.get(0)[1];
+			wo.estado = (String)o.get(0)[2];
+			wo.pedidos = new ArrayList<>(getPedidosFromWorkorder(wo.idWorkorder));
+			workorders.add(wo);
 		}
-		return list;
 	}
 	
-	public int getWorkOrderAlmacenero() {
-		List<Object[]> workorders = db.executeQueryArray(SQL);
-		return (int)workorders.get(0)[0];
-	}
-	 
-	public int getWorkOrderPedido(String idWorkorder) {
-		List<Object[]> workorders = db.executeQueryArray(SQL,idWorkorder);
-		return (int)workorders.get(0)[0];
+	private List<PedidoDto> getPedidosFromWorkorder(int idWorkorder) {
+		List<Object[]> result = db.executeQueryArray(SQL_FIND_PEDIDOS_FROM_WO, idWorkorder);
+		List<PedidoDto> pedidos = new ArrayList<>();
+		for (Object[] o : result) {
+			PedidoDto pedido = new PedidoDto();
+			pedido.idPedido = (int)o[1];
+			pedido.idCliente = (String)o[3];
+			pedido.fecha = LocalDate.parse((String)o[4]);
+			pedido.estadoPedido = (String)o[5];
+			pedido.productos = new HashMap<>(getProductosPorPedido(idWorkorder, pedido.idPedido));
+			pedidos.add(pedido);
+		}	
+		return pedidos;
 	}
 	
-	public List<ProductoAlmacen> getProductos(int idPedido){
-		List<ProductoAlmacen> productos = new ArrayList<ProductoAlmacen>();
-		List<Object[]> listDb = db.executeQueryArray(SQL, idPedido);
-		for(int i = 0; i<listDb.size();i++) {
-			ProductoAlmacen p = new ProductoAlmacen((int)listDb.get(i)[0],(int)listDb.get(i)[1],(String)listDb.get(i)[2],(int)listDb.get(i)[3],(int)listDb.get(i)[4],(int)listDb.get(i)[5]);
-			productos.add(p);
+	private Map<ProductoDto, Integer> getProductosPorPedido(int idWorkorder, int idPedido) {
+		Map<ProductoDto, Integer> resultado = new HashMap<>();
+		List<Object[]> productos = db.executeQueryArray(SQL_FIND_PRODUCTOS_FROM_PEDIDOYWO, idWorkorder, idPedido);
+		for (Object[] o : productos) {
+			ProductoDto dto = new ProductoDto();
+			dto.idProducto = (int)o[5];
+			dto.nombre = (String)o[6];
+			dto.categoria = (String)o[7];
+			dto.descripcion = (String)o[8];
+			dto.precio = (double)o[9];
+			dto.pasillo = (int)o[10];
+			dto.estanteria = (int)o[11];
+			dto.balda = (int)o[12];
+			int cantidad = (int)o[3];
+			if (cantidad > 0) resultado.put(dto, cantidad);
 		}
-		
-		return ordenarProductos(productos);
-	}	
+		return resultado;
+	}
 	
-	class ProductoComparator implements Comparator<ProductoAlmacen> {
+	static class ProductoComparator implements Comparator<ProductoDto> {
 	    private int ultimaBaldaVisitada;
 
 	    public ProductoComparator(int ultimaBaldaVisitada) {
@@ -60,15 +89,15 @@ public class WorkorderModel {
 	    }
 
 	    @Override
-	    public int compare(ProductoAlmacen p1, ProductoAlmacen p2) {
+	    public int compare(ProductoDto p1, ProductoDto p2) {
 	        // Comprobar por pasillo
-	        int pasilloComp = Integer.compare(p1.getPasillo(), p2.getPasillo());
+	        int pasilloComp = Integer.compare(p1.pasillo, p2.pasillo);
 	        if (pasilloComp != 0) {
 	            return pasilloComp; 
 	        }
 
 	        // Comprobar estanteria
-	        int estanteriaComparison = Integer.compare(p1.getEstanteria(), p2.getEstanteria());
+	        int estanteriaComparison = Integer.compare(p1.estanteria, p2.estanteria);
 	        if (estanteriaComparison != 0) {
 	            return estanteriaComparison; // Si son diferentes, devolvemos la comparación de estanterías
 	        }
@@ -76,10 +105,10 @@ public class WorkorderModel {
 	        // comprobar balda
 	        if (ultimaBaldaVisitada == 3) {
 	            //ordenacion descendente (ultima balda es 3)
-	            return Integer.compare(p2.getBalda(), p1.getBalda());
+	            return Integer.compare(p2.balda, p1.balda);
 	        } else {
 	            // ordenacion ascendente (resto)
-	            return Integer.compare(p1.getBalda(), p2.getBalda());
+	            return Integer.compare(p1.balda, p2.balda);
 	        }
 	    }
 
@@ -89,16 +118,25 @@ public class WorkorderModel {
 	    }
 	}
 
-	private List<ProductoAlmacen> ordenarProductos(List<ProductoAlmacen> productos) {
+	public static List<ProductoDto> ordenarProductos(List<ProductoDto> productos) {
 	    ProductoComparator comparator = new ProductoComparator(1); //por defecto primera balda es 1(ascendente)
-
 	    Collections.sort(productos, comparator);
-
 	    // Actualizar ultima balda visitada(no hace falta)
-	    for (ProductoAlmacen producto : productos) {
-	        comparator.setUltimaBaldaVisitada(producto.getBalda());
+	    for (ProductoDto producto : productos) {
+	        comparator.setUltimaBaldaVisitada(producto.balda);
 	    }
-
 	    return productos;
+	}
+
+	public List<WorkorderDto> obtainWorkorders() {
+		return workorders;
+	}
+
+	public int getCantidadTotalDeProductos(PedidoDto dto) {
+		int cantidad = 0;
+		for (ProductoDto prod : dto.productos.keySet()) {
+			cantidad += dto.productos.get(prod);
+		}
+		return cantidad;
 	}
 }

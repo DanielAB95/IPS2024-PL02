@@ -105,9 +105,9 @@ public class PedidoModel {
 				return workordersIDs;
 			}
 		}
-		PedidoDto copia = new PedidoDto();
-		copia.idPedido = pedido.idPedido;
 		for (int i = 0; i<numeroWorkoredrsGeneradas; i++) {
+			PedidoDto copia = new PedidoDto();
+			copia.idPedido = pedido.idPedido;
 			WorkorderDto workorder = new WorkorderDto();
 			workorder.idWorkorder = getIdWorkorder();
 			workorder.idAlmacenero = almacenero.idAlmacenero;
@@ -126,16 +126,16 @@ public class PedidoModel {
 	
 	private PedidoDto fragmentarPedido(PedidoDto pedido, PedidoDto fragmento, List<ProductoDto> productos) {
 		if (productos.size() == 0) return fragmento;
+		int cantEnFrag = getCantidadTotalDeProductos(fragmento);
 		int cantidad = pedido.productos.get(productos.get(0));
 		ProductoDto producto = productos.get(0);
-		if (cantidad > WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER) {
-			cantidad -= WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER;
-			fragmento.productos.put(producto, WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER);
+		if (cantEnFrag + cantidad > WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER) {
+			cantidad -= (WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER - cantEnFrag);
+			fragmento.productos.put(producto, WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER - cantEnFrag);
 			pedido.productos.put(producto, cantidad);
 			return fragmento;
-		} else if (cantidad == WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER){
-			cantidad -= WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER;
-			fragmento.productos.put(producto, WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER);
+		} else if (cantEnFrag + cantidad == WorkorderDto.MAXIMO_PRODUCTOS_POR_WORKORDER){
+			fragmento.productos.put(producto, cantidad);
 			pedido.productos.remove(producto);
 			productos.remove(producto);
 			return fragmento;
