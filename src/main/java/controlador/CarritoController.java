@@ -134,7 +134,6 @@ public class CarritoController {
 			vista.setLocationRelativeTo(view);
 			view.dispose();
 			vista.setVisible(true);
-			//modelo.confirmarPedido();
 			
 		} else if (view.getRdbtnContrarrembolso().isSelected()){
 			
@@ -142,8 +141,7 @@ public class CarritoController {
                        " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
 			modelo.confirmarPedido();
 		} else {
-			//pago con tarjeta : EN PROCESO
-			// crear clase PagoTarjetaView
+			
 			PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
 			vista.setLocationRelativeTo(view);
 			view.dispose();
