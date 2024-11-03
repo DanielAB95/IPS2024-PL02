@@ -49,14 +49,26 @@ public class ClienteController {
 			
 			public void actionPerformed(ActionEvent e) {
 				if (!model.getCarrito().isEmpty()) {
-					view.dispose();
-					CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
-					//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
-					//cambiar los dto y databases al model en vez de tenerlo en view
-					frame.getLblNombreUsuario().setText(view.getDto().getName());
-					frame.setLocationRelativeTo(view);
-					view.dispose();
-					frame.setVisible(true);
+					
+					//si no es invitado, y es cliente de empresa
+					String nombreUsuario = view.getLblNombreUsuario().getText();
+					if (!nombreUsuario.equals("Invitado") && model.esClienteDeEmpresa(nombreUsuario)) {
+						
+						JOptionPane.showMessageDialog(view, "Mensaje confirmacion de compra Empresas");
+						model.confirmarPedido();
+					} else {
+						
+						view.dispose();
+						CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
+						//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
+						//cambiar los dto y databases al model en vez de tenerlo en view
+						frame.getLblNombreUsuario().setText(view.getDto().getName());
+						frame.setLocationRelativeTo(view);
+						view.dispose();
+						frame.setVisible(true);
+					}
+					
+					
 				} else {
 					JOptionPane.showMessageDialog(view, "No hay ningún producto en el carrito.");
 				}

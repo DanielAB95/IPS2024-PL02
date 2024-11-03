@@ -36,7 +36,6 @@ public class CarritoController {
 	
 	private void rellenaDatosCliente() {
 		Object[] datosCliente = modelo.getClient(modelo.getDto().getName());
-		view.getTextNombreUsuario().setText((String) datosCliente[1]);
 		view.getTextNombre().setText((String) datosCliente[2]);
 		view.getTextTelefono().setText((String) datosCliente[3]);
 		view.getTextPais().setText((String) datosCliente[4]);
@@ -71,25 +70,12 @@ public class CarritoController {
 		view.getBtnConfirmar().addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				if (modelo.doesClientExist(modelo.getDto().getName()))
-					
-					confirmarPedido();
-				else {
-					if (checkTodosLosCamposRellenados() && checkUsuarioValido() && checkMetodoDePago()) {
-						
-						String[] clientData = new String[8];
-						clientData[0] = UUID.randomUUID().toString();
-						clientData[1] = view.getTextNombreUsuario().getText();
-						clientData[2] = view.getTextNombre().getText();
-						clientData[3] = view.getTextTelefono().getText();
-						clientData[4] = view.getTextPais().getText();
-						clientData[5] = view.getTextRegion().getText();
-						clientData[6] = view.getTextCiudad().getText();
-						clientData[7] = view.getTextCalle().getText();
-						
-						modelo.createNewClient(clientData);
-						modelo.getDto().setName(clientData[1]);
-						
+				
+				if (checkTodosLosCamposRellenados() && checkMetodoDePago()) {
+					if (modelo.doesClientExist(modelo.getDto().getName()))
+						confirmarPedido();
+					else {
+						creaNuevoCliente();
 						confirmarPedido();
 					}
 				}
@@ -121,6 +107,22 @@ public class CarritoController {
         });
 	}
 	
+	private void creaNuevoCliente() {
+		String[] clientData = new String[9];
+		clientData[0] = UUID.randomUUID().toString();
+		clientData[1] = "INVITADO" + clientData[0].substring(0,10);
+		clientData[2] = view.getTextNombre().getText();
+		clientData[3] = view.getTextTelefono().getText();
+		clientData[4] = view.getTextPais().getText();
+		clientData[5] = view.getTextRegion().getText();
+		clientData[6] = view.getTextCiudad().getText();
+		clientData[7] = view.getTextCalle().getText();
+		clientData[8] = "PARTICULAR";
+		
+		modelo.createNewClient(clientData);
+		modelo.getDto().setName(clientData[1]);
+	}
+	
 	private void confirmarPedido() {
 		if (view.getRdbtnTransferencia().isSelected()) {
 			JOptionPane.showMessageDialog(view, "Para realizar el pago mediante transferencia bancaria, "
@@ -141,7 +143,6 @@ public class CarritoController {
 		if (view.getTextCalle().getText().isEmpty() ||
 				view.getTextCiudad().getText().isEmpty() || 
 				view.getTextNombre().getText().isEmpty() || 
-				view.getTextNombreUsuario().getText().isEmpty() ||
 				view.getTextPais().getText().isEmpty() ||
 				view.getTextRegion().getText().isEmpty() ||
 				view.getTextTelefono().getText().isEmpty()) {
@@ -153,14 +154,14 @@ public class CarritoController {
 		return true;
 	}
 	
-	private boolean checkUsuarioValido() {
-		boolean result =  modelo.doesClientExist(view.getTextNombreUsuario().getText());
-		if (result) {
-			JOptionPane.showMessageDialog(view, "Nombre de usuario no válido, ya existe");
-			return false;
-		} else 
-			return true;
-	}
+//	private boolean checkUsuarioValido() {
+//		boolean result =  modelo.doesClientExist(view.getTextNombreUsuario().getText());
+//		if (result) {
+//			JOptionPane.showMessageDialog(view, "Nombre de usuario no válido, ya existe");
+//			return false;
+//		} else 
+//			return true;
+//	}
 	
 	private boolean checkMetodoDePago() {
 		if (view.getRdbtnTransferencia().isSelected()
