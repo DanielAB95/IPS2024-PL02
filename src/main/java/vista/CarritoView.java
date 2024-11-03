@@ -68,6 +68,9 @@ public class CarritoView extends JFrame {
 	private JRadioButton rdbtnTarjetaDeCrdito;
 	private JRadioButton rdbtnContrarrembolso;
 	private JRadioButton rdbtnTransferencia;
+	private JLabel lblDescContrarrembolso;
+	private JLabel lblDescTarjeta;
+	private JLabel labelDescTransfer7;
 	
 	/**
 	 * Create the frame.
@@ -175,11 +178,11 @@ public class CarritoView extends JFrame {
 	
 	public JButton getBtnConfirmar() {
 		if (btnConfirmar == null) {
-			btnConfirmar = new JButton("Pagar");
+			btnConfirmar = new JButton("Comprar");
 			
 			btnConfirmar.setBackground(new Color(50, 205, 50));
 			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.setBounds(775, 427, 197, 23);
+			btnConfirmar.setBounds(796, 427, 176, 23);
 		}
 		return btnConfirmar;
 	}
@@ -297,7 +300,7 @@ public class CarritoView extends JFrame {
 	private JPanel getPanelRadioBotones() {
 		if (panelRadioBotones == null) {
 			panelRadioBotones = new JPanel();
-			panelRadioBotones.setBounds(91, 365, 339, 85);
+			panelRadioBotones.setBounds(91, 365, 593, 85);
 			panelRadioBotones.setLayout(null);
 			panelRadioBotones.add(getRdbtnContrarrembolso());
 			panelRadioBotones.add(getRdbtnTransferencia());
@@ -307,6 +310,9 @@ public class CarritoView extends JFrame {
 		     group.add(getRdbtnContrarrembolso());
 		     group.add(getRdbtnTransferencia());
 		     group.add(getRdbtnTarjetaDeCrdito());
+		     panelRadioBotones.add(getLblDescContrarrembolso());
+		     panelRadioBotones.add(getLblDescTarjeta());
+		     panelRadioBotones.add(getLabelDescTransfer7());
 			
 		}
 		return panelRadioBotones;
@@ -382,5 +388,30 @@ public class CarritoView extends JFrame {
 			rdbtnTransferencia.setBounds(0, 62, 123, 23);
 		}
 		return rdbtnTransferencia;
+	}
+	private JLabel getLblDescContrarrembolso() {
+		if (lblDescContrarrembolso == null) {
+			lblDescContrarrembolso = new JLabel("   (Pago en efectivo al recibir el producto)");
+			lblDescContrarrembolso.setForeground(new Color(51, 51, 51));
+			lblDescContrarrembolso.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblDescContrarrembolso.setBounds(182, 4, 422, 15);
+		}
+		return lblDescContrarrembolso;
+	}
+	private JLabel getLblDescTarjeta() {
+		if (lblDescTarjeta == null) {
+			lblDescTarjeta = new JLabel("   (Pago inmediato usando una tarjeta)");
+			lblDescTarjeta.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblDescTarjeta.setBounds(181, 36, 412, 15);
+		}
+		return lblDescTarjeta;
+	}
+	private JLabel getLabelDescTransfer7() {
+		if (labelDescTransfer7 == null) {
+			labelDescTransfer7 = new JLabel("   (Transfiera dinero directamente desde su cuenta)");
+			labelDescTransfer7.setFont(new Font("Dialog", Font.PLAIN, 12));
+			labelDescTransfer7.setBounds(179, 66, 402, 15);
+		}
+		return labelDescTransfer7;
 	}
 }

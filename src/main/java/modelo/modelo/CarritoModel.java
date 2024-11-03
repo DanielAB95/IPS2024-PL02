@@ -112,8 +112,8 @@ public class CarritoModel {
 			
 			//vuelvo al inicio
 			AppInicioView vista = new AppInicioView(getDatabase());
-			this.v.dispose();
 			vista.setVisible(true);
+			this.v.dispose();
 			
 		} else {
 			JOptionPane.showMessageDialog(this.v, "No hay productos en su carrito");
