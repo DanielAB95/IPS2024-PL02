@@ -1,5 +1,6 @@
 package vista;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -32,8 +32,6 @@ public class PedidoView extends JFrame {
 	private JScrollPane tablePanel;
 	private PedidoModel model;
 	private PedidoController controller;
-	private JLabel lbAlmacenero;
-	private JTextField txAlmacenero;
 	private Database2 db;
 	private JLabel lbPedidosPendientes;
 	private JTable tbPedidos;
@@ -41,7 +39,9 @@ public class PedidoView extends JFrame {
 	private JButton btGenerarWorkOrder;
 	private JButton btRecogida;
 	private JButton btnEmpaquetado;
-	private JButton btnNewButton_3;
+	private JPanel pnDatos;
+	private JLabel lbAlmacennero;
+	private JTextField textField;
 
 
 	/**
@@ -60,10 +60,9 @@ public class PedidoView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.add(getTablePanel());
-		contentPane.add(getLbAlmacenero());
-		contentPane.add(getTextField());
 		contentPane.add(getLbPedidosPendientes());
 		contentPane.add(getPnMenu());
+		contentPane.add(getPnDatos());
 		
 		model = new PedidoModel(db, idAlmacenero);
 		controller = new PedidoController(this, model);
@@ -81,26 +80,6 @@ public class PedidoView extends JFrame {
 	    return tablePanel;
 	}
 	
-	private JLabel getLbAlmacenero() {
-		if (lbAlmacenero == null) {
-			lbAlmacenero = new JLabel("Almacenero en sesion:");
-			lbAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbAlmacenero.setBounds(18, 11, 426, 75);
-		}
-		return lbAlmacenero;
-	}
-	private JTextField getTextField() {
-		if (txAlmacenero == null) {
-			txAlmacenero = new JTextField();
-			txAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			txAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
-			txAlmacenero.setEditable(false);
-			txAlmacenero.setBounds(18, 97, 436, 75);
-			txAlmacenero.setColumns(10);
-		}
-		return txAlmacenero;
-	}
-	
 	private JLabel getLbPedidosPendientes() {
 		if (lbPedidosPendientes == null) {
 			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
@@ -114,7 +93,6 @@ public class PedidoView extends JFrame {
 	private JTable getTbPedidos() {
 		if (tbPedidos == null) {
 			tbPedidos = new JTable();
-			tbPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
 		return tbPedidos;
 	}
@@ -122,18 +100,18 @@ public class PedidoView extends JFrame {
 	private JPanel getPnMenu() {
 		if (pnMenu == null) {
 			pnMenu = new JPanel();
-			pnMenu.setBounds(0, 726, 464, 100);
-			pnMenu.setLayout(new GridLayout(0, 4, 0, 0));
+			pnMenu.setBounds(10, 764, 444, 40);
+			pnMenu.setLayout(new GridLayout(0, 3, 0, 0));
 			pnMenu.add(getBtGenerarWorkOrder());
 			pnMenu.add(getBtRecogida());
 			pnMenu.add(getBtnEmpaquetado());
-			pnMenu.add(getBtnNewButton_3());
 		}
 		return pnMenu;
 	}
 	private JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setBackground(Color.WHITE);
 			btGenerarWorkOrder.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -145,27 +123,19 @@ public class PedidoView extends JFrame {
 	private JButton getBtRecogida() {
 		if (btRecogida == null) {
 			btRecogida = new JButton("Recogida");
+			btRecogida.setBackground(Color.WHITE);
 		}
 		return btRecogida;
 	}
 	private JButton getBtnEmpaquetado() {
 		if (btnEmpaquetado == null) {
 			btnEmpaquetado = new JButton("Empaquetado");
+			btnEmpaquetado.setBackground(Color.WHITE);
 		}
 		return btnEmpaquetado;
 	}
-	private JButton getBtnNewButton_3() {
-		if (btnNewButton_3 == null) {
-			btnNewButton_3 = new JButton("New button");
-		}
-		return btnNewButton_3;
-	}
 	
 	//Metodos Auxiliares
-	
-	public JTextField getTextAlmacenero() {
-		return this.txAlmacenero;
-	}
 	
 	public Database2 getDatabase() {
 		return this.db;
@@ -189,5 +159,31 @@ public class PedidoView extends JFrame {
 	
 	public JButton getButtonEmpaquetado() {
 		return this.btnEmpaquetado;
+	}
+	public JPanel getPnDatos() {
+		if (pnDatos == null) {
+			pnDatos = new JPanel();
+			pnDatos.setBounds(10, 11, 444, 30);
+			pnDatos.setLayout(new GridLayout(0, 2, 0, 0));
+			pnDatos.add(getLbAlmacennero());
+			pnDatos.add(getTextField_1());
+		}
+		return pnDatos;
+	}
+	public JLabel getLbAlmacennero() {
+		if (lbAlmacennero == null) {
+			lbAlmacennero = new JLabel("Almacenero en sesion:");
+			lbAlmacennero.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		}
+		return lbAlmacennero;
+	}
+	public JTextField getTextField_1() {
+		if (textField == null) {
+			textField = new JTextField();
+			textField.setHorizontalAlignment(SwingConstants.CENTER);
+			textField.setEditable(false);
+			textField.setColumns(10);
+		}
+		return textField;
 	}
 }

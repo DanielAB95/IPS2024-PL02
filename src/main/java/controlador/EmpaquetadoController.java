@@ -342,7 +342,6 @@ public class EmpaquetadoController {
 		RecogidaView2 rView = new RecogidaView2(rc);
 		ew.dispose();
 		rView.setVisible(true);
-		
 	}
 	
 	private void mostrarWorkOrder() {

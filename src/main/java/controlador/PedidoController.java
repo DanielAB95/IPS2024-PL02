@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
@@ -13,11 +14,12 @@ import modelo.dto.PedidoDTO;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
+import modelo.modelo.RecogidaModel2;
 import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
-import vista.RecogidaView;
+import vista.RecogidaView2;
 import vista.WorkorderView;
 
 public class PedidoController {
@@ -39,9 +41,9 @@ public class PedidoController {
 	
 
 	public void initView() {
-		AlmaceneroDto alm = model.getAlmacenero();
-		view.getTextAlmacenero().setText(alm.idAlmacenero + " - " + alm.nombre +  " " + alm.apellido);
-		this.getPedidos();
+		AlmaceneroDto dto = model.getAlmacenero();
+		JTextField tx = (JTextField)view.getPnDatos().getComponent(1);
+		tx.setText(dto.idAlmacenero + " - " + dto.nombre + " " + dto.apellido);
 		// view.getFrame().setVisible(true);
 	}
 
@@ -114,9 +116,11 @@ public class PedidoController {
 	}
 	
 	private void mostrarRecogida() {
-		RecogidaView rView = new RecogidaView(view.getDatabase());
+		RecogidaModel2 rm = new RecogidaModel2(view.getDatabase(), model.getAlmacenero().idAlmacenero);
+		RecogidaController2 rc = new RecogidaController2(rm);
+		RecogidaView2 rView = new RecogidaView2(rc);
 		view.dispose();
-		rView.setVisible(true);	
+		rView.setVisible(true);
 	}
 	
 	private void mostrarWorkOrder() {

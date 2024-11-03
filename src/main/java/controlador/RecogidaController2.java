@@ -32,7 +32,6 @@ public class RecogidaController2 {
 	private RecogidaView2 rw;
 	
 	private WorkorderDto wdto;
-	private PedidoDto pdto;
 	
 	public RecogidaController2() {
 		this.rm = new RecogidaModel2();

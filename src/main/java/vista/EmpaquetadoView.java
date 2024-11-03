@@ -31,7 +31,6 @@ public class EmpaquetadoView extends JFrame {
 	private JPanel pnBotones;
 	private JButton btGenerarWorkOrder;
 	private JButton btRecogida;
-	private JButton btMenu;
 	private JScrollPane scTabla;
 	private JTextArea txaIncidencias;
 	private JLabel lbEscaner;
@@ -114,11 +113,10 @@ public class EmpaquetadoView extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 764, 444, 40);
-			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
+			pnBotones.setLayout(new GridLayout(0, 3, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
 			pnBotones.add(getBtRecogida());
-			pnBotones.add(getBtMenu());
 		}
 		return pnBotones;
 	}
@@ -142,14 +140,6 @@ public class EmpaquetadoView extends JFrame {
 			btRecogida.setBackground(Color.WHITE);
 		}
 		return btRecogida;
-	}
-	
-	public JButton getBtMenu() {
-		if (btMenu == null) {
-			btMenu = new JButton("Menú");
-			btMenu.setBackground(Color.WHITE);
-		}
-		return btMenu;
 	}
 	
 	public JScrollPane getScTabla() {

@@ -33,7 +33,6 @@ public class RecogidaView2 extends JFrame {
 	private JPanel pnBotones;
 	private JButton btGenerarWorkOrder;
 	private JButton btEmpaquetado;
-	private JButton btMenu;
 	private JScrollPane scTabla;
 	private JTextArea txaIncidencias;
 	private JLabel lbEscaner;
@@ -116,11 +115,10 @@ public class RecogidaView2 extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 764, 444, 40);
-			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
+			pnBotones.setLayout(new GridLayout(0, 3, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
 			pnBotones.add(getBtEmpaquetado());
-			pnBotones.add(getBtMenu());
 		}
 		return pnBotones;
 	}
@@ -128,7 +126,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
-			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			btGenerarWorkOrder.setBackground(Color.WHITE);
 		}
 		return btGenerarWorkOrder;
@@ -137,7 +135,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtEmpaquetado() {
 		if (btEmpaquetado == null) {
 			btEmpaquetado = new JButton("Empaquetado");
-			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			btEmpaquetado.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -146,15 +144,6 @@ public class RecogidaView2 extends JFrame {
 			btEmpaquetado.setBackground(Color.WHITE);
 		}
 		return btEmpaquetado;
-	}
-	
-	public JButton getBtMenu() {
-		if (btMenu == null) {
-			btMenu = new JButton("Menú");
-			btMenu.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			btMenu.setBackground(Color.WHITE);
-		}
-		return btMenu;
 	}
 	
 	public JScrollPane getScTabla() {
@@ -248,7 +237,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtVolver() {
 		if (btVolver == null) {
 			btVolver = new JButton("Volver");
-			btVolver.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			btVolver.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			btVolver.setBackground(Color.WHITE);
 		}
 		return btVolver;
