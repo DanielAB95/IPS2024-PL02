@@ -258,6 +258,6 @@ public class EmpaquetadoView extends JFrame {
 			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			btEmpaquetado.setEnabled(false);
 		}
-		return btEmpaquetado;
+		return btEmpaquetado; 
 	}
 }

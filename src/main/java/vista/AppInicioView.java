@@ -37,12 +37,10 @@ public class AppInicioView extends JFrame {
 //					//creo bd solo una vez
 //					Database2 db =new Database2();
 //					db.createDatabase(false);
-//					
-//					//lleno bd solo una vez
-					
+				
+//					//lleno bd solo una vez					
 //					db.loadDatabase();
-					
-					
+
 					Database2 db = new Database2();
 
                     // Verificar si la base de datos ya existe
