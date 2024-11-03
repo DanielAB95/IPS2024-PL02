@@ -10,7 +10,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
+import giis.demo.util.SwingUtil;
 import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
 import persistence.dto.CategoriaDto;
@@ -94,13 +96,8 @@ public class ClienteController {
 		view.getListaProductos().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Producto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
-				if(pSeleccionado != null){		
-					view.getBtnAdd().setEnabled(true);				
-				}else {
-					CategoriaDto actual = model.getCategoria(view.getListaProductos().getSelectedValue());
-					actualizarLista(actual);
-				}
+				CategoriaDto actual = model.getCategoria(view.getListaProductos().getSelectedValue());
+				actualizarLista(actual);
 			}
 		});
 	
@@ -123,7 +120,8 @@ public class ClienteController {
 			
 		view.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				Producto pSeleccionado = model.getProducto(view.getListaProductos().getSelectedValue().split(",")[0]);
+				int fila = view.getTablaProductos().getSelectedRow();
+				Producto pSeleccionado = model.getProducto((String) view.getTablaProductos().getValueAt(fila, 0));
 				if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
 					int cantidad = (int) view.getSpinnerUnidades().getValue();
 					model.getCarrito().addToCarrito(pSeleccionado, cantidad);
@@ -138,7 +136,7 @@ public class ClienteController {
 			}
 		});
 		
-		//action listener apra la JTABLE
+		//action listener para la JTABLE
 		view.getTableCarritoModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -155,14 +153,20 @@ public class ClienteController {
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                    
-                    actualizaPrecioTotal();
-                    
-                    
+                    actualizaPrecioTotal();                                    
                 }
             }
-        });
+        });		
 		
+		view.getTablaProductos().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {		
+				view.getBtnAdd().setEnabled(true);							
+			}
+		});
 	}
+
+
 	
 	
 	public void getListaProductos(String categoria) {
@@ -182,13 +186,15 @@ public class ClienteController {
 	}
 	
 	private void rellenarModeloProducto(List<Producto> productos) {
+		view.mostrarPanel("pnTabla");
 		for(Producto p : productos) {
-			modeloProducto.addElement(String.format("%s, (%s), Precio: %s€", p.getNombre(),p.getDescripcion(),String.valueOf(p.getPrecio())));
+			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion()};
+			view.getTableProductosModel().addRow(filaNueva);
 		}
-		
 	}
 
 	private void rellenarModelo(List<CategoriaDto> categorias) {
+		view.mostrarPanel("pnLista");
 		for(CategoriaDto c : categorias) {
 			modeloProducto.addElement(c.getNombreCategoria());
 		}
@@ -211,6 +217,7 @@ public class ClienteController {
 	}
 	
 	private void volverAtras(String categoria) {
+		limpiarModeloProductos();
 		view.getBtnAdd().setEnabled(false);
 		CategoriaDto actual = model.getCategoria(categoria);
 		if(actual.getCategoriaPadre() == null) {
@@ -221,6 +228,7 @@ public class ClienteController {
 	}
 	
 	private void volverInicio() {
+		limpiarModeloProductos();
 		view.getBtnAdd().setEnabled(false);
 		actualizarLista(null);
 	}
@@ -228,6 +236,13 @@ public class ClienteController {
 	private void actualizaPrecioTotal() {
 		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
 		view.getTextPrecioTotal().setText(formattedNumber);
+	}
+	
+	private void limpiarModeloProductos() {
+		for(int i=0 ; i<view.getTableProductosModel().getRowCount(); i++) {
+			view.getTableProductosModel().removeRow(i);
+		}
+		
 	}
 
 }

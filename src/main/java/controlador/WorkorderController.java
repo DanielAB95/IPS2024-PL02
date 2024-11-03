@@ -26,7 +26,7 @@ public class WorkorderController {
 	}
 	
 	public void initView() {
-		view.getTextPedido().setText("Falta ");
+		//view.getTextPedido().setText("Falta ");
 		view.getTextAlmacenero().setText("Falta ");
 		this.getProductos();
 	}

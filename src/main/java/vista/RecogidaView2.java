@@ -44,6 +44,7 @@ public class RecogidaView2 extends JFrame {
 	private JTextField textField;
 	private JButton btVolver;
 	private JSpinner spinner;
+	private JButton btRecogida;
 
 	/**
 	 * Launch the application.
@@ -115,9 +116,10 @@ public class RecogidaView2 extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 764, 444, 40);
-			pnBotones.setLayout(new GridLayout(0, 3, 4, 0));
+			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
+			pnBotones.add(getBtRecogida());
 			pnBotones.add(getBtEmpaquetado());
 		}
 		return pnBotones;
@@ -250,5 +252,12 @@ public class RecogidaView2 extends JFrame {
 			spinner.setBounds(353, 658, 101, 30);
 		}
 		return spinner;
+	}
+	private JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+			btRecogida.setEnabled(false);
+		}
+		return btRecogida;
 	}
 }

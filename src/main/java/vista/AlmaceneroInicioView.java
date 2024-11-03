@@ -30,6 +30,7 @@ public class AlmaceneroInicioView extends JFrame {
 	 * Create the frame.
 	 */
 	public AlmaceneroInicioView(Database2 db) {
+		setResizable(false);
 		setTitle("Inicio sesion");
 		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

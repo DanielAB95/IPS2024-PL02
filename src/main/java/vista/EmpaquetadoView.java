@@ -42,6 +42,7 @@ public class EmpaquetadoView extends JFrame {
 	private JTable table;
 	private JTextField textField;
 	private JButton btVolver;
+	private JButton btEmpaquetado;
 
 	/**
 	 * Launch the application.
@@ -113,10 +114,11 @@ public class EmpaquetadoView extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 764, 444, 40);
-			pnBotones.setLayout(new GridLayout(0, 3, 4, 0));
+			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
 			pnBotones.add(getBtRecogida());
+			pnBotones.add(getBtEmpaquetado());
 		}
 		return pnBotones;
 	}
@@ -249,5 +251,11 @@ public class EmpaquetadoView extends JFrame {
 			btVolver.setBackground(Color.WHITE);
 		}
 		return btVolver;
+	}
+	private JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
+		}
+		return btEmpaquetado;
 	}
 }
