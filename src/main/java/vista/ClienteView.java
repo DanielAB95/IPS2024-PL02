@@ -41,6 +41,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ScrollPaneConstants;
+import java.awt.CardLayout;
 
 public class ClienteView extends JFrame {
 
@@ -59,9 +60,10 @@ public class ClienteView extends JFrame {
 	private  DefaultListModel<String> listModel;
 	private ClienteDTO dto;
 	private DefaultTableModel tableModelCarrito;
+	private DefaultTableModel tableModelProductos;
 	private JButton btnEliminar;
 	private JPanel panelProductos;
-	private JScrollPane pnProductos;
+	private JScrollPane pnListaProductos;
 	private JList<String> listProductos;
 	private JButton btAnterior;
 	private JButton btInicio;
@@ -72,6 +74,8 @@ public class ClienteView extends JFrame {
 	private JTable tableCarrito;
 	private JLabel lbPrecioTotal;
 	private JTextField txPrecioTotal;
+	private JScrollPane pnTablaProductos;
+	private JTable tablaProductos;
 	
 
 
@@ -108,6 +112,7 @@ public class ClienteView extends JFrame {
 		contentPane.add(getSpUnidades());
 		contentPane.add(getLbPrecioTotal());
 		contentPane.add(getTxPrecioTotal());
+		
 		
 		model = new ClienteModel(db,carrito,this);
 		controller = new ClienteController(this, model);
@@ -187,19 +192,20 @@ public class ClienteView extends JFrame {
 	private JPanel getPanelProductos() {
 		if (panelProductos == null) {
 			panelProductos = new JPanel();
-			panelProductos.setBounds(10, 93, 612, 357);
-			panelProductos.setLayout(new BorderLayout(0, 0));
-			panelProductos.add(getPnProductos());
+			panelProductos.setBounds(10, 93, 657, 357);
+			panelProductos.setLayout(new CardLayout(0, 0));
+			panelProductos.add(getPnListaProductos(), "pnLista");
+			panelProductos.add(getPnTablaProductos(), "pnTabla");
 			
 		}
 		return panelProductos;
 	}
-	private JScrollPane getPnProductos() {
-		if (pnProductos == null) {
-			pnProductos = new JScrollPane();
-			pnProductos.setViewportView(getListProductos());
+	private JScrollPane getPnListaProductos() {
+		if (pnListaProductos == null) {
+			pnListaProductos = new JScrollPane();
+			pnListaProductos.setViewportView(getListProductos());
 		}
-		return pnProductos;
+		return pnListaProductos;
 	}
 	private JList<String> getListProductos() {
 		if (listProductos == null) {
@@ -269,13 +275,17 @@ public class ClienteView extends JFrame {
 			columnModel.getColumn(1).setPreferredWidth(85);
 			columnModel.getColumn(2).setPreferredWidth(85);
 			tableCarrito.setBounds(712,64,160,236);
- 			
+			
 		}
 		return tableCarrito;
 	}
 	
 	public DefaultTableModel getTableCarritoModel() {
 		return this.tableModelCarrito;
+	}
+	
+	public DefaultTableModel getTableProductosModel() {
+		return this.tableModelProductos;
 	}
 	
 	//metodos Auxiliares
@@ -343,4 +353,39 @@ public class ClienteView extends JFrame {
 	public JTextField getTextPrecioTotal() {
 		return this.txPrecioTotal;
 	}
+	private JScrollPane getPnTablaProductos() {
+		if (pnTablaProductos == null) {
+			pnTablaProductos = new JScrollPane();
+			pnTablaProductos.setViewportView(getTablaProductos());
+		}
+		return pnTablaProductos;
+	}
+	public JTable getTablaProductos() {
+		if (tablaProductos == null) {
+			Object[] columnNames = { "Producto", "Precio","Descripcion"};
+			tableModelProductos = new DefaultTableModel(columnNames,0) {
+			
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
+			
+			tablaProductos = new JTable(tableModelProductos);
+			TableColumnModel columnModel = tablaProductos.getColumnModel();
+			columnModel.getColumn(0).setPreferredWidth(20);
+			columnModel.getColumn(1).setPreferredWidth(5);
+			columnModel.getColumn(2).setPreferredWidth(100);
+			tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tablaProductos;
+	}
+	
+	public void mostrarPanel(String nombrePanel) {
+	    CardLayout cl = (CardLayout)(panelProductos.getLayout());
+	    cl.show(panelProductos, nombrePanel);
+	}
+
 }

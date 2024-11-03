@@ -44,6 +44,7 @@ public class PedidoView extends JFrame {
 	private JPanel pnDatos;
 	private JLabel lbAlmacennero;
 	private JTextField textField;
+	private JButton btVolver;
 
 
 	/**
@@ -108,7 +109,8 @@ public class PedidoView extends JFrame {
 		if (pnMenu == null) {
 			pnMenu = new JPanel();
 			pnMenu.setBounds(10, 764, 444, 40);
-			pnMenu.setLayout(new GridLayout(0, 3, 4, 0));
+			pnMenu.setLayout(new GridLayout(0, 4, 4, 0));
+			pnMenu.add(getBtVolver());
 			pnMenu.add(getBtGenerarWorkOrder());
 			pnMenu.add(getBtRecogida());
 			pnMenu.add(getBtnEmpaquetado());
@@ -118,6 +120,7 @@ public class PedidoView extends JFrame {
 	private JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setEnabled(false);
 			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btGenerarWorkOrder.setBackground(Color.WHITE);
 			btGenerarWorkOrder.addActionListener(new ActionListener() {
@@ -195,5 +198,12 @@ public class PedidoView extends JFrame {
 			textField.setColumns(10);
 		}
 		return textField;
+	}
+	private JButton getBtVolver() {
+		if (btVolver == null) {
+			btVolver = new JButton("Volver");
+			btVolver.setEnabled(false);
+		}
+		return btVolver;
 	}
 }

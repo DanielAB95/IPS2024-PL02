@@ -30,6 +30,7 @@ public class PagoConTarjetaView extends JFrame {
 	private JButton btnFinalizar;
 	private PagoConTarjetaController controller;
 	private CarritoModel model;
+	private JLabel lblmmyyEj;
 	
 
 	/**
@@ -52,6 +53,7 @@ public class PagoConTarjetaView extends JFrame {
 		contentPane.add(getTextVencimiento());
 		contentPane.add(getTextCvv());
 		contentPane.add(getBtnFinalizar());
+		contentPane.add(getLblmmyyEj());
 		
 		this.controller = new PagoConTarjetaController(model,this);
 		controller.initController();
@@ -81,7 +83,7 @@ public class PagoConTarjetaView extends JFrame {
 		}
 		return lblCvv;
 	}
-	private JTextField getTextTarjeta() {
+	public JTextField getTextTarjeta() {
 		if (textTarjeta == null) {
 			textTarjeta = new JTextField();
 			textTarjeta.setBounds(496, 92, 216, 28);
@@ -89,7 +91,7 @@ public class PagoConTarjetaView extends JFrame {
 		}
 		return textTarjeta;
 	}
-	private JTextField getTextVencimiento() {
+	public JTextField getTextVencimiento() {
 		if (textVencimiento == null) {
 			textVencimiento = new JTextField();
 			textVencimiento.setBounds(496, 175, 216, 28);
@@ -97,7 +99,7 @@ public class PagoConTarjetaView extends JFrame {
 		}
 		return textVencimiento;
 	}
-	private JTextField getTextCvv() {
+	public JTextField getTextCvv() {
 		if (textCvv == null) {
 			textCvv = new JTextField();
 			textCvv.setBounds(496, 267, 114, 28);
@@ -114,5 +116,13 @@ public class PagoConTarjetaView extends JFrame {
 			btnFinalizar.setBounds(352, 392, 216, 25);
 		}
 		return btnFinalizar;
+	}
+	private JLabel getLblmmyyEj() {
+		if (lblmmyyEj == null) {
+			lblmmyyEj = new JLabel("(  MM/YY    Ej: 04/27  )");
+			lblmmyyEj.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblmmyyEj.setBounds(730, 181, 175, 15);
+		}
+		return lblmmyyEj;
 	}
 }

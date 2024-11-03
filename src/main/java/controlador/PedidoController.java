@@ -41,7 +41,6 @@ public class PedidoController {
 		accionWorkordersTabla();
 		accionBtEmpaquetado();
 		accionBtRecogida();
-		accionBtGenerar();
 	}
 
 	private void setAlmacenero() {
@@ -103,15 +102,6 @@ public class PedidoController {
         }
 	}
 
-	private void accionBtGenerar() {		
-		view.getButtonGenerarWorkOrders().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mostrarWorkOrder();	
-			}
-		});
-	}
-
 	private void accionBtRecogida() {
 		view.getButtonRecogida().addActionListener(new ActionListener() {	
 			@Override
@@ -145,9 +135,4 @@ public class PedidoController {
 		view.dispose();
 		rView.setVisible(true);
 	}
-	
-	private void mostrarWorkOrder() {
-		// TODO Auto-generated method stub
-		
-	}	
 }
