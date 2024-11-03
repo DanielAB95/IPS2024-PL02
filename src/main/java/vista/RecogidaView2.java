@@ -126,7 +126,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
-			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btGenerarWorkOrder.setBackground(Color.WHITE);
 		}
 		return btGenerarWorkOrder;
@@ -135,7 +135,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtEmpaquetado() {
 		if (btEmpaquetado == null) {
 			btEmpaquetado = new JButton("Empaquetado");
-			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btEmpaquetado.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -237,7 +237,7 @@ public class RecogidaView2 extends JFrame {
 	public JButton getBtVolver() {
 		if (btVolver == null) {
 			btVolver = new JButton("Volver");
-			btVolver.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			btVolver.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btVolver.setBackground(Color.WHITE);
 		}
 		return btVolver;

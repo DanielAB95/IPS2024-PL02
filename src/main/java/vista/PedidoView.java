@@ -111,6 +111,7 @@ public class PedidoView extends JFrame {
 	private JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btGenerarWorkOrder.setBackground(Color.WHITE);
 			btGenerarWorkOrder.addActionListener(new ActionListener() {
 				@Override
@@ -123,6 +124,7 @@ public class PedidoView extends JFrame {
 	private JButton getBtRecogida() {
 		if (btRecogida == null) {
 			btRecogida = new JButton("Recogida");
+			btRecogida.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btRecogida.setBackground(Color.WHITE);
 		}
 		return btRecogida;
@@ -130,6 +132,7 @@ public class PedidoView extends JFrame {
 	private JButton getBtnEmpaquetado() {
 		if (btnEmpaquetado == null) {
 			btnEmpaquetado = new JButton("Empaquetado");
+			btnEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btnEmpaquetado.setBackground(Color.WHITE);
 		}
 		return btnEmpaquetado;

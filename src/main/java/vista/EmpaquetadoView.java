@@ -124,6 +124,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtGenerarWorkOrder() {
 		if (btGenerarWorkOrder == null) {
 			btGenerarWorkOrder = new JButton("WorkOrder");
+			btGenerarWorkOrder.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btGenerarWorkOrder.setBackground(Color.WHITE);
 		}
 		return btGenerarWorkOrder;
@@ -132,6 +133,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtRecogida() {
 		if (btRecogida == null) {
 			btRecogida = new JButton("Recogida");
+			btRecogida.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btRecogida.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -243,6 +245,7 @@ public class EmpaquetadoView extends JFrame {
 	public JButton getBtVolver() {
 		if (btVolver == null) {
 			btVolver = new JButton("Volver");
+			btVolver.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			btVolver.setBackground(Color.WHITE);
 		}
 		return btVolver;
