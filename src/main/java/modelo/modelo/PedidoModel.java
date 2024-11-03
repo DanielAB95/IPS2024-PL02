@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import giis.demo.util.Database2;
-import modelo.dto.PedidoDTO;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
@@ -29,13 +28,13 @@ public class PedidoModel {
 	private AlmaceneroDto almacenero = new AlmaceneroDto();
 	
 	private Database2 db;
-	//private List<PedidoDTO> pedidos;
+	private List<PedidoDto> pedidos;
 	
 	public PedidoModel(Database2 database, int idAlmacenero) {
-		//this.pedidos = getPedidos();
 		this.db = database;
 		almacenero.idAlmacenero = idAlmacenero;
 		setAlmacenero();
+		pedidos = getPedidos();
 	}
 	
 	private void setAlmacenero() {
@@ -48,7 +47,7 @@ public class PedidoModel {
 		return almacenero;
 	}
 
-	public List<PedidoDto> getPedidos() {
+	private List<PedidoDto> getPedidos() {
 		List<PedidoDto> list = new ArrayList<PedidoDto>();
 		List<Object[]> listDb = db.executeQueryArray(SQL_LISTA_PEDIDO);
 		for(Object[] o : listDb) {
@@ -82,23 +81,17 @@ public class PedidoModel {
 		return resultado;
 	}
 	
-	public int getIdAlmacenero(int idPedido) {
-		List<Object[]> listDb = db.executeQueryArray(SQL_PEDIDO_ALMACENERO, idPedido);
-		return (int)listDb.get(0)[0];
+	public List<PedidoDto> obtainPedidos(){
+		return pedidos;
 	}
 	
-	public List<PedidoDTO> getPedidoAlmacenero (int idAlmacenro){
-		List<PedidoDTO> list = new ArrayList<PedidoDTO>();
-		List<Object[]> listDb = db.executeQueryArray(SQL_PRODUCTOS_PEDIDO, idAlmacenro);
-		
-		for(int i = 0; i<listDb.size();i++) {
-			PedidoDTO p = new PedidoDTO((int)listDb.get(i)[0],(int)listDb.get(i)[1],(String)listDb.get(i)[2]);
-			list.add(p);  
-		}
-		return list;
+	public void generarWorkorder(int posPedido) {
+		System.out.println(posPedido);
+		PedidoDto pedido = pedidos.get(posPedido);
 	}
 	
 	public void actualizarPedidoListo(int idPedido) {
 		db.executeUpdate(SQL_UPDATE_ESTADO_LISTO, idPedido);
-	}
+	}	
+
 }

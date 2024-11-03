@@ -85,7 +85,8 @@ public class PedidoView extends JFrame {
 		if (lbPedidosPendientes == null) {
 			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
 			lbPedidosPendientes.setVisible(false);
-			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			lbPedidosPendientes.setHorizontalAlignment(SwingConstants.CENTER);
+			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 25));
 			lbPedidosPendientes.setBounds(10, 52, 444, 42);
 		}
 		return lbPedidosPendientes;
@@ -107,7 +108,7 @@ public class PedidoView extends JFrame {
 		if (pnMenu == null) {
 			pnMenu = new JPanel();
 			pnMenu.setBounds(10, 764, 444, 40);
-			pnMenu.setLayout(new GridLayout(0, 3, 0, 0));
+			pnMenu.setLayout(new GridLayout(0, 3, 4, 0));
 			pnMenu.add(getBtGenerarWorkOrder());
 			pnMenu.add(getBtRecogida());
 			pnMenu.add(getBtnEmpaquetado());
