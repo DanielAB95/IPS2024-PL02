@@ -2,6 +2,7 @@ package vista;
 
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -69,6 +70,22 @@ public class AppInicioView extends JFrame {
 		
 		control.initController();
 		setLocationRelativeTo(null);
+		
+		
+		mostrarClientes();
+	}
+	
+	private void mostrarClientes() {
+		// SQL_GET_CLIENTES
+		List<Object[]> usuarios = database.executeQueryArray("select * from cliente");
+		System.out.println("----------------- CLIENTES ------------------");
+		
+		for (int i = 0; i < usuarios.size(); i++) {
+			for (int j = 0; j < usuarios.get(i).length; j++) {
+				System.out.print(usuarios.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
 	}
 	
 	public Database2 getDatabase() {

@@ -28,6 +28,7 @@ public class CarritoModel {
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
+	private static final String SQL_GET_CLIENTES = "select * from cliente";
 	
 	private Carrito carrito;
 	private Database2 db;
@@ -124,6 +125,8 @@ public class CarritoModel {
 		}
 	}
 	
+	
+
 	private boolean checkHayProductos() {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		if (productosCarrito.size() <= 0) {
