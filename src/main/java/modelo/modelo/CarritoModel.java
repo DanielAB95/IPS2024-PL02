@@ -111,6 +111,11 @@ public class CarritoModel {
 			System.out.println("-- DESPUES de confirmar compra --");
 			mostrarPedidos();
 			
+			//--------------------------------
+			// método limpiarCarritoUsuario
+			//--------------------------------
+			
+			
 			//vuelvo al inicio
 			AppInicioView vista = new AppInicioView(getDatabase());
 			vista.setVisible(true);
