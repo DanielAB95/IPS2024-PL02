@@ -12,6 +12,7 @@ import modelo.modelo.CarritoModel;
 import vista.AppInicioView;
 import vista.CarritoView;
 import vista.ClienteView;
+import vista.PagoConTarjetaView;
 import vista.PagoPorTransferenciaView;
 
 public class CarritoController {
@@ -129,10 +130,6 @@ public class CarritoController {
 	private void confirmarPedido() {
 		if (view.getRdbtnTransferencia().isSelected()) {
 			
-//			JOptionPane.showMessageDialog(view, "Para realizar el pago mediante transferencia bancaria, "
-//					+ "por favor envíe el importe exacto al siguiente número de cuenta:\n"
-//					+ "\nIBAN: ES91 2100 0418 4502 0005 1332");
-			//Cear clase PagoTransferenciaView
 			PagoPorTransferenciaView vista = new PagoPorTransferenciaView(modelo);
 			vista.setLocationRelativeTo(view);
 			view.dispose();
@@ -147,7 +144,10 @@ public class CarritoController {
 		} else {
 			//pago con tarjeta : EN PROCESO
 			// crear clase PagoTarjetaView
-			modelo.confirmarPedido();
+			PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
+			vista.setLocationRelativeTo(view);
+			view.dispose();
+			vista.setVisible(true);
 		}
 	}
 	
