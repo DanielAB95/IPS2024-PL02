@@ -9,8 +9,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import modelo.modelo.CarritoModel;
+import vista.AppInicioView;
 import vista.CarritoView;
 import vista.ClienteView;
+import vista.PagoPorTransferenciaView;
 
 public class CarritoController {
 	
@@ -108,6 +110,7 @@ public class CarritoController {
 	}
 	
 	private void creaNuevoCliente() {
+		
 		String[] clientData = new String[9];
 		clientData[0] = UUID.randomUUID().toString();
 		clientData[1] = "INVITADO" + clientData[0].substring(0,10);
@@ -125,16 +128,25 @@ public class CarritoController {
 	
 	private void confirmarPedido() {
 		if (view.getRdbtnTransferencia().isSelected()) {
-			JOptionPane.showMessageDialog(view, "Para realizar el pago mediante transferencia bancaria, "
-					+ "por favor envíe el importe exacto al siguiente número de cuenta:\n"
-					+ "\nIBAN: ES91 2100 0418 4502 0005 1332");
-			modelo.confirmarPedido();
+			
+//			JOptionPane.showMessageDialog(view, "Para realizar el pago mediante transferencia bancaria, "
+//					+ "por favor envíe el importe exacto al siguiente número de cuenta:\n"
+//					+ "\nIBAN: ES91 2100 0418 4502 0005 1332");
+			//Cear clase PagoTransferenciaView
+			PagoPorTransferenciaView vista = new PagoPorTransferenciaView(modelo);
+			vista.setLocationRelativeTo(view);
+			view.dispose();
+			vista.setVisible(true);
+			//modelo.confirmarPedido();
+			
 		} else if (view.getRdbtnContrarrembolso().isSelected()){
+			
 			JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
                        " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
 			modelo.confirmarPedido();
 		} else {
 			//pago con tarjeta : EN PROCESO
+			// crear clase PagoTarjetaView
 			modelo.confirmarPedido();
 		}
 	}
