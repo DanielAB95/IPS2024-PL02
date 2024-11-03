@@ -1,22 +1,23 @@
 package controlador;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.JTextField;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
-import giis.demo.util.SwingUtil;
-import modelo.dto.PedidoDTO;
 import modelo.modelo.AlmaceneroModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
 import modelo.modelo.RecogidaModel2;
 import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
+import persistence.dto.PedidoDto;
+import persistence.dto.ProductoDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
 import vista.RecogidaView2;
@@ -40,11 +41,73 @@ public class PedidoController {
 	
 	
 
-	public void initView() {
+	public void init() {
+		setAlmacenero();
+		addPedidosTable();
+		accionWorkordersTabla();
+		accionBtEmpaquetado();
+		accionBtRecogida();
+		accionBtGenerar();
+		// view.getFrame().setVisible(true);
+	}
+
+	private void setAlmacenero() {
 		AlmaceneroDto dto = model.getAlmacenero();
 		JTextField tx = (JTextField)view.getPnDatos().getComponent(1);
 		tx.setText(dto.idAlmacenero + " - " + dto.nombre + " " + dto.apellido);
-		// view.getFrame().setVisible(true);
+	}
+	
+	private void accionWorkordersTabla() {
+		view.getTablaPedidos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                	generarWorkorder();
+                }
+            }
+        });
+	}
+	
+	private void generarWorkorder() {
+
+	}
+	
+	private void addPedidosTable() {
+		vaciarTabla();
+		view.getTableModel().addColumn("ID Pedido");
+		view.getTableModel().addColumn("Numero de productos");
+		view.getTableModel().addColumn("Fecha");
+		for (PedidoDto pedido : model.getPedidos()) {
+			Object[] data = {pedido.idPedido, getCantidadTotalDeProductos(pedido), pedido.fecha};
+			view.getTableModel().addRow(data);
+		}
+		ajustarTabla();
+	}
+	
+	private int getCantidadTotalDeProductos(PedidoDto dto) {
+		int cantidad = 0;
+		for (ProductoDto prod : dto.productos.keySet()) {
+			cantidad += dto.productos.get(prod);
+		}
+		return cantidad;
+	}
+	
+	private void vaciarTabla() {
+		view.getTableModel().setColumnCount(0);
+		view.getTableModel().setRowCount(0);
+	}
+	
+	private void ajustarTabla() {
+		for (int i = 0; i < view.getTablaPedidos().getColumnCount(); i++) {
+            TableColumn column = view.getTablaPedidos().getColumnModel().getColumn(i);
+            int width = 0;
+            for (int j = 0; j < view.getTablaPedidos().getRowCount(); j++) {
+                TableCellRenderer renderer = view.getTablaPedidos().getCellRenderer(j, i);
+                Component comp = renderer.getTableCellRendererComponent(view.getTablaPedidos(), view.getTablaPedidos().getValueAt(j, i), false, false,i, j);
+                width = Math.max(width, comp.getPreferredSize().width);
+            }
+            column.setPreferredWidth(width + view.getTablaPedidos().getIntercellSpacing().width);
+        }
 	}
 
 	public void initController() {
@@ -56,29 +119,12 @@ public class PedidoController {
 					int idPedido = (int) view.getTablaPedidos().getValueAt(row, 0);
 					wModel.crearWorkorder(model.getAlmacenero().idAlmacenero);
 					model.actualizarPedidoListo(idPedido);
-					actualizaTabla();
 				}
 			}
 		});
-		
-		view.getButtonEmpaquetado().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mostrarEmpaquetado();
-				
-			}
-		});
-		
-		view.getButtonRecogida().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				 mostrarRecogida();
-				
-			}
-		});
-		
+	}
+
+	private void accionBtGenerar() {
 		view.getButtonGenerarWorkOrders().addActionListener(new ActionListener() {
 			
 			@Override
@@ -89,22 +135,26 @@ public class PedidoController {
 		});
 	}
 
-	public void getPedidos() {
-		List<PedidoDTO> pedidos = model.getPedidos();
-		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos,
-				new String[] { "idPedido", "numProductos", "fecha" });
-		view.getTablaPedidos().setModel(tmodel);
-		SwingUtil.autoAdjustColumns(view.getTablaPedidos());
-		if (tmodel.getRowCount() == 0) {
-			view.getLabelPedidosPendientes().setVisible(true);
-		}
-
+	private void accionBtRecogida() {
+		view.getButtonRecogida().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 mostrarRecogida();
+				
+			}
+		});
 	}
 
-	private void actualizaTabla() {
-		view.getTablaPedidos().removeAll();
-		getPedidos();
-		
+	private void accionBtEmpaquetado() {
+		view.getButtonEmpaquetado().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarEmpaquetado();
+				
+			}
+		});
 	}
 	
 	private void mostrarEmpaquetado() {

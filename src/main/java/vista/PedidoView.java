@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.PedidoController;
 import giis.demo.util.Database2;
@@ -35,6 +36,7 @@ public class PedidoView extends JFrame {
 	private Database2 db;
 	private JLabel lbPedidosPendientes;
 	private JTable tbPedidos;
+	private DefaultTableModel tableModel;
 	private JPanel pnMenu;
 	private JButton btGenerarWorkOrder;
 	private JButton btRecogida;
@@ -66,14 +68,13 @@ public class PedidoView extends JFrame {
 		
 		model = new PedidoModel(db, idAlmacenero);
 		controller = new PedidoController(this, model);
-		controller.initController();
-		controller.initView();
+		controller.init();
 	}
 
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
 	        tablePanel = new JScrollPane(); 
-	        tablePanel.setBounds(18, 239, 436, 467);
+	        tablePanel.setBounds(10, 105, 444, 648);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
 	        tablePanel.setViewportView(getTbPedidos());
 	    }
@@ -85,16 +86,21 @@ public class PedidoView extends JFrame {
 			lbPedidosPendientes = new JLabel("No hay pedidos pendientes");
 			lbPedidosPendientes.setVisible(false);
 			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbPedidosPendientes.setBounds(18, 193, 377, 42);
+			lbPedidosPendientes.setBounds(10, 52, 444, 42);
 		}
 		return lbPedidosPendientes;
 	}
 	
 	private JTable getTbPedidos() {
 		if (tbPedidos == null) {
-			tbPedidos = new JTable();
+			tableModel = new DefaultTableModel();
+			tbPedidos = new JTable(tableModel);
 		}
 		return tbPedidos;
+	}
+	
+	public DefaultTableModel getTableModel() {
+		return tableModel;
 	}
 	
 	private JPanel getPnMenu() {

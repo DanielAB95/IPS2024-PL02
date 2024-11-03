@@ -77,7 +77,8 @@ create table Pedido(
 create table Almacenero(
     idAlmacenero int primary key,
     nombre varchar(20) not null,
-    apellido varchar(20) not null
+    apellido varchar(20) not null,
+    check (idAlmacenero >= 0)
 );
 
 create table Workorder(

@@ -175,15 +175,11 @@ public class EmpaquetadoController {
 		for (int i = 0; i < ew.getTable().getColumnCount(); i++) {
             TableColumn column = ew.getTable().getColumnModel().getColumn(i);
             int width = 0;
-
-            // Calcular el ancho máximo de cada celda en la columna
             for (int j = 0; j < ew.getTable().getRowCount(); j++) {
                 TableCellRenderer renderer = ew.getTable().getCellRenderer(j, i);
                 Component comp = renderer.getTableCellRendererComponent(ew.getTable(), ew.getTable().getValueAt(j, i), false, false,i, j);
                 width = Math.max(width, comp.getPreferredSize().width);
             }
-
-            // Ajustar el ancho de la columna
             column.setPreferredWidth(width + ew.getTable().getIntercellSpacing().width);
         }
 	}

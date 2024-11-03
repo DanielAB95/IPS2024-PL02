@@ -56,7 +56,7 @@ public class AlmaceneroInicioView extends JFrame {
 			txIdAlmacenero = new JTextField();
 			txIdAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			txIdAlmacenero.setBounds(171, 234, 277, 136);
+			txIdAlmacenero.setBounds(10, 204, 438, 73);
 			txIdAlmacenero.setColumns(10);
 		}
 		return txIdAlmacenero;
@@ -64,8 +64,9 @@ public class AlmaceneroInicioView extends JFrame {
 	private JLabel getLbIdAlmacenero() {
 		if (lbIdAlmacenero == null) {
 			lbIdAlmacenero = new JLabel("Escriba su id:");
+			lbIdAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			lbIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbIdAlmacenero.setBounds(171, 144, 264, 73);
+			lbIdAlmacenero.setBounds(10, 120, 438, 73);
 		}
 		return lbIdAlmacenero;
 	}
@@ -74,7 +75,7 @@ public class AlmaceneroInicioView extends JFrame {
 		if (btContinuar == null) {
 			btContinuar =  new JButton("Continuar");
 			btContinuar.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			btContinuar.setBounds(195, 692, 264, 102);
+			btContinuar.setBounds(10, 288, 438, 73);
 		}
 		return btContinuar;
 	}

@@ -1,16 +1,25 @@
 package modelo.modelo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import giis.demo.util.Database2;
 import modelo.dto.PedidoDTO;
-import modelo.dto.PedidoProductoDTO;
 import persistence.dto.AlmaceneroDto;
+import persistence.dto.PedidoDto;
+import persistence.dto.ProductoDto;
 
 public class PedidoModel {
 	
-	public static final String SQL_LISTA_PEDIDO = "select p.idPedido, pp.cantidad, p.fecha  from Pedido p inner join PedidoProducto pp on p.idPedido = pp.idPedido  where estado = 'Pendiente' order by fecha";
+	public static final String SQL_LISTA_PEDIDO = "select * from Pedido where estado = 'Pendiente' order by fecha";
+	private final static String SQL_FIND_PRODUCTOS_FROM_PEDIDO = "select * from PedidoProducto pp "
+														+ "inner join Producto p on pp.idProducto = p.id "
+														+ "where idPedido = ?";
+	
+	
 	public static final String SQL = "select * from Pedido";
 	public static final String SQL_PEDIDO_ALMACENERO = "select ap.idAlmacenero from AlmaceneroPedido ap join Pedido p on ap.idPedido = p.idPedido and p.idPedido = ?";
 	private static final String SQL_PRODUCTOS_PEDIDO = "select pp.idPedido, pp.idProducto, pp.cantidad, p.descripcion from PedidoProducto pp join Producto p ON pp.idProducto = p.id where pp.idPedido = ?";
@@ -39,30 +48,43 @@ public class PedidoModel {
 		return almacenero;
 	}
 
-	public List<PedidoDTO> getPedidos() {
-		List<PedidoDTO> list = new ArrayList<PedidoDTO>();
+	public List<PedidoDto> getPedidos() {
+		List<PedidoDto> list = new ArrayList<PedidoDto>();
 		List<Object[]> listDb = db.executeQueryArray(SQL_LISTA_PEDIDO);
-		for(int i = 0; i< listDb.size(); i++) {
-			PedidoDTO p = new PedidoDTO((int)listDb.get(i)[0], (int)listDb.get(i)[1], (String)listDb.get(i)[2]);//Arreglar
-			list.add(p);
+		for(Object[] o : listDb) {
+			PedidoDto pedido = new PedidoDto();
+			pedido.idPedido = (int)o[0];
+			pedido.idCliente = (String)o[1];
+			pedido.fecha = LocalDate.parse((String)o[2]);
+			pedido.estadoPedido = (String)o[3];
+			pedido.productos = new HashMap<>(getProductosPorPedido(pedido.idPedido));
+			list.add(pedido);
 		}
 		return list;
+	}
+	
+	private Map<ProductoDto, Integer> getProductosPorPedido(int idPedido) {
+		Map<ProductoDto, Integer> resultado = new HashMap<>();
+		List<Object[]> productos = db.executeQueryArray(SQL_FIND_PRODUCTOS_FROM_PEDIDO, idPedido);
+		for (Object[] o : productos) {
+			ProductoDto dto = new ProductoDto();
+			dto.idProducto = (int)o[3];
+			dto.nombre = (String)o[4];
+			dto.categoria = (String)o[5];
+			dto.descripcion = (String)o[6];
+			dto.precio = (double)o[7];
+			dto.pasillo = (int)o[8];
+			dto.estanteria = (int)o[9];
+			dto.balda = (int)o[10];
+			int cantidad = (int)o[2];
+			resultado.put(dto, cantidad);
+		}
+		return resultado;
 	}
 	
 	public int getIdAlmacenero(int idPedido) {
 		List<Object[]> listDb = db.executeQueryArray(SQL_PEDIDO_ALMACENERO, idPedido);
 		return (int)listDb.get(0)[0];
-	}
-	
-	public List<PedidoProductoDTO> getProductosPorPedido(int idPedido){
-		List<PedidoProductoDTO> list = new ArrayList<PedidoProductoDTO>();
-		List<Object[]> listDb = db.executeQueryArray(SQL_PRODUCTOS_PEDIDO, idPedido);
-		
-		for(int i = 0; i<listDb.size();i++) {
-			PedidoProductoDTO p = new PedidoProductoDTO((int)listDb.get(i)[0],(int)listDb.get(i)[1],(int)listDb.get(i)[2]);
-			list.add(p);
-		}
-		return list;
 	}
 	
 	public List<PedidoDTO> getPedidoAlmacenero (int idAlmacenro){
