@@ -12,6 +12,8 @@ drop table WorkorderPedido;
 drop table Categoria;
 drop table PaqueteProducto;
 drop table WorkorderProducto;
+drop table carrito;
+drop table producto_carrito;
 
 --estado: particular o empresa
 create table Cliente(
