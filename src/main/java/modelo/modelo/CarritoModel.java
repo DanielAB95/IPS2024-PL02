@@ -14,17 +14,23 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
+
 import vista.AppInicioView;
 import vista.CarritoView;
 
 public class CarritoModel {
 	
-
+	//wer
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, numProductos, fecha, estado) values (?, ?, ?, ?)";
+	private static final String SQL_CREA_CLIENTE_NUEVO = "INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
+	private static final String SQL_GET_CLIENTES = "select * from cliente";
+	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
+	private static final String SQL_GET_PRODUCTO_CARRITO = "select * from producto_carrito";
 	
 	private Carrito carrito;
 	private Database2 db;
@@ -45,7 +51,7 @@ public class CarritoModel {
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
 		
 		for (int i = 0; i < productos.size(); i++) {
-			Producto p = new Producto(productos.get(i)[0], productos.get(i)[1], productos.get(i)[2], productos.get(i)[3], productos.get(i)[4]);
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
 			resultado.add(p);
 		}
 		
@@ -56,29 +62,66 @@ public class CarritoModel {
 		return this.db;
 	}
 	
+	
+	private String getClientIDfromName(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return (String) usuario.get(0)[0];
+		
+	}
+	
+	public Object[] getClient(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		return usuario.get(0);
+		
+	}
+	
+	public boolean doesClientExist(String name) {
+		List<Object[]> usuario = db.executeQueryArray(SQL_GET_CLIENTE, name);
+		
+		if (usuario.isEmpty())
+			return false;
+		
+		return true;
+		
+	}
+	
+	public void createNewClient(String[] clientData) {
+		
+		db.executeUpdate(SQL_CREA_CLIENTE_NUEVO, clientData[0], clientData[1],
+				clientData[2],clientData[3],clientData[4],clientData[5],clientData[6], clientData[7], clientData[8]);
+		
+	}
+	
 	public void confirmarPedido() {
 		if (checkHayProductos()) {
 			System.out.println("-- ANTES de confirmar compra -- ");
 			mostrarPedidos();
 			
 			int nuevoID = getNuevoID();
-			int numeroProductos = carrito.getCarrito().size();
+			//int numeroProductos = carrito.getCarrito().size(); ya no se utiliza
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, numeroProductos, fecha, estado);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.getName()), fecha, estado);
 				
 			insertarProductosPedido(nuevoID);
 			
-			JOptionPane.showMessageDialog(this.v, "Compra realizada");
+			//JOptionPane.showMessageDialog(this.v, "Gracias por ");
 			
 			System.out.println("-- DESPUES de confirmar compra --");
 			mostrarPedidos();
 			
+			//--------------------------------
+			// método limpiarCarritoUsuario
+			//--------------------------------
+			
+			
 			//vuelvo al inicio
 			AppInicioView vista = new AppInicioView(getDatabase());
-			this.v.dispose();
 			vista.setVisible(true);
+			this.v.dispose();
 			
 		} else {
 			JOptionPane.showMessageDialog(this.v, "No hay productos en su carrito");
@@ -89,6 +132,8 @@ public class CarritoModel {
 		}
 	}
 	
+	
+
 	private boolean checkHayProductos() {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		if (productosCarrito.size() <= 0) {
@@ -268,5 +313,64 @@ public class CarritoModel {
 		}
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
 		return precioFormateado;
+	}
+
+	public void printProductoCarrito() {
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_PRODUCTO_CARRITO);
+		
+		for (int i = 0; i < carrito.size(); i++) {
+			for (int j = 0; j < carrito.get(i).length; j++) {
+				System.out.print(carrito.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public void modificarCantidadCarrito(String nombreProducto, int nuevaCantidad, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("UPDATE producto_carrito SET cantidad = ? WHERE id_producto = ? AND id_carrito = ?", 
+				nuevaCantidad, idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+		
+	}
+
+	private int getIdProductoFromNombre(String nombreProducto) {
+		List<Object[]> producto = db.executeQueryArray( "select * from producto where nombre = ?", nombreProducto);
+		return (int) producto.get(0)[0];
+	}
+
+	public void eliminaProductoCarrito(String nombreProducto, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_producto = ? AND id_carrito = ?", 
+				idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+	}
+	
+	private String getIdCarritoFromCliente(String idCliente) {
+		
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_CARRITO_FROM_CLIENTE, idCliente);
+		
+		return (String) carrito.get(0)[1];
+	}
+
+	public void borraCarritoCliente(String nombreUsuario) {
+		
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_carrito = ?", idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
 	}
 }

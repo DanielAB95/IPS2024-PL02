@@ -3,6 +3,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import persistence.dto.ProductoDto;
+
 public class Carrito {
 	
 	//El Object[] contendra un Producto y su cantidad pedida

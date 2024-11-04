@@ -12,16 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controlador.EmpaquetadoController;
+import controlador.RecogidaController2;
 
-public class EmpaquetadoView extends JFrame {
+public class RecogidaView2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,19 +32,19 @@ public class EmpaquetadoView extends JFrame {
 	private JLabel lbAlmacennero;
 	private JPanel pnBotones;
 	private JButton btGenerarWorkOrder;
-	private JButton btRecogida;
+	private JButton btEmpaquetado;
 	private JScrollPane scTabla;
 	private JTextArea txaIncidencias;
 	private JLabel lbEscaner;
 	private JTextField txEscaner;
 	private JButton btEscaner;
-	private JButton btCerrarCaja;
 	private JButton btApuntar;
 	private JLabel lbIncidencia;
 	private JTable table;
 	private JTextField textField;
 	private JButton btVolver;
-	private JButton btEmpaquetado;
+	private JSpinner spinner;
+	private JButton btRecogida;
 
 	/**
 	 * Launch the application.
@@ -52,8 +54,8 @@ public class EmpaquetadoView extends JFrame {
 			@Override
 			public void run() {
 				try {
-					EmpaquetadoController controller = new EmpaquetadoController();
-					EmpaquetadoView frame = new EmpaquetadoView(controller);
+					RecogidaController2 controller = new RecogidaController2();
+					RecogidaView2 frame = new RecogidaView2(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,8 +67,8 @@ public class EmpaquetadoView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EmpaquetadoView(EmpaquetadoController ec) {
-		setTitle("Empaquetado");
+	public RecogidaView2(RecogidaController2 ec) {
+		setTitle("Recogida");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 854);
@@ -82,9 +84,9 @@ public class EmpaquetadoView extends JFrame {
 		contentPane.add(getLbEscaner());
 		contentPane.add(getTxEscaner());
 		contentPane.add(getBtEscaner());
-		contentPane.add(getBtCerrarCaja());
 		contentPane.add(getBtApuntar());
 		contentPane.add(getLbIncidencia());
+		contentPane.add(getSpinner());
 		setLocationRelativeTo(null);
 		
 		ec.setView(this);
@@ -132,24 +134,24 @@ public class EmpaquetadoView extends JFrame {
 		return btGenerarWorkOrder;
 	}
 	
-	public JButton getBtRecogida() {
-		if (btRecogida == null) {
-			btRecogida = new JButton("Recogida");
-			btRecogida.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			btRecogida.addActionListener(new ActionListener() {
+	public JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
+			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			btEmpaquetado.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			btRecogida.setBackground(Color.WHITE);
+			btEmpaquetado.setBackground(Color.WHITE);
 		}
-		return btRecogida;
+		return btEmpaquetado;
 	}
 	
 	public JScrollPane getScTabla() {
 		if (scTabla == null) {
 			scTabla = new JScrollPane();
-			scTabla.setBounds(10, 112, 444, 641);//440 (641) para escanear productos
+			scTabla.setBounds(10, 82, 444, 671);//470 (671) para escanear productos
 			scTabla.setViewportView(getTable());
 		}
 		return scTabla;
@@ -206,16 +208,6 @@ public class EmpaquetadoView extends JFrame {
 		return btEscaner;
 	}
 	
-	public JButton getBtCerrarCaja() {
-		if (btCerrarCaja == null) {
-			btCerrarCaja = new JButton("Cerrar Caja");
-			btCerrarCaja.setVisible(false);
-			btCerrarCaja.setBackground(Color.WHITE);
-			btCerrarCaja.setBounds(353, 658, 101, 30);
-		}
-		return btCerrarCaja;
-	}
-	
 	public JButton getBtApuntar() {
 		if (btApuntar == null) {
 			btApuntar = new JButton("Apuntar");
@@ -252,12 +244,21 @@ public class EmpaquetadoView extends JFrame {
 		}
 		return btVolver;
 	}
-	private JButton getBtEmpaquetado() {
-		if (btEmpaquetado == null) {
-			btEmpaquetado = new JButton("Empaquetado");
-			btEmpaquetado.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			btEmpaquetado.setEnabled(false);
+	public JSpinner getSpinner() {
+		if (spinner == null) {
+			spinner = new JSpinner();
+			spinner.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+			spinner.setVisible(false);
+			spinner.setBounds(353, 658, 101, 30);
 		}
-		return btEmpaquetado; 
+		return spinner;
+	}
+	private JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
+			btRecogida.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			btRecogida.setEnabled(false);
+		}
+		return btRecogida;
 	}
 }

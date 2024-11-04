@@ -7,28 +7,33 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.JTextComponent;
 
 import controlador.CarritoController;
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
+//import vista.ClienteView.MyTableModel;
 import vista.ClienteView.MyTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTable;
+import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
 public class CarritoView extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane;//af
 	private JLabel lblProductos;
 	private JButton btnEliminar;
 	private JLabel lblPrecioTotal;
@@ -41,7 +46,6 @@ public class CarritoView extends JFrame {
 	private JScrollPane scrollPane;
 	private  DefaultListModel<String> listModel;
 	private CarritoController controller;
-	private Database2 database;
 	private JLabel lblUsuario;
 	private JLabel lblNombreUsuario;
 	private ClienteDTO dto;
@@ -60,6 +64,14 @@ public class CarritoView extends JFrame {
 	private JTextField textPais;
 	private JTextField textRegion;
 	private JTextField textCiudad;
+	private Database2 database;
+	private JTextField textCalle;
+	private JRadioButton rdbtnTarjetaDeCrdito;
+	private JRadioButton rdbtnContrarrembolso;
+	private JRadioButton rdbtnTransferencia;
+	private JLabel lblDescContrarrembolso;
+	private JLabel lblDescTarjeta;
+	private JLabel labelDescTransfer7;
 	
 	/**
 	 * Create the frame.
@@ -88,10 +100,10 @@ public class CarritoView extends JFrame {
 	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
 		setTitle("Confirmación de Compra: Datos de Envío");
 		this.database = db;
-		this.dto = dto;
 		
 		this.listModel = new DefaultListModel<>();
 		this.carrito = c;
+		this.dto = dto;
 		this.modelo = new CarritoModel(carrito, this, this.database, this.dto);
 		this.controller = new CarritoController(this, modelo);
 		
@@ -123,6 +135,7 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextPais());
 		contentPane.add(getTextRegion());
 		contentPane.add(getTextCiudad());
+		contentPane.add(getTextCalle());
 	
 		controller.initView();
 		controller.initController();
@@ -142,7 +155,7 @@ public class CarritoView extends JFrame {
 			
 			btnEliminar.setBackground(new Color(178, 34, 34));
 			btnEliminar.setForeground(Color.WHITE);
-			btnEliminar.setBounds(676, 286, 86, 23);
+			btnEliminar.setBounds(676, 286, 116, 23);
 		}
 		return btnEliminar;
 	}
@@ -166,11 +179,11 @@ public class CarritoView extends JFrame {
 	
 	public JButton getBtnConfirmar() {
 		if (btnConfirmar == null) {
-			btnConfirmar = new JButton("Confirmar Pago");
+			btnConfirmar = new JButton("Comprar");
 			
 			btnConfirmar.setBackground(new Color(50, 205, 50));
 			btnConfirmar.setForeground(Color.WHITE);
-			btnConfirmar.setBounds(775, 427, 197, 23);
+			btnConfirmar.setBounds(796, 427, 176, 23);
 		}
 		return btnConfirmar;
 	}
@@ -200,7 +213,7 @@ public class CarritoView extends JFrame {
 		if (lblUsuario == null) {
 			lblUsuario = new JLabel("Usuario: ");
 			lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblUsuario.setBounds(10, 8, 71, 14);
+			lblUsuario.setBounds(12, 17, 71, 14);
 		}
 		return lblUsuario;
 	}
@@ -208,21 +221,21 @@ public class CarritoView extends JFrame {
 		if (lblNombreUsuario == null) {
 			lblNombreUsuario = new JLabel("");
 			lblNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			lblNombreUsuario.setBounds(91, 8, 116, 14);
+			lblNombreUsuario.setBounds(95, 17, 116, 14);
 		}
 		return lblNombreUsuario;
 	}
 	public JTable getTable() {
 		if (table == null) {
-			Object[] columnNames = {"   Producto   ", "Cantidad ", "€ "};
-			//tableModel = new DefaultTableModel(columnNames, 0);
+			Object[] columnNames = {"   Producto   ", "  Cantidad  ", "€ "};
+			
 			tableModelCarrito = new MyTableModel(columnNames);
 			table = new JTable(tableModelCarrito);
-			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			
 			TableColumnModel columnModel = table.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(200);
+			columnModel.getColumn(0).setPreferredWidth(220);
 			columnModel.getColumn(1).setPreferredWidth(85);
-			columnModel.getColumn(1).setPreferredWidth(85);	
+			columnModel.getColumn(2).setPreferredWidth(85);	
 			table.setBounds(712, 64, 160, 236);
 			
 		}
@@ -246,90 +259,163 @@ public class CarritoView extends JFrame {
 	private JLabel getLblTelefono() {
 		if (lblTelefono == null) {
 			lblTelefono = new JLabel("Teléfono: ");
-			lblTelefono.setBounds(91, 103, 77, 14);
+			lblTelefono.setBounds(91, 110, 77, 14);
 		}
 		return lblTelefono;
 	}
 	private JLabel getLblPais() {
 		if (lblPais == null) {
 			lblPais = new JLabel("País: ");
-			lblPais.setBounds(91, 143, 77, 14);
+			lblPais.setBounds(91, 156, 77, 14);
 		}
 		return lblPais;
 	}
 	private JLabel getLblRegion() {
 		if (lblRegion == null) {
 			lblRegion = new JLabel("Región:");
-			lblRegion.setBounds(91, 187, 77, 14);
+			lblRegion.setBounds(91, 204, 77, 14);
 		}
 		return lblRegion;
 	}
 	private JLabel getLblCiudad() {
 		if (lblCiudad == null) {
 			lblCiudad = new JLabel("Ciudad: ");
-			lblCiudad.setBounds(91, 236, 77, 14);
+			lblCiudad.setBounds(95, 249, 77, 14);
 		}
 		return lblCiudad;
 	}
 	private JLabel getLblCalle() {
 		if (lblCalle == null) {
 			lblCalle = new JLabel("Calle: ");
-			lblCalle.setBounds(91, 290, 77, 14);
+			lblCalle.setBounds(91, 295, 77, 14);
 		}
 		return lblCalle;
 	}
 	private JLabel getLblMetodoDePago() {
 		if (lblMetodoDePago == null) {
 			lblMetodoDePago = new JLabel("Método de Pago: ");
-			lblMetodoDePago.setBounds(91, 340, 116, 14);
+			lblMetodoDePago.setBounds(91, 340, 197, 14);
 		}
 		return lblMetodoDePago;
 	}
 	private JPanel getPanelRadioBotones() {
 		if (panelRadioBotones == null) {
 			panelRadioBotones = new JPanel();
-			panelRadioBotones.setBounds(91, 365, 258, 85);
+			panelRadioBotones.setBounds(91, 365, 593, 85);
+			panelRadioBotones.setLayout(null);
+			panelRadioBotones.add(getRdbtnContrarrembolso());
+			panelRadioBotones.add(getRdbtnTransferencia());
+			panelRadioBotones.add(getRdbtnTarjetaDeCrdito());
+			
+			 ButtonGroup group = new ButtonGroup();
+		     group.add(getRdbtnContrarrembolso());
+		     group.add(getRdbtnTransferencia());
+		     group.add(getRdbtnTarjetaDeCrdito());
+		     panelRadioBotones.add(getLblDescContrarrembolso());
+		     panelRadioBotones.add(getLblDescTarjeta());
+		     panelRadioBotones.add(getLabelDescTransfer7());
+			
 		}
 		return panelRadioBotones;
 	}
-	private JTextField getTextTelefono() {
+	public JTextField getTextTelefono() {
 		if (textTelefono == null) {
 			textTelefono = new JTextField();
-			textTelefono.setBounds(178, 100, 171, 20);
+			textTelefono.setBounds(186, 106, 252, 23);
 			textTelefono.setColumns(10);
 		}
 		return textTelefono;
 	}
-	private JTextField getTextNombre() {
+	public JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
-			textNombre.setBounds(178, 61, 171, 20);
+			textNombre.setBounds(186, 60, 252, 23);
 			textNombre.setColumns(10);
 		}
 		return textNombre;
 	}
-	private JTextField getTextPais() {
+	public JTextField getTextPais() {
 		if (textPais == null) {
 			textPais = new JTextField();
-			textPais.setBounds(178, 140, 171, 20);
+			textPais.setBounds(186, 152, 252, 23);
 			textPais.setColumns(10);
 		}
 		return textPais;
 	}
-	private JTextField getTextRegion() {
+	public JTextField getTextRegion() {
 		if (textRegion == null) {
 			textRegion = new JTextField();
-			textRegion.setBounds(178, 184, 171, 20);
+			textRegion.setBounds(186, 200, 252, 23);
 			textRegion.setColumns(10);
 		}
 		return textRegion;
 	}
-	private JTextField getTextCiudad() {
+	public JTextField getTextCiudad() {
 		if (textCiudad == null) {
 			textCiudad = new JTextField();
-			textCiudad.setBounds(178, 233, 171, 20);
+			textCiudad.setBounds(186, 245, 252, 23);
 			textCiudad.setColumns(10);
 		}
 		return textCiudad;
+	}
+	public Database2 getDatabase() {
+		return this.database;
+	}
+	public JTextField getTextCalle() {
+		if (textCalle == null) {
+			textCalle = new JTextField();
+			textCalle.setBounds(186, 291, 252, 23);
+			textCalle.setColumns(10);
+		}
+		return textCalle;
+	}
+	public JRadioButton getRdbtnTarjetaDeCrdito() {
+		if (rdbtnTarjetaDeCrdito == null) {
+			rdbtnTarjetaDeCrdito = new JRadioButton("Tarjeta de Crédito");
+			rdbtnTarjetaDeCrdito.setBounds(0, 32, 154, 23);
+		}
+		return rdbtnTarjetaDeCrdito;
+	}
+	public JRadioButton getRdbtnContrarrembolso() {
+		if (rdbtnContrarrembolso == null) {
+			rdbtnContrarrembolso = new JRadioButton("Contrarrembolso");
+			rdbtnContrarrembolso.setBounds(0, 0, 145, 23);
+		}
+		return rdbtnContrarrembolso;
+	}
+	public JRadioButton getRdbtnTransferencia() {
+		if (rdbtnTransferencia == null) {
+			rdbtnTransferencia = new JRadioButton("Transferencia");
+			rdbtnTransferencia.setBounds(0, 62, 123, 23);
+		}
+		return rdbtnTransferencia;
+	}
+	private JLabel getLblDescContrarrembolso() {
+		if (lblDescContrarrembolso == null) {
+			lblDescContrarrembolso = new JLabel("   (Pago en efectivo al recibir el producto)");
+			lblDescContrarrembolso.setForeground(new Color(51, 51, 51));
+			lblDescContrarrembolso.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblDescContrarrembolso.setBounds(182, 4, 422, 15);
+		}
+		return lblDescContrarrembolso;
+	}
+	private JLabel getLblDescTarjeta() {
+		if (lblDescTarjeta == null) {
+			lblDescTarjeta = new JLabel("   (Pago inmediato usando una tarjeta)");
+			lblDescTarjeta.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblDescTarjeta.setBounds(181, 36, 412, 15);
+		}
+		return lblDescTarjeta;
+	}
+	private JLabel getLabelDescTransfer7() {
+		if (labelDescTransfer7 == null) {
+			labelDescTransfer7 = new JLabel("   (Transfiera dinero directamente desde su cuenta)");
+			labelDescTransfer7.setFont(new Font("Dialog", Font.PLAIN, 12));
+			labelDescTransfer7.setBounds(179, 66, 402, 15);
+		}
+		return labelDescTransfer7;
+	}
+	public ClienteDTO getDto() {
+		return this.dto;
 	}
 }

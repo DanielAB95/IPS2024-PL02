@@ -1,44 +1,63 @@
 package controlador;
 
-import java.util.List;
+import java.awt.Component;
 
-import javax.swing.table.TableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
-import giis.demo.util.SwingUtil;
-import modelo.dto.AlmaceneroDTO;
-import modelo.dto.PedidoDTO;
-import modelo.dto.PedidoProductoDTO;
-import modelo.modelo.ClienteModel;
-import modelo.modelo.PedidoModel;
 import modelo.modelo.WorkorderModel;
+import persistence.dto.PedidoDto;
+import persistence.dto.WorkorderDto;
 import vista.WorkorderView;
 
 public class WorkorderController {
+	
 	private WorkorderView view;
 	private WorkorderModel model;
 	
-	
-	//private workOrderModel model;
-	public WorkorderController(WorkorderView view ,WorkorderModel model) {
-		this.view = view;
+	public WorkorderController(WorkorderModel model) {
 		this.model = model; 
 		
 	}
 	
-	public void initView() {
-		view.getTextPedido().setText("Falta ");
-		view.getTextAlmacenero().setText("Falta ");
-		this.getProductos();
+	public void setView(WorkorderView workorderView) {
+		this.view = workorderView;
 	}
 	
-	public void initController() {
-		
+	public void init() {
+		addWorkordersTable();
 	}
 	
-	public void getProductos() {
-//		List<PedidoProductoDTO> pedidos = pModel.getProductosPorPedido(idPedido);
-//		TableModel tmodel = SwingUtil.getTableModelFromPojos(pedidos, new String[] {"idPedido", "idProducto", "cantidad", "descripcion"});
-//		view.getTablaProductos().setModel(tmodel);
-//		SwingUtil.autoAdjustColumns(view.getTablaProductos());
+	private void addWorkordersTable() {
+		vaciarTabla();
+		view.getTableModel().addColumn("Workorder");
+		view.getTableModel().addColumn("ID Almacenero");
+		view.getTableModel().addColumn("Pedido");
+		view.getTableModel().addColumn("Numero de productos");
+		for (WorkorderDto workorder : model.obtainWorkorders()) {
+			for (PedidoDto pedido : workorder.pedidos) {
+				Object[] data = {workorder.idWorkorder, workorder.idAlmacenero, pedido.idPedido, model.getCantidadTotalDeProductos(pedido)};
+				view.getTableModel().addRow(data);
+			}
+		}
+		ajustarTabla();
+	}
+	
+	private void vaciarTabla() {
+		view.getTableModel().setColumnCount(0);
+		view.getTableModel().setRowCount(0);
+	}
+	
+	private void ajustarTabla() {
+		for (int i = 0; i < view.getTable().getColumnCount(); i++) {
+            TableColumn column = view.getTable().getColumnModel().getColumn(i);
+            int width = 0;
+            for (int j = 0; j < view.getTable().getRowCount(); j++) {
+                TableCellRenderer renderer = view.getTable().getCellRenderer(j, i);
+                Component comp = renderer.getTableCellRendererComponent(view.getTable(), view.getTable().getValueAt(j, i), false, false,i, j);
+                width = Math.max(width, comp.getPreferredSize().width);
+            }
+            column.setPreferredWidth(width + view.getTable().getIntercellSpacing().width);
+        }
 	}
 }

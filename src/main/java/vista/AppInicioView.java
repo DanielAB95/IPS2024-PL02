@@ -1,8 +1,11 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import java.awt.EventQueue;
+import java.io.File;
+import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,12 +13,10 @@ import javax.swing.border.EmptyBorder;
 import controlador.AppInicioController;
 import giis.demo.util.Database2;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AppInicioView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCliente;
 	private JButton btnAlmacen;
@@ -23,21 +24,35 @@ public class AppInicioView extends JFrame {
 	private AppInicioController control;
 	
 	
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					
-					//creo bd solo una vez
-					Database2 db =new Database2();
-					db.createDatabase(false);
-					
-					//lleno bd solo una vez
-					db.loadDatabase();
-					
+//					//creo bd solo una vez
+//					Database2 db =new Database2();
+//					db.createDatabase(false);
+				
+//					//lleno bd solo una vez					
+//					db.loadDatabase();
+
+					Database2 db = new Database2();
+
+                    // Verificar si la base de datos ya existe
+                    if (!dbExists(db.getUrl())) {
+                        // Crea la base de datos solo si no existe
+                        db.createDatabase(false);
+                        // Carga datos iniciales solo si se creó la base de datos
+                        db.loadDatabase();
+//                  } else {
+//                    	db.loadDatabase();
+//                  }
+                    }
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -68,6 +83,30 @@ public class AppInicioView extends JFrame {
 		contentPane.add(getBtnAlmacen());
 		
 		control.initController();
+		setLocationRelativeTo(null);
+		
+		
+		//mostrarClientes();
+	}
+	
+	
+	private static boolean dbExists(String dbUrl) {
+        // Comprueba si el archivo de base de datos existe
+        File dbFile = new File(dbUrl.replace("jdbc:sqlite:", ""));
+        return dbFile.exists();
+    }
+	
+	private void mostrarClientes() {
+		// SQL_GET_CLIENTES
+		List<Object[]> usuarios = database.executeQueryArray("select * from cliente");
+		System.out.println("----------------- CLIENTES ------------------");
+		
+		for (int i = 0; i < usuarios.size(); i++) {
+			for (int j = 0; j < usuarios.get(i).length; j++) {
+				System.out.print(usuarios.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
 	}
 	
 	public Database2 getDatabase() {
