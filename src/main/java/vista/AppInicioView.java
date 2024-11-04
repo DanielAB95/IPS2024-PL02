@@ -49,8 +49,10 @@ public class AppInicioView extends JFrame {
                         db.createDatabase(false);
                         // Carga datos iniciales solo si se creó la base de datos
                         db.loadDatabase();
+//                  } else {
+//                    	db.loadDatabase();
+//                  }
                     }
-					
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -84,7 +86,7 @@ public class AppInicioView extends JFrame {
 		setLocationRelativeTo(null);
 		
 		
-		mostrarClientes();
+		//mostrarClientes();
 	}
 	
 	

@@ -42,6 +42,11 @@ public class ClienteController {
 		view.getTextCategoria().setText("Inicio");
 		view.getLblNombreUsuario().setText(view.getDto().getName());
 		//view.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
+		
+		if (!view.getDto().getName().equals("Invitado")) {
+			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().getName());
+		}
+		
 		getListaProductos(null);
 	}
 			
@@ -112,6 +117,10 @@ public class ClienteController {
 					view.getTableCarritoModel().removeRow(filaSeleccionada);
 					view.getCarrito().removeFromCarrito(nombreProducto);
 					
+					
+					model.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					
+					
 					actualizaPrecioTotal();
 				}
 			}
@@ -129,7 +138,12 @@ public class ClienteController {
 					Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
 					view.getTableCarritoModel().addRow(filaNueva);
 					actualizaPrecioTotal();
-					view.getSpinnerUnidades().setValue(1);;
+					view.getSpinnerUnidades().setValue(1);
+					
+					
+					
+					model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
+					model.printProductoCarrito();
 				} else {
 					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
 				}
@@ -153,6 +167,9 @@ public class ClienteController {
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                    
+                    
+                    model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    
                     actualizaPrecioTotal();                                    
                 }
             }

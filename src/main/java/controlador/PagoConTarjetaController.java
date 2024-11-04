@@ -29,6 +29,8 @@ public class PagoConTarjetaController {
 				if (checkTodosLosCamposRellenados() && checkFecha() && checkNumeroTarjeta() && checkCVV()) {
 					JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
 		                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
+					
+					
 					model.confirmarPedido();
 					view.dispose();
 				}
