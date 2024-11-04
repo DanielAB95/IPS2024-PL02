@@ -14,6 +14,7 @@ drop table PaqueteProducto;
 drop table WorkorderProducto;
 drop table carrito;
 drop table producto_carrito;
+drop table workorderPaquete;
 
 --estado: particular o empresa
 create table Cliente(
@@ -140,4 +141,11 @@ create table PaqueteProducto(
     foreign key (idProducto) references Producto(id),
     check (cantidad >= 0),
     primary key (idPaquete, idProducto)
+);
+
+create table workorderPaquete(
+    idWorkorder int not null,
+    idPaquete int not null,
+    foreign key (idWorkorder) references Workorder(idWorkorder),
+    foreign key (idPaquete) references Paquete(idPaquete)
 );

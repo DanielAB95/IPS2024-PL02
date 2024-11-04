@@ -37,7 +37,7 @@ public class AppInicioView extends JFrame {
 //					//creo bd solo una vez
 //					Database2 db =new Database2();
 //					db.createDatabase(false);
-				
+//				
 //					//lleno bd solo una vez					
 //					db.loadDatabase();
 
@@ -49,10 +49,10 @@ public class AppInicioView extends JFrame {
                         db.createDatabase(false);
                         // Carga datos iniciales solo si se creó la base de datos
                         db.loadDatabase();
-//                  } else {
-//                    	db.loadDatabase();
+                  } else {
+                   	//db.loadDatabase();
 
-                    }
+                   }
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
