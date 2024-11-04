@@ -315,9 +315,7 @@ public class EmpaquetadoController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mostarRecogida();
-				
 			}
-
 			
 		});	
 	}

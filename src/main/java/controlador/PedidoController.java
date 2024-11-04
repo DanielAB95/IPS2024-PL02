@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
@@ -25,8 +26,7 @@ public class PedidoController {
 
 	private PedidoModel model;
 	private PedidoView view;
-	private WorkorderModel wModel;
-	private WorkorderView wView;
+	private List<Integer> woids;
 
 	public PedidoController(PedidoView view, PedidoModel model) {
 		this.model = model;
@@ -60,8 +60,12 @@ public class PedidoController {
 	}
 	
 	private void generarWorkorder(int posPedido) {
-		model.generarWorkorder(posPedido);
-
+		woids = model.generarWorkorder(posPedido);
+		addPedidosTable();
+		WorkorderModel wm = new WorkorderModel(model.getDB(), woids);
+		WorkorderController wc = new WorkorderController(wm);
+		WorkorderView wv = new WorkorderView(wc);
+		wv.setVisible(true);
 	}
 	
 	private void addPedidosTable() {

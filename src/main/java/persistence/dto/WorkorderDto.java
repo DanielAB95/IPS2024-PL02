@@ -1,5 +1,6 @@
 package persistence.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ public class WorkorderDto {
 	public int idWorkorder;
 	public int idAlmacenero;
 	public String estado;
-	public List<PedidoDto> pedidos; //puede ser solo uno y estar partido
+	public List<PedidoDto> pedidos = new ArrayList<>(); //puede ser solo uno y estar partido
 	@Override
 	public int hashCode() {
 		return Objects.hash(idWorkorder);
