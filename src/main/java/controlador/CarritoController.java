@@ -64,7 +64,9 @@ public class CarritoController {
 					view.getTableModel().removeRow(filaSeleccionada);
 					view.getCarrito().removeFromCarrito(nombreProducto);
 					
-					modelo.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					if (modelo.doesClientExist(modelo.getDto().getName())) {
+							modelo.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					}
 					
 					actualizaLblTotal();
 				}
@@ -104,8 +106,10 @@ public class CarritoController {
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
                    
-                    modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
-                    
+                    if (modelo.doesClientExist(modelo.getDto().getName())) {
+                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    }
+                    	
                     actualizaLblTotal();
                     
                     
@@ -138,7 +142,9 @@ public class CarritoController {
 			vista.setLocationRelativeTo(view);
 			view.dispose();
 			
-			modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			}
 			vista.setVisible(true);
 			
 		} else if (view.getRdbtnContrarrembolso().isSelected()){
@@ -146,7 +152,9 @@ public class CarritoController {
 			JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
                        " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
 			
-			modelo.borraCarritoCliente(view.getDto().getName());
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); 
+			}
 			modelo.confirmarPedido();
 		} else {
 			
@@ -154,7 +162,9 @@ public class CarritoController {
 			vista.setLocationRelativeTo(view);
 			view.dispose();
 			
-			modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			}
 			vista.setVisible(true);
 		}
 	}

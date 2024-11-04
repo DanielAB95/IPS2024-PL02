@@ -118,8 +118,9 @@ public class ClienteController {
 					view.getCarrito().removeFromCarrito(nombreProducto);
 					
 					
-					model.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
-					
+					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+						model.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					}
 					
 					actualizaPrecioTotal();
 				}
@@ -141,9 +142,10 @@ public class ClienteController {
 					view.getSpinnerUnidades().setValue(1);
 					
 					
-					
-					model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
-					model.printProductoCarrito();
+					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+						model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
+						model.printProductoCarrito();
+					}
 				} else {
 					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
 				}
@@ -167,9 +169,9 @@ public class ClienteController {
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                    
-                    
-                    model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
-                    
+                    if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+                    	model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    }
                     actualizaPrecioTotal();                                    
                 }
             }
