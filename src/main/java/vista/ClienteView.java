@@ -122,14 +122,14 @@ public class ClienteView extends JFrame {
 	public JLabel getLblCantidad() {
 		if (lblCantidad == null) {
 			lblCantidad = new JLabel("Cantidad: ");
-			lblCantidad.setBounds(490, 68, 67, 14);
+			lblCantidad.setBounds(455, 68, 67, 14);
 		}
 		return lblCantidad;
 	}
 	public JLabel getLblCategoria() {
 		if (lblCategoria == null) {
 			lblCategoria = new JLabel("Estas en:");
-			lblCategoria.setBounds(162, 46, 77, 14);
+			lblCategoria.setBounds(138, 46, 77, 14);
 		}
 		return lblCategoria;
 	}
@@ -137,7 +137,7 @@ public class ClienteView extends JFrame {
 		if (textCategoria == null) {
 			textCategoria = new JTextField();
 			textCategoria.setEditable(false);
-			textCategoria.setBounds(162, 64, 219, 23);
+			textCategoria.setBounds(138, 64, 208, 23);
 			textCategoria.setColumns(10);
 		}
 		return textCategoria;
@@ -148,7 +148,7 @@ public class ClienteView extends JFrame {
 			btnAdd.setEnabled(false);
 			btnAdd.setForeground(Color.WHITE);
 			btnAdd.setBackground(Color.BLACK);
-			btnAdd.setBounds(630, 64, 89, 23);
+			btnAdd.setBounds(588, 64, 79, 23);
 		}
 		return btnAdd;
 	}
@@ -184,7 +184,7 @@ public class ClienteView extends JFrame {
 	private JLabel getLblCarrito() {
 		if (lblCarrito == null) {
 			lblCarrito = new JLabel("Carrito: ");
-			lblCarrito.setBounds(735, 68, 46, 14);
+			lblCarrito.setBounds(712, 68, 46, 14);
 		}
 		return lblCarrito;
 	}
@@ -218,7 +218,7 @@ public class ClienteView extends JFrame {
 		if (btAnterior == null) {
 			btAnterior = new JButton("Volver Atras");
 			btAnterior.setEnabled(false);
-			btAnterior.setBounds(34, 64, 118, 23);
+			btAnterior.setBounds(10, 64, 111, 23);
 		}
 		return btAnterior;
 	}
@@ -226,7 +226,7 @@ public class ClienteView extends JFrame {
 		if (btInicio == null) {
 			btInicio = new JButton("Inicio");
 			btInicio.setEnabled(false);
-			btInicio.setBounds(391, 64, 89, 23);
+			btInicio.setBounds(356, 64, 89, 23);
 		}
 		return btInicio;
 	}
@@ -243,7 +243,7 @@ public class ClienteView extends JFrame {
 		if (spUnidades == null) {
 			spUnidades = new JSpinner();
 			spUnidades.setModel(new SpinnerNumberModel(1, 1, 99, 1));
-			spUnidades.setBounds(552, 65, 57, 20);
+			spUnidades.setBounds(521, 65, 57, 20);
 		}
 		return spUnidades;
 	}
@@ -271,8 +271,8 @@ public class ClienteView extends JFrame {
 			tableModelCarrito = new MyTableModel(columnNames);
 			tableCarrito = new JTable(tableModelCarrito);
 			TableColumnModel columnModel = tableCarrito.getColumnModel();
-			columnModel.getColumn(0).setPreferredWidth(220);
-			columnModel.getColumn(1).setPreferredWidth(85);
+			columnModel.getColumn(0).setPreferredWidth(200);
+			columnModel.getColumn(1).setPreferredWidth(95);
 			columnModel.getColumn(2).setPreferredWidth(85);
 			tableCarrito.setBounds(712,64,160,236);
 			
