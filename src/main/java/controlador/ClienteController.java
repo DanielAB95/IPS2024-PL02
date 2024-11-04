@@ -130,25 +130,25 @@ public class ClienteController {
 			
 		view.getBtnAdd().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				int fila = view.getTablaProductos().getSelectedRow();
-				Producto pSeleccionado = model.getProducto((String) view.getTablaProductos().getValueAt(fila, 0));
-				if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
-					int cantidad = (int) view.getSpinnerUnidades().getValue();
-					model.getCarrito().addToCarrito(pSeleccionado, cantidad);
-					
-					Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
-					view.getTableCarritoModel().addRow(filaNueva);
-					actualizaPrecioTotal();
-					view.getSpinnerUnidades().setValue(1);
-					
-					
-					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-						model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
-						model.printProductoCarrito();
-					}
-				} else {
-					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
-				}
+//				int fila = view.getTablaProductos().getSelectedRow();
+//				Producto pSeleccionado = model.getProducto((String) view.getTablaProductos().getValueAt(fila, 0));
+//				if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
+//					int cantidad = (int) view.getSpinnerUnidades().getValue();
+//					model.getCarrito().addToCarrito(pSeleccionado, cantidad);
+//					
+//					Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
+//					view.getTableCarritoModel().addRow(filaNueva);
+//					actualizaPrecioTotal();
+//					view.getSpinnerUnidades().setValue(1);
+//					
+//					
+//					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+//						model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
+//						model.printProductoCarrito();
+//					}
+//				} else {
+//					JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
+//				}
 			}
 		});
 		
@@ -180,7 +180,10 @@ public class ClienteController {
 		view.getTablaProductos().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {		
-				view.getBtnAdd().setEnabled(true);							
+				view.getBtnAdd().setEnabled(true);
+				// quitar el btn añadir
+				// 
+				addProducto();
 			}
 		});
 	}
@@ -263,5 +266,28 @@ public class ClienteController {
 		}
 		
 	}
+	
+	private void addProducto() {
+		int fila = view.getTablaProductos().getSelectedRow();
+		Producto pSeleccionado = model.getProducto((String) view.getTablaProductos().getValueAt(fila, 0));
+		if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
+			int cantidad = (int) view.getSpinnerUnidades().getValue();
+			model.getCarrito().addToCarrito(pSeleccionado, cantidad);
+			
+			Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
+			view.getTableCarritoModel().addRow(filaNueva);
+			actualizaPrecioTotal();
+			view.getSpinnerUnidades().setValue(1);
+			
+			
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
+				model.printProductoCarrito();
+			}
+		} else {
+			JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
+		}
+	}
+
 
 }
