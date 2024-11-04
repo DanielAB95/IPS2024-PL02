@@ -51,7 +51,7 @@ public class AppInicioView extends JFrame {
                         db.loadDatabase();
 //                  } else {
 //                    	db.loadDatabase();
-//                  }
+
                     }
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
