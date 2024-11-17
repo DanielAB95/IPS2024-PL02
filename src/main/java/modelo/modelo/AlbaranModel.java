@@ -29,6 +29,7 @@ public class AlbaranModel {
 		pedido.idPedido = idPedido;
 		getPedido();
 		getPaquetes();
+		setCliente();
 	}
 	
 	public AlbaranModel() {
@@ -38,6 +39,7 @@ public class AlbaranModel {
 		pedido.idPedido = 3;
 		getPedido();
 		getPaquetes();
+		setCliente();
 	}
 	
 
@@ -89,6 +91,20 @@ public class AlbaranModel {
 		}
 		String str = sb.toString();
 		return str.substring(0, str.length() - 1);
+	}
+	
+	private void setCliente() {
+		List<Object[]> result = db.executeQueryArray(SQL_CLIENTE, pedido.idCliente);
+		
+		cliente.idCliente = (String)result.get(0)[0];
+		cliente.numbreUsusario = (String)result.get(0)[1];
+		cliente.nombre = (String)result.get(0)[2];
+		cliente.telefono = (String)result.get(0)[3];
+		cliente.pais = (String)result.get(0)[4];
+		cliente.region = (String)result.get(0)[5];
+		cliente.ciudad = (String)result.get(0)[6];
+		cliente.calle = (String)result.get(0)[7];
+		cliente.tipoCliente = (String)result.get(0)[8];
 	}
 	
 	public String getProductosString() {

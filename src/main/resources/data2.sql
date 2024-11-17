@@ -24,6 +24,24 @@ INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, c
 ('CLI000014', 'softdev_solutions', 'SoftDev Solutions', '+12024567890', 'EE.UU.', 'Nueva York', 'Nueva York', '5th Avenue 300', 'EMPRESA'),
 ('CLI000015', 'global_trades', 'Global Trades Ltd.', '+81345678901', 'Japón', 'Kanto', 'Tokio', 'Ginza Street 10', 'EMPRESA');
 
+delete from carrito;
+INSERT INTO carrito (id_cliente, id_carrito) VALUES
+('CLI000001', 'CAR000001'),
+('CLI000002', 'CAR000002'),
+('CLI000003', 'CAR000003'),
+('CLI000004', 'CAR000004'),
+('CLI000005', 'CAR000005'),
+('CLI000006', 'CAR000006'),
+('CLI000007', 'CAR000007'),
+('CLI000008', 'CAR000008'),
+('CLI000009', 'CAR000009'),
+('CLI000010', 'CAR000010'),
+('CLI000011', 'CAR000011'),
+('CLI000012', 'CAR000012'),
+('CLI000013', 'CAR000013'),
+('CLI000014', 'CAR000014'),
+('CLI000015', 'CAR000015');
+
 
 
 delete from producto;
@@ -211,9 +229,9 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 
 delete from Workorder;
 insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
-    (1, 1, 'En Curso'),
-    (2, 1, 'En Curso'),
-    (3, 1, 'En Curso'),
+    (1, 1, 'Pendiente'),
+    (2, 1, 'Pendiente'),
+    (3, 1, 'Pendiente'),
     (5, 1, 'Empaquetada'),
     (300, 1, 'Listo'),
     (301, 1, 'Listo'),

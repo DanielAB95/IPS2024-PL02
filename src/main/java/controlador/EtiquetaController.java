@@ -29,11 +29,13 @@ public class EtiquetaController {
 	private void generarFactura() {
 		StringBuilder factura = new StringBuilder();
          
+		// CAMBIOS A REALIZAR: añadir direccion a factura (SIMILAR A ABAJO)
 		factura.append("Fecha: " + getDate() + "\n\n");
 		factura.append("ID del pedido: " + fm.getIDPedido() + "\n");
 		factura.append("ID del paquete: " + fm.getIDPaquete() + "\n");
 		factura.append("Productos: \n");
 		factura.append(fm.getProductosString());
+	
 		
 		fv.getTextArea().setText(factura.toString());
 	}

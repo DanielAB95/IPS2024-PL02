@@ -34,7 +34,7 @@ public class ClienteLoginView extends JFrame {
 		this.controler = new ClienteLoginController(this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 307);
+		setBounds(100, 100, 567, 307);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

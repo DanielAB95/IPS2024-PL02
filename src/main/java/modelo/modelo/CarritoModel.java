@@ -29,6 +29,8 @@ public class CarritoModel {
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
 	private static final String SQL_GET_CLIENTES = "select * from cliente";
+	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
+	private static final String SQL_GET_PRODUCTO_CARRITO = "select * from producto_carrito";
 	
 	private Carrito carrito;
 	private Database2 db;
@@ -311,5 +313,64 @@ public class CarritoModel {
 		}
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
 		return precioFormateado;
+	}
+
+	public void printProductoCarrito() {
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_PRODUCTO_CARRITO);
+		
+		for (int i = 0; i < carrito.size(); i++) {
+			for (int j = 0; j < carrito.get(i).length; j++) {
+				System.out.print(carrito.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public void modificarCantidadCarrito(String nombreProducto, int nuevaCantidad, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("UPDATE producto_carrito SET cantidad = ? WHERE id_producto = ? AND id_carrito = ?", 
+				nuevaCantidad, idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+		
+	}
+
+	private int getIdProductoFromNombre(String nombreProducto) {
+		List<Object[]> producto = db.executeQueryArray( "select * from producto where nombre = ?", nombreProducto);
+		return (int) producto.get(0)[0];
+	}
+
+	public void eliminaProductoCarrito(String nombreProducto, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_producto = ? AND id_carrito = ?", 
+				idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+	}
+	
+	private String getIdCarritoFromCliente(String idCliente) {
+		
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_CARRITO_FROM_CLIENTE, idCliente);
+		
+		return (String) carrito.get(0)[1];
+	}
+
+	public void borraCarritoCliente(String nombreUsuario) {
+		
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_carrito = ?", idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
 	}
 }

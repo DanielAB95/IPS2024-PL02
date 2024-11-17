@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JRadioButton;
@@ -413,5 +414,8 @@ public class CarritoView extends JFrame {
 			labelDescTransfer7.setBounds(179, 66, 402, 15);
 		}
 		return labelDescTransfer7;
+	}
+	public ClienteDTO getDto() {
+		return this.dto;
 	}
 }

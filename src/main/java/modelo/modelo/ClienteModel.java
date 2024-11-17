@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import giis.demo.util.Database2;
 import modelo.dto.Carrito;
@@ -29,8 +30,9 @@ public class ClienteModel {
 	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
-	
-	
+	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
+	private static final String SQL_INSERTAR_PRODUCTOS_CARRITO = "insert into producto_carrito(id_producto, cantidad, id_carrito) values (?, ?, ?)";
+	private static final String SQL_GET_PRODUCTO_CARRITO = "select * from producto_carrito";
 	
 	private Database2 db;
 	private Carrito carrito;
@@ -250,6 +252,98 @@ public class ClienteModel {
 			System.out.println("PedidoProducto: " + p[0] + " "+ p[1] + " "+ p[2]);
 		}
 		System.out.println("<-----------------  FIN  -------------------->");
+	}
+
+	public void añadeProductoCarrito(int idProducto, int cantidad, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		
+		db.executeUpdate(SQL_INSERTAR_PRODUCTOS_CARRITO, idProducto, cantidad, idCarrito);
+		
+	}
+
+	private String getIdCarritoFromCliente(String idCliente) {
+		
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_CARRITO_FROM_CLIENTE, idCliente);
+		
+		return (String) carrito.get(0)[1];
+	}
+
+	public void printProductoCarrito() {
+		List<Object[]> carrito = db.executeQueryArray(SQL_GET_PRODUCTO_CARRITO);
+		
+		for (int i = 0; i < carrito.size(); i++) {
+			for (int j = 0; j < carrito.get(i).length; j++) {
+				System.out.print(carrito.get(i)[j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public void modificarCantidadCarrito(String nombreProducto, int nuevaCantidad, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("UPDATE producto_carrito SET cantidad = ? WHERE id_producto = ? AND id_carrito = ?", 
+				nuevaCantidad, idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+		
+	}
+
+	private int getIdProductoFromNombre(String nombreProducto) {
+		List<Object[]> producto = db.executeQueryArray( "select * from producto where nombre = ?", nombreProducto);
+		return (int) producto.get(0)[0];
+	}
+
+	public void eliminaProductoCarrito(String nombreProducto, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		int idProducto = getIdProductoFromNombre(nombreProducto);
+		
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_producto = ? AND id_carrito = ?", 
+				idProducto, idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+	}
+
+	public void rellenaTablaCarrito(DefaultTableModel tableCarritoModel, String nombreUsuario) {
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		List<Object[]> carrito2 = db.executeQueryArray("select * from producto_carrito where id_carrito = ?", idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+		
+		
+		for (int i = 0; i < carrito2.size(); i++) {
+			//for (int j = 0; j < carrito2.get(i).length; j++) {
+				
+				String nombre = getNombreProductoPorId((int) carrito2.get(i)[0]);
+				int cantidad = (int) carrito2.get(i)[1]; 
+				
+				String precio = getPrecioPorNombre(nombre,cantidad);
+				
+				Object[] fila = {nombre, cantidad, precio};
+				tableCarritoModel.addRow(fila);
+				
+				this.carrito.addToCarrito(getProducto(nombre), cantidad);
+			//}
+			
+		}
+		
+		
+		
+	}
+
+	private String getNombreProductoPorId(int id) {
+		List<Object[]> producto = db.executeQueryArray("select * from producto where id = ?", id);
+		
+		return (String) producto.get(0)[1];
 	}
 	
 	

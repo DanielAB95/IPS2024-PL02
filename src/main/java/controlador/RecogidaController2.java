@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +20,7 @@ import javax.swing.table.TableColumn;
 
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.RecogidaModel2;
+import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
@@ -207,7 +210,8 @@ public class RecogidaController2 {
 		rw.getTableModel().addColumn("Cantidad");
 		rw.getTableModel().addColumn("Ubicación");
 		for (PedidoDto pedido : wdto.pedidos) {
-			for (ProductoDto producto : pedido.productos.keySet()) {
+			List<ProductoDto> productos = new ArrayList<>(pedido.productos.keySet());
+			for (ProductoDto producto : WorkorderModel.ordenarProductos(productos)) {
 				Object[] data = {pedido.idPedido, producto.idProducto, producto.nombre, pedido.productos.get(producto), producto.ubicacion()};
 				rw.getTableModel().addRow(data);
 			}

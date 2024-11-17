@@ -64,6 +64,10 @@ public class CarritoController {
 					view.getTableModel().removeRow(filaSeleccionada);
 					view.getCarrito().removeFromCarrito(nombreProducto);
 					
+					if (modelo.doesClientExist(modelo.getDto().getName())) {
+							modelo.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					}
+					
 					actualizaLblTotal();
 				}
 			}
@@ -102,6 +106,10 @@ public class CarritoController {
                     
                     view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
                    
+                    if (modelo.doesClientExist(modelo.getDto().getName())) {
+                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    }
+                    	
                     actualizaLblTotal();
                     
                     
@@ -133,18 +141,30 @@ public class CarritoController {
 			PagoPorTransferenciaView vista = new PagoPorTransferenciaView(modelo);
 			vista.setLocationRelativeTo(view);
 			view.dispose();
+			
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			}
 			vista.setVisible(true);
 			
 		} else if (view.getRdbtnContrarrembolso().isSelected()){
 			
 			JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
                        " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
+			
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); 
+			}
 			modelo.confirmarPedido();
 		} else {
 			
 			PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
 			vista.setLocationRelativeTo(view);
 			view.dispose();
+			
+			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+			}
 			vista.setVisible(true);
 		}
 	}
