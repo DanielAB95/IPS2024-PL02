@@ -15,6 +15,7 @@ drop table WorkorderProducto;
 drop table carrito;
 drop table producto_carrito;
 drop table workorderPaquete;
+drop table vehiculo;
 
 --estado: particular o empresa
 create table Cliente(
@@ -28,6 +29,16 @@ create table Cliente(
 	 calle varchar(32) not null,
 	 tipoCliente varchar(32) not null
 );
+
+
+--igual meter zonaReparto en paquete
+create table Vehiculo (
+	
+	matricula varchar(9) primary key not null,
+	zonaRepart varchar(15) not null
+	
+);
+
 
 create table carrito (
 	id_cliente varchar(9) not null,
@@ -50,15 +61,6 @@ create table Categoria (
 	foreign key (categoriaPadre) references Categoria(nombreCategoria)
 );
 
-	-- igual cambiar nombres ?
-	-- meter la info directamente en producto
---create table Almacen(
---    idProducto int not null,
---    estanteria int not null,
---    posicionEstanteria int not null,
---    pasillo int not null,
---    foreign key (idProducto) references Producto(id)
---);
 
 create table Producto(
     id int primary key not null, 
@@ -69,6 +71,12 @@ create table Producto(
     pasillo int not null,
     estanteria int not null,
     balda int not null,
+    precioEmpresa decimal(10,2) not null,
+    iva int not null,
+    --stock
+    --minStock
+    --stockReposicion
+    
     foreign key (categoria) references Categoria(nombreCategoria)
 );
 
@@ -100,6 +108,7 @@ create table Workorder(
     idWorkorder  int primary key,
     idAlmacenero int not null,
     workorderEstado varchar(20) not null,
+    fecha date,
     check (workorderEstado in('Pendiente','En Curso','Incidencia','Listo','Empaquetada')),
     foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
@@ -115,6 +124,7 @@ create table Paquete(
     idPaquete int primary key,
     idPedido int not null,
     paqueteEstado varchar(20) not null,
+    fecha date,
     check (paqueteEstado in('En Curso','Listo','Incidencia')),
     foreign key (idPedido) references Pedido(idPedido)
 );

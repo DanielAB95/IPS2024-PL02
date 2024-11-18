@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import giis.demo.util.Database2;
+import persistence.dto.ClienteDto;
 import persistence.dto.PaqueteDto;
 import persistence.dto.ProductoDto;
 
@@ -12,7 +13,15 @@ public class EtiquetaModel {
 	
 	private PaqueteDto paquete = new PaqueteDto();
 	private Database2 db;
+	private ClienteDto cliente = new ClienteDto();
 	
+	private final static String SQL_GET_CLIENTE = "SELECT idCliente, nombre, pais, region, ciudad, calle "
+			+ "FROM Cliente "
+			+ "WHERE idCliente in ("
+			+ "	SELECT idCliente"
+			+ "	FROM pedido"
+			+ "	WHERE idPedido like ?"
+			+ ")";
 	private final static String SQL_PAQUETES = "select * from Paquete where idPaquete = ?";
 	private final static String SQL_PRODUCTOS_ID = "select * from PaqueteProducto where idPaquete = ?";
 	private final static String SQL_PRODUCTOS = "select * from Producto where id = ?";
@@ -22,8 +31,10 @@ public class EtiquetaModel {
 		this.paquete.idPaquete = paquete;
 		getPaquete();
 		getProductos();
+		setCliente();
 	}
-	
+	// del paquete pillo ipedido y del pedido el id del cliente y los set como en albaran model
+	//modificar etiquetamodel, etiqueta controller, para que se vean datos de cliente como en el albaran
 	public EtiquetaModel() {
 		db = new Database2();
 		db.createDatabase(false);
@@ -58,6 +69,24 @@ public class EtiquetaModel {
 			productosMapa.put(p, (int)idProductos.get(i)[2]);
 		}
 		paquete.productos = productosMapa;
+	}
+	
+	private void setCliente() {
+		
+		
+		List<Object[]> result = db.executeQueryArray(SQL_GET_CLIENTE, paquete.idPedido);
+		
+		cliente.idCliente = (String)result.get(0)[0];
+		cliente.nombre = (String)result.get(0)[1];
+		cliente.pais = (String)result.get(0)[2];
+		cliente.region = (String)result.get(0)[3];
+		cliente.ciudad = (String)result.get(0)[4];
+		cliente.calle = (String)result.get(0)[5];
+
+	}
+	
+	public ClienteDto getCliente() {
+		return this.cliente;
 	}
 
 	public int getIDPedido() {

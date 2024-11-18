@@ -34,25 +34,25 @@ public class AppInicioView extends JFrame {
 			public void run() {
 				try {
 					
-//					//creo bd solo una vez
-//					Database2 db =new Database2();
-//					db.createDatabase(false);
-//				
-//					//lleno bd solo una vez					
-//					db.loadDatabase();
+					//creo bd solo una vez
+					Database2 db =new Database2();
+					db.createDatabase(false);
+				
+					//lleno bd solo una vez					
+					db.loadDatabase();
 
-					Database2 db = new Database2();
+//					Database2 db = new Database2();
+//
+//                    // Verificar si la base de datos ya existe
+//                    if (!dbExists(db.getUrl())) {
+//                        // Crea la base de datos solo si no existe
+//                        db.createDatabase(false);
+//                        // Carga datos iniciales solo si se creó la base de datos
+//                        db.loadDatabase();
+//                  } else {
+//                   	//db.loadDatabase();
 
-                    // Verificar si la base de datos ya existe
-                    if (!dbExists(db.getUrl())) {
-                        // Crea la base de datos solo si no existe
-                        db.createDatabase(false);
-                        // Carga datos iniciales solo si se creó la base de datos
-                        db.loadDatabase();
-                  } else {
-                   	//db.loadDatabase();
-
-                   }
+                   //}
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
 				} catch (Exception e) {
