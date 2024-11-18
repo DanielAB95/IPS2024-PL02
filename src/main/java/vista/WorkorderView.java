@@ -28,7 +28,8 @@ public class WorkorderView extends JDialog {
 	public WorkorderView(WorkorderController wc) {
 		setTitle("Almacenero: WorkOrder");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		//setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -37,7 +38,7 @@ public class WorkorderView extends JDialog {
 		contentPane.add(getProductoPanel());
 		contentPane.add(getLbProductos());
 		
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(this);
 		
 		wc.setView(this);
 		wc.init();
@@ -47,7 +48,7 @@ public class WorkorderView extends JDialog {
 		if (productoPanel == null) {
 			productoPanel = new JScrollPane();
 			productoPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			productoPanel.setBounds(10, 61, 444, 743);
+			productoPanel.setBounds(10, 61, 414, 589);
 			productoPanel.setViewportView(getTbProductos());
 		}
 		return productoPanel;

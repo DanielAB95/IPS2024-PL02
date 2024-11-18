@@ -185,8 +185,8 @@ public class EmpaquetadoController {
 	}
 	
 	private void borrarDatos() {
-		ew.getPnDatos().setBounds(10, 11, 444, 30);
-		ew.getScTabla().setBounds(10, 112, 444, 641);
+		ew.getPnDatos().setBounds(10, 11, 414, 30);
+		ew.getScTabla().setBounds(10, 112, 414, 487);
 		setVisibleComponentes(false);
 		if (ew.getPnDatos().getComponents().length > 4) {
 			ew.getPnDatos().remove(5);
@@ -258,7 +258,7 @@ public class EmpaquetadoController {
 	}
 	
 	private void ajustarTamañoPedidos() {
-		ew.getPnDatos().setBounds(10, 11, 444, 60);
+		ew.getPnDatos().setBounds(10, 11, 414, 60);
 		
 		ew.getPnDatos().add(nuevaLabel("Workorder ID:"));
 		ew.getPnDatos().add(nuevoTxField(wdto.idWorkorder));
@@ -267,8 +267,9 @@ public class EmpaquetadoController {
 	}
 	
 	private void ajustarTamañosProductos(boolean pasoDirecto) {
-		ew.getScTabla().setBounds(10, 112, 444, 440);
-		ew.getPnDatos().setBounds(10, 11, 444, 90);
+		//scTabla.setBounds(10, 112, 414, 487);
+		ew.getScTabla().setBounds(10, 112, 414, 348);
+		ew.getPnDatos().setBounds(10, 11, 414, 90);
 		if (pasoDirecto) {
 			ew.getPnDatos().add(nuevaLabel("Workorder ID:"));
 			ew.getPnDatos().add(nuevoTxField(wdto.idWorkorder));

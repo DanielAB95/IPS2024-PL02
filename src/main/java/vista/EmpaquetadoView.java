@@ -69,7 +69,8 @@ public class EmpaquetadoView extends JFrame {
 		setTitle("Empaquetado");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		//setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -94,7 +95,7 @@ public class EmpaquetadoView extends JFrame {
 	public JPanel getPnDatos() {
 		if (pnDatos == null) {
 			pnDatos = new JPanel();
-			pnDatos.setBounds(10, 11, 444, 30);//60 para pedidos 90 para productos (30)
+			pnDatos.setBounds(10, 11, 414, 30);//60 para pedidos 90 para productos (30)
 			pnDatos.setLayout(new GridLayout(0, 2, 0, 0));
 			pnDatos.add(getLbAlmacennero());
 			pnDatos.add(getTextField());
@@ -113,7 +114,7 @@ public class EmpaquetadoView extends JFrame {
 	public JPanel getPnBotones() {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
-			pnBotones.setBounds(10, 764, 444, 40);
+			pnBotones.setBounds(10, 610, 414, 40);
 			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
@@ -149,7 +150,7 @@ public class EmpaquetadoView extends JFrame {
 	public JScrollPane getScTabla() {
 		if (scTabla == null) {
 			scTabla = new JScrollPane();
-			scTabla.setBounds(10, 112, 444, 641);//440 (641) para escanear productos
+			scTabla.setBounds(10, 112, 414, 487);//440 (641) para escanear productos
 			scTabla.setViewportView(getTable());
 		}
 		return scTabla;
@@ -171,7 +172,7 @@ public class EmpaquetadoView extends JFrame {
 		if (txaIncidencias == null) {
 			txaIncidencias = new JTextArea();
 			txaIncidencias.setVisible(false);
-			txaIncidencias.setBounds(10, 604, 222, 84);
+			txaIncidencias.setBounds(10, 515, 200, 84);
 		}
 		return txaIncidencias;
 	}
@@ -180,7 +181,7 @@ public class EmpaquetadoView extends JFrame {
 		if (lbEscaner == null) {
 			lbEscaner = new JLabel("Escaner:");
 			lbEscaner.setVisible(false);
-			lbEscaner.setBounds(242, 563, 101, 30);
+			lbEscaner.setBounds(220, 471, 101, 30);
 		}
 		return lbEscaner;
 	}
@@ -189,7 +190,7 @@ public class EmpaquetadoView extends JFrame {
 		if (txEscaner == null) {
 			txEscaner = new JTextField();
 			txEscaner.setVisible(false);
-			txEscaner.setBounds(242, 604, 101, 30);
+			txEscaner.setBounds(220, 512, 86, 30);
 			txEscaner.setColumns(10);
 		}
 		return txEscaner;
@@ -201,7 +202,7 @@ public class EmpaquetadoView extends JFrame {
 			btEscaner.setEnabled(false);
 			btEscaner.setVisible(false);
 			btEscaner.setBackground(Color.WHITE);
-			btEscaner.setBounds(353, 604, 101, 30);
+			btEscaner.setBounds(338, 512, 86, 30);
 		}
 		return btEscaner;
 	}
@@ -211,7 +212,7 @@ public class EmpaquetadoView extends JFrame {
 			btCerrarCaja = new JButton("Cerrar Caja");
 			btCerrarCaja.setVisible(false);
 			btCerrarCaja.setBackground(Color.WHITE);
-			btCerrarCaja.setBounds(353, 658, 101, 30);
+			btCerrarCaja.setBounds(338, 569, 86, 30);
 		}
 		return btCerrarCaja;
 	}
@@ -221,7 +222,7 @@ public class EmpaquetadoView extends JFrame {
 			btApuntar = new JButton("Apuntar");
 			btApuntar.setVisible(false);
 			btApuntar.setBackground(Color.WHITE);
-			btApuntar.setBounds(242, 658, 101, 30);
+			btApuntar.setBounds(220, 569, 86, 30);
 		}
 		return btApuntar;
 	}
@@ -230,7 +231,7 @@ public class EmpaquetadoView extends JFrame {
 		if (lbIncidencia == null) {
 			lbIncidencia = new JLabel("Escribir Incidencia:");
 			lbIncidencia.setVisible(false);
-			lbIncidencia.setBounds(10, 563, 222, 30);
+			lbIncidencia.setBounds(10, 474, 200, 30);
 		}
 		return lbIncidencia;
 	}
