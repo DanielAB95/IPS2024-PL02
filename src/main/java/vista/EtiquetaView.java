@@ -37,7 +37,8 @@ public class EtiquetaView extends JDialog {
 		setTitle("Facturación");
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		//setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

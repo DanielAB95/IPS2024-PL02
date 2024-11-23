@@ -55,7 +55,8 @@ public class PedidoView extends JFrame {
 		this.db = db;
 		setTitle("Almacenero: Generar WorkOrder");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		//setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		setLocationRelativeTo(null);
 		contentPane =  new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +76,7 @@ public class PedidoView extends JFrame {
 	private JScrollPane getTablePanel() {
 	    if (tablePanel == null) {
 	        tablePanel = new JScrollPane(); 
-	        tablePanel.setBounds(10, 105, 444, 648);
+	        tablePanel.setBounds(10, 105, 414, 494);
 	        tablePanel.setPreferredSize(new Dimension(300, 300));
 	        tablePanel.setViewportView(getTbPedidos());
 	    }
@@ -88,7 +89,7 @@ public class PedidoView extends JFrame {
 			lbPedidosPendientes.setVisible(false);
 			lbPedidosPendientes.setHorizontalAlignment(SwingConstants.CENTER);
 			lbPedidosPendientes.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			lbPedidosPendientes.setBounds(10, 52, 444, 42);
+			lbPedidosPendientes.setBounds(10, 52, 414, 42);
 		}
 		return lbPedidosPendientes;
 	}
@@ -108,7 +109,7 @@ public class PedidoView extends JFrame {
 	private JPanel getPnMenu() {
 		if (pnMenu == null) {
 			pnMenu = new JPanel();
-			pnMenu.setBounds(10, 764, 444, 40);
+			pnMenu.setBounds(10, 610, 414, 40);
 			pnMenu.setLayout(new GridLayout(0, 4, 4, 0));
 			pnMenu.add(getBtVolver());
 			pnMenu.add(getBtGenerarWorkOrder());
@@ -176,7 +177,7 @@ public class PedidoView extends JFrame {
 	public JPanel getPnDatos() {
 		if (pnDatos == null) {
 			pnDatos = new JPanel();
-			pnDatos.setBounds(10, 11, 444, 30);
+			pnDatos.setBounds(10, 11, 414, 30);
 			pnDatos.setLayout(new GridLayout(0, 2, 0, 0));
 			pnDatos.add(getLbAlmacennero());
 			pnDatos.add(getTextField_1());

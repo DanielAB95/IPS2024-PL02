@@ -34,7 +34,8 @@ public class AlmaceneroInicioView extends JFrame {
 		setTitle("Inicio sesion");
 		this.db = db;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		//setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -56,7 +57,7 @@ public class AlmaceneroInicioView extends JFrame {
 			txIdAlmacenero = new JTextField();
 			txIdAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			txIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			txIdAlmacenero.setBounds(10, 204, 438, 73);
+			txIdAlmacenero.setBounds(10, 204, 414, 73);
 			txIdAlmacenero.setColumns(10);
 		}
 		return txIdAlmacenero;
@@ -66,7 +67,7 @@ public class AlmaceneroInicioView extends JFrame {
 			lbIdAlmacenero = new JLabel("Escriba su id:");
 			lbIdAlmacenero.setHorizontalAlignment(SwingConstants.CENTER);
 			lbIdAlmacenero.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			lbIdAlmacenero.setBounds(10, 120, 438, 73);
+			lbIdAlmacenero.setBounds(10, 120, 414, 73);
 		}
 		return lbIdAlmacenero;
 	}
@@ -75,7 +76,7 @@ public class AlmaceneroInicioView extends JFrame {
 		if (btContinuar == null) {
 			btContinuar =  new JButton("Continuar");
 			btContinuar.setFont(new Font("Tahoma", Font.PLAIN, 30));
-			btContinuar.setBounds(10, 288, 438, 73);
+			btContinuar.setBounds(10, 288, 414, 73);
 		}
 		return btContinuar;
 	}

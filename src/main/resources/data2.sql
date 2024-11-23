@@ -45,46 +45,46 @@ INSERT INTO carrito (id_cliente, id_carrito) VALUES
 
 
 delete from producto;
-insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda) values  
+insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda, precioEmpresa, iva) values  
 	-- Productos en la categoría Ferretería
-    (1, 'Llave Inglesa', 'Llaves y Pinzas', 'Llave inglesa ajustable', 15.99, 1, 1, 1),
-    (2, 'Pinzas de Corte', 'Llaves y Pinzas', 'Pinzas de corte de precisión', 8.50, 1, 1, 2),
-    (3, 'Destornillador Philips', 'Destornilladores', 'Destornillador Philips mediano', 4.99, 1, 1, 3),
-    (4, 'Juego de Destornilladores', 'Destornilladores', 'Set de destornilladores de varios tamaños', 12.99, 2, 2, 1),
-    (5, 'Taladro Percutor', 'Taladros', 'Taladro percutor con múltiples brocas', 49.99, 2, 2, 2),
-    (6, 'Taladro Inalámbrico', 'Taladros', 'Taladro inalámbrico de 18V', 89.99, 2, 2, 3),
-    (7, 'Sierra Circular', 'Sierras', 'Sierra circular para madera', 129.99, 2, 3, 1),
-    (8, 'Sierra Caladora', 'Sierras', 'Sierra caladora para cortes curvos', 69.99, 2, 3, 2),
+    (1, 'Llave Inglesa', 'Llaves y Pinzas', 'Llave inglesa ajustable', 15.99, 1, 1, 1, 10, 12),
+    (2, 'Pinzas de Corte', 'Llaves y Pinzas', 'Pinzas de corte de precisión', 8.50, 1, 1, 2, 6, 12),
+    (3, 'Destornillador Philips', 'Destornilladores', 'Destornillador Philips mediano', 4.99, 1, 1, 3, 3,12),
+    (4, 'Juego de Destornilladores', 'Destornilladores', 'Set de destornilladores de varios tamaños', 12.99, 2, 2, 1,10,12),
+    (5, 'Taladro Percutor', 'Taladros', 'Taladro percutor con múltiples brocas', 49.99, 2, 2, 2, 40,12),
+    (6, 'Taladro Inalámbrico', 'Taladros', 'Taladro inalámbrico de 18V', 89.99, 2, 2, 3, 80, 12),
+    (7, 'Sierra Circular', 'Sierras', 'Sierra circular para madera', 129.99, 2, 3, 1, 100, 12),
+    (8, 'Sierra Caladora', 'Sierras', 'Sierra caladora para cortes curvos', 69.99, 2, 3, 2, 60, 12),
      
     -- Productos en la categoría Almacén
-    (9, 'Caja de Plástico 50L', 'Cajas y Contenedores', 'Caja de almacenamiento de 50 litros', 19.99, 2, 3, 3),
-    (10, 'Caja de Plástico 100L', 'Cajas y Contenedores', 'Caja de almacenamiento de 100 litros', 29.99, 3, 4, 1),
-    (11, 'Estantería de Metal', 'Estanterías', 'Estantería de metal con 5 niveles', 89.99, 3, 4, 2),
-    (12, 'Estantería de Plástico', 'Estanterías', 'Estantería plástica para garaje', 49.99, 3, 4, 3),
-    (13, 'Carretilla de Mano', 'Carretillas', 'Carretilla de mano con capacidad de 200kg', 55.99, 3, 5, 1),
-    (14, 'Carro de Plataforma', 'Plataformas', 'Carro de plataforma plegable', 75.99, 3, 5, 2),
+    (9, 'Caja de Plástico 50L', 'Cajas y Contenedores', 'Caja de almacenamiento de 50 litros', 19.99, 2, 3, 3, 10, 12),
+    (10, 'Caja de Plástico 100L', 'Cajas y Contenedores', 'Caja de almacenamiento de 100 litros', 29.99, 3, 4, 1, 10, 12),
+    (11, 'Estantería de Metal', 'Estanterías', 'Estantería de metal con 5 niveles', 89.99, 3, 4, 2, 10, 12),
+    (12, 'Estantería de Plástico', 'Estanterías', 'Estantería plástica para garaje', 49.99, 3, 4, 3, 10, 12),
+    (13, 'Carretilla de Mano', 'Carretillas', 'Carretilla de mano con capacidad de 200kg', 55.99, 3, 5, 1, 10, 12),
+    (14, 'Carro de Plataforma', 'Plataformas', 'Carro de plataforma plegable', 75.99, 3, 5, 2, 10, 12),
     
     -- Productos en la categoría Muebles
-    (15, 'Sofá 3 Plazas', 'Sofás', 'Sofá de 3 plazas de tela gris', 299.99, 3, 5, 3),
-    (16, 'Sofá Esquinero', 'Sofás', 'Sofá esquinero modular', 499.99, 4, 6, 1),
-    (17, 'Mesa de Centro', 'Mesas de Centro', 'Mesa de centro de madera', 99.99, 4, 6, 2),
-    (18, 'Mesa de Centro con Cristal', 'Mesas de Centro', 'Mesa de centro de cristal y metal', 149.99, 4, 6, 3),
-    (19, 'Cama Matrimonial', 'Camas', 'Cama matrimonial con base de madera', 249.99, 4, 7, 1),
-    (20, 'Cama King Size', 'Camas', 'Cama king size con cabecera', 399.99, 4, 7, 2),
-    (21, 'Mesa de Noche', 'Mesas de Noche', 'Mesa de noche con cajón', 59.99, 4, 7, 3),
-    (22, 'Mesa de Noche Moderna', 'Mesas de Noche', 'Mesa de noche con diseño moderno', 79.99, 5, 8, 1),
+    (15, 'Sofá 3 Plazas', 'Sofás', 'Sofá de 3 plazas de tela gris', 299.99, 3, 5, 3, 10, 12),
+    (16, 'Sofá Esquinero', 'Sofás', 'Sofá esquinero modular', 499.99, 4, 6, 1, 10, 12),
+    (17, 'Mesa de Centro', 'Mesas de Centro', 'Mesa de centro de madera', 99.99, 4, 6, 2, 10, 12),
+    (18, 'Mesa de Centro con Cristal', 'Mesas de Centro', 'Mesa de centro de cristal y metal', 149.99, 4, 6, 3, 10, 12),
+    (19, 'Cama Matrimonial', 'Camas', 'Cama matrimonial con base de madera', 249.99, 4, 7, 1, 10, 12),
+    (20, 'Cama King Size', 'Camas', 'Cama king size con cabecera', 399.99, 4, 7, 2, 10, 12),
+    (21, 'Mesa de Noche', 'Mesas de Noche', 'Mesa de noche con cajón', 59.99, 4, 7, 3, 10, 12),
+    (22, 'Mesa de Noche Moderna', 'Mesas de Noche', 'Mesa de noche con diseño moderno', 79.99, 5, 8, 1, 10, 12),
     
     -- Productos en la categoría Electrodomésticos
-    (23, 'Horno Eléctrico', 'Hornos', 'Horno eléctrico de gran capacidad', 199.99, 5, 8, 2),
-    (24, 'Horno Microondas', 'Microondas', 'Microondas digital con grill', 99.99, 5, 8, 3),
-    (25, 'Lavadora Automática', 'Lavadoras', 'Lavadora automática de alta eficiencia', 399.99, 5, 9, 1),
-    (26, 'Secadora de Ropa', 'Secadoras', 'Secadora de ropa con sensor de humedad', 349.99, 5, 9, 2),
+    (23, 'Horno Eléctrico', 'Hornos', 'Horno eléctrico de gran capacidad', 199.99, 5, 8, 2, 10, 12),
+    (24, 'Horno Microondas', 'Microondas', 'Microondas digital con grill', 99.99, 5, 8, 3, 10, 12),
+    (25, 'Lavadora Automática', 'Lavadoras', 'Lavadora automática de alta eficiencia', 399.99, 5, 9, 1, 10, 12),
+    (26, 'Secadora de Ropa', 'Secadoras', 'Secadora de ropa con sensor de humedad', 349.99, 5, 9, 2, 10, 12),
     
     -- Productos en la categoría Tecnología
-    (27, 'Laptop de 14 pulgadas', 'Laptops', 'Laptop ultradelgada con SSD de 512GB', 899.99, 5, 9, 3),
-    (28, 'PC de Escritorio', 'Escritorio', 'PC de escritorio con 16GB RAM y 1TB HDD', 699.99, 6, 10, 1),
-    (29, 'Smartphone 5G', 'Smartphones', 'Smartphone con pantalla OLED de 6.5 pulgadas', 699.99, 6, 10, 2),
-    (30, 'Teléfono Inalámbrico', 'Teléfonos Fijos', 'Teléfono inalámbrico con contestador', 49.99, 6, 10, 3);
+    (27, 'Laptop de 14 pulgadas', 'Laptops', 'Laptop ultradelgada con SSD de 512GB', 899.99, 5, 9, 3, 10, 12),
+    (28, 'PC de Escritorio', 'Escritorio', 'PC de escritorio con 16GB RAM y 1TB HDD', 699.99, 6, 10, 1, 10, 12),
+    (29, 'Smartphone 5G', 'Smartphones', 'Smartphone con pantalla OLED de 6.5 pulgadas', 699.99, 6, 10, 2, 10, 12),
+    (30, 'Teléfono Inalámbrico', 'Teléfonos Fijos', 'Teléfono inalámbrico con contestador', 49.99, 6, 10, 3, 10, 12);
 
 delete from Categoria;
 insert into Categoria(nombreCategoria,categoriaPadre) values
@@ -228,14 +228,14 @@ insert into Almacenero(idAlmacenero, nombre, apellido) values
 	(10, 'Maria', 'Garcia');
 
 delete from Workorder;
-insert into Workorder(idWorkorder, idAlmacenero, workorderEstado) values
-    (1, 1, 'Pendiente'),
-    (2, 1, 'Pendiente'),
-    (3, 1, 'Pendiente'),
-    (5, 1, 'Empaquetada'),
-    (300, 1, 'Listo'),
-    (301, 1, 'Listo'),
-    (302, 1, 'Listo');
+insert into Workorder(idWorkorder, idAlmacenero, workorderEstado, fecha) values
+    (1, 1, 'Pendiente', null),
+    (2, 1, 'Pendiente', null),
+    (3, 1, 'Pendiente', null),
+    (5, 1, 'Empaquetada', null),
+    (300, 1, 'Listo','2024-10-25'),
+    (301, 1, 'Listo','2024-10-25'),
+    (302, 1, 'Listo','2024-10-25');
 
 delete from WorkorderPedido;
 insert into WorkorderPedido(idWorkorder, idPedido) values
@@ -266,8 +266,8 @@ insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recog
     (302, 15, 2, 1, 1);
 
 delete from Paquete;
-insert into Paquete(idPaquete, idPedido, paqueteEstado) values
-	(2, 3, 'Listo');
+insert into Paquete(idPaquete, idPedido, paqueteEstado, fecha) values
+	(2, 3, 'Listo', '2024-10-25');
 
 delete from PaqueteProducto;
 insert into PaqueteProducto(idPaquete, idProducto, cantidad) values

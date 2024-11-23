@@ -192,9 +192,10 @@ public class RecogidaController2 {
         }
 	}
 
+	//------------------
 	private void borrarDatos() {
-		rw.getPnDatos().setBounds(10, 11, 444, 30);
-		rw.getScTabla().setBounds(10, 82, 444, 671);
+		rw.getPnDatos().setBounds(10, 11, 414, 30);
+		rw.getScTabla().setBounds(10, 82, 414, 517);
 		setVisibleComponentes(false);
 		rw.getPnDatos().remove(3);
 		rw.getPnDatos().remove(2);
@@ -243,9 +244,10 @@ public class RecogidaController2 {
 		}		
 	}
 	
+	
 	private void ajustarTamañosProductos() {
-		rw.getScTabla().setBounds(10, 82, 444, 470);
-		rw.getPnDatos().setBounds(10, 11, 444, 60);
+		rw.getScTabla().setBounds(10, 82, 414, 381);
+		rw.getPnDatos().setBounds(10, 11, 414, 60);
 		rw.getPnDatos().add(nuevaLabel("Workorder ID:"));
 		rw.getPnDatos().add(nuevoTxField(wdto.idWorkorder));
 		setVisibleComponentes(true);
