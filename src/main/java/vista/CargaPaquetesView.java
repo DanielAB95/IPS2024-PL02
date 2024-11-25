@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import controlador.CargaPaquetesController;
 import vista.ClienteView.MyTableModel;
 
 import javax.swing.JButton;
@@ -21,6 +22,10 @@ import javax.swing.JTable;
 
 public class CargaPaquetesView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel pnBotones;
 	private JButton btnNewButton;
@@ -37,6 +42,7 @@ public class CargaPaquetesView extends JFrame {
 	private JButton btEscanear;
 	private JButton btFinalizar;
 	private DefaultTableModel tableModelPaquetes;
+	private JButton btRecepcionVehiculo;
 
 	/**
 	 * Launch the application.
@@ -45,7 +51,8 @@ public class CargaPaquetesView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CargaPaquetesView frame = new CargaPaquetesView();
+					CargaPaquetesController controller = new CargaPaquetesController();
+					CargaPaquetesView frame = new CargaPaquetesView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,11 +64,11 @@ public class CargaPaquetesView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CargaPaquetesView() {
+	public CargaPaquetesView(CargaPaquetesController controller) {
 		setResizable(false);
 		setTitle("Carga Paquetes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 854);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -75,6 +82,10 @@ public class CargaPaquetesView extends JFrame {
 		contentPane.add(getScpnPaquetes());
 		contentPane.add(getBtEscanear());
 		contentPane.add(getBtFinalizar());
+		contentPane.add(getBtRecepcionVehiculo());
+		
+		 controller.setView(this);
+		 controller.init();
 	}
 	private JPanel getPnBotones() {
 		if (pnBotones == null) {
@@ -122,7 +133,7 @@ public class CargaPaquetesView extends JFrame {
 	private JComboBox<String> getCbRegion() {
 		if (cbRegion == null) {
 			cbRegion = new JComboBox<String>();
-			cbRegion.setBounds(83, 164, 261, 49);
+			cbRegion.setBounds(58, 142, 261, 49);
 		}
 		return cbRegion;
 	}
@@ -130,7 +141,7 @@ public class CargaPaquetesView extends JFrame {
 		if (lbVehiculo == null) {
 			lbVehiculo = new JLabel("Matricula:");
 			lbVehiculo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lbVehiculo.setBounds(103, 26, 126, 33);
+			lbVehiculo.setBounds(59, 26, 126, 33);
 		}
 		return lbVehiculo;
 	}
@@ -138,7 +149,7 @@ public class CargaPaquetesView extends JFrame {
 		if (textField == null) {
 			textField = new JTextField();
 			textField.setFont(new Font("Tahoma", Font.BOLD, 18));
-			textField.setBounds(103, 59, 197, 49);
+			textField.setBounds(59, 59, 197, 49);
 			textField.setColumns(10);
 		}
 		return textField;
@@ -147,14 +158,14 @@ public class CargaPaquetesView extends JFrame {
 		if (lbZonaReparto == null) {
 			lbZonaReparto = new JLabel("Zona reparto:");
 			lbZonaReparto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lbZonaReparto.setBounds(83, 139, 99, 26);
+			lbZonaReparto.setBounds(59, 119, 99, 26);
 		}
 		return lbZonaReparto;
 	}
 	private JScrollPane getScpnPaquetes() {
 		if (scpnPaquetes == null) {
 			scpnPaquetes = new JScrollPane();
-			scpnPaquetes.setBounds(10, 237, 444, 377);
+			scpnPaquetes.setBounds(10, 272, 444, 342);
 			scpnPaquetes.setViewportView(getTbPedidos());
 		}
 		return scpnPaquetes;
@@ -186,6 +197,14 @@ public class CargaPaquetesView extends JFrame {
 		return btFinalizar;
 	}
 	
+	private JButton getBtRecepcionVehiculo() {
+		if (btRecepcionVehiculo == null) {
+			btRecepcionVehiculo = new JButton("Recepcion Vehiculo");
+			btRecepcionVehiculo.setBounds(148, 212, 159, 49);
+		}
+		return btRecepcionVehiculo;
+	}
+	
 	//Metodos auxiliares
 	
 	public JButton getButtonFinalizar() {
@@ -198,5 +217,17 @@ public class CargaPaquetesView extends JFrame {
 	
 	public JTable getTablePaquetes() {
 		return this.tbPedidos;
+	}
+	
+	public JTextField getTextMatricula() {
+		return this.getTextField();
+	}
+	
+	public JComboBox<String> getComboBoxZonaReparto(){
+		return this.getCbRegion();
+	}
+	
+	public JButton getButtonRecepcionVehiculos() {
+		return this.btRecepcionVehiculo;
 	}
 }

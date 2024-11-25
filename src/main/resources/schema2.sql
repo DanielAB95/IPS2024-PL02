@@ -35,10 +35,9 @@ create table Cliente(
 create table Vehiculo (
 	
 	matricula varchar(9) primary key not null,
-	zonaRepart varchar(15) not null
+	zonaReparto varchar(15) not null
 	
 );
-
 
 create table carrito (
 	id_cliente varchar(9) not null,
@@ -54,13 +53,11 @@ create table producto_carrito (
 	foreign key (id_carrito) references carrito(id_carrito)
 );
 
-
 create table Categoria (
 	nombreCategoria varchar(20) primary key,
 	categoriaPadre varchar(20),
 	foreign key (categoriaPadre) references Categoria(nombreCategoria)
 );
-
 
 create table Producto(
     id int primary key not null, 
