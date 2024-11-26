@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import controlador.CargaPaquetesController;
+import controlador.CargaPaqueteController;
 import vista.ClienteView.MyTableModel;
 
 import javax.swing.JButton;
@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class CargaPaquetesView extends JFrame {
+public class CargaPaqueteView extends JFrame {
 
 	/**
 	 * 
@@ -51,8 +51,8 @@ public class CargaPaquetesView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CargaPaquetesController controller = new CargaPaquetesController();
-					CargaPaquetesView frame = new CargaPaquetesView(controller);
+					CargaPaqueteController controller = new CargaPaqueteController();
+					CargaPaqueteView frame = new CargaPaqueteView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +64,7 @@ public class CargaPaquetesView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CargaPaquetesView(CargaPaquetesController controller) {
+	public CargaPaqueteView(CargaPaqueteController controller) {
 		setResizable(false);
 		setTitle("Carga Paquetes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
