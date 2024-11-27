@@ -6,14 +6,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class InformeVentasTipoUsuarioDiaView extends JFrame {
+public class InformeVentasTipoMinorista extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbInforme;
 	private JScrollPane scpVentas;
@@ -26,7 +30,7 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InformeVentasTipoUsuarioDiaView frame = new InformeVentasTipoUsuarioDiaView();
+					InformeVentasTipoMinorista frame = new InformeVentasTipoMinorista();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,10 +42,10 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformeVentasTipoUsuarioDiaView() {
-		setTitle("Informe Ventas:  tipo usuario y dia");
+	public InformeVentasTipoMinorista() {
+		setTitle("Informe Ventas : tipo minorista");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 825, 532);
+		setBounds(100, 100, 842, 521);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -50,9 +54,10 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 		contentPane.add(getLbInforme(), BorderLayout.NORTH);
 		contentPane.add(getScpVentas(), BorderLayout.CENTER);
 	}
+
 	private JLabel getLbInforme() {
 		if (lbInforme == null) {
-			lbInforme = new JLabel("Informe de Ventas por tipo de usuario y dia");
+			lbInforme = new JLabel("Informe Ventas por tipo de  minorista");
 			lbInforme.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			lbInforme.setHorizontalAlignment(SwingConstants.CENTER);
 		}
