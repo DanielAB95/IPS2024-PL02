@@ -70,9 +70,9 @@ create table Producto(
     balda int not null,
     precioEmpresa decimal(10,2) not null,
     iva int not null,
-    --stock
-    --minStock
-    --stockReposicion
+    stock int not null,
+    minStock int not null,
+    stockReposicion int not null,
     
     foreign key (categoria) references Categoria(nombreCategoria)
 );

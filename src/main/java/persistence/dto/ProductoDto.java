@@ -10,6 +10,8 @@ public class ProductoDto {
 	public String descripcion;
 	public double precio;
 	public int pasillo, estanteria, balda; //(x,y,z) almacen
+	public int iva;
+	public int stock, minStock, stockReposicion;
 	
 	@Override
 	public int hashCode() {
