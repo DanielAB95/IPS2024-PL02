@@ -15,6 +15,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
 
 public class InformeRepuestoView extends JFrame {
 
@@ -51,14 +53,14 @@ public class InformeRepuestoView extends JFrame {
 	public InformeRepuestoView(InformeRepuestoController controller) {
 		setTitle("Informe : Produtos a reponer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 574, 390);
+		setBounds(100, 100, 804, 512);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		contentPane.add(getLbInforme());
-		contentPane.add(getScpProductos());
+		contentPane.setLayout(new BorderLayout(5, 5));
+		contentPane.add(getLbInforme(), BorderLayout.NORTH);
+		contentPane.add(getScpProductos(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
 		
 		controller.setView(this);
@@ -69,15 +71,14 @@ public class InformeRepuestoView extends JFrame {
 			lbInforme = new JLabel("Informe productos a reponer");
 			lbInforme.setHorizontalAlignment(SwingConstants.CENTER);
 			lbInforme.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lbInforme.setBounds(0, 11, 558, 64);
 		}
 		return lbInforme;
 	}
 	private JScrollPane getScpProductos() {
 		if (scpProductos == null) {
 			scpProductos = new JScrollPane();
-			scpProductos.setBounds(10, 68, 538, 272);
 			scpProductos.setViewportView(getTbProductos());
+		
 		}
 		return scpProductos;
 	}
@@ -86,12 +87,14 @@ public class InformeRepuestoView extends JFrame {
 			Object[] columnNames = {" Producto ", "  Descripcion  ", " Stock actual ", " Cantidad a pedir "};
 			tableModelProductos = new DefaultTableModel(columnNames,0);
 			tbProductos = new JTable(tableModelProductos);
+			tbProductos.setEnabled(false);
 			TableColumnModel columnModel = tbProductos.getColumnModel();
 			columnModel.getColumn(0).setPreferredWidth(30);
 			columnModel.getColumn(1).setPreferredWidth(150);
 			columnModel.getColumn(2).setPreferredWidth(20);
 			columnModel.getColumn(3).setPreferredWidth(20);
 			tbProductos.setBounds(712,64,160,236);
+			tbProductos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	
 		}
 		return tbProductos;

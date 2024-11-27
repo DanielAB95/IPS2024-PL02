@@ -34,16 +34,16 @@ public class InformeRepuestoController {
 			int cantidadRepuesto = dto.stockReposicion - dto.stock;
 			Object[] filaNueva = {dto.nombre, dto.descripcion, dto.stock, cantidadRepuesto};
 			view.getTableProductosModel().addRow(filaNueva);
-		}
-		
+		}	
 	}
 
 	private void limpiarModelo() {
 		for(int i=0 ; i<view.getTableProductosModel().getRowCount(); i++) {
 			view.getTableProductosModel().removeRow(i);
-		}
-		
+		}	
 	}
+	
+	
 	
 }
 

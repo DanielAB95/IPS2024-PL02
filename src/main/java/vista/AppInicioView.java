@@ -22,6 +22,7 @@ public class AppInicioView extends JFrame {
 	private JButton btnAlmacen;
 	private Database2 database;
 	private AppInicioController control;
+	private JButton btInformes;
 	
 	
 	
@@ -81,6 +82,7 @@ public class AppInicioView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getBtnCliente());
 		contentPane.add(getBtnAlmacen());
+		contentPane.add(getBtInformes());
 		
 		control.initController();
 		setLocationRelativeTo(null);
@@ -128,5 +130,12 @@ public class AppInicioView extends JFrame {
 			btnAlmacen.setBounds(10, 227, 89, 23);
 		}
 		return btnAlmacen;
+	}
+	public JButton getBtInformes() {
+		if (btInformes == null) {
+			btInformes = new JButton("Gerente");
+			btInformes.setBounds(172, 227, 89, 23);
+		}
+		return btInformes;
 	}
 }
