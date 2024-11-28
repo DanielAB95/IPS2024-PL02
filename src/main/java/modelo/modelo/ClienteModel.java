@@ -345,6 +345,16 @@ public class ClienteModel {
 		
 		return (String) producto.get(0)[1];
 	}
+
+	public void borraCarritoCliente(String nombreUsuario) {
+		
+		String idCliente = getClientIDfromName(nombreUsuario);
+		String idCarrito = getIdCarritoFromCliente(idCliente);
+		db.executeUpdate("DELETE FROM producto_carrito WHERE id_carrito = ?", idCarrito);
+		
+		System.out.println();
+		printProductoCarrito();
+	}
 	
 	
 

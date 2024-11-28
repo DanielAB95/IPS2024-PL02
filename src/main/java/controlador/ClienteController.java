@@ -64,6 +64,7 @@ public class ClienteController {
 						JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
 			                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
 						model.confirmarPedido();
+						model.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
 					} else {
 						
 						view.dispose();

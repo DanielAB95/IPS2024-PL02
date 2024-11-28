@@ -20,7 +20,7 @@ public class AppInicioController {
 	public void initController() {
 		view.getBtnCliente().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//ClienteView cliente = new ClienteView(view.getDatabase());
+				
 				ClienteLoginView login = new ClienteLoginView(view.getDatabase());
 				login.setLocationRelativeTo(view);
 				view.dispose();
@@ -38,5 +38,13 @@ public class AppInicioController {
 				
 			}
 		});
+		
+		view.getBtnReset().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.getDatabase().loadDatabase();
+				System.out.println(" > Base de Datos Reseteada.");
+			}
+		});
+		
 	}
 }
