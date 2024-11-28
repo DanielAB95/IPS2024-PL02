@@ -12,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.AppInicioController;
 import giis.demo.util.Database2;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class AppInicioView extends JFrame {
@@ -22,7 +24,7 @@ public class AppInicioView extends JFrame {
 	private JButton btnAlmacen;
 	private Database2 database;
 	private AppInicioController control;
-	
+	private JButton btnReset;
 	
 	
 	/**
@@ -131,6 +133,7 @@ public class AppInicioView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getBtnCliente());
 		contentPane.add(getBtnAlmacen());
+		contentPane.add(getBtnReset());
 		
 		control.initController();
 		setLocationRelativeTo(null);
@@ -178,5 +181,13 @@ public class AppInicioView extends JFrame {
 			btnAlmacen.setBounds(10, 227, 89, 23);
 		}
 		return btnAlmacen;
+	}
+	
+	public JButton getBtnReset() {
+		if (btnReset == null) {
+			btnReset = new JButton("Reset BD");		
+			btnReset.setBounds(10, 11, 89, 23);
+		}
+		return btnReset;
 	}
 }
