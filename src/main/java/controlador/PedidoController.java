@@ -13,13 +13,13 @@ import javax.swing.table.TableColumn;
 
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.PedidoModel;
-import modelo.modelo.RecogidaModel2;
+import modelo.modelo.RecogidaModel;
 import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
-import vista.RecogidaView2;
+import vista.RecogidaView;
 import vista.WorkorderView;
 
 public class PedidoController {
@@ -127,9 +127,9 @@ public class PedidoController {
 	}
 	
 	private void mostrarRecogida() {
-		RecogidaModel2 rm = new RecogidaModel2(view.getDatabase(), model.getAlmacenero().idAlmacenero);
-		RecogidaController2 rc = new RecogidaController2(rm);
-		RecogidaView2 rView = new RecogidaView2(rc);
+		RecogidaModel rm = new RecogidaModel(view.getDatabase(), model.getAlmacenero().idAlmacenero);
+		RecogidaController rc = new RecogidaController(rm);
+		RecogidaView rView = new RecogidaView(rc);
 		view.dispose();
 		rView.setVisible(true);
 	}

@@ -21,9 +21,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controlador.RecogidaController2;
+import controlador.RecogidaController;
 
-public class RecogidaView2 extends JFrame {
+public class RecogidaView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -54,8 +54,8 @@ public class RecogidaView2 extends JFrame {
 			@Override
 			public void run() {
 				try {
-					RecogidaController2 controller = new RecogidaController2();
-					RecogidaView2 frame = new RecogidaView2(controller);
+					RecogidaController controller = new RecogidaController();
+					RecogidaView frame = new RecogidaView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,7 +67,7 @@ public class RecogidaView2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RecogidaView2(RecogidaController2 ec) {
+	public RecogidaView(RecogidaController ec) {
 		setTitle("Recogida");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

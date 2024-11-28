@@ -19,7 +19,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import modelo.modelo.EmpaquetadoModel;
-import modelo.modelo.RecogidaModel2;
+import modelo.modelo.RecogidaModel;
 import modelo.modelo.WorkorderModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
@@ -27,20 +27,20 @@ import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
-import vista.RecogidaView2;
+import vista.RecogidaView;
 
-public class RecogidaController2 {
+public class RecogidaController {
 
-	private RecogidaModel2 rm;
-	private RecogidaView2 rw;
+	private RecogidaModel rm;
+	private RecogidaView rw;
 	
 	private WorkorderDto wdto;
 	
-	public RecogidaController2() {
-		this.rm = new RecogidaModel2();
+	public RecogidaController() {
+		this.rm = new RecogidaModel();
 	}
 	
-	public RecogidaController2(RecogidaModel2 em) {
+	public RecogidaController(RecogidaModel em) {
 		this.rm = em;
 	}
 	
@@ -57,7 +57,7 @@ public class RecogidaController2 {
 		accionIncidencia();
 	}
 	
-	public void setView(RecogidaView2 view) {
+	public void setView(RecogidaView view) {
 		rw = view;
 	}
 
