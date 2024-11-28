@@ -35,27 +35,77 @@ public class AppInicioView extends JFrame {
 			public void run() {
 				try {
 					
-					//creo bd solo una vez
-					Database2 db =new Database2();
-					db.createDatabase(false);
-				
-					//lleno bd solo una vez					
-					db.loadDatabase();
+//					//creo bd solo una vez
+//					Database2 db =new Database2();
+//					db.createDatabase(false);
+//				
+//					//lleno bd solo una vez					
+//					db.loadDatabase();
+//---------------------------------------------------------					
+					
 
 //					Database2 db = new Database2();
-//
-//                    // Verificar si la base de datos ya existe
-//                    if (!dbExists(db.getUrl())) {
+//					
+//					db.createDatabase(true);
+//					
+//					if (db.isDatabaseEmpty()) {
+//						System.out.println("BASE DE DATOS VACIA");
+//					    db.loadDatabase();
+//					}
+//---------------------------------------------------------									
+					
+					
+//					if (!dbExists(db.getUrl())) {
+//                      // Crea la base de datos solo si no existe
+//                      //db.createDatabase(false);
+//                      // Carga datos iniciales solo si se creó la base de datos
+//						//db.createDatabase(false);
+//						db.loadDatabase();
+//						
+//						System.out.println("Entra por NO existe");
+//					} else {
+//						
+//						
+//						db.loadDatabase();
+//						System.out.println("Entra por SI existe");
+//					}
+//---------------------------------------------------------						
+					
+                    // Verificar si la base de datos ya existe
+//                  if (!dbExists(db.getUrl())) {
 //                        // Crea la base de datos solo si no existe
-//                        db.createDatabase(false);
+//                	  	db.createDatabase(false);
 //                        // Carga datos iniciales solo si se creó la base de datos
-//                        db.loadDatabase();
+//                  		db.loadDatabase();
+//                  		System.out.println("Entra por NO existe");
 //                  } else {
-//                   	//db.loadDatabase();
+//                	  	System.out.println("Entra por SI existe");
+//                	  	db.loadDatabase();
+//
+//                  }
+//---------------------------------------------------------	
+					
+					
+					Database2 db = new Database2();
 
-                   //}
+		            // Verificar si la base de datos ya existe
+		            if (!dbExists(db.getUrl())) {
+		                System.out.println("La base de datos no existe. Creándola...");
+		                db.createDatabase(false); 
+		                db.loadDatabase();        
+		            } else {
+		                System.out.println("La base de datos ya existe. Verificando si está vacía...");
+		                if (db.isDatabaseEmpty()) {
+		                    System.out.println("La base de datos está vacía. Cargando datos iniciales...");
+		                    db.loadDatabase();
+		                } else {
+		                    System.out.println("La base de datos ya tiene datos.");
+		                }
+		            }
+					
 					AppInicioView frame = new AppInicioView(db);
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
