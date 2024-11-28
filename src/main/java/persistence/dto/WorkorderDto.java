@@ -10,6 +10,7 @@ public class WorkorderDto {
 	public int idAlmacenero;
 	public String estado;
 	public List<PedidoDto> pedidos = new ArrayList<>(); //puede ser solo uno y estar partido
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(idWorkorder);

@@ -12,6 +12,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controlador.InformePaqutesListosControler;
+
 public class InformePaquetesListosView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -19,13 +21,15 @@ public class InformePaquetesListosView extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btInformes;
+	private DefaultTableModel tableModel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					InformePaquetesListosView frame = new InformePaquetesListosView();
+					InformePaqutesListosControler controller = new InformePaqutesListosControler();
+					InformePaquetesListosView frame = new InformePaquetesListosView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +38,7 @@ public class InformePaquetesListosView extends JFrame {
 		});
 	}
 
-	public InformePaquetesListosView() {
+	public InformePaquetesListosView(InformePaqutesListosControler cont) {
 		setTitle("Informes - Paquetes Listos");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +50,10 @@ public class InformePaquetesListosView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getScrollPane());
 		contentPane.add(getBtInformes());
+		setLocationRelativeTo(null);
+		
+		cont.setView(this);
+		cont.init();
 	}
 
 	public JScrollPane getScrollPane() {
@@ -59,14 +67,8 @@ public class InformePaquetesListosView extends JFrame {
 	}
 	public JTable getTable() {
 		if (table == null) {
-			table = new JTable();
-			table.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"ID Paquete", "ID Pedido", "Numero de productos"
-				}
-			));
+			tableModel = new DefaultTableModel();
+			table = new JTable(tableModel);
 		}
 		return table;
 	}
@@ -77,5 +79,9 @@ public class InformePaquetesListosView extends JFrame {
 			btInformes.setBounds(10, 429, 110, 33);
 		}
 		return btInformes;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
 	}
 }

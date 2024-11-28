@@ -11,5 +11,15 @@ public class Queries {
 		public static final String PRODUCTO_INSERT = "insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recogidos) "
 												   + "values (?,?,?,?,0)";
 	}
+	
+	public class Paquete {
+		public static final String FIND_READY = "select idPaquete, idPedido, fecha "
+											  + "from Paquete "
+											  + "where paqueteEstado = 'Listo'";
+		
+		public static final String FIND_PRODUCTOS = "select idProducto, cantidad "
+												  + "from PaqueteProducto "
+												  + "where idPaquete = ?";
+	}
 
 }
