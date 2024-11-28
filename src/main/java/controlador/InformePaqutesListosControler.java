@@ -31,7 +31,7 @@ public class InformePaqutesListosControler {
 		view.getTableModel().addColumn("ID Pedido");
 		view.getTableModel().addColumn("Numero de productos");
 		for (PaqueteDto paquete : model.getPaquetes()) {
-			Object[] data = {paquete.idPaquete, paquete.idPaquete, model.getCantidadDeProductos(paquete)};
+			Object[] data = {paquete.idPaquete, paquete.idPedido, model.getCantidadDeProductos(paquete)};
 			view.getTableModel().addRow(data);
 		}
 	}
