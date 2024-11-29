@@ -42,22 +42,8 @@ INSERT INTO carrito (id_cliente, id_carrito) VALUES
 ('CLI000014', 'CAR000014'),
 ('CLI000015', 'CAR000015');
 
-
-
-delete from producto;
-insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estanteria, balda, precioEmpresa, iva, stock, minStock, stockReposicion) values  
-    -- Productos en la categoría Ferretería
-    (1, 'Llave Inglesa', 'Llaves y Pinzas', 'Llave inglesa ajustable', 15.99, 1, 1, 1, 10, 21, 50, 10, 100),
-    (2, 'Pinzas de Corte', 'Llaves y Pinzas', 'Pinzas de corte de precisión', 8.50, 1, 1, 2, 6, 21, 60, 15, 120),
-    (3, 'Destornillador Philips', 'Destornilladores', 'Destornillador Philips mediano', 4.99, 1, 1, 3, 3, 21, 100, 20, 200),
-    (4, 'Juego de Destornilladores', 'Destornilladores', 'Set de destornilladores de varios tamaños', 12.99, 2, 2, 1, 10, 21, 40, 10, 80),
-    (5, 'Taladro Percutor', 'Taladros', 'Taladro percutor con múltiples brocas', 49.99, 2, 2, 2, 40, 21, 20, 5, 40),
-    (6, 'Taladro Inalámbrico', 'Taladros', 'Taladro inalámbrico de 18V', 89.99, 2, 2, 3, 80, 21, 15, 3, 30),
-    (7, 'Sierra Circular', 'Sierras', 'Sierra circular para madera', 129.99, 2, 3, 1, 100, 21, 10, 2, 20),
-    (8, 'Sierra Caladora', 'Sierras', 'Sierra caladora para cortes curvos', 69.99, 2, 3, 2, 60, 21, 12, 3, 25),
-    
+  
 delete from Producto;
-
 insert into Producto(id, nombre, categoria, descripcion, precio, pasillo, 
 	estanteria, balda, precioEmpresa, iva, stock, minStock, stockReposicion) values  
     -- Productos en la categoría Ferretería
