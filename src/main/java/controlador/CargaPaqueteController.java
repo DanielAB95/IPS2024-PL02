@@ -3,6 +3,9 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 import modelo.modelo.CargaPaqueteModel;
 import vista.CargaPaqueteView;
 
@@ -23,7 +26,7 @@ public class CargaPaqueteController {
 	}
 	
 	public void init() {
-		
+		comboBoxValores();
 		accionPaquetesTabla();
 		accionRecepcionVehiculo();
 		accionEscanear();
@@ -32,13 +35,18 @@ public class CargaPaqueteController {
 	
 	
 
+	private void comboBoxValores() {
+		view.getComboBoxZonaReparto().setModel(new DefaultComboBoxModel<String>(new String[] {"Regional", "Nacional"}));
+		
+	}
+
 	private void accionFinalizar() {
 		view.getButtonFinalizar().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-			}
+				finalizaCarga();
+			}	
 		});;
 		
 	}
@@ -48,8 +56,7 @@ public class CargaPaqueteController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		
-				 
+				cargarPaquetes();
 			}
 		});
 		
@@ -72,6 +79,21 @@ public class CargaPaqueteController {
 		
 	}
 	
+	private void RecepcionVehiculo() {	
+		model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());	
+		filtrarPaquetes();
+		
+	}
+	
+	private void filtrarPaquetes() {
+		if(view.getComboBoxZonaReparto().getSelectedItem().equals("Regional")) {
+			
+		}else {
+			
+		}
+		
+	}
+
 	private boolean checkVehiculo() {
 		String text = view.getTextMatricula().getText().trim();
 		if(text.length() != 7) {
@@ -107,10 +129,31 @@ public class CargaPaqueteController {
 	    }
 	    return true;
 	}
-
-	private void RecepcionVehiculo() {	
-		model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());	
-		//seleccionar paquetes por zona reparto
+	
+	private void cargarPaquetes() {
+		JOptionPane.showMessageDialog(null, "Los paquetes seleccionados se han cargado en el vehiculo");
+		
 		
 	}
+	
+	private void finalizaCarga() {
+		JOptionPane.showMessageDialog(null, "Se ha finalizado el proceso de carga");
+		limpiarDatos();
+	}
+
+	private void limpiarDatos() {
+		view.getTextMatricula().setText("");
+		view.getComboBoxZonaReparto().setSelectedIndex(0);
+		limpiarModelo();
+		
+	}
+
+	private void limpiarModelo() {
+		for(int i=0 ; i<view.getTablePaquetes().getRowCount(); i++) {
+			view.getTablePaquetesModel().removeRow(i);
+		}
+		
+	}
+
+	
 }

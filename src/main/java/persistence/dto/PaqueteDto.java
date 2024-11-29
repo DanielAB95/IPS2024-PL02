@@ -1,11 +1,13 @@
 package persistence.dto;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class PaqueteDto {
 	
 	public int idPaquete;
 	public int idPedido;
+	public LocalDate fecha;
 	public String paqueteEstado;
 	public Map<ProductoDto, Integer> productos;
 	

@@ -19,6 +19,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.DefaultComboBoxModel;
 
 public class CargaPaqueteView extends JFrame {
 
@@ -28,11 +30,11 @@ public class CargaPaqueteView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel pnBotones;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
+	private JButton btCargaPaquetes;
+	private JButton btEmpaquetado;
+	private JButton btRecogida;
+	private JButton btWorkOrder;
+	private JButton btVolver;
 	private JComboBox<String> cbRegion;
 	private JLabel lbVehiculo;
 	private JTextField textField;
@@ -43,6 +45,7 @@ public class CargaPaqueteView extends JFrame {
 	private JButton btFinalizar;
 	private DefaultTableModel tableModelPaquetes;
 	private JButton btRecepcionVehiculo;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -90,50 +93,54 @@ public class CargaPaqueteView extends JFrame {
 	private JPanel getPnBotones() {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
-			pnBotones.setBounds(0, 745, 464, 59);
-			pnBotones.setLayout(new GridLayout(1, 5, 0, 0));
-			pnBotones.add(getBtnNewButton_4());
-			pnBotones.add(getBtnNewButton_3());
-			pnBotones.add(getBtnNewButton_2());
-			pnBotones.add(getBtnNewButton_1());
+			pnBotones.setBounds(0, 602, 434, 59);
+			pnBotones.setLayout(new GridLayout(0, 3, 0, 0));
+			pnBotones.add(getBtVolver());
+			pnBotones.add(getBtWorkOrder());
+			pnBotones.add(getBtRecogida());
+			pnBotones.add(getBtEmpaquetado());
+			pnBotones.add(getBtCargaPaquetes());
 			pnBotones.add(getBtnNewButton());
 		}
 		return pnBotones;
 	}
-	private JButton getBtnNewButton() {
-		if (btnNewButton == null) {
-			btnNewButton = new JButton("New button");
+	private JButton getBtCargaPaquetes() {
+		if (btCargaPaquetes == null) {
+			btCargaPaquetes = new JButton("Carga");
+			btCargaPaquetes.setEnabled(false);
 		}
-		return btnNewButton;
+		return btCargaPaquetes;
 	}
-	private JButton getBtnNewButton_1() {
-		if (btnNewButton_1 == null) {
-			btnNewButton_1 = new JButton("New button");
+	private JButton getBtEmpaquetado() {
+		if (btEmpaquetado == null) {
+			btEmpaquetado = new JButton("Empaquetado");
 		}
-		return btnNewButton_1;
+		return btEmpaquetado;
 	}
-	private JButton getBtnNewButton_2() {
-		if (btnNewButton_2 == null) {
-			btnNewButton_2 = new JButton("New button");
+	private JButton getBtRecogida() {
+		if (btRecogida == null) {
+			btRecogida = new JButton("Recogida");
 		}
-		return btnNewButton_2;
+		return btRecogida;
 	}
-	private JButton getBtnNewButton_3() {
-		if (btnNewButton_3 == null) {
-			btnNewButton_3 = new JButton("New button");
+	private JButton getBtWorkOrder() {
+		if (btWorkOrder == null) {
+			btWorkOrder = new JButton("WorkOrder");
 		}
-		return btnNewButton_3;
+		return btWorkOrder;
 	}
-	private JButton getBtnNewButton_4() {
-		if (btnNewButton_4 == null) {
-			btnNewButton_4 = new JButton("New button");
+	private JButton getBtVolver() {
+		if (btVolver == null) {
+			btVolver = new JButton("Volver");
+			btVolver.setEnabled(false);
 		}
-		return btnNewButton_4;
+		return btVolver;
 	}
 	private JComboBox<String> getCbRegion() {
 		if (cbRegion == null) {
 			cbRegion = new JComboBox<String>();
-			cbRegion.setBounds(58, 142, 261, 49);
+			cbRegion.setBounds(58, 126, 261, 33);
+			
 		}
 		return cbRegion;
 	}
@@ -141,7 +148,7 @@ public class CargaPaqueteView extends JFrame {
 		if (lbVehiculo == null) {
 			lbVehiculo = new JLabel("Matricula:");
 			lbVehiculo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lbVehiculo.setBounds(59, 26, 126, 33);
+			lbVehiculo.setBounds(58, 11, 126, 33);
 		}
 		return lbVehiculo;
 	}
@@ -149,7 +156,7 @@ public class CargaPaqueteView extends JFrame {
 		if (textField == null) {
 			textField = new JTextField();
 			textField.setFont(new Font("Tahoma", Font.BOLD, 18));
-			textField.setBounds(59, 59, 197, 49);
+			textField.setBounds(58, 43, 197, 39);
 			textField.setColumns(10);
 		}
 		return textField;
@@ -158,14 +165,14 @@ public class CargaPaqueteView extends JFrame {
 		if (lbZonaReparto == null) {
 			lbZonaReparto = new JLabel("Zona reparto:");
 			lbZonaReparto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lbZonaReparto.setBounds(59, 119, 99, 26);
+			lbZonaReparto.setBounds(58, 103, 99, 26);
 		}
 		return lbZonaReparto;
 	}
 	private JScrollPane getScpnPaquetes() {
 		if (scpnPaquetes == null) {
 			scpnPaquetes = new JScrollPane();
-			scpnPaquetes.setBounds(10, 272, 444, 342);
+			scpnPaquetes.setBounds(10, 232, 419, 274);
 			scpnPaquetes.setViewportView(getTbPedidos());
 		}
 		return scpnPaquetes;
@@ -175,6 +182,7 @@ public class CargaPaqueteView extends JFrame {
 			Object[] columnNames = {"   Id   ", "  Fecha  ", "Cliente"};
 			tableModelPaquetes = new MyTableModel(columnNames);
 			tbPedidos = new JTable(tableModelPaquetes);
+			tbPedidos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			TableColumnModel columnModel = tbPedidos.getColumnModel();
 			columnModel.getColumn(0).setPreferredWidth(40);
 			columnModel.getColumn(1).setPreferredWidth(60);
@@ -185,14 +193,14 @@ public class CargaPaqueteView extends JFrame {
 	private JButton getBtEscanear() {
 		if (btEscanear == null) {
 			btEscanear = new JButton("Escanear");
-			btEscanear.setBounds(33, 647, 149, 65);
+			btEscanear.setBounds(8, 517, 149, 65);
 		}
 		return btEscanear;
 	}
 	private JButton getBtFinalizar() {
 		if (btFinalizar == null) {
 			btFinalizar = new JButton("Finalizar");
-			btFinalizar.setBounds(270, 647, 159, 65);
+			btFinalizar.setBounds(254, 517, 159, 65);
 		}
 		return btFinalizar;
 	}
@@ -200,7 +208,7 @@ public class CargaPaqueteView extends JFrame {
 	private JButton getBtRecepcionVehiculo() {
 		if (btRecepcionVehiculo == null) {
 			btRecepcionVehiculo = new JButton("Recepcion Vehiculo");
-			btRecepcionVehiculo.setBounds(148, 212, 159, 49);
+			btRecepcionVehiculo.setBounds(108, 172, 159, 49);
 		}
 		return btRecepcionVehiculo;
 	}
@@ -230,4 +238,17 @@ public class CargaPaqueteView extends JFrame {
 	public JButton getButtonRecepcionVehiculos() {
 		return this.btRecepcionVehiculo;
 	}
+	
+	public DefaultTableModel getTablePaquetesModel() {
+		return this.tableModelPaquetes;
+	}
+	private JButton getBtnNewButton() {
+		if (btnNewButton == null) {
+			btnNewButton = new JButton("");
+			btnNewButton.setEnabled(false);
+		}
+		return btnNewButton;
+	}
+	
+	
 }
