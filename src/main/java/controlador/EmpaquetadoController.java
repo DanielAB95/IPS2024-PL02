@@ -19,7 +19,7 @@ import javax.swing.table.TableColumn;
 import modelo.modelo.AlbaranModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.EtiquetaModel;
-import modelo.modelo.RecogidaModel2;
+import modelo.modelo.RecogidaModel;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
@@ -28,7 +28,7 @@ import vista.AlbaranView;
 import vista.EmpaquetadoView;
 import vista.EtiquetaView;
 import vista.PedidoView;
-import vista.RecogidaView2;
+import vista.RecogidaView;
 
 public class EmpaquetadoController {
 	
@@ -332,9 +332,9 @@ public class EmpaquetadoController {
 	}
 	
 	private void mostarRecogida() {
-		RecogidaModel2 rm = new RecogidaModel2(em.getDB(), em.getAlmacenero().idAlmacenero);
-		RecogidaController2 rc = new RecogidaController2(rm);
-		RecogidaView2 rView = new RecogidaView2(rc);
+		RecogidaModel rm = new RecogidaModel(em.getDB(), em.getAlmacenero().idAlmacenero);
+		RecogidaController rc = new RecogidaController(rm);
+		RecogidaView rView = new RecogidaView(rc);
 		ew.dispose();
 		rView.setVisible(true);
 	}

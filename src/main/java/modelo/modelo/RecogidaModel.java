@@ -12,7 +12,7 @@ import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
 
-public class RecogidaModel2 {
+public class RecogidaModel {
 
 	List<WorkorderDto> workorders = new ArrayList<>();
 	AlmaceneroDto almacenero = new AlmaceneroDto();
@@ -32,14 +32,14 @@ public class RecogidaModel2 {
 												  + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
 	private final static String SQL_UPDATE_ESTADO_WORKORDER = "update Workorder set workorderEstado = ? where idWorkorder = ?";
 	
-	public RecogidaModel2(Database2 db2, int idAlmacenero) {
+	public RecogidaModel(Database2 db2, int idAlmacenero) {
 		db = db2;
 		almacenero.idAlmacenero = idAlmacenero;
 		setAlmacenero();
 		workordersListas();
 	}
 	
-	public RecogidaModel2() {
+	public RecogidaModel() {
 		db = new Database2();
 		db.createDatabase(false);
 		db.loadDatabase();
@@ -130,6 +130,7 @@ public class RecogidaModel2 {
 				if (isWoFinished(wdto)) {
 					workorders.remove(wdto);
 					db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Listo", wdto.idWorkorder);
+					//poner fecha
 				}
 				return true;
 			}
