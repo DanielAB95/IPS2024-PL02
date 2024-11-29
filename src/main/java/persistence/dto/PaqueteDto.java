@@ -10,7 +10,6 @@ public class PaqueteDto {
 	public int idPedido;
 	public LocalDate fecha;
 	public String paqueteEstado;
-	public LocalDate fecha;
 	
 	@Override
 	public int hashCode() {
