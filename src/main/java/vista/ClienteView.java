@@ -362,7 +362,7 @@ public class ClienteView extends JFrame {
 	}
 	public JTable getTablaProductos() {
 		if (tablaProductos == null) {
-			Object[] columnNames = { "Producto", "Precio","Descripcion"};
+			Object[] columnNames = { "Producto", "Precio","Descripcion","Stock"};
 			tableModelProductos = new DefaultTableModel(columnNames,0) {
 			
 				private static final long serialVersionUID = 1L;
@@ -378,6 +378,7 @@ public class ClienteView extends JFrame {
 			columnModel.getColumn(0).setPreferredWidth(20);
 			columnModel.getColumn(1).setPreferredWidth(5);
 			columnModel.getColumn(2).setPreferredWidth(100);
+			columnModel.getColumn(3).setPreferredWidth(1);
 			tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
 		return tablaProductos;

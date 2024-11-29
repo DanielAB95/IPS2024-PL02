@@ -67,6 +67,7 @@ public class Database2 extends DbUtil {
 	 * (si onlyOnce=true solo ejecutara el script la primera vez
 	 */
 	public void loadDatabase() {
+		executeScript(SQL_SCHEMA);
 		executeScript(SQL_LOAD);
 	}
 	

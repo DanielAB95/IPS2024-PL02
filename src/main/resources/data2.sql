@@ -56,6 +56,20 @@ insert into producto(id, nombre, categoria, descripcion, precio, pasillo, estant
     (7, 'Sierra Circular', 'Sierras', 'Sierra circular para madera', 129.99, 2, 3, 1, 100, 21, 10, 2, 20),
     (8, 'Sierra Caladora', 'Sierras', 'Sierra caladora para cortes curvos', 69.99, 2, 3, 2, 60, 21, 12, 3, 25),
     
+delete from Producto;
+
+insert into Producto(id, nombre, categoria, descripcion, precio, pasillo, 
+	estanteria, balda, precioEmpresa, iva, stock, minStock, stockReposicion) values  
+    -- Productos en la categoría Ferretería
+    (1, 'Llave Inglesa', 'Llaves y Pinzas', 'Llave inglesa ajustable', 15.99, 1, 1, 1, 10, 12, 50, 10, 20),
+    (2, 'Pinzas de Corte', 'Llaves y Pinzas', 'Pinzas de corte de precisión', 8.50, 1, 1, 2, 6, 12, 100, 15, 30),
+    (3, 'Destornillador Philips', 'Destornilladores', 'Destornillador Philips mediano', 4.99, 1, 1, 3, 3, 12, 200, 20, 50),
+    (4, 'Juego de Destornilladores', 'Destornilladores', 'Set de destornilladores de varios tamaños', 12.99, 2, 2, 1, 10, 12, 75, 15, 30),
+    (5, 'Taladro Percutor', 'Taladros', 'Taladro percutor con múltiples brocas', 49.99, 2, 2, 2, 40, 12, 30, 5, 15),
+    (6, 'Taladro Inalámbrico', 'Taladros', 'Taladro inalámbrico de 18V', 89.99, 2, 2, 3, 80, 12, 25, 5, 10),
+    (7, 'Sierra Circular', 'Sierras', 'Sierra circular para madera', 129.99, 2, 3, 1, 100, 12, 15, 3, 5),
+    (8, 'Sierra Caladora', 'Sierras', 'Sierra caladora para cortes curvos', 69.99, 2, 3, 2, 60, 12, 20, 4, 8),
+     
     -- Productos en la categoría Almacén
     (9, 'Caja de Plástico 50L', 'Cajas y Contenedores', 'Caja de almacenamiento de 50 litros', 19.99, 2, 3, 3, 10, 21, 30, 10, 50),
     (10, 'Caja de Plástico 100L', 'Cajas y Contenedores', 'Caja de almacenamiento de 100 litros', 29.99, 3, 4, 1, 10, 21, 20, 5, 40),

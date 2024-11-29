@@ -54,24 +54,26 @@ public class ClienteController {
 			public void actionPerformed(ActionEvent e) {
 				if (!model.getCarrito().isEmpty()) {
 					
-					//si no es invitado, y es cliente de empresa
-					String nombreUsuario = view.getLblNombreUsuario().getText();
-					if (!nombreUsuario.equals("Invitado") && model.esClienteDeEmpresa(nombreUsuario)) {
+					if (model.checkStockCarrito()) {
 						
-						JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
-			                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
-						model.confirmarPedido();
-						model.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
-					} else {
-						
-						view.dispose();
-						CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
-						//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
-						//cambiar los dto y databases al model en vez de tenerlo en view
-						frame.getLblNombreUsuario().setText(view.getDto().getName());
-						frame.setLocationRelativeTo(view);
-						view.dispose();
-						frame.setVisible(true);
+						String nombreUsuario = view.getLblNombreUsuario().getText();
+						if (!nombreUsuario.equals("Invitado") && model.esClienteDeEmpresa(nombreUsuario)) {
+							
+							JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
+				                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
+							model.confirmarPedido();
+							model.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+						} else {
+							
+							view.dispose();
+							CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
+							//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
+							//cambiar los dto y databases al model en vez de tenerlo en view
+							frame.getLblNombreUsuario().setText(view.getDto().getName());
+							frame.setLocationRelativeTo(view);
+							view.dispose();
+							frame.setVisible(true);
+						}
 					}
 					
 					
@@ -195,8 +197,10 @@ public class ClienteController {
 			rellenarModelo(list);
 			view.getListaProductos().setModel(modeloProducto);
 		}
+		
 		List<CategoriaDto> list = model.getSubCategoria(categoria);
 		rellenarModelo(list);
+		
 		view.getListaProductos().setModel(modeloProducto);
 		if(modeloProducto.isEmpty()) {
 			List<Producto> listProductos = model.getProductos(categoria);
@@ -205,10 +209,10 @@ public class ClienteController {
 		}
 	}
 	
-	private void rellenarModeloProducto(List<Producto> productos) {
+	private void rellenarModeloProducto(List<Producto> productos) { //CAMBIAR AQUI LO QUE HAYA QUE PONER EN STOCK(Ej: nº o Bajo Stock, etc)
 		view.mostrarPanel("pnTabla");
 		for(Producto p : productos) {
-			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion()};
+			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion(), p.getStock()};
 			view.getTableProductosModel().addRow(filaNueva);
 		}
 	}

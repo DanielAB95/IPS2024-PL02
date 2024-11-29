@@ -33,6 +33,7 @@ public class ClienteModel {
 	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
 	private static final String SQL_INSERTAR_PRODUCTOS_CARRITO = "insert into producto_carrito(id_producto, cantidad, id_carrito) values (?, ?, ?)";
 	private static final String SQL_GET_PRODUCTO_CARRITO = "select * from producto_carrito";
+	private static final String SQL_REDUCE_STOCK_PRODUCTO = "UPDATE producto SET stock = ? WHERE id = ?";
 	
 	private Database2 db;
 	private Carrito carrito;
@@ -62,7 +63,19 @@ public class ClienteModel {
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
 		
 		for (int i = 0; i < productos.size(); i++) {
-			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
+			
+//			for (int j = 0; j < productos.get(i).length; j++) {
+//				System.out.println(productos.get(i)[j].toString());
+//			} 
+			
+			
+			//Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
+			Producto p = new Producto( (int)productos.get(i)[0], (String)productos.get(i)[1], 
+					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
+					(int)productos.get(i)[5], (int)productos.get(i)[6], (int)productos.get(i)[7],
+					(int)productos.get(i)[8], (int)productos.get(i)[9], (int)productos.get(i)[10],
+					(int)productos.get(i)[11], (int)productos.get(i)[12] );
+			
 			resultado.add(p);
 		}
 		
@@ -95,11 +108,13 @@ public class ClienteModel {
 
 	public List<Producto> getProductos(String categoria) {
 		List<Producto> list = new ArrayList<Producto>();
-		List<Object[]> listDb = db.executeQueryArray(SQL_LISTA_PRODUCTOS, categoria);
-		for (int i = 0; i < listDb.size(); i++) {
-			Producto p = new Producto((int) listDb.get(i)[0], (String) listDb.get(i)[1],
-					(String) listDb.get(i)[2], (String) listDb.get(i)[3], (double) listDb.get(i)[4],
-					(int) listDb.get(i)[5], (int) listDb.get(i)[6], (int) listDb.get(i)[7]);
+		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTOS, categoria);
+		for (int i = 0; i < productos.size(); i++) {
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], 
+					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
+					(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7],
+					(int)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
+					(int)productos.get(i)[11],(int)productos.get(i)[12]);
 			list.add(p);
 		}
 		return list;
@@ -128,7 +143,9 @@ public class ClienteModel {
 		}
 		Producto p = new Producto((int) listDb.get(0)[0], (String) listDb.get(0)[1],
 				(String) listDb.get(0)[2], (String) listDb.get(0)[3], (double) listDb.get(0)[4],
-				(int) listDb.get(0)[5], (int) listDb.get(0)[6], (int) listDb.get(0)[7]);
+				(int) listDb.get(0)[5], (int) listDb.get(0)[6], (int) listDb.get(0)[7], 
+				 (int) listDb.get(0)[8],  (int) listDb.get(0)[9],  (int) listDb.get(0)[10], (int) listDb.get(0)[11],
+						 (int) listDb.get(0)[12]);
 		return p;
 	}
 	
@@ -161,6 +178,7 @@ public class ClienteModel {
 			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado);
 				
 			insertarProductosPedido(nuevoID);
+			reduceStockProductos();
 			
 			//JOptionPane.showMessageDialog(this.v, "Gracias por ");
 			
@@ -179,6 +197,22 @@ public class ClienteModel {
 			this.vista.dispose();
 			vista.setVisible(true);
 		}
+	}
+	
+	private void reduceStockProductos() {
+		//SQL_REDUCE_STOCK_PRODUCTO   UPDATE producto SET stock = ? WHERE id_producto = ? 
+		
+		List<Object[]> productosCarrito = this.carrito.getCarrito();
+		
+		for (Object[] o: productosCarrito) {
+			
+			int oldStock = (int)((Producto) o[0]).getStock();
+			int cantidadPedido = (int) o[1];
+			
+			
+			db.executeUpdate(SQL_REDUCE_STOCK_PRODUCTO, oldStock - cantidadPedido, ((Producto) o[0]).getId());
+		}
+		
 	}
 	
 	private String getClientIDfromName(String name) {
@@ -356,6 +390,22 @@ public class ClienteModel {
 		printProductoCarrito();
 	}
 	
+	
+	//checkea si se compra mas cantidad de la que hay en stock de algun producto del carrito
+		public boolean checkStockCarrito() {
+			List<Object[]> productosCarrito = this.carrito.getCarrito();
+			
+			for (Object[] o: productosCarrito) {
+				
+				if ( ((Producto) o[0]).getStock() < (int) o[1]) {
+					
+					JOptionPane.showMessageDialog(vista, "Del producto: " + ((Producto) o[0]).getNombre() + " quedan " + ((Producto) o[0]).getStock() + " unidades, \nPor favor, modifique la cantidad.");
+					return false;
+				}
+				
+			}
+			return true;
+		}
 	
 
 }
