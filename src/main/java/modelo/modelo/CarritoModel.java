@@ -28,9 +28,10 @@ public class CarritoModel {
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
-	private static final String SQL_GET_CLIENTES = "select * from cliente";
+	//private static final String SQL_GET_CLIENTES = "select * from cliente";
 	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
 	private static final String SQL_GET_PRODUCTO_CARRITO = "select * from producto_carrito";
+	private static final String SQL_REDUCE_STOCK_PRODUCTO = "UPDATE producto SET stock = ? WHERE id = ?";
 	
 	private Carrito carrito;
 	private Database2 db;
@@ -51,7 +52,12 @@ public class CarritoModel {
 		List<Object[]> productos = db.executeQueryArray(SQL_LISTA_PRODUCTO); 
 		
 		for (int i = 0; i < productos.size(); i++) {
-			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], (String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4],(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7]);
+			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], 
+					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
+					(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7],
+					(int)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
+					(int)productos.get(i)[11],(int)productos.get(i)[12]);
+			
 			resultado.add(p);
 		}
 		
@@ -108,6 +114,8 @@ public class CarritoModel {
 				
 			insertarProductosPedido(nuevoID);
 			
+			reduceStockProductos();
+			
 			//JOptionPane.showMessageDialog(this.v, "Gracias por ");
 			
 			System.out.println("-- DESPUES de confirmar compra --");
@@ -133,6 +141,22 @@ public class CarritoModel {
 	}
 	
 	
+
+	private void reduceStockProductos() {
+		//SQL_REDUCE_STOCK_PRODUCTO   UPDATE producto SET stock = ? WHERE id_producto = ? 
+		
+		List<Object[]> productosCarrito = this.carrito.getCarrito();
+		
+		for (Object[] o: productosCarrito) {
+			
+			int oldStock = (int)((Producto) o[0]).getStock();
+			int cantidadPedido = (int) o[1];
+			
+			
+			db.executeUpdate(SQL_REDUCE_STOCK_PRODUCTO, oldStock - cantidadPedido, ((Producto) o[0]).getId());
+		}
+		
+	}
 
 	private boolean checkHayProductos() {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
@@ -372,5 +396,22 @@ public class CarritoModel {
 		
 		System.out.println();
 		printProductoCarrito();
+	}
+	
+	
+	//checkea si se compra mas cantidad de la que hay en stock de algun producto del carrito
+	public boolean checkStockCarrito() {
+		List<Object[]> productosCarrito = this.carrito.getCarrito();
+		
+		for (Object[] o: productosCarrito) {
+			
+			if ( ((Producto) o[0]).getStock() < (int) o[1]) {
+				
+				JOptionPane.showMessageDialog(v, "Del producto: " + ((Producto) o[0]).getNombre() + " quedan " + ((Producto) o[0]).getStock() + " unidades, \nPor favor, modifique la cantidad.");
+				return false;
+			}
+			
+		}
+		return true;
 	}
 }

@@ -136,36 +136,38 @@ public class CarritoController {
 	}
 	
 	private void confirmarPedido() {
-		if (view.getRdbtnTransferencia().isSelected()) {
-			
-			PagoPorTransferenciaView vista = new PagoPorTransferenciaView(modelo);
-			vista.setLocationRelativeTo(view);
-			view.dispose();
-			
-			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+		if (modelo.checkStockCarrito()) {
+			if (view.getRdbtnTransferencia().isSelected()) {
+				
+				PagoPorTransferenciaView vista = new PagoPorTransferenciaView(modelo);
+				vista.setLocationRelativeTo(view);
+				view.dispose();
+				
+				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+					modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+				}
+				vista.setVisible(true);
+				
+			} else if (view.getRdbtnContrarrembolso().isSelected()){
+				
+				JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
+	                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
+				
+				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+					modelo.borraCarritoCliente(view.getDto().getName()); 
+				}
+				modelo.confirmarPedido();
+			} else {
+				
+				PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
+				vista.setLocationRelativeTo(view);
+				view.dispose();
+				
+				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+					modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+				}
+				vista.setVisible(true);
 			}
-			vista.setVisible(true);
-			
-		} else if (view.getRdbtnContrarrembolso().isSelected()){
-			
-			JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
-                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
-			
-			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-				modelo.borraCarritoCliente(view.getDto().getName()); 
-			}
-			modelo.confirmarPedido();
-		} else {
-			
-			PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
-			vista.setLocationRelativeTo(view);
-			view.dispose();
-			
-			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-				modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
-			}
-			vista.setVisible(true);
 		}
 	}
 	
