@@ -267,7 +267,9 @@ insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recog
 
 delete from Paquete;
 insert into Paquete(idPaquete, idPedido, paqueteEstado, fecha) values
-	(2, 3, 'Listo', '2024-10-25');
+	(2, 3, 'Listo', '2024-10-25'),
+    (1, 2, 'Listo', '2024-11-30'),
+    (4, 1, 'Listo', '2024-02-01');
 
 delete from PaqueteProducto;
 insert into PaqueteProducto(idPaquete, idProducto, cantidad) values

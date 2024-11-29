@@ -10,14 +10,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 
-import giis.demo.util.SwingUtil;
 import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
 import persistence.dto.CategoriaDto;
 import vista.CarritoView;
-import vista.ClienteLoginView;
 import vista.ClienteView;
 
 public class ClienteController {
