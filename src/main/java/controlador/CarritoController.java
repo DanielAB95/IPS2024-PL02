@@ -100,19 +100,23 @@ public class CarritoController {
                     // obtener la cantidad modificada
                     int nuevaCantidad = Integer.valueOf((String) view.getTableModel().getValueAt(fila, 1));
                     
-                    String nuevoPrecio = modelo.getPrecioPorNombre((String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+                    if (nuevaCantidad > 0) {
+	                    String nuevoPrecio = modelo.getPrecioPorNombre((String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+	                    
+	                    view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
+	                    
+	                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+	                   
+	                    if (modelo.doesClientExist(modelo.getDto().getName())) {
+	                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+	                    }
+	                    	
+	                    actualizaLblTotal();
                     
-                    view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
-                    
-                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
-                   
-                    if (modelo.doesClientExist(modelo.getDto().getName())) {
-                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    } else {
+                    	JOptionPane.showMessageDialog(view, "La cantidad del Producto debe ser mayor que 0.");
+                    	view.getTableModel().setValueAt("1", fila, 1);
                     }
-                    	
-                    actualizaLblTotal();
-                    
-                    
                 }
             }
         });
