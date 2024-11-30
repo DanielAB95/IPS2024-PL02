@@ -14,6 +14,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
+import persistence.dto.ClienteDto;
 //import vista.ClienteView.MyTableModel;
 import vista.ClienteView.MyTableModel;
 
@@ -48,7 +49,7 @@ public class CarritoView extends JFrame {
 	private CarritoController controller;
 	private JLabel lblUsuario;
 	private JLabel lblNombreUsuario;
-	private ClienteDTO dto;
+	private ClienteDto dto;
 	private JTable table;
 	private DefaultTableModel tableModelCarrito;
 	private JLabel lblNombre;
@@ -97,7 +98,7 @@ public class CarritoView extends JFrame {
 	 * 
 	 * 
 	 */
-	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
+	public CarritoView(Carrito c, Database2 db, ClienteDto dto) {
 		setTitle("Confirmación de Compra: Datos de Envío");
 		this.database = db;
 		
@@ -415,7 +416,7 @@ public class CarritoView extends JFrame {
 		}
 		return labelDescTransfer7;
 	}
-	public ClienteDTO getDto() {
+	public ClienteDto getDto() {
 		return this.dto;
 	}
 }

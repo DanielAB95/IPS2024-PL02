@@ -31,14 +31,14 @@ public class CarritoController {
 	public void initView() {
 		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
 		
-		if (modelo.doesClientExist(modelo.getDto().getName())) {
+		if (modelo.doesClientExist(modelo.getDto().nombreUsusario)) {
 			rellenaDatosCliente();
 		}
 		
 	}
 	
 	private void rellenaDatosCliente() {
-		Object[] datosCliente = modelo.getClient(modelo.getDto().getName());
+		Object[] datosCliente = modelo.getClient(modelo.getDto().nombreUsusario);
 		view.getTextNombre().setText((String) datosCliente[2]);
 		view.getTextTelefono().setText((String) datosCliente[3]);
 		view.getTextPais().setText((String) datosCliente[4]);
@@ -64,8 +64,8 @@ public class CarritoController {
 					view.getTableModel().removeRow(filaSeleccionada);
 					view.getCarrito().removeFromCarrito(nombreProducto);
 					
-					if (modelo.doesClientExist(modelo.getDto().getName())) {
-							modelo.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+					if (modelo.doesClientExist(modelo.getDto().nombreUsusario)) {
+							modelo.eliminaProductoCarrito(nombreProducto, view.getDto().nombreUsusario);
 					}
 					
 					actualizaLblTotal();
@@ -79,7 +79,7 @@ public class CarritoController {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (checkTodosLosCamposRellenados() && checkMetodoDePago()) {
-					if (modelo.doesClientExist(modelo.getDto().getName()))
+					if (modelo.doesClientExist(modelo.getDto().nombreUsusario))
 						confirmarPedido();
 					else {
 						creaNuevoCliente();
@@ -107,8 +107,8 @@ public class CarritoController {
 	                    
 	                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
 	                   
-	                    if (modelo.doesClientExist(modelo.getDto().getName())) {
-	                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+	                    if (!modelo.getDto().nombreUsusario.equals("Invitado") && modelo.doesClientExist(modelo.getDto().nombreUsusario)) {
+	                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().nombreUsusario);
 	                    }
 	                    	
 	                    actualizaLblTotal();
@@ -136,7 +136,8 @@ public class CarritoController {
 		clientData[8] = "PARTICULAR";
 		
 		modelo.createNewClient(clientData);
-		modelo.getDto().setName(clientData[1]);
+		//modelo.getDto().setName(clientData[1]);
+		modelo.getDto().nombreUsusario = clientData[1];
 	}
 	
 	private void confirmarPedido() {
@@ -148,7 +149,7 @@ public class CarritoController {
 				view.dispose();
 				
 				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-					modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+					modelo.borraCarritoCliente(view.getDto().nombreUsusario); //puede moverse a controlador de la siguiente ventana
 				}
 				vista.setVisible(true);
 				
@@ -158,7 +159,7 @@ public class CarritoController {
 	                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
 				
 				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-					modelo.borraCarritoCliente(view.getDto().getName()); 
+					modelo.borraCarritoCliente(view.getDto().nombreUsusario); 
 				}
 				modelo.confirmarPedido("Contrarrembolso");
 			} else {
@@ -168,7 +169,7 @@ public class CarritoController {
 				view.dispose();
 				
 				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-					modelo.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+					modelo.borraCarritoCliente(view.getDto().nombreUsusario); //puede moverse a controlador de la siguiente ventana
 				}
 				vista.setVisible(true);
 			}

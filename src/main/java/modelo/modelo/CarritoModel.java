@@ -14,7 +14,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
-
+import persistence.dto.ClienteDto;
 import vista.AppInicioView;
 import vista.CarritoView;
 
@@ -36,10 +36,10 @@ public class CarritoModel {
 	private Carrito carrito;
 	private Database2 db;
 	private CarritoView v;
-	private ClienteDTO dto;
+	private ClienteDto dto;
 	private List<Producto> productosPosibles;
 	
-	public CarritoModel (Carrito c, CarritoView v, Database2 db, ClienteDTO dto) {
+	public CarritoModel (Carrito c, CarritoView v, Database2 db, ClienteDto dto) {
 		this.carrito = c;
 		this.v = v;
 		this.db = db;
@@ -110,7 +110,7 @@ public class CarritoModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.getName()), fecha, estado, tipoPago);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.nombreUsusario), fecha, estado, tipoPago);
 				
 			insertarProductosPedido(nuevoID);
 			
@@ -326,7 +326,7 @@ public class CarritoModel {
 		System.out.println("<-----------------  FIN  -------------------->");
 	}
 
-	public ClienteDTO getDto() {
+	public ClienteDto getDto() {
 		return dto;
 	}
 

@@ -13,6 +13,7 @@ import modelo.dto.ClienteDTO;
 import modelo.dto.Producto;
 import modelo.modelo.ClienteModel;
 import modelo.modelo.PedidoModel;
+import persistence.dto.ClienteDto;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -58,7 +59,7 @@ public class ClienteView extends JFrame {
 	private JLabel lblNombreUsuario;
 	private JLabel lblCarrito;
 	private  DefaultListModel<String> listModel;
-	private ClienteDTO dto;
+	private ClienteDto dto;
 	private DefaultTableModel tableModelCarrito;
 	private DefaultTableModel tableModelProductos;
 	private JButton btnEliminar;
@@ -82,7 +83,7 @@ public class ClienteView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClienteView(Database2 db, ClienteDTO dto) {
+	public ClienteView(Database2 db, ClienteDto dto) {
 		setTitle("Página de compra");
 		this.db = db;
 		this.carrito = new Carrito();
@@ -294,7 +295,7 @@ public class ClienteView extends JFrame {
 		return listModel;
 	}
 
-	public ClienteDTO getDto() {
+	public ClienteDto getDto() {
 		return dto;
 	}
 	

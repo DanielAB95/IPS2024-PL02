@@ -175,7 +175,8 @@ public class ClienteModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
+			//db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().nombreUsusario), fecha, estado, tipoPago);
 				
 			insertarProductosPedido(nuevoID);
 			reduceStockProductos();

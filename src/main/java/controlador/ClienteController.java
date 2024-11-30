@@ -40,11 +40,11 @@ public class ClienteController {
 		//System.out.print(lview.getTextNombreUsuario().getText()); mejor usar dto
 		//cambiar los dto y databases al model en vez de tenerlo en view
 		view.getTextCategoria().setText("Inicio");
-		view.getLblNombreUsuario().setText(view.getDto().getName());
+		view.getLblNombreUsuario().setText(view.getDto().nombreUsusario);
 		//view.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
 		
-		if (!view.getDto().getName().equals("Invitado")) {
-			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().getName());
+		if (!view.getDto().nombreUsusario.equals("Invitado")) {
+			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().nombreUsusario);
 		}
 		
 		getListaProductos(null);
@@ -65,14 +65,14 @@ public class ClienteController {
 							JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
 				                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
 							model.confirmarPedido("Transferencia");
-							model.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+							model.borraCarritoCliente(view.getDto().nombreUsusario); //puede moverse a controlador de la siguiente ventana
 						} else {
 							
 							view.dispose();
 							CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
 							//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
 							//cambiar los dto y databases al model en vez de tenerlo en view
-							frame.getLblNombreUsuario().setText(view.getDto().getName());
+							frame.getLblNombreUsuario().setText(view.getDto().nombreUsusario);
 							frame.setLocationRelativeTo(view);
 							view.dispose();
 							frame.setVisible(true);
@@ -122,7 +122,7 @@ public class ClienteController {
 					
 					
 					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-						model.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+						model.eliminaProductoCarrito(nombreProducto, view.getDto().nombreUsusario);
 					}
 					
 					actualizaPrecioTotal();
@@ -174,7 +174,7 @@ public class ClienteController {
                         view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                        
                         if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-                        	model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                        	model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().nombreUsusario);
                         }
                         actualizaPrecioTotal();
                         
@@ -233,6 +233,14 @@ public class ClienteController {
 				stockMessage = "No Disponible";
 			else
 				stockMessage = "Disponible";
+			
+			int precioMostrado = 0;
+			
+//			if (view.getDto().tipoCliente.equals("EMPRESA")) {
+//				
+//			} else {
+//				
+//			}
 			
 			
 			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion(), stockMessage};
@@ -308,7 +316,7 @@ public class ClienteController {
 				
 				
 				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-					model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
+					model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().nombreUsusario);
 					model.printProductoCarrito();
 				}
 			} else {

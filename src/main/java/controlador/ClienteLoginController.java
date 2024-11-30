@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import modelo.dto.ClienteDTO;
 import modelo.modelo.LoginModel;
+import persistence.dto.ClienteDto;
 import vista.ClienteLoginView;
 import vista.ClienteView;
 
@@ -26,10 +27,11 @@ public class ClienteLoginController {
 		vista.getBtnInvitado().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//hacer proceso como cliente invitado
-				ClienteDTO dto = new ClienteDTO("Invitado");
+				ClienteDto dto = new ClienteDto();
+				dto.nombreUsusario = "Invitado";
 				
 				ClienteView compra = new ClienteView(vista.getDb(), dto);
-				compra.getLblNombreUsuario().setText(dto.getName());
+				compra.getLblNombreUsuario().setText(dto.nombreUsusario);
 				compra.setLocationRelativeTo(vista);
 				vista.dispose();
 				compra.setVisible(true);
@@ -43,7 +45,10 @@ public class ClienteLoginController {
 					
 					if (model.doesClientExist(vista.getTextNombreUsuario().getText())) {
 
-						ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
+						//ClienteDTO dto = new ClienteDTO(vista.getTextNombreUsuario().getText());
+						ClienteDto dto = new ClienteDto();
+						dto.nombreUsusario = vista.getTextNombreUsuario().getText();
+						model.rellenaDto(dto);
 						
 						ClienteView compra = new ClienteView(vista.getDb(), dto);
 						compra.getLblNombreUsuario().setText(vista.getTextNombreUsuario().getText());
