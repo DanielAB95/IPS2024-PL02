@@ -24,7 +24,7 @@ public class PagoPorTransferenciaController {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(view, "¡Gracias por tu compra!" +
 	                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
-				model.confirmarPedido();
+				model.confirmarPedido("Transferencia");
 				view.dispose();
 			}
 		});

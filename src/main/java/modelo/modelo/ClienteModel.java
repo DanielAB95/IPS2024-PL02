@@ -27,7 +27,7 @@ public class ClienteModel {
 	public static final String SQL_PRODUCTO = "select * from Producto where nombre = ?";
 	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado) values (?, ?, ?, ?)";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago) values (?, ?, ?, ?, ?)";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
 	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
@@ -165,7 +165,7 @@ public class ClienteModel {
 	// ---------------------- CAMBIAR ---------------------- 
 	//DE AQUI PARA ABAJO CODIGO REPETIDO CON CARRITO MODEL, MOVER A OTRA CLASE padre de ambos
 	
-	public void confirmarPedido() {
+	public void confirmarPedido(String tipoPago) {
 		if (checkHayProductos()) {
 			System.out.println("-- ANTES de confirmar compra -- ");
 			mostrarPedidos();
@@ -175,7 +175,7 @@ public class ClienteModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
 				
 			insertarProductosPedido(nuevoID);
 			reduceStockProductos();
@@ -275,7 +275,7 @@ public class ClienteModel {
 		List<Object[]> pedidos = db.executeQueryArray(SQL_GET_PEDIDOS);
 		
 		for (Object[] p: pedidos) {
-			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3]);
+			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3] + " " + p[4]);
 		}
 		System.out.println();
 		

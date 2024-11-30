@@ -31,7 +31,7 @@ public class PagoConTarjetaController {
 		                       " Hemos recibido tu pedido y se enviará a la dirección proporcionada");
 					
 					
-					model.confirmarPedido();
+					model.confirmarPedido("Tarjeta");
 					view.dispose();
 				}
 			}

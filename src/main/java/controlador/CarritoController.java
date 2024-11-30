@@ -156,7 +156,7 @@ public class CarritoController {
 				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
 					modelo.borraCarritoCliente(view.getDto().getName()); 
 				}
-				modelo.confirmarPedido();
+				modelo.confirmarPedido("Contrarrembolso");
 			} else {
 				
 				PagoConTarjetaView vista = new PagoConTarjetaView(modelo);
