@@ -15,7 +15,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 
 public class InformeRepuestoView extends JFrame {
@@ -84,11 +83,12 @@ public class InformeRepuestoView extends JFrame {
 	}
 	private JTable getTbProductos() {
 		if (tbProductos == null) {
-			Object[] columnNames = {" Producto ", "  Descripcion  ", " Stock actual ", " Cantidad a pedir "};
+			Object[] columnNames = {" Id ", " Nombre ", "  Descripcion  ", " Stock actual ", " Cantidad a pedir "};
 			tableModelProductos = new DefaultTableModel(columnNames,0);
 			tbProductos = new JTable(tableModelProductos);
 			tbProductos.setEnabled(false);
 			TableColumnModel columnModel = tbProductos.getColumnModel();
+			columnModel.getColumn(0).setPreferredWidth(20);
 			columnModel.getColumn(0).setPreferredWidth(30);
 			columnModel.getColumn(1).setPreferredWidth(150);
 			columnModel.getColumn(2).setPreferredWidth(20);

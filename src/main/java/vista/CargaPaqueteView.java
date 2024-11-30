@@ -76,6 +76,7 @@ public class CargaPaqueteView extends JFrame {
 		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);;
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

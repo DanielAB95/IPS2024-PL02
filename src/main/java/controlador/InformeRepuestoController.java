@@ -32,7 +32,7 @@ public class InformeRepuestoController {
 		List<ProductoDto> productos = model.productosReponer();
 		for(ProductoDto dto : productos) {
 			int cantidadRepuesto = dto.stockReposicion - dto.stock;
-			Object[] filaNueva = {dto.nombre, dto.descripcion, dto.stock, cantidadRepuesto};
+			Object[] filaNueva = {dto.idProducto,dto.nombre, dto.descripcion, dto.stock, cantidadRepuesto};
 			view.getTableProductosModel().addRow(filaNueva);
 		}	
 	}
@@ -42,9 +42,6 @@ public class InformeRepuestoController {
 			view.getTableProductosModel().removeRow(i);
 		}	
 	}
-	
-	
-	
 }
 
 

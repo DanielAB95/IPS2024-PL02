@@ -6,8 +6,6 @@ import javax.swing.table.DefaultTableModel;
 
 import modelo.modelo.InformeVentasModel;
 import persistence.dto.ClienteDto;
-import persistence.dto.ProductoDto;
-import vista.InformeRepuestoView;
 import vista.InformeVentasTipoMinoristaView;
 
 public class InformeVentasTipoMinoristaController {
@@ -57,11 +55,9 @@ public class InformeVentasTipoMinoristaController {
 //		}	
 	}
 	
-	
 	private void limpiarModelo() {
 		for(int i = tbVentasModel.getRowCount()-1  ; i>=0; i++) {
 			tbVentasModel.removeRow(i);
 		}	
 	}
-	
 }

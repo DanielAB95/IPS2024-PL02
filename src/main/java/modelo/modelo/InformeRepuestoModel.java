@@ -8,7 +8,7 @@ import persistence.dto.ProductoDto;
 
 public class InformeRepuestoModel {
 	private Database2 db;
-	private final static String FIND_PRODUCTOS_REPONER = "select nombre, descripcion, stock, stockReposicion from Producto where stock < minStock";
+	private final static String FIND_PRODUCTOS_REPONER = "select id, nombre, descripcion, stock, stockReposicion from Producto where stock < minStock";
 	
 	public InformeRepuestoModel(Database2 db) {
 		this.db = db;
@@ -29,10 +29,11 @@ public class InformeRepuestoModel {
 		
 		for(Object[] o : result) {
 			ProductoDto dto = new ProductoDto();
-			dto.nombre = (String)o[0];
-			dto.descripcion = (String)o[1];		
-			dto.stock = (int)o[2];
-			dto.stockReposicion = (int)o[3];
+			dto.idProducto = (int)o[0];
+			dto.nombre = (String)o[1];
+			dto.descripcion = (String)o[2];		
+			dto.stock = (int)o[3];
+			dto.stockReposicion = (int)o[4];
 			productos.add(dto);
 		}
 		return productos;

@@ -19,17 +19,19 @@ public class CargaPaqueteModel {
 	private VehiculoDto vehiculo;
 	
 	private final static String SQL_FIND_ALMACENERO = "select idAlmacenero, nombre, apellido from Almacenero where idAlmacenero = ?";
-	private final static String ADD_VEHICULO = "insert into Vehiculo(matricula,zonaReparto) values (?,?)";
+	private final static String ADD_VEHICULO = "insert into Vehiculo(matricula,zonaReparto,fecha) values (?,?,?)";
 	private final static String GET_VEHICULO_BY_MATRICULA = "select matricula, zonaReparto from Vehiculo where matricula = ?";
 	private final static String GET_PAQUETES_ZONA_REGIONAL = "select p.idPaquete, p.fecha, c.nombre "
 																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
 																+ "inner join Cliente c on pe.idCliente = c.idCliente "
-																+ "where c.region = 'Asturias' and  p.paqueteEstado = 'Listo'";
+																+ "inner join VehiculoPaquete vp on p.idPaquete = vp.idPaquete "
+																+ "where c.region = 'Asturias' and  p.paqueteEstado = 'Listo' and vp.matricula = null";
 	private final static String GET_PAQUETES_ZONA_NACIONAL = "select p.idPaquete, p.fecha, c.nombre "
 																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
 																+ "inner join Cliente c on pe.idCliente = c.idCliente "
 																+ "where not c.region = 'Asturias' and  p.paqueteEstado = 'Listo'";
 	private final static String SQL_UPDATE_ESTADO_PAQUETE = "update Paquete set paqueteEstado = ? where idPaquete = ?";
+	private final static String ADD_PAQUETE = "insert into VehiculoPaquete  (matricula,idPaquete) values (?,?)";
 	
 	public CargaPaqueteModel(Database2 db, int idAlmacenero) {
 		this.db = db;
@@ -59,10 +61,6 @@ public class CargaPaqueteModel {
 		setAlmacenero();
 	}
 	
-	public void addVehiculo(String matricula, String zonaReparto ) {
-		db.executeUpdate(ADD_VEHICULO, matricula, zonaReparto);
-	}
-	
 	public List<ClienteDto> getClientes() {
 		return this.clientes;
 	}
@@ -73,6 +71,14 @@ public class CargaPaqueteModel {
 	
 	public VehiculoDto getVehiculo() {
 		return this.vehiculo;
+	}
+	
+	public void addVehiculo(String matricula, String zonaReparto ) {
+		db.executeUpdate(ADD_VEHICULO, matricula, zonaReparto, LocalDate.now());
+	}
+	
+	public void addPaquete(String matricula, int idPaquete) {
+		db.executeUpdate(ADD_PAQUETE, matricula, idPaquete);
 	}
 	
 	public void paquetesZonaRegional() {
@@ -114,7 +120,7 @@ public class CargaPaqueteModel {
 	}
 
 	public void paqueteReparto(int idPaquete) {
-		db.executeUpdate(SQL_UPDATE_ESTADO_PAQUETE, "En Curso", idPaquete);
+		db.executeUpdate(SQL_UPDATE_ESTADO_PAQUETE, "En Reparto", idPaquete);
 		
 	}
 

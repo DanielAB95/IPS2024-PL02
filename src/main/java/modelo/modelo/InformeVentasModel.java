@@ -12,6 +12,7 @@ public class InformeVentasModel {
 	
 	private final static String SQL_FIND_ALMACENERO = "select fecha from Pedido";
 	private final static String GET_MINORISTAS = "select idCliente, nombre from Cliente where tipoCliente = 'EMPRESA'";
+	//private final static String GET_VENTAS_ = "select "
 	
 	public InformeVentasModel(Database2 db) {
 		this.db = db;

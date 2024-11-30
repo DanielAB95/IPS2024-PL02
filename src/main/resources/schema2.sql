@@ -16,6 +16,7 @@ drop table carrito;
 drop table producto_carrito;
 drop table workorderPaquete;
 drop table vehiculo;
+drop table VehiculoPaquete;
 
 --estado: particular o empresa
 create table Cliente(
@@ -33,11 +34,17 @@ create table Cliente(
 
 --igual meter zonaReparto en paquete
 create table Vehiculo (
-	
-	matricula varchar(10) primary key not null,
+	matricula varchar(10) not null,
 	zonaReparto varchar(15) not null,
+    fecha date not null,
     check (zonaReparto in('Regional','Nacional'))
-	
+);
+
+create table VehiculoPaquete(
+    matricula int not null,
+    idPaquete int not null,
+    foreign key (matricula) references Vehiculo(matricula),
+    foreign key (idPaquete) references Paquete(idPaquete)
 );
 
 create table carrito (
@@ -123,7 +130,7 @@ create table Paquete(
     idPedido int not null,
     paqueteEstado varchar(20) not null,
     fecha date,
-    check (paqueteEstado in('En Curso','Listo','Incidencia')),
+    check (paqueteEstado in('En Curso','Listo','Incidencia','En Reparto')),
     foreign key (idPedido) references Pedido(idPedido)
 );
 
