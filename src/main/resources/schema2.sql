@@ -34,7 +34,7 @@ create table Cliente(
 --igual meter zonaReparto en paquete
 create table Vehiculo (
 	
-	matricula varchar(9) primary key not null,
+	matricula varchar(10) primary key not null,
 	zonaReparto varchar(15) not null,
     check (zonaReparto in('Regional','Nacional'))
 	

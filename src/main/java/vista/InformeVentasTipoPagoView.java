@@ -7,19 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class InformeVentasTipoMinorista extends JFrame {
+public class InformeVentasTipoPagoView extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lbInforme;
+	private JLabel lblNewLabel;
 	private JScrollPane scpVentas;
 	private JTable tbVentas;
 
@@ -30,7 +26,7 @@ public class InformeVentasTipoMinorista extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InformeVentasTipoMinorista frame = new InformeVentasTipoMinorista();
+					InformeVentasTipoPagoView frame = new InformeVentasTipoPagoView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,26 +38,26 @@ public class InformeVentasTipoMinorista extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformeVentasTipoMinorista() {
-		setTitle("Informe Ventas : tipo minorista");
+	public InformeVentasTipoPagoView() {
+		setTitle("Informe Ventas: tipo de pago");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 842, 521);
+		setBounds(100, 100, 855, 543);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getLbInforme(), BorderLayout.NORTH);
+		contentPane.add(getLblNewLabel(), BorderLayout.NORTH);
 		contentPane.add(getScpVentas(), BorderLayout.CENTER);
 	}
 
-	private JLabel getLbInforme() {
-		if (lbInforme == null) {
-			lbInforme = new JLabel("Informe Ventas por tipo de  minorista");
-			lbInforme.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lbInforme.setHorizontalAlignment(SwingConstants.CENTER);
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("Informe de Ventas por tipo de pago");
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		}
-		return lbInforme;
+		return lblNewLabel;
 	}
 	private JScrollPane getScpVentas() {
 		if (scpVentas == null) {

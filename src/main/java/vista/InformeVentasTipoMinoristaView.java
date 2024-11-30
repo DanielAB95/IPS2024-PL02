@@ -5,17 +5,24 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.InformeVentasTipoMinoristaController;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class InformeVentasTipoPago extends JFrame {
+public class InformeVentasTipoMinoristaView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblNewLabel;
+	private JLabel lbInforme;
 	private JScrollPane scpVentas;
 	private JTable tbVentas;
 
@@ -26,7 +33,8 @@ public class InformeVentasTipoPago extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InformeVentasTipoPago frame = new InformeVentasTipoPago();
+					InformeVentasTipoMinoristaController controller = new InformeVentasTipoMinoristaController();
+					InformeVentasTipoMinoristaView frame = new InformeVentasTipoMinoristaView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,26 +46,29 @@ public class InformeVentasTipoPago extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformeVentasTipoPago() {
-		setTitle("Informe Ventas: tipo de pago");
+	public InformeVentasTipoMinoristaView(InformeVentasTipoMinoristaController controller) {
+		setTitle("Informe Ventas : tipo minorista");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 855, 543);
+		setBounds(100, 100, 842, 521);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getLblNewLabel(), BorderLayout.NORTH);
+		contentPane.add(getLbInforme(), BorderLayout.NORTH);
 		contentPane.add(getScpVentas(), BorderLayout.CENTER);
+		
+		controller.setView(this);
+		controller.init();
 	}
 
-	private JLabel getLblNewLabel() {
-		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("Informe de Ventas por tipo de pago");
-			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+	private JLabel getLbInforme() {
+		if (lbInforme == null) {
+			lbInforme = new JLabel("Informe Ventas por tipo de  minorista");
+			lbInforme.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			lbInforme.setHorizontalAlignment(SwingConstants.CENTER);
 		}
-		return lblNewLabel;
+		return lbInforme;
 	}
 	private JScrollPane getScpVentas() {
 		if (scpVentas == null) {
@@ -71,5 +82,11 @@ public class InformeVentasTipoPago extends JFrame {
 			tbVentas = new JTable();
 		}
 		return tbVentas;
+	}
+	
+	//metodos Auxiliares
+	
+	public JTable getTablaVentas() {
+		return this.tbVentas;
 	}
 }

@@ -38,7 +38,7 @@ public class InformeRepuestoController {
 	}
 
 	private void limpiarModelo() {
-		for(int i=0 ; i<view.getTableProductosModel().getRowCount(); i++) {
+		for(int i = view.getTableProductosModel().getRowCount()-1  ; i>=0; i++) {
 			view.getTableProductosModel().removeRow(i);
 		}	
 	}
