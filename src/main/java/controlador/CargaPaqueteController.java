@@ -128,6 +128,10 @@ public class CargaPaqueteController {
 		
 		
 		mostrarPaquetes();
+		
+	}
+
+	private void iniciarCarga() {
 		view.getButtonRecepcionVehiculos().setEnabled(false);
 		view.getComboBoxZonaReparto().setEnabled(false);
 		view.getTextMatricula().setEditable(false);
@@ -140,8 +144,9 @@ public class CargaPaqueteController {
 		PaqueteDto paquete;
 		ClienteDto cliente;
 		filtrarPaquetes();
-		if(model.getPaquetes().size() == 0) {
+		if(model.getPaquetes().size() == 0 && view.getButtonFinalizar().isEnabled() == false) {
 			JOptionPane.showMessageDialog(null, "No hay paquetes para cargar");
+			return;
 		}else {
 			for(int i = 0; i<model.getPaquetes().size();i++) {
 				paquete = model.getPaquetes().get(i);
@@ -149,6 +154,7 @@ public class CargaPaqueteController {
 				Object[] filaNueva = {paquete.idPaquete, paquete.fecha.toString(), cliente.nombre};
 				view.getTablePaquetesModel().addRow(filaNueva);
 			}
+			iniciarCarga();
 		}
 	}  
 

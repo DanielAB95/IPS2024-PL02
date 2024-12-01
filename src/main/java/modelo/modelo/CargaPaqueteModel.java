@@ -24,8 +24,7 @@ public class CargaPaqueteModel {
 	private final static String GET_PAQUETES_ZONA_REGIONAL = "select p.idPaquete, p.fecha, c.nombre "
 																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
 																+ "inner join Cliente c on pe.idCliente = c.idCliente "
-																+ "inner join VehiculoPaquete vp on p.idPaquete = vp.idPaquete "
-																+ "where c.region = 'Asturias' and  p.paqueteEstado = 'Listo' and vp.matricula = null";
+																+ "where c.region = 'Asturias' and  p.paqueteEstado = 'Listo'";
 	private final static String GET_PAQUETES_ZONA_NACIONAL = "select p.idPaquete, p.fecha, c.nombre "
 																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
 																+ "inner join Cliente c on pe.idCliente = c.idCliente "

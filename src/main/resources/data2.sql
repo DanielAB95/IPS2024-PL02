@@ -282,8 +282,8 @@ insert into Paquete(idPaquete, idPedido, idAlmacenero, paqueteEstado, fecha) val
     (6, 5, 1, 'En Curso', '2024-11-310'),
     (7, 6, 6, 'Listo', '2024-02-21'),
     (8, 7, 2, 'En Curso', '2024-10-30'),
-    (9, 16, 1, 'Listo', '2024-11-12'),
-    (10, 18, 6, 'Listo', '2024-02-17');
+    (9, 08, 1, 'Listo', '2024-11-12'),
+    (10, 17, 6, 'Listo', '2024-02-17');
 
 delete from PaqueteProducto;
 insert into PaqueteProducto(idPaquete, idProducto, cantidad) values
