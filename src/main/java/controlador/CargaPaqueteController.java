@@ -163,7 +163,7 @@ public class CargaPaqueteController {
 				view.getTablePaquetesModel().addRow(filaNueva);
 			}
 		}
-	}
+	} 
 
 	private void filtrarPaquetes() {
 		if(view.getComboBoxZonaReparto().getSelectedItem().equals("Regional")) {
