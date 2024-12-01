@@ -123,19 +123,38 @@ public class CargaPaqueteController {
 
 	
 	private void RecepcionVehiculo() {	
-		model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());
-		JOptionPane.showMessageDialog(null, "Vehiculo registrado");
+		if(!existVehiculo()) {
+			model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());
+			JOptionPane.showMessageDialog(null, "Vehiculo registrado");
+		}else {
+			model.getVehiculoByMatricula(view.getTextMatricula().getText());
+			if(!model.getVehiculo().zonaReparto.equals(view.getComboBoxZonaReparto().getSelectedItem().toString())) {
+				JOptionPane.showMessageDialog(null, "El vehiculo ya esta registrado \n y esta no es su zona de reparto"
+						, "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		
 		mostrarPaquetes();
+		view.getButtonRecepcionVehiculos().setEnabled(false);
+		view.getComboBoxZonaReparto().setEnabled(false);
+		view.getTextMatricula().setEditable(false);
+		view.getButtonFinalizar().setEnabled(true);
+		view.getButtonEscanear().setEnabled(true);
+		
 	}
 	
+	private boolean existVehiculo() {
+		model.getVehiculoByMatricula(view.getTextMatricula().getText());
+		return model.getVehiculo() != null;
+	}
 
 	private void mostrarPaquetes() {
 		PaqueteDto paquete;
 		ClienteDto cliente;
 		filtrarPaquetes();
-		if(model.getPaquetes().size() == 0 && view.getButtonFinalizar().isEnabled() == false) {
+		if(model.getPaquetes().size() == 0) {
 			JOptionPane.showMessageDialog(null, "No hay paquetes para cargar");
-			return;
 		}else {
 			for(int i = 0; i<model.getPaquetes().size();i++) {
 				paquete = model.getPaquetes().get(i);
@@ -143,25 +162,8 @@ public class CargaPaqueteController {
 				Object[] filaNueva = {paquete.idPaquete, paquete.fecha.toString(), cliente.nombre};
 				view.getTablePaquetesModel().addRow(filaNueva);
 			}
-			activarCarga();
 		}
-	}
-	
-	private void activarCarga() {
-		view.getButtonRecepcionVehiculos().setEnabled(false);
-		view.getComboBoxZonaReparto().setEnabled(false);
-		view.getTextMatricula().setEditable(false);
-		view.getButtonFinalizar().setEnabled(true);
-		view.getButtonEscanear().setEnabled(true);	
-	}
-	
-	private void terminarCarga() {
-		view.getButtonRecepcionVehiculos().setEnabled(true);
-		view.getComboBoxZonaReparto().setEnabled(true);
-		view.getTextMatricula().setEditable(true);
-		view.getButtonFinalizar().setEnabled(false);
-		view.getButtonEscanear().setEnabled(false);
-	}
+	}  
 
 	private void filtrarPaquetes() {
 		if(view.getComboBoxZonaReparto().getSelectedItem().equals("Regional")) {
@@ -218,7 +220,6 @@ public class CargaPaqueteController {
 	}
 	
 	private void accionPaquetesTabla() {
-		model.addPaquete(view.getTextMatricula().getText(), (int)view.getTablePaquetes().getValueAt(view.getTablePaquetes().getSelectedRow(), 0));
 		actualizarPaquetesCargados();
 		limpiarModelo();
 		mostrarPaquetes();
@@ -234,7 +235,11 @@ public class CargaPaqueteController {
 	private void finalizaCarga() {
 		JOptionPane.showMessageDialog(null, "Se ha finalizado el proceso de carga");
 		limpiarDatos();
-		terminarCarga();
+		view.getButtonRecepcionVehiculos().setEnabled(true);
+		view.getComboBoxZonaReparto().setEnabled(true);
+		view.getTextMatricula().setEditable(true);
+		view.getButtonFinalizar().setEnabled(false);
+		view.getButtonEscanear().setEnabled(false);
 	}
 
 	private void limpiarDatos() {

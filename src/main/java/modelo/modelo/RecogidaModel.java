@@ -10,6 +10,7 @@ import giis.demo.util.Database2;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
+import persistence.dto.Queries;
 import persistence.dto.WorkorderDto;
 
 public class RecogidaModel {
@@ -18,8 +19,8 @@ public class RecogidaModel {
 	AlmaceneroDto almacenero = new AlmaceneroDto();
 	private Database2 db;
 	
-	private final static String SQL_FIND_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
-	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado in ('Pendiente','En Curso') and idAlmacenero = ?";
+	private final static String SQL_FIND_WOLISTAS = "select * from Workorder "
+												  + "where workorderEstado in ('Pendiente','En Curso') and idAlmacenero = ?";
 	private final static String SQL_FIND_PEDIDOS_FROM_WO = "select * from WorkorderPedido wp "
 											+ "inner join Pedido p on wp.idPedido = p.idPedido "
 											+ "where idWorkorder = ?";
@@ -30,7 +31,6 @@ public class RecogidaModel {
 		    													+ "where idWorkorder = ? and idPedido = ? and idProducto = ?";
 	private final static String SQL_UPDATE_WOPROD = "update WorkorderProducto set recogidos = recogidos + ? "
 												  + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
-	private final static String SQL_UPDATE_ESTADO_WORKORDER = "update Workorder set workorderEstado = ? where idWorkorder = ?";
 	
 	public RecogidaModel(Database2 db2, int idAlmacenero) {
 		db = db2;
@@ -49,7 +49,7 @@ public class RecogidaModel {
 	}
 	
 	private void setAlmacenero() {
-		List<Object[]> o = db.executeQueryArray(SQL_FIND_ALMACENERO, almacenero.idAlmacenero);
+		List<Object[]> o = db.executeQueryArray(Queries.Almacenero.FIND_FROM_ID, almacenero.idAlmacenero);
 		almacenero.nombre = (String)o.get(0)[1];
 		almacenero.apellido = (String)o.get(0)[2];
 	}
@@ -120,7 +120,7 @@ public class RecogidaModel {
 	public boolean checkID(WorkorderDto wdto, int idProducto, int cantidad) {
 		ProductoDto prod = new ProductoDto();
 		if (wdto.estado.equals("Pendiente")) {
-			db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "En Curso", wdto.idWorkorder);
+			db.executeUpdate(Queries.Workorder.UPDATE, "En Curso", wdto.idWorkorder);
 		}
 		prod.idProducto = idProducto;
 		for (PedidoDto pdto : wdto.pedidos) {
@@ -129,8 +129,7 @@ public class RecogidaModel {
 				guardarEnBaseDeDatos(wdto, pdto, prod, cantidad);
 				if (isWoFinished(wdto)) {
 					workorders.remove(wdto);
-					db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Listo", wdto.idWorkorder);
-					//poner fecha
+					db.executeUpdate(Queries.Workorder.UPDATE_FECHA, "Listo", LocalDate.now().toString(), wdto.idWorkorder);
 				}
 				return true;
 			}
@@ -158,7 +157,7 @@ public class RecogidaModel {
 	}
 	
 	public void apuntarIncidencia(WorkorderDto dto) {
-		db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Incidencia", dto.idWorkorder);
+		db.executeUpdate(Queries.Workorder.UPDATE, "Incidencia", dto.idWorkorder);
 		workorders.remove(dto);
 	}
 

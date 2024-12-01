@@ -17,6 +17,8 @@ drop table producto_carrito;
 drop table workorderPaquete;
 drop table vehiculo;
 drop table VehiculoPaquete;
+drop table empaquetados;
+drop table recogidos;
 
 --estado: particular o empresa
 create table Cliente(
@@ -34,7 +36,7 @@ create table Cliente(
 
 --igual meter zonaReparto en paquete
 create table Vehiculo (
-	matricula varchar(9) not null,
+	matricula varchar(10) not null,
 	zonaReparto varchar(15) not null,
     fecha date not null,
     check (zonaReparto in('Regional','Nacional'))
@@ -167,4 +169,18 @@ create table workorderPaquete(
     idPaquete int not null,
     foreign key (idWorkorder) references Workorder(idWorkorder),
     foreign key (idPaquete) references Paquete(idPaquete)
+);
+
+create table empaquetados(
+    idAlmacenero int not null,
+    cantidad int not null,
+    fecha date,
+    foreign key (idAlmacenero) references Almacenero(idAlmacenero)
+);
+
+create table recogidos(
+    idAlmacenero int not null,
+    cantidad int not null,
+    fecha date,
+    foreign key (idAlmacenero) references Almacenero(idAlmacenero)
 );
