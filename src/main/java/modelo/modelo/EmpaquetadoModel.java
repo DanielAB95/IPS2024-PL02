@@ -155,6 +155,7 @@ public class EmpaquetadoModel {
 				insertar(prod.idProducto);
 			}
 		}
+		actualizarRegistro();
 	}
 
 	private void guardarEnModelo(WorkorderDto wo, PedidoDto ped, ProductoDto prod) {
@@ -185,6 +186,16 @@ public class EmpaquetadoModel {
 			return false;
 		}
 		return true;
+	}
+	
+	private void actualizarRegistro() {
+		LocalDate date = LocalDate.now();
+		List<Object[]> result = db.executeQueryArray(Queries.Paquete.FIND_REGISTRO, almacenero.idAlmacenero, date.toString());
+		if (result.size() != 0) {
+			db.executeUpdate(Queries.Paquete.INCREMENT_REGISTRO, almacenero.idAlmacenero, date.toString());
+		} else {
+			db.executeUpdate(Queries.Paquete.INSERT_REGISTRO, almacenero.idAlmacenero, date.toString());
+		}
 	}
 
 	private void insertar(int idProducto) {

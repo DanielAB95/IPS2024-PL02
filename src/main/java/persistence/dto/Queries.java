@@ -15,9 +15,19 @@ public class Queries {
 		public static final String NEXT_DATE = "select min(fecha) from Workorder "
 											 + "where workorderEstado in ('Listo', 'Empaquetada') "
 											 + "and fecha > ?";
+		public static final String FIRST_DATE_REGISTRO = "select min(fecha) from recogidos";
+		public static final String NEXT_DATE_REGISTRO = "select min(fecha) from recogidos "
+				 	 						 		  + "where fecha > ?";
 		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
 													  + "from Workorder where fecha = ? "
 													  + "group by idAlmacenero";
+		public static final String FIND_ALL_REGISTROS = "select cantidad, idAlmacenero "
+				  									  + "from recogidos where fecha = ?";
+		public static final String FIND_REGISTRO = "select * from recogidos where idAlmacenero = ? and fecha = ?";
+		public static final String INCREMENT_REGISTRO = "update recogidos set cantidad = cantidad + 1 "
+				  									  + "where idAlmacenero = ? and fecha = ?";
+		public static final String INSERT_REGISTRO = "insert into recogidos(idAlmacenero, cantidad, fecha) "
+												   + "values(?,1,?)";
 	}
 	
 	public class Paquete {
@@ -35,9 +45,19 @@ public class Queries {
 		public static final String NEXT_DATE = "select min(fecha) from Paquete "
 				 	 						 + "where paqueteEstado in ('Listo') "
 				 	 						 + "and fecha > ?";
+		public static final String FIRST_DATE_REGISTRO = "select min(fecha) from empaquetados";
+		public static final String NEXT_DATE_REGISTRO = "select min(fecha) from empaquetados "
+				 	 						 		  + "where fecha > ?";
 		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
 				  									  + "from Paquete where fecha = ? "
 				  									  + "group by idAlmacenero";
+		public static final String FIND_ALL_REGISTROS = "select cantidad, idAlmacenero "
+													  + "from empaquetados where fecha = ?";
+		public static final String FIND_REGISTRO = "select * from empaquetados where idAlmacenero = ? and fecha = ?";
+		public static final String INCREMENT_REGISTRO = "update empaquetados set cantidad = cantidad + 1 "
+													  + "where idAlmacenero = ? and fecha = ?";
+		public static final String INSERT_REGISTRO = "insert into empaquetados(idAlmacenero, cantidad, fecha) "
+												   + "values(?,1,?)";
 	}
 	
 	public class Almacenero {

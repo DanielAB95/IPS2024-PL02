@@ -136,9 +136,20 @@ public class RecogidaModel {
 		}
 		return false;
 	}
+	
+	private void actualizarRegistro() {
+		LocalDate date = LocalDate.now();
+		List<Object[]> result = db.executeQueryArray(Queries.Workorder.FIND_REGISTRO, almacenero.idAlmacenero, date.toString());
+		if (result.size() != 0) {
+			db.executeUpdate(Queries.Workorder.INCREMENT_REGISTRO, almacenero.idAlmacenero, date.toString());
+		} else {
+			db.executeUpdate(Queries.Workorder.INSERT_REGISTRO, almacenero.idAlmacenero, date.toString());
+		}
+	}
 
 	private void guardarEnBaseDeDatos(WorkorderDto wo, PedidoDto ped, ProductoDto prod, int cantidad) {
 		actualizar(wo.idWorkorder, ped.idPedido, prod.idProducto, cantidad);
+		actualizarRegistro();
 	}
 
 	private boolean guardarEnModelo(WorkorderDto wo, PedidoDto ped, ProductoDto prod, int cant) {
