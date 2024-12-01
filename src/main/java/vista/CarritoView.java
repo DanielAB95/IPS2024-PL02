@@ -14,6 +14,7 @@ import giis.demo.util.Database2;
 import modelo.dto.Carrito;
 import modelo.dto.ClienteDTO;
 import modelo.modelo.CarritoModel;
+import persistence.dto.ClienteDto;
 //import vista.ClienteView.MyTableModel;
 import vista.ClienteView.MyTableModel;
 
@@ -48,7 +49,7 @@ public class CarritoView extends JFrame {
 	private CarritoController controller;
 	private JLabel lblUsuario;
 	private JLabel lblNombreUsuario;
-	private ClienteDTO dto;
+	private ClienteDto dto;
 	private JTable table;
 	private DefaultTableModel tableModelCarrito;
 	private JLabel lblNombre;
@@ -72,6 +73,10 @@ public class CarritoView extends JFrame {
 	private JLabel lblDescContrarrembolso;
 	private JLabel lblDescTarjeta;
 	private JLabel labelDescTransfer7;
+	private JTextField textIVAtotal;
+	private JLabel lblIVA;
+	private JTextField textPrecioTotalSinIVA;
+	private JLabel lblIPrecioTotalSinIVA;
 	
 	/**
 	 * Create the frame.
@@ -97,7 +102,7 @@ public class CarritoView extends JFrame {
 	 * 
 	 * 
 	 */
-	public CarritoView(Carrito c, Database2 db, ClienteDTO dto) {
+	public CarritoView(Carrito c, Database2 db, ClienteDto dto) {
 		setTitle("Confirmación de Compra: Datos de Envío");
 		this.database = db;
 		
@@ -136,6 +141,10 @@ public class CarritoView extends JFrame {
 		contentPane.add(getTextRegion());
 		contentPane.add(getTextCiudad());
 		contentPane.add(getTextCalle());
+		contentPane.add(getTextIVAtotal());
+		contentPane.add(getLblIVA());
+		contentPane.add(getTextPrecioTotalSinIVA());
+		contentPane.add(getLblIPrecioTotalSinIVA());
 	
 		controller.initView();
 		controller.initController();
@@ -155,14 +164,14 @@ public class CarritoView extends JFrame {
 			
 			btnEliminar.setBackground(new Color(178, 34, 34));
 			btnEliminar.setForeground(Color.WHITE);
-			btnEliminar.setBounds(676, 286, 116, 23);
+			btnEliminar.setBounds(856, 31, 116, 23);
 		}
 		return btnEliminar;
 	}
 	private JLabel getLblPrecioTotal() {
 		if (lblPrecioTotal == null) {
-			lblPrecioTotal = new JLabel("Precio Total: ");
-			lblPrecioTotal.setBounds(886, 262, 86, 14);
+			lblPrecioTotal = new JLabel("Precio Total con IVA: ");
+			lblPrecioTotal.setBounds(867, 261, 115, 14);
 		}
 		return lblPrecioTotal;
 	}
@@ -171,7 +180,7 @@ public class CarritoView extends JFrame {
 		if (textPrecioTotal == null) {
 			textPrecioTotal = new JTextField();
 			textPrecioTotal.setEditable(false);
-			textPrecioTotal.setBounds(886, 287, 86, 20);
+			textPrecioTotal.setBounds(867, 287, 105, 20);
 			textPrecioTotal.setColumns(10);
 		}
 		return textPrecioTotal;
@@ -301,7 +310,7 @@ public class CarritoView extends JFrame {
 	private JPanel getPanelRadioBotones() {
 		if (panelRadioBotones == null) {
 			panelRadioBotones = new JPanel();
-			panelRadioBotones.setBounds(91, 365, 593, 85);
+			panelRadioBotones.setBounds(91, 365, 565, 85);
 			panelRadioBotones.setLayout(null);
 			panelRadioBotones.add(getRdbtnContrarrembolso());
 			panelRadioBotones.add(getRdbtnTransferencia());
@@ -415,7 +424,39 @@ public class CarritoView extends JFrame {
 		}
 		return labelDescTransfer7;
 	}
-	public ClienteDTO getDto() {
+	public ClienteDto getDto() {
 		return this.dto;
+	}
+	public JTextField getTextIVAtotal() {
+		if (textIVAtotal == null) {
+			textIVAtotal = new JTextField();
+			textIVAtotal.setEditable(false);
+			textIVAtotal.setColumns(10);
+			textIVAtotal.setBounds(676, 287, 105, 20);
+		}
+		return textIVAtotal;
+	}
+	private JLabel getLblIVA() {
+		if (lblIVA == null) {
+			lblIVA = new JLabel("IVA Total:");
+			lblIVA.setBounds(676, 261, 105, 14);
+		}
+		return lblIVA;
+	}
+	public JTextField getTextPrecioTotalSinIVA() {
+		if (textPrecioTotalSinIVA == null) {
+			textPrecioTotalSinIVA = new JTextField();
+			textPrecioTotalSinIVA.setEditable(false);
+			textPrecioTotalSinIVA.setColumns(10);
+			textPrecioTotalSinIVA.setBounds(676, 340, 105, 20);
+		}
+		return textPrecioTotalSinIVA;
+	}
+	private JLabel getLblIPrecioTotalSinIVA() {
+		if (lblIPrecioTotalSinIVA == null) {
+			lblIPrecioTotalSinIVA = new JLabel("Precio Total sin IVA: ");
+			lblIPrecioTotalSinIVA.setBounds(676, 322, 105, 14);
+		}
+		return lblIPrecioTotalSinIVA;
 	}
 }

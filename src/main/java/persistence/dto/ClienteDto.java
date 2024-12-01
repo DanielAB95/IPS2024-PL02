@@ -3,7 +3,7 @@ package persistence.dto;
 public class ClienteDto {
 	
 	public String idCliente;
-	public String numbreUsusario;
+	public String nombreUsusario;
 	public String nombre;
 	public String telefono;
 	public String pais;

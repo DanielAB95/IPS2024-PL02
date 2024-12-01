@@ -97,7 +97,7 @@ public class AlbaranModel {
 		List<Object[]> result = db.executeQueryArray(SQL_CLIENTE, pedido.idCliente);
 		
 		cliente.idCliente = (String)result.get(0)[0];
-		cliente.numbreUsusario = (String)result.get(0)[1];
+		cliente.nombreUsusario = (String)result.get(0)[1];
 		cliente.nombre = (String)result.get(0)[2];
 		cliente.telefono = (String)result.get(0)[3];
 		cliente.pais = (String)result.get(0)[4];

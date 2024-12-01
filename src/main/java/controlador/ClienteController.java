@@ -37,13 +37,13 @@ public class ClienteController {
 		//System.out.print(lview.getTextNombreUsuario().getText()); mejor usar dto
 		//cambiar los dto y databases al model en vez de tenerlo en view
 		view.getTextCategoria().setText("Inicio");
-		view.getLblNombreUsuario().setText(view.getDto().getName());
+		view.getLblNombreUsuario().setText(view.getDto().nombreUsusario);
 		//view.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText());
 		
-		if (!view.getDto().getName().equals("Invitado")) {
-			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().getName());
+		if (!view.getDto().nombreUsusario.equals("Invitado")) {
+			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().nombreUsusario);
 		}
-		
+		actualizaPrecioTotal();
 		getListaProductos(null);
 	}
 			
@@ -62,14 +62,14 @@ public class ClienteController {
 							JOptionPane.showMessageDialog(view, "¡Gracias por su compra!" +
 				                       " Hemos recibido su pedido y se enviará a la dirección proporcionada por la empresa");
 							model.confirmarPedido("Transferencia");
-							model.borraCarritoCliente(view.getDto().getName()); //puede moverse a controlador de la siguiente ventana
+							model.borraCarritoCliente(view.getDto().nombreUsusario); //puede moverse a controlador de la siguiente ventana
 						} else {
 							
 							view.dispose();
 							CarritoView frame = new CarritoView(view.getCarrito(), view.getDatabase(), view.getDto());
 							//frame.getLblNombreUsuario().setText(lview.getTextNombreUsuario().getText()); mejor usar el dto, 
 							//cambiar los dto y databases al model en vez de tenerlo en view
-							frame.getLblNombreUsuario().setText(view.getDto().getName());
+							frame.getLblNombreUsuario().setText(view.getDto().nombreUsusario);
 							frame.setLocationRelativeTo(view);
 							view.dispose();
 							frame.setVisible(true);
@@ -119,7 +119,7 @@ public class ClienteController {
 					
 					
 					if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-						model.eliminaProductoCarrito(nombreProducto, view.getDto().getName());
+						model.eliminaProductoCarrito(nombreProducto, view.getDto().nombreUsusario);
 					}
 					
 					actualizaPrecioTotal();
@@ -163,16 +163,25 @@ public class ClienteController {
                     // obtener la cantidad modificada
                     int nuevaCantidad = Integer.valueOf((String) view.getTableCarritoModel().getValueAt(fila, 1));
                     
-                    String nuevoPrecio = model.getPrecioPorNombre((String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
-                    
-                    view.getTableCarritoModel().setValueAt(nuevoPrecio, fila, 2);
-                    
-                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
-                   
-                    if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-                    	model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().getName());
+                    if (nuevaCantidad > 0) {
+                    	String nuevoPrecio = model.getPrecioPorNombre( view.getDto().tipoCliente,(String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                        
+                        view.getTableCarritoModel().setValueAt(nuevoPrecio, fila, 2);
+                        
+                        view.getCarrito().cambiaCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                       
+                        if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+                        	model.modificarCantidadCarrito((String)view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().nombreUsusario);
+                        }
+                        actualizaPrecioTotal();
+                        
+                    } else {
+                    	
+                    	JOptionPane.showMessageDialog(view, "La cantidad del Producto debe ser mayor que 0.");
+                    	view.getTableCarritoModel().setValueAt("1", fila, 1);
                     }
-                    actualizaPrecioTotal();                                    
+                    
+                                                  
                 }
             }
         });		
@@ -212,7 +221,28 @@ public class ClienteController {
 	private void rellenarModeloProducto(List<Producto> productos) { //CAMBIAR AQUI LO QUE HAYA QUE PONER EN STOCK(Ej: nº o Bajo Stock, etc)
 		view.mostrarPanel("pnTabla");
 		for(Producto p : productos) {
-			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion(), p.getStock()};
+			
+			String stockMessage = "";
+			
+			if (p.getStock() < p.getMinStock() && p.getStock() > 0)
+				stockMessage = "Bajo Stock";
+			else if (p.getStock() <= 0)
+				stockMessage = "No Disponible";
+			else
+				stockMessage = "Disponible";
+			
+			double precioMostrado = 0;
+			
+			if (view.getDto().tipoCliente.equals("EMPRESA")) {
+				precioMostrado = p.getPrecioEmpresa();
+			} else {
+				precioMostrado = p.getPrecio() + (p.getIva() / 100.0 * p.getPrecio());
+			}
+			
+			precioMostrado = Math.round(precioMostrado * 100.0) / 100.0;
+			
+			
+			Object[] filaNueva = {p.getNombre(), precioMostrado, p.getDescripcion(), stockMessage};
 			view.getTableProductosModel().addRow(filaNueva);
 		}
 	}
@@ -258,8 +288,14 @@ public class ClienteController {
 	}
 	
 	private void actualizaPrecioTotal() {
-		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+		String formattedNumber = String.format("%.2f", view.getCarrito().getTotalConIVA(view.getDto().tipoCliente));
 		view.getTextPrecioTotal().setText(formattedNumber);
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getTotalSinIVA(view.getDto().tipoCliente));
+		view.getTextPrecioTotalSinIVA().setText(formattedNumber);
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getIVAtotalAñadido(view.getDto().tipoCliente));
+		view.getTextIVAtotal().setText(formattedNumber);
 	}
 	
 	private void limpiarModeloProductos() {
@@ -272,22 +308,42 @@ public class ClienteController {
 	private void addProducto() {
 		int fila = view.getTablaProductos().getSelectedRow();
 		Producto pSeleccionado = model.getProducto((String) view.getTablaProductos().getValueAt(fila, 0));
-		if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
-			int cantidad = (int) view.getSpinnerUnidades().getValue();
-			model.getCarrito().addToCarrito(pSeleccionado, cantidad);
-			
-			Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
-			view.getTableCarritoModel().addRow(filaNueva);
-			actualizaPrecioTotal();
-			view.getSpinnerUnidades().setValue(1);
-			
-			
-			if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
-				model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().getName());
-				model.printProductoCarrito();
+		
+		if (pSeleccionado.getStock() > 0) {
+			if (!model.checkProductoYaEnCarrito(pSeleccionado.getNombre())) {
+				int cantidad = (int) view.getSpinnerUnidades().getValue();
+				model.getCarrito().addToCarrito(pSeleccionado, cantidad);
+				
+				
+				double precioMostrado = 0;
+				
+				if (view.getDto().tipoCliente.equals("EMPRESA")) {
+					precioMostrado = pSeleccionado.getPrecioEmpresa();
+				} else {
+					precioMostrado = pSeleccionado.getPrecio() + (pSeleccionado.getIva() / 100.0 * pSeleccionado.getPrecio());
+				}
+				
+				precioMostrado = Math.round(precioMostrado * 100.0) / 100.0;
+				
+				
+				Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, precioMostrado * cantidad};
+				
+				
+				
+				view.getTableCarritoModel().addRow(filaNueva);
+				actualizaPrecioTotal();
+				view.getSpinnerUnidades().setValue(1);
+				
+				
+				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+					model.añadeProductoCarrito(pSeleccionado.getId(), cantidad, view.getDto().nombreUsusario);
+					model.printProductoCarrito();
+				}
+			} else {
+				JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
 			}
 		} else {
-			JOptionPane.showMessageDialog(view, "Este producto ya ha sido añadido. \nPuede modificar su cantidad o eliminarlo.");
+			JOptionPane.showMessageDialog(view, "Este producto no está disponible en estos momentos.");
 		}
 	}
 

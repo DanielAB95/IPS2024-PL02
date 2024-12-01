@@ -73,7 +73,7 @@ public class ClienteModel {
 			Producto p = new Producto( (int)productos.get(i)[0], (String)productos.get(i)[1], 
 					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
 					(int)productos.get(i)[5], (int)productos.get(i)[6], (int)productos.get(i)[7],
-					(int)productos.get(i)[8], (int)productos.get(i)[9], (int)productos.get(i)[10],
+					(double)productos.get(i)[8], (int)productos.get(i)[9], (int)productos.get(i)[10],
 					(int)productos.get(i)[11], (int)productos.get(i)[12] );
 			
 			resultado.add(p);
@@ -86,10 +86,18 @@ public class ClienteModel {
 		return this.db;
 	}
 	
-	public String getPrecioPorNombre(String nombre, int cantidad) {
+	public String getPrecioPorNombre(String tipoCliente, String nombre, int cantidad) {
 		double precio = 0;
 		for (Producto p: this.productosPosibles) {
-			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
+			
+			double tipoPrecio = 0;
+			if (tipoCliente.equals("EMPRESA")) {
+				tipoPrecio = p.getPrecioEmpresa();
+			} else {
+				tipoPrecio = p.getPrecio();
+			}
+			
+			if (p.getNombre().equals(nombre)) precio = (tipoPrecio + (tipoPrecio * p.getIva() / 100.0)) * cantidad;
 		}
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
 		return precioFormateado;
@@ -113,7 +121,7 @@ public class ClienteModel {
 			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], 
 					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
 					(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7],
-					(int)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
+					(double)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
 					(int)productos.get(i)[11],(int)productos.get(i)[12]);
 			list.add(p);
 		}
@@ -144,7 +152,7 @@ public class ClienteModel {
 		Producto p = new Producto((int) listDb.get(0)[0], (String) listDb.get(0)[1],
 				(String) listDb.get(0)[2], (String) listDb.get(0)[3], (double) listDb.get(0)[4],
 				(int) listDb.get(0)[5], (int) listDb.get(0)[6], (int) listDb.get(0)[7], 
-				 (int) listDb.get(0)[8],  (int) listDb.get(0)[9],  (int) listDb.get(0)[10], (int) listDb.get(0)[11],
+				 (double) listDb.get(0)[8],  (int) listDb.get(0)[9],  (int) listDb.get(0)[10], (int) listDb.get(0)[11],
 						 (int) listDb.get(0)[12]);
 		return p;
 	}
@@ -175,7 +183,8 @@ public class ClienteModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
+			//db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().nombreUsusario), fecha, estado, tipoPago);
 				
 			insertarProductosPedido(nuevoID);
 			reduceStockProductos();
@@ -360,7 +369,7 @@ public class ClienteModel {
 				String nombre = getNombreProductoPorId((int) carrito2.get(i)[0]);
 				int cantidad = (int) carrito2.get(i)[1]; 
 				
-				String precio = getPrecioPorNombre(nombre,cantidad);
+				String precio = getPrecioPorNombre(vista.getDto().tipoCliente,nombre,cantidad);
 				
 				Object[] fila = {nombre, cantidad, precio};
 				tableCarritoModel.addRow(fila);

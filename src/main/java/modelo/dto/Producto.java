@@ -7,10 +7,11 @@ public class Producto {
 	private int id;
 	private double precio;
 	private int pasillo, estanteria, balda;
-	private int precioEmpresa, iva, stock, minStock, stockReposicion;
+	private int iva, stock, minStock, stockReposicion;
+	private double precioEmpresa;
 	
 	public Producto(int id, String nombre, String categoria, String descripcion, double precio,int pasillo, int estanteria, int balda,
-			int precioEmpresa, int iva, int stock,int  minStock, int stockReposicion) {
+			double precioEmpresa, int iva, int stock,int  minStock, int stockReposicion) {
 		this.id =  id;
 		this.nombre = nombre;
 		this.categoria = categoria;
@@ -74,7 +75,7 @@ public class Producto {
 		this.balda = balda;
 	}
 
-	public int getPrecioEmpresa() {
+	public double getPrecioEmpresa() {
 		return precioEmpresa;
 	}
 
