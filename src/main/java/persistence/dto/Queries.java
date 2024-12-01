@@ -4,6 +4,7 @@ public class Queries {
 	
 	public class Workorder {
 		public static final String UPDATE = "update Workorder set workorderEstado = ? where idWorkorder = ?";
+		public static final String UPDATE_FECHA = "update Workorder set workorderEstado = ?, fecha = ? where idWorkorder = ?";
 		public static final String INSERT = "insert into Workorder(idWorkorder, idAlmacenero, workorderEstado, fecha) "
 										  + "values (?,?,?,?)";
 		public static final String PEDIDO_INSERT = "insert into WorkorderPedido(idWorkorder, idPedido) "
@@ -20,6 +21,9 @@ public class Queries {
 	}
 	
 	public class Paquete {
+		public static final String UPDATE = "update Paquete set paqueteEstado = ?, fecha = ? where idPaquete = ?";
+		public final static String INSERT = "insert into Paquete(idPaquete, idPedido, idAlmacenero, paqueteEstado) "
+										  + "values (?,?,?,'En Curso')";
 		public static final String FIND_READY = "select idPaquete, idPedido, fecha "
 											  + "from Paquete "
 											  + "where paqueteEstado = 'Listo'";
@@ -29,17 +33,20 @@ public class Queries {
 												  + "where idPaquete = ?";
 		public static final String FIRST_DATE = "select min(fecha) from Paquete where paqueteEstado in ('Listo')";
 		public static final String NEXT_DATE = "select min(fecha) from Paquete "
-				 + "where paqueteEstado in ('Listo') "
-				 + "and fecha > ?";
+				 	 						 + "where paqueteEstado in ('Listo') "
+				 	 						 + "and fecha > ?";
 		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
-				  + "from Paquete where fecha = ? "
-				  + "group by idAlmacenero";
+				  									  + "from Paquete where fecha = ? "
+				  									  + "group by idAlmacenero";
 	}
 	
 	public class Almacenero {
 		public static final String FIND_ALL = "select idAlmacenero, nombre, apellido "
 											+ "from almacenero "
 											+ "where idAlmacenero > 0";
+		public static final String FIND_FROM_ID = "select idAlmacenero, nombre, apellido "
+												+ "from almacenero "
+												+ "where idAlmacenero = ?";
 				
 	}
 
