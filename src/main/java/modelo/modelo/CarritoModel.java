@@ -409,9 +409,9 @@ public class CarritoModel {
 				
 				JOptionPane.showMessageDialog(v, "Del producto: " + ((Producto) o[0]).getNombre() + " quedan " + ((Producto) o[0]).getStock() + " unidades, \nPor favor, modifique la cantidad.");
 				return false;
-			}
-			
+			}	
 		}
 		return true;
 	}
+
 }

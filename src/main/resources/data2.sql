@@ -174,7 +174,13 @@ insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago) values
     (15, 'CLI000001', '2024-05-15', 'Listo', 'Transferencia'),
     (16, 'CLI000010', '2024-05-10', 'Listo', 'Transferencia'),
     (17, 'CLI000010', '2024-05-12', 'Listo', 'Transferencia'),
-    (18, 'CLI000010', '2024-04-11', 'Pendiente', 'Transferencia');
+    (18, 'CLI000010', '2024-04-11', 'Pendiente', 'Transferencia'),
+
+    (19, 'CLI000011', '2024-11-01', 'Pendiente', 'Tarjeta'),
+	(20, 'CLI000012', '2024-10-24', 'Pendiente', 'Tarjeta'),
+    (21, 'CLI000013', '2024-10-04', 'Sin Facturar', 'Contrarrembolso'),
+	(22, 'CLI000014', '2024-10-16', 'Sin Facturar', 'Contrarrembolso'),
+    (23, 'CLI000015', '2024-04-11', 'Pendiente', 'Transferencia');
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values

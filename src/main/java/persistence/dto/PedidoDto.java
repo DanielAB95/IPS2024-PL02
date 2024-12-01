@@ -13,6 +13,8 @@ public class PedidoDto {
 	public String idCliente; //nif
 	public LocalDate fecha;
 	public String estadoPedido;
+	public String tipoPago;
+	//public double precio;
 	public Map<ProductoDto, Integer> productos = new HashMap<>(); //mapa producto cantidad
 	public List<WorkorderDto> workorders = new ArrayList<>(); //puede estar solo en una
 	

@@ -9,9 +9,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import modelo.modelo.CarritoModel;
-import vista.AppInicioView;
 import vista.CarritoView;
-import vista.ClienteView;
 import vista.PagoConTarjetaView;
 import vista.PagoPorTransferenciaView;
 
@@ -129,7 +127,7 @@ public class CarritoController {
 		clientData[5] = view.getTextRegion().getText();
 		clientData[6] = view.getTextCiudad().getText();
 		clientData[7] = view.getTextCalle().getText();
-		clientData[8] = "PARTICULAR";
+		clientData[8] = "INVIADO"; 
 		
 		modelo.createNewClient(clientData);
 		modelo.getDto().setName(clientData[1]);

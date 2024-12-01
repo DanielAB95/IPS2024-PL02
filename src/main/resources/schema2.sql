@@ -102,6 +102,7 @@ create table Pedido(
     fecha date not null,
     estado varchar(20) not null,
     tipoPago varchar(20) not null,
+    --precio decimal(10,2) not null,
     check (tipoPago in('Tarjeta','Contrarrembolso','Transferencia')),
     check (estado in('Sin Facturar','Pendiente','Listo','Empaquetado')),
     foreign key (idCliente) references Cliente(idCliente)

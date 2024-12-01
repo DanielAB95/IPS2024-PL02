@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.InformeVentasTipoPagoController;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -14,6 +17,10 @@ import javax.swing.JTable;
 
 public class InformeVentasTipoPagoView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JScrollPane scpVentas;
@@ -26,7 +33,8 @@ public class InformeVentasTipoPagoView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InformeVentasTipoPagoView frame = new InformeVentasTipoPagoView();
+					InformeVentasTipoPagoController controller = new InformeVentasTipoPagoController();
+					InformeVentasTipoPagoView frame = new InformeVentasTipoPagoView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +46,7 @@ public class InformeVentasTipoPagoView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformeVentasTipoPagoView() {
+	public InformeVentasTipoPagoView(InformeVentasTipoPagoController controller) {
 		setTitle("Informe Ventas: tipo de pago");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 855, 543);
@@ -49,6 +57,9 @@ public class InformeVentasTipoPagoView extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getLblNewLabel(), BorderLayout.NORTH);
 		contentPane.add(getScpVentas(), BorderLayout.CENTER);
+		
+		controller.setView(this);
+		controller.init();
 	}
 
 	private JLabel getLblNewLabel() {
@@ -72,4 +83,9 @@ public class InformeVentasTipoPagoView extends JFrame {
 		}
 		return tbVentas;
 	}
+	
+	//Metodos auxiliares
+		public JTable getTablaVentas() {
+			return this.tbVentas;
+		}
 }

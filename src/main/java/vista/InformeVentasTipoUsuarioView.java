@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.InformeVentasTipoUsuarioController;
+
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -12,8 +15,12 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTable;
 
-public class InformeVentasTipoUsuarioDiaView extends JFrame {
+public class InformeVentasTipoUsuarioView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbInforme;
 	private JScrollPane scpVentas;
@@ -26,7 +33,8 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InformeVentasTipoUsuarioDiaView frame = new InformeVentasTipoUsuarioDiaView();
+					InformeVentasTipoUsuarioController controller = new InformeVentasTipoUsuarioController();
+					InformeVentasTipoUsuarioView frame = new InformeVentasTipoUsuarioView(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +46,7 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformeVentasTipoUsuarioDiaView() {
+	public InformeVentasTipoUsuarioView(InformeVentasTipoUsuarioController controller) {
 		setTitle("Informe Ventas:  tipo usuario y dia");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 825, 532);
@@ -49,6 +57,9 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getLbInforme(), BorderLayout.NORTH);
 		contentPane.add(getScpVentas(), BorderLayout.CENTER);
+		
+		controller.setView(this);
+		controller.init();
 	}
 	private JLabel getLbInforme() {
 		if (lbInforme == null) {
@@ -70,5 +81,10 @@ public class InformeVentasTipoUsuarioDiaView extends JFrame {
 			tbVentas = new JTable();
 		}
 		return tbVentas;
+	}
+	
+	//Metodos auxiliares
+	public JTable getTablaVentas() {
+		return this.tbVentas;
 	}
 }

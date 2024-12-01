@@ -23,7 +23,7 @@ public class InformeVentasTipoMinoristaView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbInforme;
-	private JScrollPane scpVentas;
+	private JScrollPane scpVentas; 
 	private JTable tbVentas;
 
 	/**
