@@ -8,8 +8,8 @@ public class PaqueteDto {
 	
 	public int idPaquete;
 	public int idPedido;
-	public String paqueteEstado;
 	public LocalDate fecha;
+	public String paqueteEstado;
 	
 	@Override
 	public int hashCode() {

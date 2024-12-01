@@ -7,8 +7,10 @@ public class Producto {
 	private int id;
 	private double precio;
 	private int pasillo, estanteria, balda;
+	private int precioEmpresa, iva, stock, minStock, stockReposicion;
 	
-	public Producto(int id, String nombre, String categoria, String descripcion, double precio,int pasillo, int estanteria, int balda) {
+	public Producto(int id, String nombre, String categoria, String descripcion, double precio,int pasillo, int estanteria, int balda,
+			int precioEmpresa, int iva, int stock,int  minStock, int stockReposicion) {
 		this.id =  id;
 		this.nombre = nombre;
 		this.categoria = categoria;
@@ -17,6 +19,13 @@ public class Producto {
 		this.pasillo = pasillo;
 		this.estanteria = estanteria;
 		this.balda = balda;
+		
+		
+		this.precioEmpresa = precioEmpresa;
+		this.iva = iva;
+		this.stock = stock;
+		this.minStock = minStock;
+		this.stockReposicion = stockReposicion;
 	}
 
 	public String getNombre() {
@@ -64,6 +73,28 @@ public class Producto {
 	public void setBalda(int balda) {
 		this.balda = balda;
 	}
+
+	public int getPrecioEmpresa() {
+		return precioEmpresa;
+	}
+
+	public int getIva() {
+		return iva;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public int getMinStock() {
+		return minStock;
+	}
+
+	public int getStockReposicion() {
+		return stockReposicion;
+	}
+	
+	
 	
 	
 }

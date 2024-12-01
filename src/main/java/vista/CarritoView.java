@@ -280,7 +280,7 @@ public class CarritoView extends JFrame {
 	private JLabel getLblCiudad() {
 		if (lblCiudad == null) {
 			lblCiudad = new JLabel("Ciudad: ");
-			lblCiudad.setBounds(95, 249, 77, 14);
+			lblCiudad.setBounds(91, 249, 77, 14);
 		}
 		return lblCiudad;
 	}

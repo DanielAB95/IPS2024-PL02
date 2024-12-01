@@ -1,7 +1,11 @@
 package giis.demo.util;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.DbUtils;
@@ -63,7 +67,21 @@ public class Database2 extends DbUtil {
 	 * (si onlyOnce=true solo ejecutara el script la primera vez
 	 */
 	public void loadDatabase() {
+		executeScript(SQL_SCHEMA);
 		executeScript(SQL_LOAD);
 	}
 	
+	
+	public boolean isDatabaseEmpty() {
+		try (Connection conn = DriverManager.getConnection(url)) {
+	        String checkQuery = "SELECT COUNT(*) FROM Cliente"; // Cambia a una tabla clave
+	        try (PreparedStatement ps = conn.prepareStatement(checkQuery);
+	             ResultSet rs = ps.executeQuery()) {
+	            return rs.next() && rs.getInt(1) == 0;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return true; // Por defecto, asumir que está vacía si hay un error
+	    }
+	}
 }
