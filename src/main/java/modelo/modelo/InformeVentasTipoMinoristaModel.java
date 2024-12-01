@@ -16,15 +16,16 @@ public class InformeVentasTipoMinoristaModel {
 	
 	private final static String GET_FECHAS = "select p.fecha from Pedido p " 
 												+ "inner join Cliente c on p.idCliente = c.idCliente "
-												+ "where c.tipoCliente = 'EMPRESA'";
+												+ "where c.tipoCliente = 'EMPRESA' "
+												+ "order by p.fecha";
 	private final static String GET_MINORISTAS = "select idCliente, nombre from Cliente where tipoCliente = 'EMPRESA'";
-//	private final static String GET_VENTAS_MINORISTAS_DIA = "select  p.Precio from Pedido p " 
-//															+ "inner join Cliente c on  p.idCliente = c.idCliente "
-//															+ "where c.idCliente = ? and fecha = ?";
-//	private final static String GET_VENTAS_MINORISTAS_TOTAL = "select  sum(p.Precio) as precioTotal "
-//															+ "from Pedido p " 
-//															+ "inner join Cliente c on  p.idCliente = c.idCliente "
-//															+ "where c.idCliente = ?";
+	private final static String GET_VENTAS_MINORISTAS_DIA = "select sum(p.precio) as precioDia from Pedido p " 
+															+ "inner join Cliente c on  p.idCliente = c.idCliente "
+															+ "where c.idCliente = ? and fecha = ?";
+	private final static String GET_VENTAS_MINORISTAS_TOTAL = "select  sum(p.Precio) as precioTotal "
+															+ "from Pedido p " 
+															+ "inner join Cliente c on  p.idCliente = c.idCliente "
+															+ "where c.idCliente = ?";
 
 	public InformeVentasTipoMinoristaModel(Database2 db) {
 		this.db = db;
@@ -68,21 +69,28 @@ public class InformeVentasTipoMinoristaModel {
 		return fechas;
 	}
 	
-//	public void getVentasMinoristaDia(String idCliente, LocalDate fecha) {
-//		List<Object[]> result = db.executeQueryArray(GET_VENTAS_MINORISTAS_DIA, idCliente, fecha);
-//		
-//		for(Object[]o : result) {
-//			 PedidoDto pedido = new PedidoDto();
-//			 pedido.fecha = LocalDate.parse((String)o[0]);
-//			 //pedido.precio = (double)o[1];
-//		}	
-//	}
+	public double getVentasMinoristaDia(String idCliente, LocalDate fecha) {
+		List<Object[]> result = db.executeQueryArray(GET_VENTAS_MINORISTAS_DIA, idCliente, fecha);
+		PedidoDto pedido = new PedidoDto();
+		for(Object[]o : result) {
+			 if(o[0] == null) {
+				 pedido.precio =  0.0;
+			 }else {
+				 pedido.precio =  ((Number) o[0]).doubleValue();
+			 }	
+		}	
+		return pedido.precio;
+	}
 	
-//	public double getVentasMinoristaTotal(String idCliente) {
-//		List<Object[]> result = db.executeQueryArray(GET_VENTAS_MINORISTAS_DIA, idCliente);
-//	
-//		return (double)result[0];
-//}
+	public double getVentasMinoristaTotal(String idCliente) {
+		List<Object[]> result = db.executeQueryArray(GET_VENTAS_MINORISTAS_TOTAL, idCliente);
+	
+		if(result.get(0)[0] == null) {
+			 return 0.0;
+		 }else {
+			return ((Number) result.get(0)[0]).doubleValue();
+		 }	
+	}
 	
 	
 }

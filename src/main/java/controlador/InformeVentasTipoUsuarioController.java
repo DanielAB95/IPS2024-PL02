@@ -1,12 +1,12 @@
 package controlador;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
 import modelo.modelo.InformeVentasTipoUsuarioModel;
-import persistence.dto.ClienteDto;
 import vista.InformeVentasTipoUsuarioView;
 
 public class InformeVentasTipoUsuarioController {
@@ -43,14 +43,31 @@ public class InformeVentasTipoUsuarioController {
 
 	private void valoresTabla() {
 		List<LocalDate> fechas = model.getFechas();
-		//model.getVentasMinorista();
-		for( LocalDate fecha : fechas) {
-			Object[] filaNueva = {fecha.toString(),"0","0","0","0","0","0"};
+		String[] tipos = {"PARTICULAR","INVITADO","EMPRESA"};
+		List<Double> precios = new ArrayList<>();	
+		for(LocalDate fecha : fechas) {
+			precios = new ArrayList<>();
+			for(String tipoUsuario : tipos) {	
+				precios.add(model.getVentasTipoUsuarioDia(tipoUsuario, fecha));
+			}
+			
+			Object[] filaNueva = {fecha.toString(),precios.get(0),precios.get(1), precios.get(2),calulaTotal(precios)};
 			tbVentasModel.addRow(filaNueva);
 		}	
-		Object[] filaNueva = {"Total","0","0","0","0","0","0"};
+		precios = new ArrayList<>();
+		for(String tipoUsuario : tipos) {	
+			precios.add(model.getVentasTipoUsuarioTotal(tipoUsuario));	
+		}
+		Object[] filaNueva = {"Total",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
 		tbVentasModel.addRow(filaNueva);
 	}
 	
+	private double calulaTotal(List<Double> precios) {
+		double total = 0.0;
+		for(Double precio : precios) {
+			total += precio;
+		}
+		return total;
+	}
 	
 }

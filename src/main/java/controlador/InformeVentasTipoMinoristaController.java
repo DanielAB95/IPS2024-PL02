@@ -1,6 +1,7 @@
 package controlador;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
@@ -50,28 +51,30 @@ public class InformeVentasTipoMinoristaController {
 
 	private void valoresTabla() {
 		List<LocalDate> fechas = model.getFechas();
-		//model.getVentasMinorista();
+		List<ClienteDto> minoristas = model.getClientes();
+		List<Double> precios = new ArrayList<>();	
 		for( LocalDate fecha : fechas) {
-			Object[] filaNueva = {fecha.toString(),"0","0","0","0","0","0"};
+			precios = new ArrayList<>();
+			for(ClienteDto minorista : minoristas) {
+				precios.add(model.getVentasMinoristaDia(minorista.idCliente, fecha));
+			}
+			Object[] filaNueva = {fecha.toString(),precios.get(0),precios.get(1),precios.get(2),precios.get(3),precios.get(4),calulaTotal(precios)};
 			tbVentasModel.addRow(filaNueva);
 		}	
-		//Object[] filaNueva = {CalcultaTotal()};
+		precios = new ArrayList<>();
+		for(ClienteDto minorista : minoristas) {	
+			precios.add(model.getVentasMinoristaTotal(minorista.idCliente));	
+		}
+		Object[] filaNueva = {"Total",precios.get(0),precios.get(1),precios.get(2),precios.get(3),precios.get(4), calulaTotal(precios)};
+		tbVentasModel.addRow(filaNueva);
 	}
 		
-//	private double[] CalcultaTotal() {
-//		double total = 0.0;
-//		for(ClienteDto cliente : model.getClientes() ) {
-//		//	tbVentasModel.addColumn(cliente.idCliente, model.getVentaMinoristaTotal(cliente.idCliente));
-//			//total += model.getVentaMinoristaTotal(cliente.idCliente);
-//		}
-//		Object[] col = {total};
-//		//tbVentasModel.ad("Total", col);	
-//		
-//	}
-	
-	private void limpiarModelo() {
-		for(int i = tbVentasModel.getRowCount()-1  ; i>=0; i++) {
-			tbVentasModel.removeRow(i);
-		}	
+	private double calulaTotal(List<Double> precios) {
+		double total = 0.0;
+		for(Double precio : precios) {
+			total += precio;
+		}
+		return total;
 	}
+
 }

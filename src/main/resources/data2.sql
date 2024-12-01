@@ -10,19 +10,19 @@ INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, c
 ('CLI000003', 'rvargas90', 'Raul Vargas', '+34987654321', 'España', 'Valencia', 'Valencia', 'Calle Colon 22 5º izquierda', 'PARTICULAR'),
 ('CLI000004', 'asolano88', 'Andrea Solano', '+34901234567', 'España', 'Andalucía', 'Sevilla', 'Calle Feria 78 5º izquierda', 'PARTICULAR'),
 ('CLI000005', 'cfuentes95', 'Carlos Fuentes', '+34987654321', 'España', 'Galicia', 'A Coruña', 'Rua Nova 11 3º B', 'PARTICULAR'),
-('CLI000006', 'lflores80', 'Laura Flores', '+35123456789', 'Portugal', 'Lisboa', 'Lisboa', 'Rua Augusta 200 3º B', 'PARTICULAR'),
-('CLI000007', 'jsantos83', 'Javier Santos', '+33456789123', 'Francia', 'Île-de-France', 'Paris', 'Rue de Rivoli 150 3º B', 'PARTICULAR'),
-('CLI000008', 'mbrown91', 'Michael Brown', '+44123456789', 'Reino Unido', 'Inglaterra', 'Londres', 'Baker Street 221B 3º B' , 'PARTICULAR'),
-('CLI000009', 'cchen99', 'Chen Chen', '+81312345678', 'Japón', 'Kanto', 'Tokio', 'Shibuya 109 3º B', 'PARTICULAR'),
-('CLI000010', 'asang95', 'Anita Sang', '+12123456789', 'EE.UU.', 'California', 'Los Ángeles', 'Sunset Blvd 500 3º B', 'PARTICULAR');
---EMPRESAS
+('CLI000006', 'lflores80', 'Laura Flores', '+34123456789', 'España', 'Asturias', 'Gijón', 'Calle Covadonga 12', 'PARTICULAR'),
+('CLI000007', 'jsantos83', 'Javier Santos', '+34678912345', 'España', 'Extremadura', 'Mérida', 'Calle Romero 25', 'INVITADO'),
+('CLI000008', 'mbrown91', 'Michael Brown', '+34123456789', 'España', 'Andalucía', 'Jaén', 'Calle Santo Reino 8', 'INVITADO'),
+('CLI000009', 'cchen99', 'Chen Chen', '+34987654321', 'España', 'La Rioja', 'Logroño', 'Calle Laurel 5', 'PARTICULAR'),
+('CLI000010', 'asang95', 'Anita Sang', '+34123456789', 'España', 'Asturias', 'Candás', 'Calle Faro 17', 'INVITADO');
 
+-- EMPRESAS
 INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES
 ('CLI000011', 'techsol_inc', 'Tech Solutions Inc.', '+34987651234', 'España', 'Madrid', 'Madrid', 'Calle Gran Vía 1', 'EMPRESA'),
 ('CLI000012', 'bioenviro_sa', 'BioEnviro S.A.', '+34906547812', 'España', 'Cataluña', 'Barcelona', 'Passeig de Gracia 55', 'EMPRESA'),
-('CLI000013', 'ecomerce_llc', 'E-Commerce LLC', '+447765432109', 'Reino Unido', 'Inglaterra', 'Londres', 'King Street 75', 'EMPRESA'),
-('CLI000014', 'softdev_solutions', 'SoftDev Solutions', '+12024567890', 'EE.UU.', 'Nueva York', 'Nueva York', '5th Avenue 300', 'EMPRESA'),
-('CLI000015', 'global_trades', 'Global Trades Ltd.', '+81345678901', 'Japón', 'Kanto', 'Tokio', 'Ginza Street 10', 'EMPRESA');
+('CLI000013', 'ecomerce_llc', 'E-Commerce LLC', '+34987654321', 'España', 'Valencia', 'Valencia', 'Avenida del Oeste 10', 'EMPRESA'),
+('CLI000014', 'softdev_solutions', 'SoftDev Solutions', '+34987654321', 'España', 'Asturias', 'Oviedo', 'Calle Uria 20', 'EMPRESA'),
+('CLI000015', 'global_trades', 'Global Trades Ltd.', '+34987654321', 'España', 'Andalucía', 'Málaga', 'Calle Larios 15', 'EMPRESA');
 
 delete from carrito;
 INSERT INTO carrito (id_cliente, id_carrito) VALUES
@@ -157,31 +157,31 @@ insert into Categoria(nombreCategoria,categoriaPadre) values
     ('Teléfonos Fijos', 'Teléfonos');
 
 delete from Pedido;
-insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago) values
-	(1, 'CLI000001', '2024-10-25', 'Sin Facturar','Contrarrembolso'),
-	(2, 'CLI000002', '2024-05-08', 'Sin Facturar', 'Contrarrembolso'),
-	(3, 'CLI000002', '2024-10-24', 'Empaquetado', 'Tarjeta'),
-	(4, 'CLI000003', '2024-10-26', 'Pendiente', 'Tarjeta'),
-	(5, 'CLI000003', '2024-07-12', 'Pendiente', 'Tarjeta'),
-	(6, 'CLI000004', '2024-11-01', 'Pendiente', 'Tarjeta'),
-	(7, 'CLI000005', '2024-10-24', 'Pendiente', 'Tarjeta'),
-	(8, 'CLI000006', '2024-10-31', 'Pendiente', 'Contrarrembolso'),
-	(9, 'CLI000007', '2024-10-19', 'Pendiente', 'Contrarrembolso'),
-	(10, 'CLI000008', '2024-10-04', 'Sin Facturar', 'Contrarrembolso'),
-	(11, 'CLI000009', '2024-10-16', 'Sin Facturar', 'Contrarrembolso'),
-	(12, 'CLI000001', '2024-03-14', 'Listo', 'Transferencia'),
-    (13, 'CLI000009', '2024-05-14', 'Listo', 'Transferencia'),
-    (14, 'CLI000010', '2024-05-15', 'Listo', 'Transferencia'),
-    (15, 'CLI000001', '2024-05-15', 'Listo', 'Transferencia'),
-    (16, 'CLI000010', '2024-05-10', 'Listo', 'Transferencia'),
-    (17, 'CLI000010', '2024-05-12', 'Listo', 'Transferencia'),
-    (18, 'CLI000010', '2024-04-11', 'Pendiente', 'Transferencia'),
+insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago, precio) values
+	(1, 'CLI000001', '2024-10-25', 'Sin Facturar','Contrarrembolso', 125.0),
+	(2, 'CLI000002', '2024-05-08', 'Sin Facturar', 'Contrarrembolso', 133.99),
+	(3, 'CLI000002', '2024-10-24', 'Empaquetado', 'Tarjeta', 200.0),
+	(4, 'CLI000003', '2024-10-26', 'Pendiente', 'Tarjeta', 55.50),
+	(5, 'CLI000003', '2024-07-12', 'Pendiente', 'Tarjeta', 33.99),
+	(6, 'CLI000004', '2024-11-01', 'Pendiente', 'Tarjeta', 399.99),
+	(7, 'CLI000005', '2024-10-24', 'Pendiente', 'Tarjeta', 600.0),
+	(8, 'CLI000006', '2024-10-31', 'Pendiente', 'Contrarrembolso', 555.55),
+	(9, 'CLI000007', '2024-10-19', 'Pendiente', 'Contrarrembolso', 333.33),
+	(10, 'CLI000008', '2024-10-04', 'Sin Facturar', 'Contrarrembolso', 999.99),
+	(11, 'CLI000009', '2024-10-16', 'Sin Facturar', 'Contrarrembolso',222.99),
+	(12, 'CLI000001', '2024-03-14', 'Listo', 'Transferencia',100.0),
+    (13, 'CLI000009', '2024-05-14', 'Listo', 'Transferencia', 99.99),
+    (14, 'CLI000010', '2024-05-15', 'Listo', 'Transferencia', 1225.0),
+    (15, 'CLI000001', '2024-05-15', 'Listo', 'Transferencia',777.99),
+    (16, 'CLI000010', '2024-05-10', 'Listo', 'Transferencia', 500.0),
+    (17, 'CLI000010', '2024-05-12', 'Listo', 'Transferencia', 666.66),
+    (18, 'CLI000010', '2024-04-11', 'Pendiente', 'Transferencia', 2222.0),
 
-    (19, 'CLI000011', '2024-11-01', 'Pendiente', 'Tarjeta'),
-	(20, 'CLI000012', '2024-10-24', 'Pendiente', 'Tarjeta'),
-    (21, 'CLI000013', '2024-10-04', 'Sin Facturar', 'Contrarrembolso'),
-	(22, 'CLI000014', '2024-10-16', 'Sin Facturar', 'Contrarrembolso'),
-    (23, 'CLI000015', '2024-04-11', 'Pendiente', 'Transferencia');
+    (19, 'CLI000011', '2024-11-01', 'Pendiente', 'Tarjeta',50000.0),
+	(20, 'CLI000012', '2024-10-24', 'Pendiente', 'Tarjeta',100000.0),
+    (21, 'CLI000013', '2024-10-04', 'Sin Facturar', 'Contrarrembolso',150000.0),
+	(22, 'CLI000014', '2024-10-16', 'Sin Facturar', 'Contrarrembolso',200000.00),
+    (23, 'CLI000015', '2024-04-11', 'Pendiente', 'Transferencia', 999999.99);
 
 delete from PedidoProducto;
 insert into PedidoProducto(idPedido, idProducto, cantidad) values
@@ -276,7 +276,14 @@ delete from Paquete;
 insert into Paquete(idPaquete, idPedido, idAlmacenero, paqueteEstado, fecha) values
 	(2, 3, 2, 'Listo', '2024-10-25'),
     (1, 2, 1, 'Listo', '2024-11-30'),
-    (4, 1, 6, 'Listo', '2024-02-01');
+    (4, 1, 6, 'Listo', '2024-02-01'),
+
+    (5, 4, 2, 'Listo', '2024-06-15'),
+    (6, 5, 1, 'En Curso', '2024-11-310'),
+    (7, 6, 6, 'Listo', '2024-02-21'),
+    (8, 7, 2, 'En Curso', '2024-10-30'),
+    (9, 16, 1, 'Listo', '2024-11-12'),
+    (10, 18, 6, 'Listo', '2024-02-17');
 
 delete from PaqueteProducto;
 insert into PaqueteProducto(idPaquete, idProducto, cantidad) values

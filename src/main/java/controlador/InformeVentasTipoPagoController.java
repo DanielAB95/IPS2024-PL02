@@ -6,10 +6,7 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import modelo.dto.PedidoDTO;
 import modelo.modelo.InformeVentasTipoPagoModel;
-import persistence.dto.ClienteDto;
-import persistence.dto.PedidoDto;
 import vista.InformeVentasTipoPagoView;
 
 public class InformeVentasTipoPagoController {
@@ -32,7 +29,7 @@ public class InformeVentasTipoPagoController {
 	}
 	
 	private void columnasTabla() {
-		Object[] columnNames = {"fecha/tipoPago", "Particular(Identificado)", "Tarjeta", "Contrarrembolso", "Transferencia"};
+		Object[] columnNames = {"fecha/tipoPago","Tarjeta", "Contrarrembolso", "Transferencia", "Total"};
 		tbVentasModel = new DefaultTableModel(columnNames,0);
 		view.getTablaVentas().setModel(tbVentasModel);
 	}
@@ -45,27 +42,22 @@ public class InformeVentasTipoPagoController {
 	private void valoresTabla() {
 		List<LocalDate> fechas = model.getFechas();
 		String[] tipos = {"Tarjeta","Contrarrembolso","Transferencia"};
-		List<Double> precios = new ArrayList<>();
+		List<Double> precios = new ArrayList<>();	
 		for( LocalDate fecha : fechas) {
-			for(String tipoPago : tipos) {
-				precios = new ArrayList<>();
-				PedidoDto pedido = new PedidoDto();
-				//model.getVentasTipoPagoDia(tipoDePago);
-				//precios.add(pedido.precio)
-				
-				
+			precios = new ArrayList<>();
+			for(String tipoPago : tipos) {	
+				precios.add(model.getVentasTipoPagoDia(tipoPago, fecha));
 			}
 			
-			Object[] filaNueva = {fecha,precios.toArray(),calulaTotal(precios)};
+			Object[] filaNueva = {fecha,precios.get(0),precios.get(1), precios.get(2),calulaTotal(precios)};
 			tbVentasModel.addRow(filaNueva);
 			
 		}	
-		
-		for(String tipoPago : tipos) {
-			precios = new ArrayList<>();
-			//precios.add(model.getVentasTipoPagoTotal(tipoDePago));	
+		precios = new ArrayList<>();
+		for(String tipoPago : tipos) {	
+			precios.add(model.getVentasTipoPagoTotal(tipoPago));	
 		}
-		Object[] filaNueva = {"Total",precios.toArray(),calulaTotal(precios)};
+		Object[] filaNueva = {"Total",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
 		tbVentasModel.addRow(filaNueva);
 	}
 	

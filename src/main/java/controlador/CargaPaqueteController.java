@@ -123,17 +123,9 @@ public class CargaPaqueteController {
 
 	
 	private void RecepcionVehiculo() {	
-		if(!existVehiculo()) {
-			model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());
-			JOptionPane.showMessageDialog(null, "Vehiculo registrado");
-		}else {
-			model.getVehiculoByMatricula(view.getTextMatricula().getText());
-			if(!model.getVehiculo().zonaReparto.equals(view.getComboBoxZonaReparto().getSelectedItem().toString())) {
-				JOptionPane.showMessageDialog(null, "El vehiculo ya esta registrado \n y esta no es su zona de reparto"
-						, "Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-		}
+		model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());
+		JOptionPane.showMessageDialog(null, "Vehiculo registrado");
+		
 		
 		mostrarPaquetes();
 		view.getButtonRecepcionVehiculos().setEnabled(false);
@@ -142,11 +134,6 @@ public class CargaPaqueteController {
 		view.getButtonFinalizar().setEnabled(true);
 		view.getButtonEscanear().setEnabled(true);
 		
-	}
-	
-	private boolean existVehiculo() {
-		model.getVehiculoByMatricula(view.getTextMatricula().getText());
-		return model.getVehiculo() != null;
 	}
 
 	private void mostrarPaquetes() {

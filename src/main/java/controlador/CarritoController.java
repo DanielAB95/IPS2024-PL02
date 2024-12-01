@@ -132,7 +132,7 @@ public class CarritoController {
 		clientData[5] = view.getTextRegion().getText();
 		clientData[6] = view.getTextCiudad().getText();
 		clientData[7] = view.getTextCalle().getText();
-		clientData[8] = "INVIADO"; 
+		clientData[8] = "INVITADO"; 
 		
 		modelo.createNewClient(clientData);
 		//modelo.getDto().setName(clientData[1]);
