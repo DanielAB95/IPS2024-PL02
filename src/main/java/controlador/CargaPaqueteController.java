@@ -172,7 +172,7 @@ public class CargaPaqueteController {
 			model.paquetesZonaNacional();
 		}
 	}
-	
+	 
 	
 
 	private boolean checkVehiculo() {
