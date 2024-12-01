@@ -59,4 +59,8 @@ public class InformePaquetesListosModel {
 		return cantidad;
 	}
 
+	public Database2 getDB() {
+		return db;
+	}
+
 }

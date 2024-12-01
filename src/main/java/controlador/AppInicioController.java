@@ -3,11 +3,10 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import modelo.modelo.InformeAlmaceneroModel;
 import vista.AlmaceneroInicioView;
 import vista.AppInicioView;
 import vista.ClienteLoginView;
-import vista.InformeAlmaceneroView;
+import vista.InformeMenuView;
 
 public class AppInicioController {
 	
@@ -52,11 +51,10 @@ public class AppInicioController {
 		view.getBtInformes().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InformeAlmaceneroModel infalmo = new InformeAlmaceneroModel(view.getDatabase());
-				InformeAlmaceneroController infalco = new InformeAlmaceneroController(infalmo);
-				InformeAlmaceneroView infalvi = new InformeAlmaceneroView(infalco);
+				InformeMenuController menucont = new InformeMenuController(view.getDatabase());
+				InformeMenuView menuview = new InformeMenuView(menucont);
 				view.dispose();
-				infalvi.setVisible(true);
+				menuview.setVisible(true);
 				
 			}
 		});

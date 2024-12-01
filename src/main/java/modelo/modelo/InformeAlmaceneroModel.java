@@ -114,5 +114,9 @@ public class InformeAlmaceneroModel {
 		LocalDate res = LocalDate.parse((String)result.get(0)[0]);
 		return res;
 	}
+
+	public Database2 getDB() {
+		return db;
+	}
 	
 }

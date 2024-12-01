@@ -10,6 +10,7 @@ import java.util.List;
 import modelo.modelo.InformeAlmaceneroModel;
 import persistence.dto.AlmaceneroDto;
 import vista.InformeAlmaceneroView;
+import vista.InformeMenuView;
 
 public class InformeAlmaceneroController {
 	
@@ -30,8 +31,22 @@ public class InformeAlmaceneroController {
 	
 	public void init() {
 		showAlmaceneros();
+		actionBtInformes();
 		actionComboBox();
 		view.getComboBox().setSelectedIndex(0);
+	}
+	
+	private void actionBtInformes() {
+		view.getBtInformes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformeMenuController menucont = new InformeMenuController(model.getDB());
+				InformeMenuView menuview = new InformeMenuView(menucont);
+				view.dispose();
+				menuview.setVisible(true);
+				
+			}
+		});
 	}
 	
 	private void actionComboBox() {

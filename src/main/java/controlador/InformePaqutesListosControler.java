@@ -1,8 +1,12 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import giis.demo.util.Database2;
 import modelo.modelo.InformePaquetesListosModel;
 import persistence.dto.PaqueteDto;
+import vista.InformeMenuView;
 import vista.InformePaquetesListosView;
 
 public class InformePaqutesListosControler {
@@ -24,6 +28,20 @@ public class InformePaqutesListosControler {
 	
 	public void init() {
 		showPaquetesListos();
+		actionBtInformes();
+	}
+	
+	private void actionBtInformes() {
+		view.getBtInformes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformeMenuController menucont = new InformeMenuController(model.getDB());
+				InformeMenuView menuview = new InformeMenuView(menucont);
+				view.dispose();
+				menuview.setVisible(true);
+				
+			}
+		});
 	}
 
 	private void showPaquetesListos() {
