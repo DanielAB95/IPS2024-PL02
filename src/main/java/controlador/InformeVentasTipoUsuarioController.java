@@ -31,7 +31,7 @@ public class InformeVentasTipoUsuarioController {
 	private void columnasTabla() {
 		
 		
-		Object[] columnNames = {"fecha/tipoUsuario", "Particular(Identificado)", "Particular(Anonimo)", "Minorista", "Total"};
+		Object[] columnNames = {"fecha/tipoUsuario", "Particular(Identificado)", "Particular(Anonimo)", "Minorista", "Total(€)"};
 		tbVentasModel = new DefaultTableModel(columnNames,0);
 		view.getTablaVentas().setModel(tbVentasModel);
 	}
@@ -58,7 +58,7 @@ public class InformeVentasTipoUsuarioController {
 		for(String tipoUsuario : tipos) {	
 			precios.add(model.getVentasTipoUsuarioTotal(tipoUsuario));	
 		}
-		Object[] filaNueva = {"Total",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
+		Object[] filaNueva = {"Total(€)",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
 		tbVentasModel.addRow(filaNueva);
 	}
 	

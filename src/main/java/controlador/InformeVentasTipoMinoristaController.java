@@ -39,7 +39,7 @@ public class InformeVentasTipoMinoristaController {
 		for(int i = 0; i < minoristas.size();i++) {
 			columnNames[i+1] = minoristas.get(i).idCliente;
 		}
-		columnNames[columnNames.length-1] = "Total";
+		columnNames[columnNames.length-1] = "Total(€)";
 		tbVentasModel = new DefaultTableModel(columnNames,0);
 		view.getTablaVentas().setModel(tbVentasModel);
 	}
@@ -65,7 +65,7 @@ public class InformeVentasTipoMinoristaController {
 		for(ClienteDto minorista : minoristas) {	
 			precios.add(model.getVentasMinoristaTotal(minorista.idCliente));	
 		}
-		Object[] filaNueva = {"Total",precios.get(0),precios.get(1),precios.get(2),precios.get(3),precios.get(4), calulaTotal(precios)};
+		Object[] filaNueva = {"Total(€)",precios.get(0),precios.get(1),precios.get(2),precios.get(3),precios.get(4), calulaTotal(precios)};
 		tbVentasModel.addRow(filaNueva);
 	}
 		

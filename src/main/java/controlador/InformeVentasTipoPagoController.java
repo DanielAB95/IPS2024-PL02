@@ -29,7 +29,7 @@ public class InformeVentasTipoPagoController {
 	}
 	
 	private void columnasTabla() {
-		Object[] columnNames = {"fecha/tipoPago","Tarjeta", "Contrarrembolso", "Transferencia", "Total"};
+		Object[] columnNames = {"fecha/tipoPago","Tarjeta", "Contrarrembolso", "Transferencia", "Total(€)"};
 		tbVentasModel = new DefaultTableModel(columnNames,0);
 		view.getTablaVentas().setModel(tbVentasModel);
 	}
@@ -57,7 +57,7 @@ public class InformeVentasTipoPagoController {
 		for(String tipoPago : tipos) {	
 			precios.add(model.getVentasTipoPagoTotal(tipoPago));	
 		}
-		Object[] filaNueva = {"Total",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
+		Object[] filaNueva = {"Total(€)",precios.get(0),precios.get(1), precios.get(2), calulaTotal(precios)};
 		tbVentasModel.addRow(filaNueva);
 	}
 	
