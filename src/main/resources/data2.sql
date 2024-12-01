@@ -232,7 +232,7 @@ insert into Workorder(idWorkorder, idAlmacenero, workorderEstado, fecha) values
     (1, 1, 'Pendiente', null),
     (2, 1, 'Pendiente', null),
     (3, 1, 'Pendiente', null),
-    (5, 1, 'Empaquetada', null),
+    (5, 2, 'Empaquetada', '2024-09-21'),
     (300, 1, 'Listo','2024-10-25'),
     (301, 1, 'Listo','2024-10-25'),
     (302, 1, 'Listo','2024-10-25');
@@ -266,10 +266,10 @@ insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recog
     (302, 15, 2, 1, 1);
 
 delete from Paquete;
-insert into Paquete(idPaquete, idPedido, paqueteEstado, fecha) values
-	(2, 3, 'Listo', '2024-10-25'),
-    (1, 2, 'Listo', '2024-11-30'),
-    (4, 1, 'Listo', '2024-02-01');
+insert into Paquete(idPaquete, idPedido, idAlmacenero, paqueteEstado, fecha) values
+	(2, 3, 2, 'Listo', '2024-10-25'),
+    (1, 2, 1, 'Listo', '2024-11-30'),
+    (4, 1, 6, 'Listo', '2024-02-01');
 
 delete from PaqueteProducto;
 insert into PaqueteProducto(idPaquete, idProducto, cantidad) values
