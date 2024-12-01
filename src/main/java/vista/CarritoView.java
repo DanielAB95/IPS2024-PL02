@@ -171,7 +171,7 @@ public class CarritoView extends JFrame {
 	private JLabel getLblPrecioTotal() {
 		if (lblPrecioTotal == null) {
 			lblPrecioTotal = new JLabel("Precio Total con IVA: ");
-			lblPrecioTotal.setBounds(867, 261, 115, 14);
+			lblPrecioTotal.setBounds(856, 261, 126, 14);
 		}
 		return lblPrecioTotal;
 	}
@@ -180,7 +180,7 @@ public class CarritoView extends JFrame {
 		if (textPrecioTotal == null) {
 			textPrecioTotal = new JTextField();
 			textPrecioTotal.setEditable(false);
-			textPrecioTotal.setBounds(867, 287, 105, 20);
+			textPrecioTotal.setBounds(856, 286, 116, 20);
 			textPrecioTotal.setColumns(10);
 		}
 		return textPrecioTotal;
@@ -432,7 +432,7 @@ public class CarritoView extends JFrame {
 			textIVAtotal = new JTextField();
 			textIVAtotal.setEditable(false);
 			textIVAtotal.setColumns(10);
-			textIVAtotal.setBounds(676, 287, 105, 20);
+			textIVAtotal.setBounds(676, 287, 116, 20);
 		}
 		return textIVAtotal;
 	}
@@ -448,14 +448,14 @@ public class CarritoView extends JFrame {
 			textPrecioTotalSinIVA = new JTextField();
 			textPrecioTotalSinIVA.setEditable(false);
 			textPrecioTotalSinIVA.setColumns(10);
-			textPrecioTotalSinIVA.setBounds(676, 340, 105, 20);
+			textPrecioTotalSinIVA.setBounds(676, 340, 116, 20);
 		}
 		return textPrecioTotalSinIVA;
 	}
 	private JLabel getLblIPrecioTotalSinIVA() {
 		if (lblIPrecioTotalSinIVA == null) {
 			lblIPrecioTotalSinIVA = new JLabel("Precio Total sin IVA: ");
-			lblIPrecioTotalSinIVA.setBounds(676, 322, 105, 14);
+			lblIPrecioTotalSinIVA.setBounds(676, 322, 132, 14);
 		}
 		return lblIPrecioTotalSinIVA;
 	}

@@ -24,7 +24,7 @@ public class CarritoModel {
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
 	private static final String SQL_CREA_CLIENTE_NUEVO = "INSERT INTO Cliente (idCliente, nombreUsuario, nombre, telefono, pais, region, ciudad, calle, tipoCliente) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago) values (?, ?, ?, ?, ?)";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago, precio) values (?, ?, ?, ?, ?, ?)";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
 	public static final String SQL_LISTA_PRODUCTO = "select * from producto";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
@@ -110,7 +110,11 @@ public class CarritoModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.nombreUsusario), fecha, estado, tipoPago);
+			
+			double precio = this.carrito.getTotalConIVA(tipoPago);
+			
+			
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(dto.nombreUsusario), fecha, estado, tipoPago, precio);
 				
 			insertarProductosPedido(nuevoID);
 			
@@ -313,7 +317,7 @@ public class CarritoModel {
 		List<Object[]> pedidos = db.executeQueryArray(SQL_GET_PEDIDOS);
 		
 		for (Object[] p: pedidos) {
-			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3] + " " + p[4]);
+			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3] + " " + p[4] + " " + p[5]);
 		}
 		System.out.println();
 		
