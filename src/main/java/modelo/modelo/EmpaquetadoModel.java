@@ -10,6 +10,7 @@ import giis.demo.util.Database2;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
+import persistence.dto.Queries;
 import persistence.dto.WorkorderDto;
 
 public class EmpaquetadoModel {
@@ -19,7 +20,6 @@ public class EmpaquetadoModel {
 	private int idPaquete;
 	private Database2 db;
 	
-	private final static String SQL_FIND_ALMACENERO = "select * from Almacenero where idAlmacenero = ?";
 	private final static String SQL_FIND_WOLISTAS = "select * from Workorder where workorderEstado = 'Listo'";
 	private final static String SQL_FIND_PEDIDOS_FROM_WO = "select * from WorkorderPedido wp "
 											+ "inner join Pedido p on wp.idPedido = p.idPedido "
@@ -30,7 +30,6 @@ public class EmpaquetadoModel {
 	private final static String SQL_FIND_PRODUCTOS_EMPAQUETADOS = "select cantidad from PaqueteProducto "
 															    + "where idPaquete = ? and idProducto = ?";
 	private final static String SQL_INSERT_PAQUETEPROD = "insert into PaqueteProducto(idPaquete, idProducto, cantidad) values (?,?,1)";
-	private final static String SQL_INSERT_PAQUETE = "insert into Paquete(idPaquete, idPedido, paqueteEstado) values (?,?,'En Curso')";
 	private final static String SQL_INSERT_WOPAQ = "insert into workorderPaquete(idWorkorder, idPaquete) values (?,?)";
 	private final static String SQL_UPDATE_PAQUETEPROD = "update PaqueteProducto set cantidad = cantidad + 1 where idPaquete = ? and idProducto = ?";
 	private final static String SQL_MAX_NUM_PAQUETE = "select max(idPaquete) from Paquete";
@@ -38,8 +37,6 @@ public class EmpaquetadoModel {
 													 + "inner join Paquete p on wp.idPaquete = p.idPaquete "
 													 + "where wp.idWorkorder = ? and p.paqueteEstado = 'En Curso'";
 	private final static String SQL_RECUPERARPRODUCTO = "select * from paqueteProducto where idPaquete = ? and idProducto = ?";
-	private final static String SQL_UPDATE_ESTADO_PAQUETE = "update Paquete set paqueteEstado = ? where idPaquete = ?";
-	private final static String SQL_UPDATE_ESTADO_WORKORDER = "update Workorder set workorderEstado = ? where idWorkorder = ?";
 	private final static String SQL_UPDATE_ESTADO_PEDIDO = "update Pedido set estado = ? where idPedido = ?";
 	private final static String SQL_FIND_ESTADO_PEDIDO = "select estado from Pedido where idPedido = ?";
 	
@@ -60,7 +57,7 @@ public class EmpaquetadoModel {
 	}
 	
 	private void setAlmacenero() {
-		List<Object[]> o = db.executeQueryArray(SQL_FIND_ALMACENERO, almacenero.idAlmacenero);
+		List<Object[]> o = db.executeQueryArray(Queries.Almacenero.FIND_FROM_ID, almacenero.idAlmacenero);
 		almacenero.nombre = (String)o.get(0)[1];
 		almacenero.apellido = (String)o.get(0)[2];
 	}
@@ -141,7 +138,7 @@ public class EmpaquetadoModel {
 			guardarEnBaseDeDatos(wdto, pdto, prod);
 			if (isWoFinished(wdto)) {
 				workorders.remove(wdto);
-				db.executeUpdate(SQL_UPDATE_ESTADO_WORKORDER, "Empaquetada", wdto.idWorkorder);
+				db.executeUpdate(Queries.Workorder.UPDATE, "Empaquetada", wdto.idWorkorder);
 			}
 			return idPaquete;
 		}
@@ -199,7 +196,7 @@ public class EmpaquetadoModel {
 	}
 
 	private void insertarNuevo(int idPedido,int idProducto) {
-		db.executeUpdate(SQL_INSERT_PAQUETE, idPaquete, idPedido);
+		db.executeUpdate(Queries.Paquete.INSERT, idPaquete, idPedido, almacenero.idAlmacenero);
 		db.executeUpdate(SQL_INSERT_PAQUETEPROD, idPaquete, idProducto);
 	}
 
@@ -217,7 +214,7 @@ public class EmpaquetadoModel {
 	
 	public int cerrarCaja(int idWorkorder) {
 		if (!getPaqueteNuevo(idWorkorder)) {
-			db.executeUpdate(SQL_UPDATE_ESTADO_PAQUETE, "Listo", idPaquete);
+			db.executeUpdate(Queries.Paquete.UPDATE, "Listo", LocalDate.now().toString() ,idPaquete);
 			return idPaquete;
 		}
 		return 0;
