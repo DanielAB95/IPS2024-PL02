@@ -47,13 +47,11 @@ public class InformeAlmaceneroModel {
 		case "Workorders recogidas":
 			return getOptionFechaQuery(date, Queries.Workorder.FINISHED_FROM_DATE);
         case "Productos recogidos":
-        	
-            break;
+        	return getOptionFechaQuery(date, Queries.Workorder.FIND_ALL_REGISTROS);
         case "Paquetes completados":
         	return getOptionFechaQuery(date, Queries.Paquete.FINISHED_FROM_DATE);
         case "Productos empaquetados":
-        	
-            break;
+        	return getOptionFechaQuery(date, Queries.Paquete.FIND_ALL_REGISTROS);
 		}
 		return null;
 	}
@@ -78,17 +76,18 @@ public class InformeAlmaceneroModel {
 			result = db.executeQueryArray(Queries.Workorder.FIRST_DATE);
             break;
         case "Productos recogidos":
-        	result = db.executeQueryArray(Queries.Paquete.FIRST_DATE);//TODO
+        	result = db.executeQueryArray(Queries.Workorder.FIRST_DATE_REGISTRO);
             break;
         case "Paquetes completados":
         	result = db.executeQueryArray(Queries.Paquete.FIRST_DATE);
             break;
         case "Productos empaquetados":
-        	result = db.executeQueryArray(Queries.Workorder.FIRST_DATE);//TODO
+        	result = db.executeQueryArray(Queries.Paquete.FIRST_DATE_REGISTRO);
             break;
 		default:
 			result = db.executeQueryArray(Queries.Workorder.FIRST_DATE);
 		}
+		if (result.get(0)[0] == null) return null;
 		LocalDate date = LocalDate.parse((String)result.get(0)[0]);
 		return date;
 	}
@@ -100,13 +99,13 @@ public class InformeAlmaceneroModel {
 			result = db.executeQueryArray(Queries.Workorder.NEXT_DATE, date);
             break;
         case "Productos recogidos":
-        	result = db.executeQueryArray(Queries.Workorder.NEXT_DATE, date);//TODO
+        	result = db.executeQueryArray(Queries.Workorder.NEXT_DATE_REGISTRO, date);
             break;
         case "Paquetes completados":
         	result = db.executeQueryArray(Queries.Paquete.NEXT_DATE, date);
             break;
         case "Productos empaquetados":
-        	result = db.executeQueryArray(Queries.Workorder.NEXT_DATE, date);//TODO
+        	result = db.executeQueryArray(Queries.Paquete.NEXT_DATE_REGISTRO, date);
             break;
 		default:
 			result = db.executeQueryArray(Queries.Workorder.NEXT_DATE, date);

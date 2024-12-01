@@ -5,6 +5,8 @@ public class Queries {
 	public class Workorder {
 		public static final String UPDATE = "update Workorder set workorderEstado = ? where idWorkorder = ?";
 		public static final String UPDATE_FECHA = "update Workorder set workorderEstado = ?, fecha = ? where idWorkorder = ?";
+		public static final String UPDATE_PRODUCTO = "update WorkorderProducto set recogidos = recogidos + ? "
+				  								    + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
 		public static final String INSERT = "insert into Workorder(idWorkorder, idAlmacenero, workorderEstado, fecha) "
 										  + "values (?,?,?,?)";
 		public static final String PEDIDO_INSERT = "insert into WorkorderPedido(idWorkorder, idPedido) "
@@ -15,9 +17,19 @@ public class Queries {
 		public static final String NEXT_DATE = "select min(fecha) from Workorder "
 											 + "where workorderEstado in ('Listo', 'Empaquetada') "
 											 + "and fecha > ?";
+		public static final String FIRST_DATE_REGISTRO = "select min(fecha) from recogidos";
+		public static final String NEXT_DATE_REGISTRO = "select min(fecha) from recogidos "
+				 	 						 		  + "where fecha > ?";
 		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
 													  + "from Workorder where fecha = ? "
 													  + "group by idAlmacenero";
+		public static final String FIND_ALL_REGISTROS = "select cantidad, idAlmacenero "
+				  									  + "from recogidos where fecha = ?";
+		public static final String FIND_REGISTRO = "select * from recogidos where idAlmacenero = ? and fecha = ?";
+		public static final String INCREMENT_REGISTRO = "update recogidos set cantidad = cantidad + 1 "
+				  									  + "where idAlmacenero = ? and fecha = ?";
+		public static final String INSERT_REGISTRO = "insert into recogidos(idAlmacenero, cantidad, fecha) "
+												   + "values(?,1,?)";
 	}
 	
 	public class Paquete {
@@ -27,7 +39,7 @@ public class Queries {
 		public static final String FIND_READY = "select idPaquete, idPedido, fecha "
 											  + "from Paquete "
 											  + "where paqueteEstado = 'Listo'";
-		
+		public static final String MAX_NUM_PAQUETE = "select max(idPaquete) from Paquete";
 		public static final String FIND_PRODUCTOS = "select idProducto, cantidad "
 												  + "from PaqueteProducto "
 												  + "where idPaquete = ?";
@@ -35,9 +47,19 @@ public class Queries {
 		public static final String NEXT_DATE = "select min(fecha) from Paquete "
 				 	 						 + "where paqueteEstado in ('Listo') "
 				 	 						 + "and fecha > ?";
+		public static final String FIRST_DATE_REGISTRO = "select min(fecha) from empaquetados";
+		public static final String NEXT_DATE_REGISTRO = "select min(fecha) from empaquetados "
+				 	 						 		  + "where fecha > ?";
 		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
 				  									  + "from Paquete where fecha = ? "
 				  									  + "group by idAlmacenero";
+		public static final String FIND_ALL_REGISTROS = "select cantidad, idAlmacenero "
+													  + "from empaquetados where fecha = ?";
+		public static final String FIND_REGISTRO = "select * from empaquetados where idAlmacenero = ? and fecha = ?";
+		public static final String INCREMENT_REGISTRO = "update empaquetados set cantidad = cantidad + 1 "
+													  + "where idAlmacenero = ? and fecha = ?";
+		public static final String INSERT_REGISTRO = "insert into empaquetados(idAlmacenero, cantidad, fecha) "
+												   + "values(?,1,?)";
 	}
 	
 	public class Almacenero {
