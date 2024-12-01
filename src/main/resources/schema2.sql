@@ -120,9 +120,11 @@ create table WorkorderPedido (
 create table Paquete(
     idPaquete int primary key,
     idPedido int not null,
+    idAlmacenero int not null,
     paqueteEstado varchar(20) not null,
     fecha date,
     check (paqueteEstado in('En Curso','Listo','Incidencia')),
+    foreign key (idAlmacenero) references Almacenero(idAlmacenero),
     foreign key (idPedido) references Pedido(idPedido)
 );
 

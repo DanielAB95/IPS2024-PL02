@@ -10,6 +10,13 @@ public class Queries {
 												 + "values (?,?)";
 		public static final String PRODUCTO_INSERT = "insert into WorkorderProducto(idWorkorder, idPedido, idProducto, cantidad, recogidos) "
 												   + "values (?,?,?,?,0)";
+		public static final String FIRST_DATE = "select min(fecha) from Workorder where workorderEstado in ('Listo', 'Empaquetada')";
+		public static final String NEXT_DATE = "select min(fecha) from Workorder "
+											 + "where workorderEstado in ('Listo', 'Empaquetada') "
+											 + "and fecha > ?";
+		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
+													  + "from Workorder where fecha = ? "
+													  + "group by idAlmacenero";
 	}
 	
 	public class Paquete {
@@ -20,6 +27,20 @@ public class Queries {
 		public static final String FIND_PRODUCTOS = "select idProducto, cantidad "
 												  + "from PaqueteProducto "
 												  + "where idPaquete = ?";
+		public static final String FIRST_DATE = "select min(fecha) from Paquete where paqueteEstado in ('Listo')";
+		public static final String NEXT_DATE = "select min(fecha) from Paquete "
+				 + "where paqueteEstado in ('Listo') "
+				 + "and fecha > ?";
+		public static final String FINISHED_FROM_DATE = "select count(*), idAlmacenero "
+				  + "from Paquete where fecha = ? "
+				  + "group by idAlmacenero";
+	}
+	
+	public class Almacenero {
+		public static final String FIND_ALL = "select idAlmacenero, nombre, apellido "
+											+ "from almacenero "
+											+ "where idAlmacenero > 0";
+				
 	}
 
 }
