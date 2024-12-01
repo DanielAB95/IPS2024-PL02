@@ -126,11 +126,6 @@ public class CargaPaqueteController {
 		model.addVehiculo(view.getTextMatricula().getText(), view.getComboBoxZonaReparto().getSelectedItem().toString());
 		JOptionPane.showMessageDialog(null, "Vehiculo registrado");
 		mostrarPaquetes();
-		view.getButtonRecepcionVehiculos().setEnabled(false);
-		view.getComboBoxZonaReparto().setEnabled(false);
-		view.getTextMatricula().setEditable(false);
-		view.getButtonFinalizar().setEnabled(true);
-		view.getButtonEscanear().setEnabled(true);	
 	}
 	
 
@@ -138,8 +133,9 @@ public class CargaPaqueteController {
 		PaqueteDto paquete;
 		ClienteDto cliente;
 		filtrarPaquetes();
-		if(model.getPaquetes().size() == 0) {
+		if(model.getPaquetes().size() == 0 && view.getButtonFinalizar().isEnabled() == false) {
 			JOptionPane.showMessageDialog(null, "No hay paquetes para cargar");
+			return;
 		}else {
 			for(int i = 0; i<model.getPaquetes().size();i++) {
 				paquete = model.getPaquetes().get(i);
@@ -147,7 +143,24 @@ public class CargaPaqueteController {
 				Object[] filaNueva = {paquete.idPaquete, paquete.fecha.toString(), cliente.nombre};
 				view.getTablePaquetesModel().addRow(filaNueva);
 			}
+			activarCarga();
 		}
+	}
+	
+	private void activarCarga() {
+		view.getButtonRecepcionVehiculos().setEnabled(false);
+		view.getComboBoxZonaReparto().setEnabled(false);
+		view.getTextMatricula().setEditable(false);
+		view.getButtonFinalizar().setEnabled(true);
+		view.getButtonEscanear().setEnabled(true);	
+	}
+	
+	private void terminarCarga() {
+		view.getButtonRecepcionVehiculos().setEnabled(true);
+		view.getComboBoxZonaReparto().setEnabled(true);
+		view.getTextMatricula().setEditable(true);
+		view.getButtonFinalizar().setEnabled(false);
+		view.getButtonEscanear().setEnabled(false);
 	}
 
 	private void filtrarPaquetes() {
@@ -221,11 +234,7 @@ public class CargaPaqueteController {
 	private void finalizaCarga() {
 		JOptionPane.showMessageDialog(null, "Se ha finalizado el proceso de carga");
 		limpiarDatos();
-		view.getButtonRecepcionVehiculos().setEnabled(true);
-		view.getComboBoxZonaReparto().setEnabled(true);
-		view.getTextMatricula().setEditable(true);
-		view.getButtonFinalizar().setEnabled(false);
-		view.getButtonEscanear().setEnabled(false);
+		terminarCarga();
 	}
 
 	private void limpiarDatos() {
