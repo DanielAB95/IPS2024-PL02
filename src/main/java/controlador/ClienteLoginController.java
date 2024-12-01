@@ -29,6 +29,7 @@ public class ClienteLoginController {
 				//hacer proceso como cliente invitado
 				ClienteDto dto = new ClienteDto();
 				dto.nombreUsusario = "Invitado";
+				dto.tipoCliente = "PARTICULAR";
 				
 				ClienteView compra = new ClienteView(vista.getDb(), dto);
 				compra.getLblNombreUsuario().setText(dto.nombreUsusario);

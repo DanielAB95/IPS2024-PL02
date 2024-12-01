@@ -77,6 +77,10 @@ public class ClienteView extends JFrame {
 	private JTextField txPrecioTotal;
 	private JScrollPane pnTablaProductos;
 	private JTable tablaProductos;
+	private JTextField textIVAtotal;
+	private JLabel lblIVAtotal;
+	private JTextField textPrecioTotalSinIVA;
+	private JLabel lblPrecioSinIVA;
 	
 
 
@@ -113,12 +117,17 @@ public class ClienteView extends JFrame {
 		contentPane.add(getSpUnidades());
 		contentPane.add(getLbPrecioTotal());
 		contentPane.add(getTxPrecioTotal());
+		contentPane.add(getTextIVAtotal());
+		contentPane.add(getLblIVAtotal());
+		contentPane.add(getTextPrecioTotalSinIVA());
+		contentPane.add(getLblPrecioSinIVA());
 		
 		
 		model = new ClienteModel(db,carrito,this);
 		controller = new ClienteController(this, model);
 		controller.initController();
 		controller.initView();
+		
 	}
 	public JLabel getLblCantidad() {
 		if (lblCantidad == null) {
@@ -251,8 +260,8 @@ public class ClienteView extends JFrame {
 	
 	private JLabel getLbPrecioTotal() {
 		if (lbPrecioTotal == null) {
-			lbPrecioTotal = new JLabel("Precio total:");
-			lbPrecioTotal.setBounds(857, 323, 107, 19);
+			lbPrecioTotal = new JLabel("Precio total con IVA:");
+			lbPrecioTotal.setBounds(857, 322, 123, 19);
 		}
 		return lbPrecioTotal;
 	}
@@ -260,7 +269,7 @@ public class ClienteView extends JFrame {
 		if (txPrecioTotal == null) {
 			txPrecioTotal = new JTextField();
 			txPrecioTotal.setEditable(false);
-			txPrecioTotal.setBounds(857, 346, 111, 23);
+			txPrecioTotal.setBounds(857, 342, 111, 23);
 			txPrecioTotal.setColumns(10);
 		}
 		return txPrecioTotal;
@@ -322,7 +331,7 @@ public class ClienteView extends JFrame {
 			btnEliminar = new JButton("Eliminar");
 			btnEliminar.setBackground(new Color(255, 0, 0));
 			btnEliminar.setForeground(Color.WHITE);
-			btnEliminar.setBounds(712, 346, 107, 23);
+			btnEliminar.setBounds(861, 64, 107, 23);
 		}
 		return btnEliminar;
 	}
@@ -389,5 +398,36 @@ public class ClienteView extends JFrame {
 	    CardLayout cl = (CardLayout)(panelProductos.getLayout());
 	    cl.show(panelProductos, nombrePanel);
 	}
-
+	public JTextField getTextIVAtotal() {
+		if (textIVAtotal == null) {
+			textIVAtotal = new JTextField();
+			textIVAtotal.setEditable(false);
+			textIVAtotal.setColumns(10);
+			textIVAtotal.setBounds(712, 342, 111, 23);
+		}
+		return textIVAtotal;
+	}
+	private JLabel getLblIVAtotal() {
+		if (lblIVAtotal == null) {
+			lblIVAtotal = new JLabel("IVA total: ");
+			lblIVAtotal.setBounds(712, 324, 89, 14);
+		}
+		return lblIVAtotal;
+	}
+	public JTextField getTextPrecioTotalSinIVA() {
+		if (textPrecioTotalSinIVA == null) {
+			textPrecioTotalSinIVA = new JTextField();
+			textPrecioTotalSinIVA.setEditable(false);
+			textPrecioTotalSinIVA.setColumns(10);
+			textPrecioTotalSinIVA.setBounds(712, 399, 111, 23);
+		}
+		return textPrecioTotalSinIVA;
+	}
+	private JLabel getLblPrecioSinIVA() {
+		if (lblPrecioSinIVA == null) {
+			lblPrecioSinIVA = new JLabel("Precio total sin IVA: ");
+			lblPrecioSinIVA.setBounds(712, 376, 145, 14);
+		}
+		return lblPrecioSinIVA;
+	}
 }

@@ -55,7 +55,7 @@ public class CarritoModel {
 			Producto p = new Producto((int)productos.get(i)[0], (String)productos.get(i)[1], 
 					(String)productos.get(i)[2], (String)productos.get(i)[3], (double)productos.get(i)[4], 
 					(int)productos.get(i)[5],(int)productos.get(i)[6],(int)productos.get(i)[7],
-					(int)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
+					(double)productos.get(i)[8],(int)productos.get(i)[9],(int)productos.get(i)[10],
 					(int)productos.get(i)[11],(int)productos.get(i)[12]);
 			
 			resultado.add(p);
@@ -222,7 +222,7 @@ public class CarritoModel {
 		List<Object[]> productosCarrito = this.carrito.getCarrito();
 		for (Object[] o: productosCarrito) {
 			//nombre producto, cantidad Producto, precio producto
-			Object[] fila = { ((Producto) o[0]).getNombre(),  o[1],  ((Producto) o[0]).getPrecio() * (int)o[1] };
+			Object[] fila = { ((Producto) o[0]).getNombre(),  o[1],  getPrecioPorNombre(getDto().tipoCliente, ((Producto) o[0]).getNombre(), (int)o[1]) }; //((Producto) o[0]).getPrecio() * (int)o[1]
 			tabla.addRow(fila);
 		}
 	}
@@ -330,10 +330,25 @@ public class CarritoModel {
 		return dto;
 	}
 
-	public String getPrecioPorNombre(String nombre, int cantidad) {
+	public String getPrecioPorNombre(String tipoCliente, String nombre, int cantidad) {
+//		double precio = 0;
+//		for (Producto p: this.productosPosibles) {
+//			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
+//		}
+//		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
+//		return precioFormateado;
+		
 		double precio = 0;
 		for (Producto p: this.productosPosibles) {
-			if (p.getNombre().equals(nombre)) precio = p.getPrecio() * cantidad;
+			
+			double tipoPrecio = 0;
+			if (tipoCliente.equals("EMPRESA")) {
+				tipoPrecio = p.getPrecioEmpresa();
+			} else {
+				tipoPrecio = p.getPrecio();
+			}
+			
+			if (p.getNombre().equals(nombre)) precio = (tipoPrecio + (tipoPrecio * p.getIva() / 100.0)) * cantidad;
 		}
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
 		return precioFormateado;
@@ -351,15 +366,19 @@ public class CarritoModel {
 	}
 
 	public void modificarCantidadCarrito(String nombreProducto, int nuevaCantidad, String nombreUsuario) {
-		String idCliente = getClientIDfromName(nombreUsuario);
-		String idCarrito = getIdCarritoFromCliente(idCliente);
-		int idProducto = getIdProductoFromNombre(nombreProducto);
-		
-		db.executeUpdate("UPDATE producto_carrito SET cantidad = ? WHERE id_producto = ? AND id_carrito = ?", 
-				nuevaCantidad, idProducto, idCarrito);
-		
-		System.out.println();
-		printProductoCarrito();
+			
+		if (!this.dto.nombreUsusario.equals("Invitado")) {
+			String idCliente = getClientIDfromName(nombreUsuario);
+			String idCarrito = getIdCarritoFromCliente(idCliente);
+			int idProducto = getIdProductoFromNombre(nombreProducto);
+			
+			db.executeUpdate("UPDATE producto_carrito SET cantidad = ? WHERE id_producto = ? AND id_carrito = ?", 
+					nuevaCantidad, idProducto, idCarrito);
+			
+			System.out.println();
+			printProductoCarrito();
+		}
+			
 		
 	}
 

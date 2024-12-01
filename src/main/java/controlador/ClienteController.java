@@ -46,7 +46,7 @@ public class ClienteController {
 		if (!view.getDto().nombreUsusario.equals("Invitado")) {
 			model.rellenaTablaCarrito(view.getTableCarritoModel(), view.getDto().nombreUsusario);
 		}
-		
+		actualizaPrecioTotal();
 		getListaProductos(null);
 	}
 			
@@ -167,7 +167,7 @@ public class ClienteController {
                     int nuevaCantidad = Integer.valueOf((String) view.getTableCarritoModel().getValueAt(fila, 1));
                     
                     if (nuevaCantidad > 0) {
-                    	String nuevoPrecio = model.getPrecioPorNombre((String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                    	String nuevoPrecio = model.getPrecioPorNombre( view.getDto().tipoCliente,(String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                         
                         view.getTableCarritoModel().setValueAt(nuevoPrecio, fila, 2);
                         
@@ -234,16 +234,18 @@ public class ClienteController {
 			else
 				stockMessage = "Disponible";
 			
-			int precioMostrado = 0;
+			double precioMostrado = 0;
 			
-//			if (view.getDto().tipoCliente.equals("EMPRESA")) {
-//				
-//			} else {
-//				
-//			}
+			if (view.getDto().tipoCliente.equals("EMPRESA")) {
+				precioMostrado = p.getPrecioEmpresa();
+			} else {
+				precioMostrado = p.getPrecio() + (p.getIva() / 100.0 * p.getPrecio());
+			}
+			
+			precioMostrado = Math.round(precioMostrado * 100.0) / 100.0;
 			
 			
-			Object[] filaNueva = {p.getNombre(), p.getPrecio(), p.getDescripcion(), stockMessage};
+			Object[] filaNueva = {p.getNombre(), precioMostrado, p.getDescripcion(), stockMessage};
 			view.getTableProductosModel().addRow(filaNueva);
 		}
 	}
@@ -289,8 +291,14 @@ public class ClienteController {
 	}
 	
 	private void actualizaPrecioTotal() {
-		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+		String formattedNumber = String.format("%.2f", view.getCarrito().getTotalConIVA(view.getDto().tipoCliente));
 		view.getTextPrecioTotal().setText(formattedNumber);
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getTotalSinIVA(view.getDto().tipoCliente));
+		view.getTextPrecioTotalSinIVA().setText(formattedNumber);
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getIVAtotalAñadido(view.getDto().tipoCliente));
+		view.getTextIVAtotal().setText(formattedNumber);
 	}
 	
 	private void limpiarModeloProductos() {
@@ -309,7 +317,22 @@ public class ClienteController {
 				int cantidad = (int) view.getSpinnerUnidades().getValue();
 				model.getCarrito().addToCarrito(pSeleccionado, cantidad);
 				
-				Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, pSeleccionado.getPrecio()*cantidad};
+				
+				double precioMostrado = 0;
+				
+				if (view.getDto().tipoCliente.equals("EMPRESA")) {
+					precioMostrado = pSeleccionado.getPrecioEmpresa();
+				} else {
+					precioMostrado = pSeleccionado.getPrecio() + (pSeleccionado.getIva() / 100.0 * pSeleccionado.getPrecio());
+				}
+				
+				precioMostrado = Math.round(precioMostrado * 100.0) / 100.0;
+				
+				
+				Object[] filaNueva = {pSeleccionado.getNombre(), cantidad, precioMostrado * cantidad};
+				
+				
+				
 				view.getTableCarritoModel().addRow(filaNueva);
 				actualizaPrecioTotal();
 				view.getSpinnerUnidades().setValue(1);

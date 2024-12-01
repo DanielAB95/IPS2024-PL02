@@ -29,7 +29,8 @@ public class CarritoController {
 	}
 	
 	public void initView() {
-		view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
+		//view.getTextPrecioTotal().setText( String.valueOf(modelo.calcularPrecioTotal()) );
+		actualizaLblTotal();
 		
 		if (modelo.doesClientExist(modelo.getDto().nombreUsusario)) {
 			rellenaDatosCliente();
@@ -78,7 +79,7 @@ public class CarritoController {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				if (checkTodosLosCamposRellenados() && checkMetodoDePago()) {
+				if (modelo.checkStockCarrito() && checkTodosLosCamposRellenados() && checkMetodoDePago()) {
 					if (modelo.doesClientExist(modelo.getDto().nombreUsusario))
 						confirmarPedido();
 					else {
@@ -101,13 +102,13 @@ public class CarritoController {
                     int nuevaCantidad = Integer.valueOf((String) view.getTableModel().getValueAt(fila, 1));
                     
                     if (nuevaCantidad > 0) {
-	                    String nuevoPrecio = modelo.getPrecioPorNombre((String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
+	                    String nuevoPrecio = modelo.getPrecioPorNombre(view.getDto().tipoCliente, (String) view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
 	                    
 	                    view.getTableModel().setValueAt(nuevoPrecio, fila, 2);
 	                    
 	                    view.getCarrito().cambiaCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad);
 	                   
-	                    if (!modelo.getDto().nombreUsusario.equals("Invitado") && modelo.doesClientExist(modelo.getDto().nombreUsusario)) {
+	                    if (!view.getTextNombre().getText().equals("Invitado") && modelo.doesClientExist(modelo.getDto().nombreUsusario)) { //!modelo.getDto().nombreUsusario.equals("Invitado")
 	                    	modelo.modificarCantidadCarrito((String)view.getTableModel().getValueAt(fila, 0), nuevaCantidad, view.getDto().nombreUsusario);
 	                    }
 	                    	
@@ -148,7 +149,7 @@ public class CarritoController {
 				vista.setLocationRelativeTo(view);
 				view.dispose();
 				
-				if (!view.getLblNombreUsuario().getText().equals("Invitado")) {
+				if (!view.getLblNombreUsuario().getText().equals("Invitado")) { //!view.getLblNombreUsuario().getText().equals("Invitado")
 					modelo.borraCarritoCliente(view.getDto().nombreUsusario); //puede moverse a controlador de la siguiente ventana
 				}
 				vista.setVisible(true);
@@ -212,7 +213,15 @@ public class CarritoController {
 	}
 	
 	private void actualizaLblTotal() {
-		String formattedNumber = String.format("%.2f", view.getCarrito().getTotal());
+		
+		String formattedNumber = String.format("%.2f", view.getCarrito().getTotalConIVA(view.getDto().tipoCliente));
 		view.getTextPrecioTotal().setText( formattedNumber );
+		
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getTotalSinIVA(view.getDto().tipoCliente));
+		view.getTextPrecioTotalSinIVA().setText(formattedNumber);
+		
+		formattedNumber = String.format("%.2f", view.getCarrito().getIVAtotalAñadido(view.getDto().tipoCliente));
+		view.getTextIVAtotal().setText(formattedNumber);
 	}
 }

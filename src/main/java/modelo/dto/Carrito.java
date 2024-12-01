@@ -33,13 +33,48 @@ public class Carrito {
 		}
 	}
 	
-	public double getTotal() {
+	public double getTotalSinIVA(String tipoCliente) {
+		
+		double tipoPrecio = 0;
 		double res  = 0;
+		
 		for (Object[] o: productosCarrito) {
-			res += ((Producto)o[0]).getPrecio() * (int)o[1];
+			
+			if (tipoCliente.equals("EMPRESA")) {
+				tipoPrecio = ((Producto)o[0]).getPrecioEmpresa();
+			} else {
+				tipoPrecio = ((Producto)o[0]).getPrecio();
+			}
+			
+			res += tipoPrecio * (int)o[1];
 		}
 		return res;
 	}
+	
+	public double getIVAtotalAñadido(String tipoCliente) {
+		double tipoPrecio = 0;
+		double res  = 0;
+		for (Object[] o: productosCarrito) {
+			
+			if (tipoCliente.equals("EMPRESA")) {
+				tipoPrecio = ((Producto)o[0]).getPrecioEmpresa();
+			} else {
+				tipoPrecio = ((Producto)o[0]).getPrecio();
+			}
+			
+			res += ((Producto)o[0]).getIva() / 100.0 * tipoPrecio * (int)o[1];
+		}
+		return res;
+	}
+	
+	
+	
+	public double getTotalConIVA(String tipoCliente) {
+		return getTotalSinIVA(tipoCliente) + getIVAtotalAñadido(tipoCliente);
+	}
+	
+	
+	
 	
 	public boolean isEmpty() {
 		if (this.productosCarrito.size() > 0) return false; else return true;
