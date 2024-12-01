@@ -45,6 +45,8 @@ public class RecogidaView extends JFrame {
 	private JButton btVolver;
 	private JSpinner spinner;
 	private JButton btRecogida;
+	private JButton btCargaProductos;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -117,11 +119,13 @@ public class RecogidaView extends JFrame {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
 			pnBotones.setBounds(10, 610, 414, 40);
-			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
+			pnBotones.setLayout(new GridLayout(2, 3, 4, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
 			pnBotones.add(getBtRecogida());
 			pnBotones.add(getBtEmpaquetado());
+			pnBotones.add(getBtCargaProductos());
+			pnBotones.add(getBtnNewButton_1());
 		}
 		return pnBotones;
 	}
@@ -261,5 +265,19 @@ public class RecogidaView extends JFrame {
 			btRecogida.setEnabled(false);
 		}
 		return btRecogida;
+	}
+	public JButton getBtCargaProductos() {
+		if (btCargaProductos == null) {
+			btCargaProductos = new JButton("Carga");
+			btCargaProductos.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		}
+		return btCargaProductos;
+	}
+	private JButton getBtnNewButton_1() {
+		if (btnNewButton_1 == null) {
+			btnNewButton_1 = new JButton("New button");
+			btnNewButton_1.setEnabled(false);
+		}
+		return btnNewButton_1;
 	}
 }

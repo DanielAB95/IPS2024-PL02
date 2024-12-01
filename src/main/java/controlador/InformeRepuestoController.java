@@ -1,9 +1,12 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import modelo.modelo.InformeRepuestoModel;
 import persistence.dto.ProductoDto;
+import vista.InformeMenuView;
 import vista.InformeRepuestoView;
 
 public class InformeRepuestoController {
@@ -20,9 +23,23 @@ public class InformeRepuestoController {
 	}
 	
 	public void init() {
+		actionBtInformes();
 		activarTabla();
 	}
 	
+	private void actionBtInformes() {
+		view.getButtonInforme().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformeMenuController menucont = new InformeMenuController(model.getDb());
+				InformeMenuView menuview = new InformeMenuView(menucont);
+				view.dispose();
+				menuview.setVisible(true);	
+			}
+		});
+		
+	}
+
 	public void setView(InformeRepuestoView view) {
 		this.view = view;
 	}

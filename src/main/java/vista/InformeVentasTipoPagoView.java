@@ -8,12 +8,12 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.InformeVentasTipoPagoController;
 
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JButton;
 
 public class InformeVentasTipoPagoView extends JFrame {
 
@@ -25,6 +25,7 @@ public class InformeVentasTipoPagoView extends JFrame {
 	private JLabel lblNewLabel;
 	private JScrollPane scpVentas;
 	private JTable tbVentas;
+	private JButton btInforme;
 
 	/**
 	 * Launch the application.
@@ -47,16 +48,19 @@ public class InformeVentasTipoPagoView extends JFrame {
 	 * Create the frame.
 	 */
 	public InformeVentasTipoPagoView(InformeVentasTipoPagoController controller) {
+		setResizable(false);
 		setTitle("Informe Ventas: tipo de pago");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 855, 543);
+		setBounds(100, 100, 804, 512);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getLblNewLabel(), BorderLayout.NORTH);
-		contentPane.add(getScpVentas(), BorderLayout.CENTER);
+		contentPane.setLayout(null);
+		contentPane.add(getLblNewLabel());
+		contentPane.add(getScpVentas());
+		contentPane.add(getBtInforme());
 		
 		controller.setView(this);
 		controller.init();
@@ -65,14 +69,16 @@ public class InformeVentasTipoPagoView extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Informe de Ventas por tipo de pago");
+			lblNewLabel.setBounds(10, 22, 778, 25);
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		}
 		return lblNewLabel;
 	}
 	private JScrollPane getScpVentas() {
 		if (scpVentas == null) {
 			scpVentas = new JScrollPane();
+			scpVentas.setBounds(10, 58, 747, 355);
 			scpVentas.setViewportView(getTbVentas());
 		}
 		return scpVentas;
@@ -84,8 +90,19 @@ public class InformeVentasTipoPagoView extends JFrame {
 		return tbVentas;
 	}
 	
-	//Metodos auxiliares
-		public JTable getTablaVentas() {
-			return this.tbVentas;
+	private JButton getBtInforme() {
+		if (btInforme == null) {
+			btInforme = new JButton("Volver a Informes");
+			btInforme.setBounds(10, 424, 140, 38);
 		}
+		return btInforme;
+	}
+	
+	//Metodos auxiliares
+	public JTable getTablaVentas() {
+		return this.tbVentas;
+	}
+	public JButton getButtonInforme() {
+		return this.btInforme;
+	}
 }

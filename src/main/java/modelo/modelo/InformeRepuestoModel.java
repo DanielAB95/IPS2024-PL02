@@ -10,6 +10,10 @@ public class InformeRepuestoModel {
 	private Database2 db;
 	private final static String FIND_PRODUCTOS_REPONER = "select id, nombre, descripcion, stock, stockReposicion from Producto where stock < minStock";
 	
+	public Database2 getDb() {
+		return this.db;
+	}
+	
 	public InformeRepuestoModel(Database2 db) {
 		this.db = db;
 		productosReponer();

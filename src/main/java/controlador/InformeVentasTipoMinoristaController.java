@@ -1,5 +1,7 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import modelo.modelo.InformeVentasTipoMinoristaModel;
 import persistence.dto.ClienteDto;
-
+import vista.InformeMenuView;
 import vista.InformeVentasTipoMinoristaView;
 
 public class InformeVentasTipoMinoristaController {
@@ -24,13 +26,28 @@ public class InformeVentasTipoMinoristaController {
 	public InformeVentasTipoMinoristaController(InformeVentasTipoMinoristaModel model) {
 		this.model = model;
 	}
-	
+	 
 	
 	public void init() {
+		actionBtInformes();
 		columnasTabla();
 		valoresTabla();
 	}
 	
+	private void actionBtInformes() {
+		view.getButtonInforme().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformeMenuController menucont = new InformeMenuController(model.getDb());
+				InformeMenuView menuview = new InformeMenuView(menucont);
+				view.dispose();
+				menuview.setVisible(true);
+				
+			}
+		});
+		
+	}
+
 	private void columnasTabla() {
 		model.getMinoristas();
 		List<ClienteDto> minoristas = model.getClientes();

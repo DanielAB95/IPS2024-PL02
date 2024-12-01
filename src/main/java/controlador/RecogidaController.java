@@ -18,6 +18,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import modelo.modelo.CargaPaqueteModel;
 import modelo.modelo.EmpaquetadoModel;
 import modelo.modelo.RecogidaModel;
 import modelo.modelo.WorkorderModel;
@@ -25,6 +26,7 @@ import persistence.dto.AlmaceneroDto;
 import persistence.dto.PedidoDto;
 import persistence.dto.ProductoDto;
 import persistence.dto.WorkorderDto;
+import vista.CargaPaqueteView;
 import vista.EmpaquetadoView;
 import vista.PedidoView;
 import vista.RecogidaView;
@@ -53,10 +55,11 @@ public class RecogidaController {
 		accionBotonVolver();
 		accionWorkOrder();
 		accionEmpaquetado();
+		accionCargaPaquetes();
 		accionBotonEscanear();
 		accionIncidencia();
 	}
-	
+
 	public void setView(RecogidaView view) {
 		rw = view;
 	}
@@ -303,6 +306,17 @@ public class RecogidaController {
 		});	
 	}
 	
+	private void accionCargaPaquetes() {
+		rw.getBtCargaProductos().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mostrarCargaPaquetes();		
+			}
+		});
+		
+	}
+	
 	private void mostarEmpaquetado() {
 		EmpaquetadoModel em = new EmpaquetadoModel(rm.getDB(), rm.getAlmacenero().idAlmacenero);
 		EmpaquetadoController ec = new EmpaquetadoController(em);
@@ -315,6 +329,13 @@ public class RecogidaController {
 		PedidoView pView = new PedidoView(rm.getDB(), rm.getAlmacenero().idAlmacenero);
 		rw.dispose();
 		pView.setVisible(true);
-		
+	}
+	
+	private void mostrarCargaPaquetes() {
+		CargaPaqueteModel cpm = new CargaPaqueteModel(rm.getDB(),rm.getAlmacenero().idAlmacenero);
+		CargaPaqueteController cpc = new CargaPaqueteController(cpm);
+		CargaPaqueteView cpv = new CargaPaqueteView(cpc);
+		rw.dispose();
+		cpv.setVisible(true);
 	}
 }

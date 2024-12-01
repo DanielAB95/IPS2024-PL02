@@ -9,15 +9,20 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.InformeMenuController;
 import giis.demo.util.Database2;
+import java.awt.GridLayout;
+import javax.swing.border.TitledBorder;
 
 public class InformeMenuView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btInformeProductosReponer;
+	private JButton btInformeVentasTipoPago;
 	private JButton btInnformeAlmaceneros;
 	private JButton btInformesPaquetes;
+	private JPanel panel;
+	private JButton btInformeVentasTipoUsuario;
+	private JButton btInformeVentasMinorista;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -45,29 +50,23 @@ public class InformeMenuView extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.add(getBtnNewButton());
-		contentPane.add(getBtnNewButton_1());
+		contentPane.add(getBtInformeProductosReponer());
 		contentPane.add(getBtInnformeAlmaceneros());
 		contentPane.add(getBtInformesPaquetes());
+		contentPane.add(getPanel());
 		setLocationRelativeTo(null);
 		
 		controller.setView(this);
 		controller.init();
 	}
-	public JButton getBtnNewButton() {
-		if (btnNewButton == null) {
-			btnNewButton = new JButton("New button");
-			btnNewButton.setBounds(125, 194, 165, 50);
+	public JButton getBtInformeProductosReponer() {
+		if (btInformeProductosReponer == null) {
+			btInformeProductosReponer = new JButton("Productos a reponer");
+			btInformeProductosReponer.setBounds(125, 133, 165, 50);
 		}
-		return btnNewButton;
+		return btInformeProductosReponer;
 	}
-	public JButton getBtnNewButton_1() {
-		if (btnNewButton_1 == null) {
-			btnNewButton_1 = new JButton("New button");
-			btnNewButton_1.setBounds(125, 133, 165, 50);
-		}
-		return btnNewButton_1;
-	}
+	
 	public JButton getBtInnformeAlmaceneros() {
 		if (btInnformeAlmaceneros == null) {
 			btInnformeAlmaceneros = new JButton("Informe Almaceneros");
@@ -81,5 +80,38 @@ public class InformeMenuView extends JFrame {
 			btInformesPaquetes.setBounds(125, 11, 165, 50);
 		}
 		return btInformesPaquetes;
+	}
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setName("");
+			panel.setBorder(new TitledBorder(null, "Informe Ventas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel.setBounds(59, 194, 333, 56);
+			panel.setLayout(new GridLayout(1, 0, 0, 0));
+			panel.add(getBtInformeVentasTipoUsuario());
+			panel.add(getBtInformeVentasTipoPago());
+			panel.add(getBtInformeVentasMinorista());
+		}
+		return panel;
+	}
+	
+	public JButton getBtInformeVentasTipoPago() {
+		if (btInformeVentasTipoPago == null) {
+			btInformeVentasTipoPago = new JButton("Tipo Pago");
+		}
+		return btInformeVentasTipoPago;
+	}
+	
+	public JButton getBtInformeVentasTipoUsuario() {
+		if (btInformeVentasTipoUsuario == null) {
+			btInformeVentasTipoUsuario = new JButton("Tipo Usuario");
+		}
+		return btInformeVentasTipoUsuario;
+	}
+	public JButton getBtInformeVentasMinorista() {
+		if (btInformeVentasMinorista == null) {
+			btInformeVentasMinorista = new JButton("Minorista");
+		}
+		return btInformeVentasMinorista;
 	}
 }

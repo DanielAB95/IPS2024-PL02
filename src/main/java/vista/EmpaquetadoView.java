@@ -43,6 +43,8 @@ public class EmpaquetadoView extends JFrame {
 	private JTextField textField;
 	private JButton btVolver;
 	private JButton btEmpaquetado;
+	private JButton btCargaPaquetes;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -114,12 +116,14 @@ public class EmpaquetadoView extends JFrame {
 	public JPanel getPnBotones() {
 		if (pnBotones == null) {
 			pnBotones = new JPanel();
-			pnBotones.setBounds(10, 610, 414, 40);
-			pnBotones.setLayout(new GridLayout(0, 4, 4, 0));
+			pnBotones.setBounds(10, 610, 424, 40);
+			pnBotones.setLayout(new GridLayout(2, 3, 3, 0));
 			pnBotones.add(getBtVolver());
 			pnBotones.add(getBtGenerarWorkOrder());
 			pnBotones.add(getBtRecogida());
 			pnBotones.add(getBtEmpaquetado());
+			pnBotones.add(getBtCargaPaquetes());
+			pnBotones.add(getBtnNewButton_1());
 		}
 		return pnBotones;
 	}
@@ -260,5 +264,19 @@ public class EmpaquetadoView extends JFrame {
 			btEmpaquetado.setEnabled(false);
 		}
 		return btEmpaquetado; 
+	}
+	public JButton getBtCargaPaquetes() {
+		if (btCargaPaquetes == null) {
+			btCargaPaquetes = new JButton("Carga");
+			btCargaPaquetes.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		}
+		return btCargaPaquetes;
+	}
+	private JButton getBtnNewButton_1() {
+		if (btnNewButton_1 == null) {
+			btnNewButton_1 = new JButton("");
+			btnNewButton_1.setEnabled(false);
+		}
+		return btnNewButton_1;
 	}
 }

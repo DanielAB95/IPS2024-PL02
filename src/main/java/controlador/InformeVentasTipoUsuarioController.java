@@ -1,5 +1,7 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.modelo.InformeVentasTipoUsuarioModel;
+import vista.InformeMenuView;
 import vista.InformeVentasTipoUsuarioView;
 
 public class InformeVentasTipoUsuarioController {
@@ -24,10 +27,25 @@ public class InformeVentasTipoUsuarioController {
 	}
 	
 	public void init() {
+		actionBtInformes();
 		columnasTabla();
 		valoresTabla();
 	}
 	
+	private void actionBtInformes() {
+		view.getButtonInforme().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformeMenuController menucont = new InformeMenuController(model.getDb());
+				InformeMenuView menuview = new InformeMenuView(menucont);
+				view.dispose();
+				menuview.setVisible(true);
+				
+			}
+		});
+		
+	}
+
 	private void columnasTabla() {
 		
 		

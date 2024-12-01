@@ -30,7 +30,7 @@ public class PedidoDto {
 		return sb.toString();
 	}
 	
-	@Override
+	@Override 
 	public int hashCode() {
 		return Objects.hash(idPedido);
 	}

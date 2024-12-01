@@ -45,6 +45,8 @@ public class PedidoView extends JFrame {
 	private JLabel lbAlmacennero;
 	private JTextField textField;
 	private JButton btVolver;
+	private JButton btCargaProductos;
+	private JButton btnNewButton_1;
 
 
 	/**
@@ -110,11 +112,13 @@ public class PedidoView extends JFrame {
 		if (pnMenu == null) {
 			pnMenu = new JPanel();
 			pnMenu.setBounds(10, 610, 414, 40);
-			pnMenu.setLayout(new GridLayout(0, 4, 4, 0));
+			pnMenu.setLayout(new GridLayout(2, 3, 4, 0));
 			pnMenu.add(getBtVolver());
 			pnMenu.add(getBtGenerarWorkOrder());
 			pnMenu.add(getBtRecogida());
 			pnMenu.add(getBtnEmpaquetado());
+			pnMenu.add(getBtCargaProductos());
+			pnMenu.add(getBtnNewButton_1());
 		}
 		return pnMenu;
 	}
@@ -207,5 +211,19 @@ public class PedidoView extends JFrame {
 			btVolver.setEnabled(false);
 		}
 		return btVolver;
+	}
+	public JButton getBtCargaProductos() {
+		if (btCargaProductos == null) {
+			btCargaProductos = new JButton("Carga");
+			btCargaProductos.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		}
+		return btCargaProductos;
+	}
+	private JButton getBtnNewButton_1() {
+		if (btnNewButton_1 == null) {
+			btnNewButton_1 = new JButton("");
+			btnNewButton_1.setEnabled(false);
+		}
+		return btnNewButton_1;
 	}
 }
