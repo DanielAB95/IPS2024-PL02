@@ -32,7 +32,6 @@ public class EmpaquetadoModel {
 	private final static String SQL_INSERT_PAQUETEPROD = "insert into PaqueteProducto(idPaquete, idProducto, cantidad) values (?,?,1)";
 	private final static String SQL_INSERT_WOPAQ = "insert into workorderPaquete(idWorkorder, idPaquete) values (?,?)";
 	private final static String SQL_UPDATE_PAQUETEPROD = "update PaqueteProducto set cantidad = cantidad + 1 where idPaquete = ? and idProducto = ?";
-	private final static String SQL_MAX_NUM_PAQUETE = "select max(idPaquete) from Paquete";
 	private final static String SQL_RECUPERARPAQUETE = "select wp.idPaquete from workorderPaquete wp "
 													 + "inner join Paquete p on wp.idPaquete = p.idPaquete "
 													 + "where wp.idWorkorder = ? and p.paqueteEstado = 'En Curso'";
@@ -214,7 +213,7 @@ public class EmpaquetadoModel {
 	private boolean getPaqueteNuevo(int idWorkorder){
 		List<Object[]> result = db.executeQueryArray(SQL_RECUPERARPAQUETE, idWorkorder);
 		if (result.size() == 0) {
-			result = db.executeQueryArray(SQL_MAX_NUM_PAQUETE);
+			result = db.executeQueryArray(Queries.Paquete.MAX_NUM_PAQUETE);
 			idPaquete = (int)result.get(0)[0] + 1;
 			db.executeUpdate(SQL_INSERT_WOPAQ, idWorkorder, idPaquete);
 			return true;

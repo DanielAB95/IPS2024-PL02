@@ -29,9 +29,7 @@ public class RecogidaModel {
 											+ "where idWorkorder = ? and idPedido = ?";
 	private final static String SQL_FIND_PRODUCTOS_RECOGIDOS = "select recogidos from WorkorderProducto "
 		    													+ "where idWorkorder = ? and idPedido = ? and idProducto = ?";
-	private final static String SQL_UPDATE_WOPROD = "update WorkorderProducto set recogidos = recogidos + ? "
-												  + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
-	
+												  
 	public RecogidaModel(Database2 db2, int idAlmacenero) {
 		db = db2;
 		almacenero.idAlmacenero = idAlmacenero;
@@ -173,7 +171,7 @@ public class RecogidaModel {
 	}
 
 	private void actualizar(int idWorkorder, int idPedido, int idProducto, int cantidad) {
-		db.executeUpdate(SQL_UPDATE_WOPROD, cantidad, idWorkorder, idPedido, idProducto);
+		db.executeUpdate(Queries.Workorder.UPDATE_PRODUCTO, cantidad, idWorkorder, idPedido, idProducto);
 	}
 	
 	public Database2 getDB() {

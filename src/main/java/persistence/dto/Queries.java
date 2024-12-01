@@ -5,6 +5,8 @@ public class Queries {
 	public class Workorder {
 		public static final String UPDATE = "update Workorder set workorderEstado = ? where idWorkorder = ?";
 		public static final String UPDATE_FECHA = "update Workorder set workorderEstado = ?, fecha = ? where idWorkorder = ?";
+		public static final String UPDATE_PRODUCTO = "update WorkorderProducto set recogidos = recogidos + ? "
+				  								    + "where idWorkorder = ? and idPedido = ? and idProducto = ?";
 		public static final String INSERT = "insert into Workorder(idWorkorder, idAlmacenero, workorderEstado, fecha) "
 										  + "values (?,?,?,?)";
 		public static final String PEDIDO_INSERT = "insert into WorkorderPedido(idWorkorder, idPedido) "
@@ -37,7 +39,7 @@ public class Queries {
 		public static final String FIND_READY = "select idPaquete, idPedido, fecha "
 											  + "from Paquete "
 											  + "where paqueteEstado = 'Listo'";
-		
+		public static final String MAX_NUM_PAQUETE = "select max(idPaquete) from Paquete";
 		public static final String FIND_PRODUCTOS = "select idProducto, cantidad "
 												  + "from PaqueteProducto "
 												  + "where idPaquete = ?";
