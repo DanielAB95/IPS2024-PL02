@@ -27,7 +27,7 @@ public class ClienteModel {
 	public static final String SQL_PRODUCTO = "select * from Producto where nombre = ?";
 	private static final String SQL_GET_CLIENTE = "select * from cliente where nombreUsuario = ?";
 	private static final String SQL_INSERTAR_PRODUCTOS_PEDIDO = "insert into PedidoProducto(idPedido, idProducto, cantidad) values (?, ?, ?)";
-	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago) values (?, ?, ?, ?, ?)";
+	private static final String SQL_INSERTAR_PEDIDO = "insert into Pedido(idPedido, idCliente, fecha, estado, tipoPago, precio) values (?, ?, ?, ?, ?, ?)";
 	private static final String SQL_GET_PEDIDOS = "select * from pedido";
 	private static final String SQL_GET_PEDIDOs_Producto = "select * from pedidoproducto";
 	private static final String SQL_GET_CARRITO_FROM_CLIENTE = "select * from carrito where id_cliente = ?";
@@ -93,12 +93,16 @@ public class ClienteModel {
 			double tipoPrecio = 0;
 			if (tipoCliente.equals("EMPRESA")) {
 				tipoPrecio = p.getPrecioEmpresa();
+				if (p.getNombre().equals(nombre)) precio = (tipoPrecio ) * cantidad;
+				
 			} else {
 				tipoPrecio = p.getPrecio();
+				if (p.getNombre().equals(nombre)) precio = (tipoPrecio + (tipoPrecio * p.getIva() / 100.0)) * cantidad;
 			}
 			
-			if (p.getNombre().equals(nombre)) precio = (tipoPrecio + (tipoPrecio * p.getIva() / 100.0)) * cantidad;
+			//if (p.getNombre().equals(nombre)) precio = (tipoPrecio + (tipoPrecio * p.getIva() / 100.0)) * cantidad;
 		}
+		
 		String precioFormateado = String.format("%.2f", precio); //que tenga solo 2 decimales
 		return precioFormateado;
 	}
@@ -183,8 +187,11 @@ public class ClienteModel {
 			String fecha = getFechaDeHoy();
 			String estado = "Pendiente";
 			
+			double precio = this.carrito.getTotalConIVA(tipoPago);
+			
+			
 			//db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().getName()), fecha, estado, tipoPago);
-			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().nombreUsusario), fecha, estado, tipoPago);
+			db.executeUpdate(SQL_INSERTAR_PEDIDO, nuevoID, getClientIDfromName(vista.getDto().nombreUsusario), fecha, estado, tipoPago, precio);
 				
 			insertarProductosPedido(nuevoID);
 			reduceStockProductos();
@@ -284,7 +291,7 @@ public class ClienteModel {
 		List<Object[]> pedidos = db.executeQueryArray(SQL_GET_PEDIDOS);
 		
 		for (Object[] p: pedidos) {
-			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3] + " " + p[4]);
+			System.out.println("Pedido: " + p[0] + " "+ p[1] + " "+ p[2] + " "+ p[3] + " " + p[4] + " " + p[5]);
 		}
 		System.out.println();
 		

@@ -164,7 +164,7 @@ public class ClienteController {
                     int nuevaCantidad = Integer.valueOf((String) view.getTableCarritoModel().getValueAt(fila, 1));
                     
                     if (nuevaCantidad > 0) {
-                    	String nuevoPrecio = model.getPrecioPorNombre( view.getDto().tipoCliente,(String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
+                    	String nuevoPrecio = model.getPrecioPorNombre( view.getDto().tipoCliente, (String) view.getTableCarritoModel().getValueAt(fila, 0), nuevaCantidad);
                         
                         view.getTableCarritoModel().setValueAt(nuevoPrecio, fila, 2);
                         
