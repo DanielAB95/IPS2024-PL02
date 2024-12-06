@@ -5,10 +5,10 @@ import java.util.List;
 
 import giis.demo.util.Database2;
 import persistence.dto.ProductoDto;
+import persistence.dto.Queries;
 
 public class InformeRepuestoModel {
 	private Database2 db;
-	private final static String FIND_PRODUCTOS_REPONER = "select id, nombre, descripcion, stock, stockReposicion from Producto where stock < minStock";
 	
 	public Database2 getDb() {
 		return this.db;
@@ -29,7 +29,7 @@ public class InformeRepuestoModel {
 	
 	public List<ProductoDto> productosReponer(){
 		List<ProductoDto> productos = new ArrayList<>();
-		List<Object[]> result = db.executeQueryArray(FIND_PRODUCTOS_REPONER);
+		List<Object[]> result = db.executeQueryArray(Queries.Producto.FIND_PRODUCTOS_REPONER);
 		
 		for(Object[] o : result) {
 			ProductoDto dto = new ProductoDto();

@@ -8,6 +8,7 @@ import giis.demo.util.Database2;
 import persistence.dto.AlmaceneroDto;
 import persistence.dto.ClienteDto;
 import persistence.dto.PaqueteDto;
+import persistence.dto.Queries;
 import persistence.dto.VehiculoDto;
 
 public class CargaPaqueteModel {
@@ -18,20 +19,6 @@ public class CargaPaqueteModel {
 	private List<ClienteDto> clientes = new ArrayList<ClienteDto>();
 	private VehiculoDto vehiculo;
 	
-	private final static String SQL_FIND_ALMACENERO = "select idAlmacenero, nombre, apellido from Almacenero where idAlmacenero = ?";
-	private final static String ADD_VEHICULO = "insert into Vehiculo(matricula,zonaReparto,fecha) values (?,?,?)";
-	private final static String GET_VEHICULO_BY_MATRICULA = "select matricula, zonaReparto from Vehiculo where matricula = ?";
-	private final static String GET_PAQUETES_ZONA_REGIONAL = "select p.idPaquete, p.fecha, c.nombre "
-																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
-																+ "inner join Cliente c on pe.idCliente = c.idCliente "
-																+ "where c.region = 'Asturias' and  p.paqueteEstado = 'Listo'";
-	private final static String GET_PAQUETES_ZONA_NACIONAL = "select p.idPaquete, p.fecha, c.nombre "
-																+ "from Paquete p inner join Pedido pe on p.idPedido = pe.idPedido "
-																+ "inner join Cliente c on pe.idCliente = c.idCliente "
-																+ "where not c.region = 'Asturias' and  p.paqueteEstado = 'Listo'";
-	private final static String SQL_UPDATE_ESTADO_PAQUETE = "update Paquete set paqueteEstado = ? where idPaquete = ?";
-	private final static String ADD_PAQUETE = "insert into VehiculoPaquete  (matricula,idPaquete) values (?,?)";
-	
 	public CargaPaqueteModel(Database2 db, int idAlmacenero) {
 		this.db = db;
 		almacenero.idAlmacenero = idAlmacenero;
@@ -39,7 +26,7 @@ public class CargaPaqueteModel {
 	}
 	
 	private void setAlmacenero() {
-		List<Object[]> o = db.executeQueryArray(SQL_FIND_ALMACENERO, almacenero.idAlmacenero);
+		List<Object[]> o = db.executeQueryArray(Queries.Almacenero.FIND_FROM_ID, almacenero.idAlmacenero);
 		almacenero.nombre = (String)o.get(0)[1];
 		almacenero.apellido = (String)o.get(0)[2];
 	}
@@ -73,15 +60,15 @@ public class CargaPaqueteModel {
 	}
 	
 	public void addVehiculo(String matricula, String zonaReparto ) {
-		db.executeUpdate(ADD_VEHICULO, matricula, zonaReparto, LocalDate.now());
+		db.executeUpdate(Queries.Vehiculo.ADD_VEHICULO, matricula, zonaReparto, LocalDate.now());
 	}
 	
 	public void addPaquete(String matricula, int idPaquete) {
-		db.executeUpdate(ADD_PAQUETE, matricula, idPaquete);
+		db.executeUpdate(Queries.Vehiculo.ADD_PAQUETE, matricula, idPaquete);
 	}
 	
 	public void paquetesZonaRegional() {
-		List<Object[]> result = db.executeQueryArray(GET_PAQUETES_ZONA_REGIONAL);
+		List<Object[]> result = db.executeQueryArray(Queries.Paquete.GET_PAQUETES_ZONA_REGIONAL);
 		ClienteDto cliente;
 		PaqueteDto paquete;
 		for(Object[] o : result) {
@@ -96,7 +83,7 @@ public class CargaPaqueteModel {
 	}
 	
 	public void paquetesZonaNacional() {
-		List<Object[]> result = db.executeQueryArray(GET_PAQUETES_ZONA_NACIONAL);
+		List<Object[]> result = db.executeQueryArray(Queries.Paquete.GET_PAQUETES_ZONA_NACIONAL);
 		ClienteDto cliente;
 		PaqueteDto paquete;
 		for(Object[] o : result) {
@@ -119,12 +106,12 @@ public class CargaPaqueteModel {
 	}
 
 	public void paqueteReparto(int idPaquete) {
-		db.executeUpdate(SQL_UPDATE_ESTADO_PAQUETE, "En Reparto", idPaquete);
+		db.executeUpdate(Queries.Paquete.UPDATE_ESTADO_PAQUETE, "En Reparto", idPaquete);
 		
 	}
 
 	public void getVehiculoByMatricula(String matricula) {
-		List<Object[]> result = db.executeQueryArray(GET_VEHICULO_BY_MATRICULA, matricula);
+		List<Object[]> result = db.executeQueryArray(Queries.Vehiculo.GET_VEHICULO_BY_MATRICULA, matricula);
 		for(Object[] o : result) {
 			vehiculo = new VehiculoDto();
 			vehiculo.matricula = (String)o[0];
